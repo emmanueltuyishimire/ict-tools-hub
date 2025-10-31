@@ -15,65 +15,59 @@ import Link from 'next/link';
 
 // --- MAC Address Logic & OUI Data ---
 const ouiData: Record<string, string> = {
-    '000C29': 'VMware, Inc.',
-    '005056': 'VMware, Inc.',
+    '000C29': 'VMware, Inc.', '005056': 'VMware, Inc.', '020056': 'VMware, Inc.',
     '080027': 'Oracle Corporation (VirtualBox)',
     '000569': 'IBM Corporation',
-    '3C5AB4': 'Google, Inc.',
-    'F8E43B': 'Apple, Inc.',
-    'A8A159': 'Apple, Inc.',
-    'D83062': 'Apple, Inc.',
-    'B827EB': 'Raspberry Pi Foundation',
-    'DCA632': 'Raspberry Pi Foundation',
-    '001A2A': 'ASUSTek COMPUTER INC.',
+    '3C5AB4': 'Google, Inc.', '001A11': 'Google, Inc.',
+    'F8E43B': 'Apple, Inc.', 'A8A159': 'Apple, Inc.', 'D83062': 'Apple, Inc.', '0010FA': 'Apple, Inc.',
+    'B827EB': 'Raspberry Pi Foundation', 'DCA632': 'Raspberry Pi Foundation', 'E45F01': 'Raspberry Pi Trading Ltd',
     '00E04C': 'Realtek Semiconductor Corp.',
-    'E848B8': 'TP-LINK TECHNOLOGIES CO.,LTD.',
-    '90F652': 'TP-LINK TECHNOLOGIES CO.,LTD.',
-    'B03956': 'Intel Corporate',
-    'D481D7': 'Intel Corporate',
-    '9C5C8E': 'Dell Inc.',
-    '180373': 'Dell Inc.',
-    '001422': 'Dell Inc.',
-    'B42E99': 'Hewlett Packard',
-    '3CD92B': 'Hewlett Packard',
-    '00000C': 'Cisco Systems, Inc',
-    '28940F': 'Cisco Systems, Inc',
-    '00A0C9': 'Intel Corporation',
-    '3413E8': 'Microsoft Corporation',
-    'C84B79': 'Microsoft Corporation',
+    'E848B8': 'TP-LINK TECHNOLOGIES CO.,LTD.', '90F652': 'TP-LINK TECHNOLOGIES CO.,LTD.',
+    'B03956': 'Intel Corporate', 'D481D7': 'Intel Corporate', '00A0C9': 'Intel Corporation',
+    '9C5C8E': 'Dell Inc.', '180373': 'Dell Inc.', '001422': 'Dell Inc.',
+
+    'B42E99': 'Hewlett Packard', '3CD92B': 'Hewlett Packard', '000B0D': 'Hewlett Packard',
+    '00000C': 'Cisco Systems, Inc', '28940F': 'Cisco Systems, Inc', 'F87A41': 'Cisco Systems, Inc',
+    '3413E8': 'Microsoft Corporation', 'C84B79': 'Microsoft Corporation',
     '00155D': 'Microsoft Corporation (Hyper-V)',
-    'E0D55E': 'Amazon Technologies Inc.',
-    '90B8D0': 'Amazon Technologies Inc.',
+    'E0D55E': 'Amazon Technologies Inc.', '90B8D0': 'Amazon Technologies Inc.',
+    '1C69A5': 'ASUSTek COMPUTER INC.',
+    '001A70': 'ASRock Incorporation',
+    '149182': 'NETGEAR',
 };
 
 const validateMac = (mac: string) => {
     if (!mac) return { isValid: false, message: 'Input is empty.', format: 'None', oui: 'N/A' };
     
-    // Normalize: remove separators and convert to uppercase
-    const normalized = mac.replace(/[:.-]/g, '').toUpperCase();
+    const originalMac = mac;
+    const strippedMac = mac.replace(/[\s:.-]/g, '').toUpperCase();
 
-    if (normalized.length !== 12) {
-        return { isValid: false, message: 'MAC address must be 12 hexadecimal characters long.', format: 'None', oui: 'N/A' };
-    }
-    if (!/^[0-9A-F]{12}$/.test(normalized)) {
+    if (!/^[0-9A-F]*$/.test(strippedMac)) {
         return { isValid: false, message: 'Contains invalid hexadecimal characters.', format: 'None', oui: 'N/A' };
     }
+    
+    if (strippedMac.length !== 12) {
+        return { isValid: false, message: `MAC address must be 12 hexadecimal characters long. You entered ${strippedMac.length}.`, format: 'None', oui: 'N/A' };
+    }
 
-    // Determine format based on original input
-    let format = 'None';
-    if (/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/.test(mac)) {
+    let format = 'Unknown';
+    if (/^([0-9A-Fa-f]{2}:){5}([0-9A-Fa-f]{2})$/.test(originalMac)) {
         format = 'Colon-Separated (XX:XX:XX:XX:XX:XX)';
-    } else if (/^([0-9A-Fa-f]{4}[.]){2}([0-9A-Fa-f]{4})$/.test(mac)) {
-        format = 'Dot-Separated (XXXX.XXXX.XXXX)';
-    } else if (/^[0-9A-Fa-f]{12}$/.test(mac)) {
+    } else if (/^([0-9A-Fa-f]{2}-){5}([0-9A-Fa-f]{2})$/.test(originalMac)) {
+        format = 'Hyphen-Separated (XX-XX-XX-XX-XX-XX)';
+    } else if (/^([0-9A-Fa-f]{4}\.){2}([0-9A-Fa-f]{4})$/.test(originalMac)) {
+        format = 'Dot-Separated (Cisco-style)';
+    } else if (/^[0-9A-Fa-f]{12}$/.test(originalMac)) {
         format = 'No Separator (XXXXXXXXXXXX)';
     }
 
-    const oui = normalized.substring(0, 6);
+    const oui = strippedMac.substring(0, 6);
     const vendor = ouiData[oui] || 'Unknown Vendor';
+    const normalized = strippedMac.match(/.{1,2}/g)?.join(':') || '';
 
-    return { isValid: true, message: 'Valid MAC Address', format, oui, vendor };
+    return { isValid: true, message: 'Valid MAC Address', format, oui, vendor, normalized };
 };
+
 
 // --- FAQ & Schema Data ---
 const faqData = [
@@ -81,7 +75,7 @@ const faqData = [
     { question: "Is a MAC address the same as an IP address?", answer: "No. A MAC address is a permanent, hardware-level address, while an IP address is a logical, network-level address that can change. A MAC address is used for communication on the local network (Layer 2), while an IP address is used for routing data across different networks and the internet (Layer 3)." },
     { question: "Can two devices have the same MAC address?", answer: "Theoretically, no. MAC addresses are assigned by the manufacturer and are designed to be globally unique. However, it's possible for duplicate MAC addresses to exist due to manufacturing errors or through 'MAC spoofing,' where a user intentionally changes a device's MAC address." },
     { question: "What is an OUI?", answer: "An OUI (Organizationally Unique Identifier) is the first 24 bits (or 6 hexadecimal digits) of a MAC address. The IEEE assigns these prefixes to hardware manufacturers. By looking at the OUI, you can identify the company that made the network device, which is what this tool does." },
-    { question: "What are the common formats for writing a MAC address?", answer: "The most common format uses colons as separators (e.g., 00:1A:2B:3C:4D:5E). Hyphens are also common, especially in Windows (e.g., 00-1A-2B-3C-4D-5E). Cisco devices often use a dot-separated format (e.g., 001a.2b3c.4d5e). This tool validates the colon-separated and dot-separated formats." },
+    { question: "What are the common formats for writing a MAC address?", answer: "The most common format uses colons as separators (e.g., 00:1A:2B:3C:4D:5E). Hyphens are also common, especially in Windows (e.g., 00-1A-2B-3C-4D-5E). Cisco devices often use a dot-separated format (e.g., 001a.2b3c.4d5e). This tool validates all these common formats." },
     { question: "Is it safe to enter my device's MAC address here?", answer: "Yes. This tool runs entirely in your web browser using JavaScript. The MAC address you enter is not sent to any server, stored, or logged. All validation happens on your local machine." },
     { question: "What is MAC spoofing?", answer: "MAC spoofing is the act of changing the MAC address reported by a network interface. It can be used for legitimate reasons, such as to bypass a network access control list on a router, or for malicious purposes, like impersonating another device on a network." },
     { question: "What is a broadcast MAC address?", answer: "The broadcast MAC address is FF:FF:FF:FF:FF:FF. A data frame sent to this address is received and processed by all devices on the local network segment. It's used for services like ARP to discover the MAC address of a device with a known IP address." },
@@ -101,10 +95,10 @@ const howToSchema = {
     name: 'How to Validate a MAC Address',
     description: 'A step-by-step guide to check if a MAC address is valid and identify its manufacturer.',
     step: [
-        { '@type': 'HowToStep', name: 'Enter the MAC Address', text: 'Type or paste the MAC address you want to validate into the input field. The tool accepts common formats like colon-separated (XX:XX:XX:XX:XX:XX) and dot-separated (XXXX.XXXX.XXXX).' },
+        { '@type': 'HowToStep', name: 'Enter the MAC Address', text: 'Type or paste the MAC address you want to validate into the input field. The tool accepts common formats like colon-separated (XX:XX:XX:XX:XX:XX), hyphen-separated (XX-XX-XX-XX-XX-XX), and no separator (XXXXXXXXXXXX).' },
         { '@type': 'HowToStep', name: 'Review Real-Time Results', text: 'The tool validates the address as you type. A status message will immediately indicate whether the format is valid.' },
-        { '@type': 'HowToStep', name: 'Analyze the Details', text: 'If the address is valid, the results card will show the detected format, the OUI (the first 6 characters), and the manufacturer associated with that OUI.' },
-        { '@type': 'HowToStep', name: 'Copy Information', text: 'Use the copy button in the input field to copy the address.' }
+        { '@type': 'HowToStep', name: 'Analyze the Details', text: 'If the address is valid, the results card will show the detected format, the normalized colon-separated format, the OUI (the first 6 characters), and the manufacturer associated with that OUI.' },
+        { '@type': 'HowToStep', name: 'Clear or Copy', text: 'Use the "Clear" button to reset the tool or the copy button to copy the normalized MAC address.' }
     ],
     totalTime: 'PT1M',
 };
@@ -116,9 +110,9 @@ export function MacValidator() {
     
     const validationResult = useMemo(() => validateMac(macAddress), [macAddress]);
 
-    const handleCopyToClipboard = () => {
-        if (!macAddress) return;
-        navigator.clipboard.writeText(macAddress).then(() => {
+    const handleCopyToClipboard = (value: string) => {
+        if (!value) return;
+        navigator.clipboard.writeText(value).then(() => {
             setHasCopied(true);
             setTimeout(() => setHasCopied(false), 2000);
         });
@@ -132,37 +126,31 @@ export function MacValidator() {
                 <CardHeader>
                     <CardTitle>MAC Address Validator</CardTitle>
                     <CardDescription>
-                        Enter a MAC address to check its validity and identify the manufacturer.
+                       Validate any MAC address format instantly and learn how MAC addressing works in networking.
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                     <div className="space-y-2">
                         <Label htmlFor="mac-input">MAC Address</Label>
-                        <div className="relative">
-                            <Input
+                        <div className="flex flex-col sm:flex-row gap-2">
+                           <Input
                                 id="mac-input"
                                 type="text"
                                 value={macAddress}
                                 onChange={(e) => setMacAddress(e.target.value)}
                                 placeholder="e.g., 00:1A:2B:3C:4D:5E"
-                                className="font-code"
+                                className="font-code flex-grow"
                                 aria-label="MAC Address Input"
                             />
-                            <Button
-                                size="icon"
-                                variant="ghost"
-                                className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8"
-                                onClick={handleCopyToClipboard}
-                                aria-label={hasCopied ? 'Copied' : 'Copy'}
-                            >
-                                {hasCopied ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
-                            </Button>
+                            <div className='flex gap-2'>
+                                <Button onClick={() => setMacAddress('')} variant="outline" className="w-full sm:w-auto">Clear</Button>
+                            </div>
                         </div>
                     </div>
                      {macAddress.length > 0 && (
                          <Alert variant={validationResult.isValid ? 'default' : 'destructive'} className={validationResult.isValid ? 'border-green-500/50' : ''}>
                              {validationResult.isValid ? <CheckCircle className="h-4 w-4 text-green-600" /> : <XCircle className="h-4 w-4" />}
-                             <AlertTitle>{validationResult.isValid ? 'Valid' : 'Invalid'}</AlertTitle>
+                             <AlertTitle>{validationResult.isValid ? 'Valid MAC Address' : 'Invalid MAC Address'}</AlertTitle>
                              <AlertDescription>{validationResult.message}</AlertDescription>
                          </Alert>
                      )}
@@ -176,8 +164,15 @@ export function MacValidator() {
                                 <Table>
                                     <TableBody>
                                         <TableRow>
-                                            <TableHead className="font-semibold">Format Detected</TableHead>
-                                            <TableCell>{validationResult.format}</TableCell>
+                                            <TableHead className="font-semibold">Normalized</TableHead>
+                                            <TableCell className="font-code">
+                                                 <div className="flex items-center justify-between">
+                                                    <span>{validationResult.normalized}</span>
+                                                    <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => handleCopyToClipboard(validationResult.normalized!)} aria-label={hasCopied ? 'Copied' : 'Copy'}>
+                                                        {hasCopied ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
+                                                    </Button>
+                                                </div>
+                                            </TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableHead className="font-semibold">OUI (Vendor ID)</TableHead>
@@ -186,6 +181,10 @@ export function MacValidator() {
                                          <TableRow>
                                             <TableHead className="font-semibold">Vendor</TableHead>
                                             <TableCell>{validationResult.vendor}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableHead className="font-semibold">Detected Format</TableHead>
+                                            <TableCell>{validationResult.format}</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>
@@ -196,11 +195,11 @@ export function MacValidator() {
             </Card>
 
             <section>
-                <h2 className="text-2xl font-bold mb-4">How to Use the MAC Address Validator</h2>
+                <h2 className="text-2xl font-bold mb-4">How to Use the Tool</h2>
                 <Card className="prose prose-sm max-w-none text-foreground p-6">
-                    <p>This tool provides a quick and easy way to validate a MAC address and find its manufacturer. The validation happens instantly as you type.</p>
+                    <p>This MAC Address Validator provides a quick and easy way to check a MAC address and find its manufacturer. The validation happens instantly as you type.</p>
                     <ol>
-                        <li><strong>Enter the MAC Address:</strong> Type or paste the MAC address into the input field. The tool is flexible and accepts several common formats, including:
+                        <li><strong>Enter the MAC Address:</strong> Type or paste the MAC address into the input field. The tool is flexible and accepts several common formats:
                             <ul>
                                 <li><strong>Colon-Separated:</strong> <code className="font-code bg-muted p-1 rounded-sm">00:1A:2B:3C:4D:5E</code></li>
                                 <li><strong>Hyphen-Separated:</strong> <code className="font-code bg-muted p-1 rounded-sm">00-1A-2B-3C-4D-5E</code></li>
@@ -209,7 +208,8 @@ export function MacValidator() {
                             </ul>
                         </li>
                         <li><strong>Review Instant Feedback:</strong> A status box will appear immediately, showing whether the address is valid or invalid and explaining why.</li>
-                        <li><strong>Check the Details:</strong> If the address is valid, a "Validation Details" card will display the format you used, the OUI (the first six digits that identify the manufacturer), and the name of the manufacturer.</li>
+                        <li><strong>Check the Details:</strong> If the address is valid, a "Validation Details" card will display the standard colon-separated format, the OUI (the first six digits that identify the manufacturer), and the name of the manufacturer.</li>
+                        <li><strong>Clear or Copy:</strong> Use the "Clear" button to empty the input field or the copy icon in the results table to copy the standardized MAC address.</li>
                     </ol>
                     <Alert>
                         <Lightbulb className="h-4 w-4" />
