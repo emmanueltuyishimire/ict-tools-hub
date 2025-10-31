@@ -9,6 +9,7 @@ import { BinaryToIpConverter } from '@/app/tools/binary-to-ip/binary-to-ip-conve
 import { IpToBinaryConverter } from '@/app/tools/ip-to-binary/ip-to-binary-converter';
 import { SubnetCalculator } from '@/app/tools/subnet-calculator/subnet-calculator';
 import { SubnetMaskConverter } from '@/app/tools/subnet-mask-converter/subnet-mask-converter';
+import { VlsmCalculator } from '@/app/tools/vlsm-calculator/vlsm-calculator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -27,6 +28,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'ip-to-binary': IpToBinaryConverter,
     'subnet-calculator': SubnetCalculator,
     'subnet-mask-converter': SubnetMaskConverter,
+    'vlsm-calculator': VlsmCalculator,
 };
 
 
