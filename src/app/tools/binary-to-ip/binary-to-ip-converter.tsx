@@ -142,7 +142,7 @@ export function BinaryToIpConverter() {
             setError('Invalid format. Please use four 8-bit octets separated by dots.');
             return;
         }
-        octets = inputWithDots;
+        octets = inputWithDots.map(o => o.padStart(8, '0'));
       } else {
          octets = binaryInput.match(/.{1,8}/g);
       }
@@ -166,7 +166,6 @@ export function BinaryToIpConverter() {
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Allow binary digits, dots, and spaces
     if (/^[01.\s]*$/.test(value)) {
         setBinary(value);
     }
@@ -311,7 +310,7 @@ export function BinaryToIpConverter() {
                 <section>
                     <h3 className="font-bold text-xl">How Binary Relates to IP Addresses: The Language of Computers</h3>
                     <p>Computers operate in binary, a base-2 number system that uses only two digits: 0 and 1. Each digit is called a bit. While humans find it easier to work with decimal (base-10) numbers, all digital data is ultimately stored and processed as binary. To bridge this gap, we must be able to convert between these systems.</p>
-                    <p>An IPv4 address is fundamentally a 32-bit binary number. The dot-decimal notation is just a convenient abstraction. Understanding this binary foundation is not just academic; it's essential for advanced networking tasks like subnetting, access control list (ACL) configuration, and network troubleshooting. When you use a <Link href="/tools/subnet-calculator">Subnet Calculator</Link> to configure a mask like <code className="font-code bg-muted p-1 rounded-sm">255.255.255.0</code>, you're actually telling the network hardware to look at the first 24 bits of an IP address to identify its network portion. In binary, that mask is <code className="font-code bg-muted p-1 rounded-sm">11111111.11111111.11111111.00000000</code>.</p>
+                    <p>An IPv4 address is fundamentally a 32-bit binary number. The dot-decimal notation is just a convenient abstraction. Understanding this binary foundation is not just academic; it's essential for advanced networking tasks like subnetting, access control list (ACL) configuration, and network troubleshooting. When you use a <Link href="/tools/subnet-calculator" className='text-primary hover:underline'>Subnet Calculator</Link> to configure a mask like <code className="font-code bg-muted p-1 rounded-sm">255.255.255.0</code>, you're actually telling the network hardware to look at the first 24 bits of an IP address to identify its network portion. In binary, that mask is <code className="font-code bg-muted p-1 rounded-sm">11111111.11111111.11111111.00000000</code>.</p>
                     
                     <h4 className='font-semibold text-lg'>Step-by-Step Manual Conversion: A Practical Tutorial</h4>
                     <p>Let's manually convert the binary string <code className="font-code bg-muted p-1 rounded-sm">11000000.10101000.00000001.00000001</code> to a decimal IP address. This process demystifies what our tool does automatically.</p>

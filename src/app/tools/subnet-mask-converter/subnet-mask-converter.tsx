@@ -121,11 +121,12 @@ export function SubnetMaskConverter() {
                 }
                 maskLong = ipToLong(value);
             } else if (type === 'wildcard') {
-                if (!isValidMask(longToIp(~ipToLong(value)! >>> 0))) {
-                     setError('Invalid Wildcard Mask. Bits must be contiguous.');
+                const longVal = ipToLong(value);
+                 if (longVal === null || !isValidMask(longToIp(~longVal >>> 0))) {
+                     setError('Invalid Wildcard Mask. Bits must form a valid inverse mask.');
                     return;
                 }
-                maskLong = ~ipToLong(value)!;
+                maskLong = ~longVal;
             } else {
                 return;
             }
@@ -288,7 +289,7 @@ export function SubnetMaskConverter() {
                         <Lightbulb className="h-4 w-4" />
                         <AlertTitle>Example Scenario</AlertTitle>
                         <AlertDescription>
-                          A colleague asks you to configure a firewall rule for the `192.168.10.0/24` network. You need the wildcard mask for the ACL. Select "CIDR Prefix" as the input, choose "/24" from the list, and instantly see the wildcard mask is `0.0.0.255`. No manual calculation needed!
+                          A colleague asks you to configure a firewall rule for the `192.168.50.0/24` network. You need the wildcard mask for the ACL. Select "CIDR Prefix" as the input, choose "/24" from the list, and instantly see the wildcard mask is `0.0.0.255`. No manual calculation needed!
                         </AlertDescription>
                     </Alert>
                 </Card>
