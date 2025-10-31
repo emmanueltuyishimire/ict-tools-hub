@@ -1,3 +1,10 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "tech-background",
+      "description": "A generic tech background image.",
+      "imageUrl": "https://images.unsplash.com/photo-1645839057098-5ea8761a6b09?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx0ZWNobm9sb2d5JTIwbmV0d29ya3xlbnwwfHx8fDE3NjE5MjUxNDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "technology network"
+    }
+  ]
 }
