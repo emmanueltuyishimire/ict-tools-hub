@@ -1,3 +1,4 @@
+
 import { allTools } from '@/lib/tools';
 import { notFound } from 'next/navigation';
 import { PageHeader } from '@/components/page-header';
@@ -13,6 +14,7 @@ import { VlsmCalculator } from '@/app/tools/vlsm-calculator/vlsm-calculator';
 import { BandwidthEstimator } from '@/app/tools/bandwidth-estimator/bandwidth-estimator';
 import { LatencyEstimator } from '@/app/tools/latency-estimator/latency-estimator';
 import { PasswordStrengthChecker } from '@/app/tools/password-strength-checker/password-strength-checker';
+import { DataTransferTimeCalculator } from '@/app/tools/data-transfer-calculator/data-transfer-calculator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -35,6 +37,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'bandwidth-estimator': BandwidthEstimator,
     'latency-estimator': LatencyEstimator,
     'password-strength-checker': PasswordStrengthChecker,
+    'data-transfer-calculator': DataTransferTimeCalculator,
 };
 
 
@@ -86,3 +89,5 @@ function ComingSoon() {
       </Card>
     )
 }
+
+    
