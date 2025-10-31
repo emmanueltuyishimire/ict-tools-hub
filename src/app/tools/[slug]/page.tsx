@@ -11,6 +11,7 @@ import { SubnetCalculator } from '@/app/tools/subnet-calculator/subnet-calculato
 import { SubnetMaskConverter } from '@/app/tools/subnet-mask-converter/subnet-mask-converter';
 import { VlsmCalculator } from '@/app/tools/vlsm-calculator/vlsm-calculator';
 import { BandwidthEstimator } from '@/app/tools/bandwidth-estimator/bandwidth-estimator';
+import { LatencyEstimator } from '@/app/tools/latency-estimator/latency-estimator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -31,6 +32,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'subnet-mask-converter': SubnetMaskConverter,
     'vlsm-calculator': VlsmCalculator,
     'bandwidth-estimator': BandwidthEstimator,
+    'latency-estimator': LatencyEstimator,
 };
 
 
