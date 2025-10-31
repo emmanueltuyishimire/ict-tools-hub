@@ -143,10 +143,11 @@ export function LatencyEstimator() {
     const handlePresetClick = (from: string, to: string) => {
         setLocationA(from);
         setLocationB(to);
-        // Trigger calculation after state update
-        useEffect(() => {
-             handleCalculate();
-        }, [from, to]);
+        // This is a bit of a trick to trigger calculation after state is set.
+        // In a real app, you might want a more robust way to handle this,
+        // but for this demo, we'll just call it directly.
+        // A better approach would be useEffect on locationA and locationB.
+        setTimeout(() => document.getElementById('calculate-btn')?.click(), 0);
     };
 
     return (
@@ -165,7 +166,7 @@ export function LatencyEstimator() {
                         <Label>Quick Presets</Label>
                         <div className="flex flex-wrap gap-2">
                              {presets.map(p => (
-                                <Button key={p.label} variant="outline" size="sm" onClick={() => { setLocationA(p.from); setLocationB(p.to); }}>{p.label}</Button>
+                                <Button key={p.label} variant="outline" size="sm" onClick={() => handlePresetClick(p.from, p.to)}>{p.label}</Button>
                             ))}
                         </div>
                     </div>
@@ -189,7 +190,7 @@ export function LatencyEstimator() {
                             </Select>
                         </div>
                     </div>
-                    <Button onClick={handleCalculate} className="w-full sm:w-auto"><Timer className="mr-2 h-4 w-4" /> Estimate Latency</Button>
+                    <Button id="calculate-btn" onClick={handleCalculate} className="w-full sm:w-auto"><Timer className="mr-2 h-4 w-4" /> Estimate Latency</Button>
                     {error && (
                         <Alert variant="destructive" role="alert">
                             <AlertCircle className="h-4 w-4" />
@@ -238,7 +239,7 @@ export function LatencyEstimator() {
                     <p>This tool helps you understand the physical limits of network speed. It calculates the absolute minimum time it takes for data to travel from one point on Earth to another and back again.</p>
                     <ol>
                         <li><strong>Select a Starting Point:</strong> Choose your location (or where your device is) from the "Location A" dropdown.</li>
-                        <li><strong>Select a Destination:</strong> Choose the location of the server you want to connect to from the "Location B" dropdown.</li>
+                        <li><strong>Select a Destination:</strong> Choose the location of the server you want to connect to from the "Location B" dropdown. You can use our presets for common routes.</li>
                         <li><strong>Estimate Latency:</strong> Click the "Estimate Latency" button.</li>
                         <li><strong>Analyze the Results:</strong>
                             <ul>
@@ -296,6 +297,51 @@ export function LatencyEstimator() {
                     </section>
                 </CardContent>
             </Card>
+
+            <div className="grid md:grid-cols-2 gap-8">
+                <Card>
+                    <CardHeader>
+                        <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                            <li><strong>Pick the Right Server:</strong> Before starting an online game or a video call, check if the application lets you choose a server region. Always pick the one geographically closest to you. This tool can help you understand why a 'US-East' server gives a better experience from New York than a 'US-West' one.</li>
+                            <li><strong>Go Wired:</strong> Wi-Fi adds its own latency (5-20ms or more). For latency-sensitive tasks like gaming, always use a wired Ethernet connection to your router.</li>
+                            <li><strong>Understand "Peering":</strong> Not all ISPs are equal. Some have better 'peering' agreements, meaning they have more direct, efficient routes to popular services like Netflix or AWS. This results in fewer hops and lower latency.</li>
+                            <li><strong>Use as a Sanity Check:</strong> If you're in London and a speed test to a server in London shows a 100ms ping, you know something is very wrong with your local network or ISP, because the speed-of-light delay should be less than 1ms.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                         <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                    </CardHeader>
+                    <CardContent>
+                         <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                            <li><strong>Confusing Latency with Bandwidth:</strong> Thinking that upgrading to a faster (higher bandwidth) internet plan will automatically lower your ping for gaming. While it can help reduce queuing delay, it cannot overcome the physical distance to the server.</li>
+                            <li><strong>Ignoring Physical Distance:</strong> Expecting a low ping to a server on the other side of the world. Physics is the ultimate limitation; data can't travel faster than light.</li>
+                             <li><strong>Blaming the Server:</strong> While servers can be overloaded, often high ping is due to the network path *to* the server. Use `traceroute` (or `tracert` on Windows) to see the 'hops' your data takes and where delays are being introduced.</li>
+                            <li><strong>Overlooking Local Network Issues:</strong> A slow or old router, a bad Ethernet cable, or a computer running too many background processes can all add latency before your data even leaves your home.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+            </div>
+            
+             <section>
+                <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+                <Card>
+                    <CardContent className="p-6">
+                        <Accordion type="single" collapsible className="w-full">
+                            {faqData.map((item, index) => (
+                                <AccordionItem value={`item-${index}`} key={index}>
+                                    <AccordionTrigger>{item.question}</AccordionTrigger>
+                                    <AccordionContent>{item.answer}</AccordionContent>
+                                </AccordionItem>
+                            ))}
+                        </Accordion>
+                    </CardContent>
+                </Card>
+            </section>
             
              <section>
                 <h2 className="text-2xl font-bold mb-4">Related Tools & Articles</h2>
@@ -321,7 +367,7 @@ export function LatencyEstimator() {
                             <CardHeader>
                                 <CardTitle className="text-base flex items-center justify-between">Subnet Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
                                 <CardDescription className="text-xs">Proper network design can reduce the number of hops and improve latency.</CardDescription>
-                            </CardHeader>
+                            </Header>
                         </Card>
                     </Link>
                 </div>
@@ -329,5 +375,3 @@ export function LatencyEstimator() {
         </div>
     );
 }
-
-    
