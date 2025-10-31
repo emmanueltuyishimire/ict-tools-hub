@@ -25,6 +25,7 @@ import { IpRangeGenerator } from '@/app/tools/ip-range-generator/ip-range-genera
 import { BroadcastAddressCalculator } from '@/app/tools/broadcast-address-calculator/broadcast-address-calculator';
 import { HostCountCalculator } from '@/app/tools/host-count-calculator/host-count-calculator';
 import { NetworkAddressCalculator } from '@/app/tools/network-address-calculator/network-address-calculator';
+import { CidrToSubnetListGenerator } from '@/app/tools/cidr-to-subnet-list/cidr-to-subnet-list-generator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -57,6 +58,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'broadcast-address-calculator': BroadcastAddressCalculator,
     'host-count-calculator': HostCountCalculator,
     'network-address-calculator': NetworkAddressCalculator,
+    'cidr-to-subnet-list': CidrToSubnetListGenerator,
 };
 
 
