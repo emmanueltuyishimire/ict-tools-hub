@@ -270,7 +270,7 @@ export function DataTransferTimeCalculator() {
                     </section>
                     <section>
                         <h3 className="font-bold text-xl">What Is "Bandwidth"? The Highway Analogy</h3>
-                        <p>Bandwidth is the maximum theoretical rate at which data can be transferred over a connection. The best analogy is a highway. Bandwidth is the number of lanes. A ten-lane highway can carry more cars at once than a two-lane highway. Similarly, a 1 Gbps (1000 Mbps) connection can carry more data at once than a 100 Mbps connection.</p>
+                        <p>Bandwidth is the maximum theoretical rate at which data can be transferred over a connection. The best analogy is a highway. Bandwidth is the number of lanes. A ten-lane highway can carry more cars at once than a two-lane highway. Similarly, a 1 Gbps (1000 Mbps) connection can carry more data at once than a 100 Mbps connection. You can use our <Link href="/tools/bandwidth-estimator" className="text-primary hover:underline">Bandwidth Estimator</Link> to figure out how many "lanes" you need.</p>
                         <p>However, the existence of a ten-lane highway doesn't mean you can drive at 500 mph. Your speed is limited by other factors. This brings us to the other critical component: latency.</p>
                     </section>
                     <section>
@@ -279,7 +279,7 @@ export function DataTransferTimeCalculator() {
                         <ol className="list-decimal pl-5 space-y-2">
                            <li><strong>Network Congestion:</strong> Just like a highway during rush hour, the internet can get congested. If too many people in your neighborhood are streaming or downloading at once, the total available bandwidth from your ISP gets shared, and everyone's speed drops.</li>
                            <li><strong>Server-Side Bottlenecks:</strong> The server you are downloading from has its own bandwidth limits. A popular game on launch day might have millions of people trying to download it at once. Even with a super-fast home connection, the server can only send out data so fast, creating a bottleneck.</li>
-                           <li><strong>Latency:</strong> Latency is the delay it takes for a data packet to travel from a server to you and back. For a single, large file transfer, its effect is small. But if you are transferring thousands of small files, the latency for each file's "handshake" process adds up, significantly increasing the total time.</li>
+                           <li><strong>Latency:</strong> Latency is the delay it takes for a data packet to travel from a server to you and back. For a single, large file transfer, its effect is small. But if you are transferring thousands of small files, the latency for each file's "handshake" process adds up, significantly increasing the total time. Our <Link href="/tools/latency-estimator" className="text-primary hover:underline">Latency Estimator</Link> can help visualize this.</li>
                            <li><strong>Wi-Fi vs. Wired:</strong> A wired Ethernet connection is always faster and more stable than Wi-Fi. Wi-Fi signals are prone to interference from walls, other electronic devices, and even your neighbor's Wi-Fi network. This interference causes dropped packets that must be re-sent, slowing down the transfer.</li>
                            <li><strong>Protocol Overhead:</strong> Data isn't sent as one continuous stream. It's broken into "packets," and each packet has extra data (headers and trailers) for addressing and error-checking. This TCP/IP overhead can consume 5% or more of your bandwidth, meaning it's not being used for the file itself.</li>
                         </ol>
@@ -386,5 +386,3 @@ export function DataTransferTimeCalculator() {
         </div>
     );
 }
-
-    

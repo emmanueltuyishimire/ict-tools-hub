@@ -362,7 +362,7 @@ export function IpToBinaryConverter() {
                         <p className="text-sm text-muted-foreground">A security admin needs to write a firewall rule (Access Control List) to block a specific range of IP addresses, from `172.16.10.32` to `172.16.10.47`. To create the most efficient rule, they convert both IPs to binary. This helps them calculate the correct wildcard mask (`0.0.0.15`) needed for the ACL entry, ensuring only the intended addresses are blocked.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Passing Certification Exams</h3>
+                        <h3 className="font-semibold text-lg mb-2">Passing for a Certification Exam</h3>
                         <p className="text-sm text-muted-foreground">A student preparing for their Cisco CCNA exam encounters a question that requires them to find the "magic number" for subnetting the address `192.168.100.0` with a `/28` mask. They quickly convert the mask's interesting octet (`240`) to binary (`11110000`) to understand its structure, helping them solve the problem quickly and accurately under time pressure.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">

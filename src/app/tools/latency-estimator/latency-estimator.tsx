@@ -271,7 +271,7 @@ export function LatencyEstimator() {
                         <h3 className="font-bold text-xl">The Two Pillars of Network Performance</h3>
                         <p>When people talk about a "fast" internet connection, they are usually talking about **bandwidth**. It's the big number ISPs advertise: 500 Mbps, 1 Gbps, etc. Bandwidth is the *capacity* of your connection. Using the classic highway analogy, bandwidth is the number of lanes. More lanes mean more cars (data) can travel at the same time.</p>
                         <p>But there's another, equally important pillar: **latency**. Latency (or ping) is the *delay* of your connection. It's the time it takes for a single piece of information to make a round trip. In the highway analogy, latency is the time it takes for a single car to drive to a destination and come back. This is dictated by the speed limit and the distance. No matter how many lanes you add to the highway, you cannot make the car's journey faster than the speed limit and the physical distance allow.</p>
-                        <p>This calculator focuses exclusively on the physical distance component of latency, which is governed by the speed of light. It's the hard, unbreakable speed limit of the internet.</p>
+                        <p>This calculator focuses exclusively on the physical distance component of latency, which is governed by the speed of light. It's the hard, unbreakable speed limit of the internet. You can use our <Link href="/tools/bandwidth-estimator" className="text-primary hover:underline">Bandwidth Estimator</Link> to analyze the other side of this equation.</p>
                     </section>
                     <section>
                         <h3 className="font-bold text-xl">When Does Latency Matter Most?</h3>
@@ -289,7 +289,7 @@ export function LatencyEstimator() {
                         <p>This tool shows you the best-case scenario. Here's what adds on top of that physical limit to create the final ping you see in a speed test:</p>
                         <ol className="list-decimal pl-5 space-y-2">
                            <li><strong>Propagation Delay:</strong> This is what our tool calculates. The time it takes for light to travel the physical distance through fiber. This is the largest and unavoidable component of long-distance communication.</li>
-                           <li><strong>Transmission Delay:</strong> The time it takes to push all the bits of a packet onto the wire. This is affected by bandwidth but is usually negligible on modern broadband connections.</li>
+                           <li><strong>Transmission Delay:</strong> The time it takes to push all the bits of a packet onto the wire. This is affected by bandwidth but is usually negligible on modern broadband connections. Check out our <Link href="/tools/data-transfer-calculator" className="text-primary hover:underline">Data Transfer Time Calculator</Link> to see how this plays out.</li>
                            <li><strong>Processing Delay:</strong> Every router, switch, and firewall between you and the server must read the packet's header and decide where to send it next. Each "hop" adds a small delay, typically 1-2ms per hop. A cross-country connection might have 10-20 hops.</li>
                            <li><strong>Queuing Delay:</strong> If a router is congested with too much traffic, your packet has to wait in a line (a queue or buffer) before it can be processed. This is the primary cause of "lag spikes" and jitter.</li>
                             <li><strong>Server-Side Delay:</strong> The time it takes for the destination server itself to process your request and generate a response.</li>
@@ -375,5 +375,3 @@ export function LatencyEstimator() {
         </div>
     );
 }
-
-    

@@ -318,7 +318,7 @@ export function SubnetCalculator() {
                     </section>
                      <section>
                         <h3 className="font-bold text-xl">Decoding CIDR Notation</h3>
-                        <p>Classless Inter-Domain Routing (CIDR) was introduced to replace the old classful system. CIDR notation is simply a shorthand for the subnet mask. It's represented by a forward slash followed by a number, like `/24`. This number indicates exactly how many consecutive '1's are at the beginning of the subnet mask. It's far more efficient and flexible than writing out `255.255.255.0`.</p>
+                        <p>Classless Inter-Domain Routing (CIDR) was introduced to replace the old classful system. CIDR notation is simply a shorthand for the subnet mask. It's represented by a forward slash followed by a number, like `/24`. This number indicates exactly how many consecutive '1's are at the beginning of the subnet mask. It's far more efficient and flexible than writing out `255.255.255.0`. You can use our <Link href="/tools/subnet-mask-converter" className='text-primary hover:underline'>Subnet Mask Converter</Link> to switch between formats.</p>
                         <div className="overflow-x-auto my-4">
                            <table className="w-full">
                               <thead>
@@ -378,7 +378,7 @@ export function SubnetCalculator() {
                 <div className="grid md:grid-cols-2 gap-6">
                     <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">New Office Network Setup</h3>
-                        <p className="text-sm text-muted-foreground">An IT administrator is setting up a new office with 120 employees. They are assigned the IP block `10.10.0.0/22`. To improve security and organization, they need separate networks for Servers (15 IPs), Staff (150 IPs), and Guest Wi-Fi (100 IPs). Using a subnet calculator, they plan a VLSM scheme, creating a `/27` for servers, a `/24` for staff, and another `/24` for guests, all within their assigned block. The calculator provides the exact IP ranges for each, ensuring no overlap and efficient use of addresses.</p>
+                        <p className="text-sm text-muted-foreground">An IT administrator is setting up a new office with 120 employees. They are assigned the IP block `10.10.0.0/22`. To improve security and organization, they need separate networks for Servers (15 IPs), Staff (150 IPs), and Guest Wi-Fi (100 IPs). Using a <Link href="/tools/vlsm-calculator" className="text-primary hover:underline">VLSM calculator</Link>, they plan a scheme, creating a `/27` for servers, a `/24` for staff, and another `/24` for guests, all within their assigned block. The subnet calculator provides the exact IP ranges for each, ensuring no overlap and efficient use of addresses.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Troubleshooting Connectivity Issues</h3>

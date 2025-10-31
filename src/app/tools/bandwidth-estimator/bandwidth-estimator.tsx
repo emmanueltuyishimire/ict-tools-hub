@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
@@ -475,5 +476,3 @@ export function BandwidthEstimator() {
         </div>
     );
 }
-
-    

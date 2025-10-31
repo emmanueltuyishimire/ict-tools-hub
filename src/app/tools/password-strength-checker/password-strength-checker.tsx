@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -150,7 +151,7 @@ export function PasswordStrengthChecker() {
                     <div className='space-y-3'>
                          <div className="flex justify-between items-center">
                             <span className="text-sm font-medium">Strength: <span className={cn('font-bold', color.replace('bg-', 'text-'))}>{label}</span></span>
-                             <span className="text-sm font-medium">Entropy: <span className="font-bold font-code">{entropy} bits</span></span>
+                             <span className="text-sm font-medium">Entropy: <Link href="/tools/password-entropy-calculator" className="text-primary hover:underline font-bold font-code">{entropy} bits</Link></span>
                          </div>
                         <Progress value={strengthPercentage} className={cn('h-3 transition-all', color)} />
                     </div>
@@ -193,7 +194,7 @@ export function PasswordStrengthChecker() {
                             <li>**80 - 120 bits:** Strong. Considered secure for most purposes. It would take centuries or longer to crack with current technology.</li>
                             <li>**Above 120 bits:** Very Strong. Overkill for most uses, but provides extreme security, resistant even to future advances in computing power (for the foreseeable future).</li>
                         </ul>
-                        <p>Entropy is calculated based on two factors: the length of the password and the size of the character pool it draws from (lowercase, uppercase, numbers, symbols). Adding just one character type (e.g., a single number to an all-lowercase password) can significantly increase the character pool and boost the entropy.</p>
+                        <p>Entropy is calculated based on two factors: the length of the password and the size of the character pool it draws from (lowercase, uppercase, numbers, symbols). Adding just one character type (e.g., a single number to an all-lowercase password) can significantly increase the character pool and boost the entropy. You can explore this further with our <Link href="/tools/password-entropy-calculator" className="text-primary hover:underline">Password Entropy Calculator</Link>.</p>
                     </section>
                 </CardContent>
             </Card>
