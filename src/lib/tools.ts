@@ -39,6 +39,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'VLSM Calculator', slug: 'vlsm-calculator', description: 'Design efficient network schemes with Variable Length Subnet Masking.' },
       { name: 'Network Bandwidth Estimator', slug: 'bandwidth-estimator', description: 'Estimate network bandwidth requirements based on usage.' },
       { name: 'Ping / Latency Estimator', slug: 'latency-estimator', description: 'Estimate ping and latency over distances.' },
+      { name: 'Latency to Distance Estimator', slug: 'latency-to-distance', description: 'Estimate distance from network latency with advanced options.' },
       { name: 'Data Transfer Time Calculator', slug: 'data-transfer-calculator', description: 'Calculate time to transfer data.' },
       { name: 'MAC Address Validator', slug: 'mac-validator', description: 'Validate MAC address format.' },
       { name: 'Port Number Lookup', slug: 'port-lookup', description: 'Look up common network port numbers.' },
