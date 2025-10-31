@@ -159,7 +159,7 @@ export function SubnetMaskConverter() {
         if (results && resultRef.current) {
             resultRef.current.focus();
         }
-    }, [inputType, inputValue]);
+    }, [inputType, inputValue, results]);
 
     const handleCopyToClipboard = (key: string, value: string) => {
         navigator.clipboard.writeText(value).then(() => {
@@ -318,7 +318,7 @@ export function SubnetMaskConverter() {
                             <li>`/16` means 16 ones, or `255.255.0.0`.</li>
                             <li>`/24` means 24 ones, or `255.255.255.0`.</li>
                         </ul>
-                        <p>This "classless" system broke the rigid rules of old Class A, B, and C networks, allowing network administrators to create subnets of any size, a technique known as Variable Length Subnet Masking (VLSM). This flexibility is essential for efficient IP address allocation. Our <Link href="/tools/subnet-calculator" className='text-primary hover:underline'>Subnet Calculator</oink> is perfect for exploring how different CIDR values affect network sizes.</p>
+                        <p>This "classless" system broke the rigid rules of old Class A, B, and C networks, allowing network administrators to create subnets of any size, a technique known as Variable Length Subnet Masking (VLSM). This flexibility is essential for efficient IP address allocation. Our <Link href="/tools/subnet-calculator" className='text-primary hover:underline'>Subnet Calculator</Link> is perfect for exploring how different CIDR values affect network sizes.</p>
                     </section>
                      <section>
                         <h3 className="font-bold text-xl">3. The Wildcard Mask: The Rule-Maker's Tool</h3>
