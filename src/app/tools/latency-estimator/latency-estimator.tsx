@@ -28,6 +28,15 @@ const cities = [
     { name: 'Dubai, UAE', lat: 25.2048, lon: 55.2708 },
     { name: 'Moscow, Russia', lat: 55.7558, lon: 37.6173 },
     { name: 'Toronto, Canada', lat: 43.6532, lon: -79.3832 },
+    { name: 'Ashburn, USA (N. Virginia)', lat: 39.0438, lon: -77.4874 },
+    { name: 'Seattle, USA', lat: 47.6062, lon: -122.3321 },
+    { name: 'Chicago, USA', lat: 41.8781, lon: -87.6298 },
+    { name: 'Dallas, USA', lat: 32.7767, lon: -96.7970 },
+    { name: 'Miami, USA', lat: 25.7617, lon: -80.1918 },
+    { name: 'Amsterdam, Netherlands', lat: 52.3676, lon: 4.9041 },
+    { name: 'Paris, France', lat: 48.8566, lon: 2.3522 },
+    { name: 'Seoul, South Korea', lat: 37.5665, lon: 126.9780 },
+    { name: 'Beijing, China', lat: 39.9042, lon: 116.4074 },
 ];
 
 const SPEED_OF_LIGHT_VACUUM = 299792.458; // km/s
@@ -166,7 +175,7 @@ export function LatencyEstimator() {
                             <Select value={locationA} onValueChange={setLocationA}>
                                 <SelectTrigger id="loc-a"><SelectValue /></SelectTrigger>
                                 <SelectContent>
-                                    {cities.map(c => <SelectItem key={c.name} value={c.name}>{c.name}</SelectItem>)}
+                                    {cities.sort((a,b) => a.name.localeCompare(b.name)).map(c => <SelectItem key={c.name} value={c.name}>{c.name}</SelectItem>)}
                                 </SelectContent>
                             </Select>
                         </div>
@@ -175,7 +184,7 @@ export function LatencyEstimator() {
                             <Select value={locationB} onValueChange={setLocationB}>
                                 <SelectTrigger id="loc-b"><SelectValue /></SelectTrigger>
                                 <SelectContent>
-                                    {cities.map(c => <SelectItem key={c.name} value={c.name}>{c.name}</SelectItem>)}
+                                    {cities.sort((a,b) => a.name.localeCompare(b.name)).map(c => <SelectItem key={c.name} value={c.name}>{c.name}</SelectItem>)}
                                 </SelectContent>
                             </Select>
                         </div>
@@ -320,3 +329,5 @@ export function LatencyEstimator() {
         </div>
     );
 }
+
+    
