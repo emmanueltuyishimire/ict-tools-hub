@@ -50,7 +50,7 @@ const validateMac = (mac: string) => {
     if (!mac) return { isValid: false, message: 'Input is empty.', format: 'None', oui: 'N/A' };
     
     // Normalize: remove separators and convert to uppercase
-    const normalized = mac.replace(/[:-.]/g, '').toUpperCase();
+    const normalized = mac.replace(/[:.-]/g, '').toUpperCase();
 
     if (normalized.length !== 12) {
         return { isValid: false, message: 'MAC address must be 12 hexadecimal characters long.', format: 'None', oui: 'N/A' };
