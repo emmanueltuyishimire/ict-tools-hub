@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
@@ -80,7 +81,7 @@ const howToSchema = {
 // --- Component ---
 export function LatencyEstimator() {
     const [locationA, setLocationA] = useState('New York, USA');
-    const [locationB, setLocationB] = = useState('London, UK');
+    const [locationB, setLocationB] = useState('London, UK');
     const [results, setResults] = useState<any>(null);
     const [error, setError] = useState('');
     const resultRef = useRef<HTMLDivElement>(null);
