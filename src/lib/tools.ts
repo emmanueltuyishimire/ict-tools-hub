@@ -52,7 +52,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Network Address Calculator', slug: 'network-address-calculator', description: 'Calculate the network address (Network ID) of a subnet.' },
       { name: 'CIDR to Subnet List Generator', slug: 'cidr-to-subnet-list', description: 'Generate subnets from a CIDR.' },
       { name: 'CIDR to Wildcard Mask Converter', slug: 'cidr-to-wildcard', description: 'Convert CIDR to wildcard mask.' },
-      { name: 'IP Summarization Tool', slug: 'ip-summarization', description: 'Summarize a list of IP networks.' },
+      { name: 'IP Summarization Tool', slug: 'ip-summarization', description: 'Summarize a list of IP networks into a single route.' },
     ],
   },
   {
@@ -306,3 +306,5 @@ export const mainNavLinks = [
         description: 'Generate and debug code with AI.'
     }
 ]
+
+    
