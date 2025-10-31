@@ -59,7 +59,7 @@ export const toolCategories: ToolCategory[] = [
     name: 'Web & Server Tools',
     icon: Server,
     tools: [
-      { name: 'HTTP Status Code Checker', slug: 'http-status-checker', description: 'Check the HTTP status code of a URL.' },
+      { name: 'HTTP Header Checker', slug: 'http-header-checker', description: 'Check the HTTP status code of a URL.' },
       { name: 'SSL Certificate Expiration Checker', slug: 'ssl-expiry-checker', description: 'Check SSL certificate expiration.' },
       { name: 'URL Encoder / Decoder', slug: 'url-encoder-decoder', description: 'Encode or decode URLs.' },
       { name: 'HTML Entity Encoder / Decoder', slug: 'html-entity-encoder-decoder', description: 'Encode or decode HTML entities.' },
