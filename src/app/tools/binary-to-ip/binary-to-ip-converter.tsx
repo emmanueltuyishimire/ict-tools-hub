@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Check, Clipboard, AlertCircle, VenetianMask, Lightbulb, HelpCircle, BookOpen, ChevronRight } from 'lucide-react';
+import { Check, Clipboard, AlertCircle, VenetianMask, Lightbulb, HelpCircle, BookOpen, ChevronRight, Wand, AlertTriangle, BadgeHelp, CheckCircle } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { CodeBlock } from '@/components/code-block';
@@ -98,13 +98,17 @@ export function BinaryToIpConverter() {
     });
   };
 
+  const example1 = "01100101.11100001.00001010.01010101";
+  const example2 = "11000000101010000000000100000001";
+  const example3 = "10.0.0.1"; // This is an IP, to show error
+
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="max-w-4xl mx-auto space-y-12">
         <Card>
             <CardHeader>
-                <CardTitle>Enter Binary String</CardTitle>
+                <CardTitle>Binary to IP Address Converter</CardTitle>
                 <CardDescription>
-                    Input a 32-bit binary string, with or without dots between octets.
+                    Input a 32-bit binary string to instantly get its decimal IPv4 representation.
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -164,105 +168,230 @@ export function BinaryToIpConverter() {
             </CardContent>
         </Card>
 
+        {/* How to Use This Tool */}
+        <section>
+            <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
+            <Card className="prose prose-sm max-w-none text-foreground p-6">
+                <p>This tool is designed for simplicity and accuracy. Here’s a quick guide:</p>
+                <ol>
+                    <li><strong>Enter the Binary String:</strong> In the input field labeled "Binary IPv4 Address," type or paste the 32-bit binary string you want to convert.</li>
+                    <li><strong>Formatting:</strong> You can format the binary string in two ways:
+                        <ul>
+                            <li><strong>With dots:</strong> Separate the four 8-bit octets with periods (e.g., <code className="font-code bg-muted p-1 rounded-sm">11000000.10101000.00000001.00000001</code>).</li>
+                            <li><strong>Without dots:</strong> A continuous 32-bit string (e.g., <code className="font-code bg-muted p-1 rounded-sm">11000000101010000000000100000001</code>). The tool will automatically segment it.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Convert:</strong> Click the "Convert" button. The tool will validate the input and, if valid, display the corresponding decimal IP address.</li>
+                    <li><strong>View the Result:</strong> The converted IP address will appear in a read-only field below.</li>
+                    <li><strong>Copy:</strong> Click the clipboard icon to instantly copy the IP address to your clipboard for use elsewhere.</li>
+                    <li><strong>Clear:</strong> The "Clear" button resets the input, output, and any error messages, preparing the tool for a new conversion.</li>
+                </ol>
+                <Alert>
+                    <Lightbulb className="h-4 w-4" />
+                    <AlertTitle>Example</AlertTitle>
+                    <AlertDescription>
+                        Try pasting <code className="font-code bg-muted p-1 rounded-sm">00001010.00000000.00000000.00000001</code> and hitting "Convert". You should see the result <code className="font-code bg-muted p-1 rounded-sm">10.0.0.1</code>.
+                    </AlertDescription>
+                </Alert>
+            </Card>
+        </section>
+
+        {/* Educational Deep Dive */}
         <Card className='bg-secondary/30 border-primary/20'>
             <CardHeader>
                 <div className='flex items-center gap-2 text-primary'>
                     <BookOpen className="h-6 w-6" aria-hidden="true" />
-                    <CardTitle className="text-primary">Educational Deep Dive</CardTitle>
+                    <CardTitle className="text-primary">Educational Deep Dive: From Bits to Packets</CardTitle>
                 </div>
-                <CardDescription>Learn the concepts behind binary to IP conversion.</CardDescription>
+                <CardDescription>Understand the fundamental concepts that make binary to IP conversion possible and essential.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6 prose prose-sm max-w-none text-foreground">
+            <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
                 <section>
-                    <h3 className="font-semibold text-lg">What is an IP Address?</h3>
-                    <p>An IP (Internet Protocol) address is a unique numerical label assigned to each device connected to a computer network that uses the Internet Protocol for communication. An IPv4 address, the most common type, is a 32-bit number, typically expressed in a "dot-decimal" notation like <code className="font-code bg-muted p-1 rounded-sm">192.168.1.1</code>.</p>
+                    <h3 className="font-bold text-xl">What is an IP Address? The Internet's Postal System</h3>
+                    <p>An IP (Internet Protocol) address is a unique numerical label assigned to every device connected to a computer network. Think of it as a mailing address for your computer, phone, or any other smart device. Just as the postal service needs a specific address to deliver a letter, network devices need IP addresses to send and receive data packets across the internet. Without IP addresses, there would be no way to stream videos, browse websites, or send emails.</p>
+                    <p>The most common version you'll encounter is IPv4 (Internet Protocol version 4). It's a 32-bit number, which means there are 2<sup>32</sup> (about 4.3 billion) possible unique addresses. While this seemed like an enormous number in the early days of the internet, the explosion of devices has led to IPv4 address exhaustion. This is why IPv6, a 128-bit address system, was introduced, offering a virtually limitless number of addresses. However, IPv4 remains the backbone of the internet for now, and understanding it is crucial for anyone in IT.</p>
+                    <p>For human readability, we don't write out all 32 bits. Instead, we use "dot-decimal notation." The 32 bits are divided into four groups of 8 bits, called octets. Each octet is converted to its decimal equivalent (a number from 0 to 255) and separated by a dot. For example, the IP address <code className="font-code bg-muted p-1 rounded-sm">172.16.254.1</code> is the human-friendly version of a long 32-bit binary string.</p>
                 </section>
                 
                 <section>
-                    <h3 className="font-semibold text-lg">How Binary Relates to IP Addresses</h3>
-                    <p>Computers don't understand decimal numbers directly. They work in binary, a base-2 system using only 0s and 1s. An IPv4 address is made of four 8-bit sections called "octets." Each octet can represent a decimal number from 0 to 255. To convert, you translate each octet from binary to its decimal equivalent.</p>
-                    <div className="overflow-x-auto">
-                        <table className="w-full my-4">
-                            <thead>
-                                <tr className='border-b'>
-                                    <th className="p-2 text-left font-semibold">Decimal</th>
-                                    <th className="p-2 text-left font-semibold">Binary</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr className='border-b'><td className="p-2 font-code">192</td><td className="p-2 font-code">11000000</td></tr>
-                                <tr className='border-b'><td className="p-2 font-code">168</td><td className="p-2 font-code">10101000</td></tr>
-                                <tr className='border-b'><td className="p-2 font-code">1</td><td className="p-2 font-code">00000001</td></tr>
-                                <tr><td className="p-2 font-code">1</td><td className="p-2 font-code">00000001</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <section>
-                    <h3 className="font-semibold text-lg">Step-by-Step Conversion Tutorial</h3>
+                    <h3 className="font-bold text-xl">How Binary Relates to IP Addresses: The Language of Computers</h3>
+                    <p>Computers operate in binary, a base-2 number system that uses only two digits: 0 and 1. Each digit is called a bit. While humans find it easier to work with decimal (base-10) numbers, all digital data is ultimately stored and processed as binary. To bridge this gap, we must be able to convert between these systems.</p>
+                    <p>An IPv4 address is fundamentally a 32-bit binary number. The dot-decimal notation is just a convenient abstraction. Understanding this binary foundation is not just academic; it's essential for advanced networking tasks like subnetting, access control list (ACL) configuration, and network troubleshooting. When you configure a subnet mask like <code className="font-code bg-muted p-1 rounded-sm">255.255.255.0</code>, you're actually telling the network hardware to look at the first 24 bits of an IP address to identify its network portion. In binary, that mask is <code className="font-code bg-muted p-1 rounded-sm">11111111.11111111.11111111.00000000</code>.</p>
+                    
+                    <h4 className='font-semibold text-lg'>Step-by-Step Manual Conversion: A Practical Tutorial</h4>
+                    <p>Let's manually convert the binary string <code className="font-code bg-muted p-1 rounded-sm">11000000.10101000.00000001.00000001</code> to a decimal IP address. This process demystifies what our tool does automatically.</p>
                     <ol className="list-decimal pl-5 space-y-2">
-                        <li><strong>Take the 32-bit binary string.</strong> If not already separated, divide it into four 8-bit octets.</li>
-                        <li><strong>Focus on one octet at a time.</strong> For example, <code className="font-code bg-muted p-1 rounded-sm">11000000</code>.</li>
-                        <li><strong>Assign positional values</strong> to each bit, from right to left, starting with 2<sup>0</sup> (which is 1), 2<sup>1</sup> (2), 2<sup>2</sup> (4), up to 2<sup>7</sup> (128).</li>
-                        <li><strong>Add up the values for the '1's.</strong> For <code className="font-code bg-muted p-1 rounded-sm">11000000</code>, you add 128 + 64, which equals 192.</li>
-                        <li><strong>Repeat for all four octets</strong> and join them with dots to get the final IP address.</li>
+                        <li>
+                            <strong>Segment into Octets:</strong> First, ensure the 32-bit string is divided into four 8-bit octets.
+                            <ul className='list-disc pl-5 mt-2'>
+                                <li>Octet 1: <code className="font-code bg-muted p-1 rounded-sm">11000000</code></li>
+                                <li>Octet 2: <code className="font-code bg-muted p-1 rounded-sm">10101000</code></li>
+                                <li>Octet 3: <code className="font-code bg-muted p-1 rounded-sm">00000001</code></li>
+                                <li>Octet 4: <code className="font-code bg-muted p-1 rounded-sm">00000001</code></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Assign Positional Values:</strong> Each position in an 8-bit octet corresponds to a power of 2, starting from 2<sup>0</sup> on the far right.
+                            <div className="overflow-x-auto my-4">
+                                <table className="w-full">
+                                    <thead>
+                                        <tr className='border-b'><th className="p-2 text-left font-semibold">Position</th><td className="p-2 font-code">7</td><td className="p-2 font-code">6</td><td className="p-2 font-code">5</td><td className="p-2 font-code">4</td><td className="p-2 font-code">3</td><td className="p-2 font-code">2</td><td className="p-2 font-code">1</td><td className="p-2 font-code">0</td></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr className='border-b'><th className="p-2 text-left font-semibold">Power of 2</th><td className="p-2 font-code">2<sup>7</sup></td><td className="p-2 font-code">2<sup>6</sup></td><td className="p-2 font-code">2<sup>5</sup></td><td className="p-2 font-code">2<sup>4</sup></td><td className="p-2 font-code">2<sup>3</sup></td><td className="p-2 font-code">2<sup>2</sup></td><td className="p-2 font-code">2<sup>1</sup></td><td className="p-2 font-code">2<sup>0</sup></td></tr>
+                                        <tr><th className="p-2 text-left font-semibold">Decimal Value</th><td className="p-2 font-code">128</td><td className="p-2 font-code">64</td><td className="p-2 font-code">32</td><td className="p-2 font-code">16</td><td className="p-2 font-code">8</td><td className="p-2 font-code">4</td><td className="p-2 font-code">2</td><td className="p-2 font-code">1</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </li>
+                        <li>
+                            <strong>Calculate Each Octet:</strong> For each octet, add the decimal values for every position that has a '1'.
+                            <ul>
+                                <li><strong>Octet 1 (<code className="font-code bg-muted p-1 rounded-sm">11000000</code>):</strong> The '1's are in the 128 and 64 positions. So, 128 + 64 = <strong>192</strong>.</li>
+                                <li><strong>Octet 2 (<code className="font-code bg-muted p-1 rounded-sm">10101000</code>):</strong> The '1's are in the 128, 32, and 8 positions. So, 128 + 32 + 8 = <strong>168</strong>.</li>
+                                <li><strong>Octet 3 (<code className="font-code bg-muted p-1 rounded-sm">00000001</code>):</strong> The '1' is in the 1 position. So, the value is <strong>1</strong>.</li>
+                                <li><strong>Octet 4 (<code className="font-code bg-muted p-1 rounded-sm">00000001</code>):</strong> The '1' is in the 1 position. So, the value is <strong>1</strong>.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Combine the Octets:</strong> Join the decimal values with dots to form the final IP address: <code className="font-code bg-muted p-1 rounded-sm">192.168.1.1</code>.</li>
                     </ol>
                 </section>
             </CardContent>
         </Card>
         
         <div className="grid md:grid-cols-2 gap-8">
+             {/* Pro Tips */}
             <Card>
                 <CardHeader>
                     <div className='flex items-center gap-2'>
-                        <Lightbulb className="h-6 w-6 text-accent" aria-hidden="true" />
-                        <CardTitle>Practical Use Cases</CardTitle>
+                        <Wand className="h-6 w-6 text-accent" aria-hidden="true" />
+                        <CardTitle>Pro Tips & Quick Hacks</CardTitle>
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
-                        <li><strong>Networking Labs:</strong> Students and professionals use this conversion to understand and complete networking exercises.</li>
-                        <li><strong>Subnetting:</strong> Binary is essential for calculating subnet masks, network addresses, and broadcast addresses.</li>
-                        <li><strong>Troubleshooting:</strong> Understanding the binary representation can help diagnose certain IP configuration and routing issues.</li>
-                        <li><strong>Cybersecurity:</strong> Analysts may examine network traffic at the bit level to identify anomalies or malicious patterns.</li>
+                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Memorize Key Patterns:</strong> Learn common binary patterns. For example, <code className="font-code bg-muted p-1 rounded-sm">11111111</code> is always 255, and <code className="font-code bg-muted p-1 rounded-sm">10000000</code> is always 128. This speeds up mental conversions.</li>
+                        <li><strong>The "Split and Conquer" Hack:</strong> When converting from decimal to binary, you don't always need complex math. For 192, ask: "Is it >= 128?" Yes (1). Remainder: 64. "Is 64 >= 64?" Yes (1). Remainder: 0. The rest are zeros. Result: <code className="font-code bg-muted p-1 rounded-sm">11000000</code>.</li>
+                        <li><strong>Use Spaces for Readability:</strong> When writing binary, use spaces or dots. The tool strips them for conversion, but they make it easier for you to proofread your input.</li>
+                        <li><strong>Work Backwards:</strong> If you're unsure about a conversion, use our <Link href="/tools/ip-to-binary">IP to Binary Converter</Link> to check your work. Reversing the process is a great way to solidify your understanding.</li>
                     </ul>
                 </CardContent>
             </Card>
+
+             {/* Common Mistakes */}
             <Card>
                 <CardHeader>
                      <div className='flex items-center gap-2'>
-                        <HelpCircle className="h-6 w-6" aria-hidden="true" />
-                        <CardTitle>Frequently Asked Questions</CardTitle>
+                        <AlertTriangle className="h-6 w-6 text-destructive" aria-hidden="true" />
+                        <CardTitle>Common Mistakes to Avoid</CardTitle>
                     </div>
                 </CardHeader>
                 <CardContent>
+                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Incorrect Bit Count:</strong> An IPv4 address must have exactly 32 bits. A common error is having too few (e.g., 31) or too many. Always double-check the length.</li>
+                        <li><strong>Octet Padding Errors:</strong> Forgetting leading zeros is frequent. The binary for 12 is <code className="font-code bg-muted p-1 rounded-sm">1100</code>, but as an octet, it must be <code className="font-code bg-muted p-1 rounded-sm">00001100</code>.</li>
+                        <li><strong>Miscalculating Positional Values:</strong> A simple math error, like thinking 2<sup>2</sup> is 6 instead of 4, can throw off the entire octet. Write down the positional values (128, 64, 32, 16, 8, 4, 2, 1) when starting out.</li>
+                        <li><strong>Mixing up Binary and Decimal:</strong> Accidentally typing a digit other than 0 or 1. Our tool will catch this, but it's a frequent manual error.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+        </div>
+
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Practical Use Cases</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Network Subnetting</h3>
+                    <p className="text-sm text-muted-foreground">Subnetting is the process of dividing a large network into smaller, more manageable sub-networks. This is impossible without understanding binary. Network engineers use binary to create custom subnet masks, determining the size and range of each sub-network to optimize traffic and improve security.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Cybersecurity Analysis</h3>
+                    <p className="text-sm text-muted-foreground">Security analysts often work with firewall Access Control Lists (ACLs) and inspect network packet data. ACL rules frequently use wildcard masks, which are inverted subnet masks and are best understood in binary. Examining packet headers at the bit level can help identify malicious patterns or network anomalies that are invisible in decimal format.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Academic and Certification Labs</h3>
+                    <p className="text-sm text-muted-foreground">Students studying for certifications like CompTIA Network+ or Cisco CCNA are required to perform binary to IP conversions by hand. This tool serves as an excellent practice and verification aid to master this fundamental skill required to pass exams and succeed in the field.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Software Development</h3>
+                    <p className="text-sm text-muted-foreground">Developers building networking applications, scripts for network automation, or even low-level system utilities often need to manipulate IP addresses as raw bits. This tool helps them quickly convert and validate binary representations of addresses used in their code.</p>
+                </div>
+            </div>
+        </section>
+
+        {/* FAQs */}
+        <section>
+             <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+            <Card>
+                <CardContent className="p-6">
                      <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="item-1">
                             <AccordionTrigger>Why is an IPv4 address 32 bits?</AccordionTrigger>
                             <AccordionContent>
-                            It consists of four 8-bit octets (4 x 8 = 32). This structure allows for approximately 4.3 billion unique addresses, which seemed like more than enough when it was designed.
+                            An IPv4 address is 32 bits long because it was designed with a structure of four octets (4 x 8 = 32 bits). This structure allows for approximately 4.3 billion (2<sup>32</sup>) unique addresses. At the time of its creation, this was considered more than enough for the foreseeable future of the internet.
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="item-2">
-                            <AccordionTrigger>Can a binary IP be shorter than 32 bits?</AccordionTrigger>
+                            <AccordionTrigger>Can a binary IP be shorter or longer than 32 bits?</AccordionTrigger>
                             <AccordionContent>
-                            No, a valid IPv4 address must be exactly 32 bits long. This tool will show an error if the input is not 32 bits. You may need to pad octets with leading zeros (e.g., `1010` becomes `00001010`).
+                            No, a valid IPv4 address must be exactly 32 bits long. If your binary string is shorter, you likely need to pad it with leading zeros in one or more octets (e.g., `1010` becomes `00001010`). If it's longer, it's not a valid IPv4 address. This tool will show an error for any input that isn't 32 bits.
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="item-3">
-                            <AccordionTrigger>What's the difference between IPv4 and IPv6?</AccordionTrigger>
+                            <AccordionTrigger>What's the main difference between IPv4 and IPv6?</AccordionTrigger>
                             <AccordionContent>
-                            IPv4 is 32-bit, while IPv6 is a newer, 128-bit address format designed to solve the problem of IPv4 address exhaustion. IPv6 addresses are much longer and are represented in hexadecimal.
+                            The primary difference is the length and format. IPv4 is a 32-bit address represented in decimal, while IPv6 is a 128-bit address represented in hexadecimal. IPv6 was created to solve the problem of IPv4 address exhaustion, offering a vastly larger address space (2<sup>128</sup>).
+                            </AccordionContent>
+                        </AccordionItem>
+                         <AccordionItem value="item-4">
+                            <AccordionTrigger>What is an octet?</AccordionTrigger>
+                            <AccordionContent>
+                            In networking, an octet is a group of 8 bits. An IPv4 address is composed of four octets, each of which can represent a decimal number from 0 (binary `00000000`) to 255 (binary `11111111`).
+                            </AccordionContent>
+                        </AccordionItem>
+                         <AccordionItem value="item-5">
+                            <AccordionTrigger>Do I need to include the dots in the binary string?</AccordionTrigger>
+                            <AccordionContent>
+                            No, it's optional. You can provide a continuous 32-bit string, and the tool will automatically divide it into four 8-bit octets for conversion. However, using dots can make it easier for you to read and verify your input.
+                            </AccordionContent>
+                        </AccordionItem>
+                         <AccordionItem value="item-6">
+                            <AccordionTrigger>How are binary numbers used in subnet masks?</AccordionTrigger>
+                            <AccordionContent>
+                            A subnet mask uses a string of consecutive '1's followed by '0's to define the network and host portions of an IP address. The '1's correspond to the network ID, and the '0's correspond to the host ID. For example, the mask `255.255.255.0` is `11111111.11111111.11111111.00000000` in binary, indicating the first 24 bits are for the network.
+                            </AccordionContent>
+                        </AccordionItem>
+                         <AccordionItem value="item-7">
+                            <AccordionTrigger>What is the highest and lowest number an octet can represent?</AccordionTrigger>
+                            <AccordionContent>
+                            The lowest value is 0 (binary `00000000`). The highest value is 255 (binary `11111111`), which is calculated by adding all the positional values: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1.
+                            </AccordionContent>
+                        </AccordionItem>
+                         <AccordionItem value="item-8">
+                            <AccordionTrigger>Is `192.168.1.1` a public or private IP address?</AccordionTrigger>
+                            <AccordionContent>
+                            It is a private IP address. Private IP address ranges (like 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16) are reserved for use within local networks and are not routable on the public internet.
+                            </AccordionContent>
+                        </AccordionItem>
+                         <AccordionItem value="item-9">
+                            <AccordionTrigger>Can I convert an IPv6 address with this tool?</AccordionTrigger>
+                            <AccordionContent>
+                            No, this tool is specifically designed for IPv4 addresses. IPv6 addresses are 128 bits long and are represented in hexadecimal format, so they require a different conversion process. We will have a separate tool for IPv6 conversions.
+                            </AccordionContent>
+                        </AccordionItem>
+                         <AccordionItem value="item-10">
+                            <AccordionTrigger>Why does my conversion fail even if I have 32 bits?</AccordionTrigger>
+                            <AccordionContent>
+                            The most likely reason is an invalid character. The input must only contain '0's and '1's (and optional dots or spaces, which are stripped). Any other character, including letters or other numbers, will result in an error. Double-check your input for typos.
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
                 </CardContent>
             </Card>
-        </div>
+        </section>
 
-        <div>
-            <h3 className="text-xl font-semibold mb-4">Related Tools & Articles</h3>
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Related Tools & Articles</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <Link href="/tools/ip-to-binary" className="block">
                     <Card className="hover:border-primary transition-colors h-full">
@@ -271,7 +400,7 @@ export function BinaryToIpConverter() {
                                 IP to Binary Converter
                                 <ChevronRight className="h-4 w-4 text-muted-foreground" />
                             </CardTitle>
-                            <CardDescription className="text-xs">Convert decimal IP addresses back to binary.</CardDescription>
+                            <CardDescription className="text-xs">The reverse process: convert decimal IP addresses back to their binary form.</CardDescription>
                         </CardHeader>
                     </Card>
                 </Link>
@@ -282,7 +411,7 @@ export function BinaryToIpConverter() {
                                 Subnet Calculator
                                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
                             </CardTitle>
-                            <CardDescription className="text-xs">Calculate network ranges, broadcast addresses, and more.</CardDescription>
+                            <CardDescription className="text-xs">Calculate network ranges, broadcast addresses, and available hosts for any subnet.</CardDescription>
                         </CardHeader>
                     </Card>
                 </Link>
@@ -293,12 +422,14 @@ export function BinaryToIpConverter() {
                                 Number Base Converter
                                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
                             </CardTitle>
-                            <CardDescription className="text-xs">Convert between binary, decimal, and hexadecimal.</CardDescription>
+                            <CardDescription className="text-xs">A universal tool to convert numbers between binary, decimal, and hexadecimal.</CardDescription>
                         </CardHeader>
                     </Card>
                 </Link>
             </div>
-        </div>
+        </section>
     </div>
   );
 }
+
+    
