@@ -13,6 +13,7 @@ import { CodeBlock } from '@/components/code-block';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Bot } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import React from 'react';
 
 const formSchema = z.object({
   task: z.enum(['generate', 'debug']),
@@ -38,6 +39,7 @@ async function formActionHandler(_prevState: typeof initialState, formData: Form
 
 export function CodeForm() {
   const [state, formAction] = useFormState(formActionHandler, initialState);
+  const resultRef = React.useRef<HTMLDivElement>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -54,6 +56,12 @@ export function CodeForm() {
   const handleTabChange = (value: string) => {
     setValue('task', value as 'generate' | 'debug');
   };
+  
+  React.useEffect(() => {
+    if (state && resultRef.current) {
+      resultRef.current.focus();
+    }
+  }, [state]);
 
   return (
     <div>
@@ -70,9 +78,10 @@ export function CodeForm() {
                 name="requirements"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Requirements</FormLabel>
+                    <FormLabel htmlFor="generate-requirements">Requirements</FormLabel>
                     <FormControl>
                       <Textarea
+                        id="generate-requirements"
                         placeholder="e.g., Create a JavaScript function that returns a random item from an array."
                         rows={5}
                         {...field}
@@ -89,9 +98,10 @@ export function CodeForm() {
                 name="requirements"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Problem Description</FormLabel>
+                    <FormLabel htmlFor="debug-requirements">Problem Description</FormLabel>
                     <FormControl>
                       <Textarea
+                        id="debug-requirements"
                         placeholder="e.g., This code should sort the array, but it's not working correctly."
                         rows={3}
                         {...field}
@@ -106,9 +116,10 @@ export function CodeForm() {
                 name="codeSnippet"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Code to Debug</FormLabel>
+                    <FormLabel htmlFor="code-snippet">Code to Debug</FormLabel>
                     <FormControl>
                       <Textarea
+                        id="code-snippet"
                         placeholder="Paste your code snippet here..."
                         rows={8}
                         className="font-code"
@@ -132,7 +143,7 @@ export function CodeForm() {
                 <FormLabel>Language</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger aria-label="Select a language">
                       <SelectValue placeholder="Select a language" />
                     </SelectTrigger>
                   </FormControl>
@@ -154,45 +165,47 @@ export function CodeForm() {
         </form>
       </Form>
 
-      {formState.isSubmitting && (
-        <div className="mt-8 space-y-4">
-            <Skeleton className="h-8 w-32" />
-            <Skeleton className="h-48 w-full" />
-        </div>
-      )}
+      <div ref={resultRef} tabIndex={-1} aria-live="polite" role="region">
+        {formState.isSubmitting && (
+          <div className="mt-8 space-y-4" aria-label="Loading AI response">
+              <Skeleton className="h-8 w-32" />
+              <Skeleton className="h-48 w-full" />
+          </div>
+        )}
 
-      {state && (state.generatedCode || state.debuggingSuggestions) && (
-        <div className="mt-8 space-y-4">
-            <div className='flex items-center gap-2 text-primary font-semibold'>
-                <Bot className="h-6 w-6" />
-                <h3 className="text-xl">AI Response</h3>
-            </div>
-            <Card className="bg-secondary/30 border-primary/20">
-              <CardContent className="p-4">
-                {state.generatedCode && (
-                  <div>
-                    <h4 className="font-semibold mb-2">Generated Code:</h4>
-                    <CodeBlock code={state.generatedCode} />
-                  </div>
-                )}
-                {state.debuggingSuggestions && (
-                  <div>
-                    <h4 className="font-semibold mb-2">Debugging Suggestions:</h4>
-                    <div className="prose prose-sm max-w-none text-muted-foreground bg-background/50 p-4 rounded-md">
-                        <p>{state.debuggingSuggestions}</p>
+        {state && (state.generatedCode || state.debuggingSuggestions) && (
+          <div className="mt-8 space-y-4">
+              <div className='flex items-center gap-2 text-primary font-semibold'>
+                  <Bot className="h-6 w-6" aria-hidden="true" />
+                  <h3 className="text-xl">AI Response</h3>
+              </div>
+              <Card className="bg-secondary/30 border-primary/20">
+                <CardContent className="p-4">
+                  {state.generatedCode && (
+                    <div>
+                      <h4 className="font-semibold mb-2">Generated Code:</h4>
+                      <CodeBlock code={state.generatedCode} language={form.getValues('language').toLowerCase()} />
                     </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-        </div>
-      )}
-      
-      {state && 'error' in state && (
-        <div className="mt-8 text-destructive-foreground bg-destructive p-4 rounded-md">
-            <p>{state.error}</p>
-        </div>
-      )}
+                  )}
+                  {state.debuggingSuggestions && (
+                    <div>
+                      <h4 className="font-semibold mb-2">Debugging Suggestions:</h4>
+                      <div className="prose prose-sm max-w-none text-muted-foreground bg-background/50 p-4 rounded-md">
+                          <p>{state.debuggingSuggestions}</p>
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+          </div>
+        )}
+        
+        {state && 'error' in state && (
+          <div className="mt-8 text-destructive-foreground bg-destructive p-4 rounded-md" role="alert">
+              <p>{state.error}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

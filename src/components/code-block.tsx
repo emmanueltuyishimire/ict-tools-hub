@@ -22,21 +22,24 @@ export function CodeBlock({ code, language, className }: CodeBlockProps) {
   };
 
   return (
-    <div className={cn('relative rounded-lg border bg-secondary/50 p-4', className)}>
-      <Button
-        size="icon"
-        variant="ghost"
-        className="absolute right-2 top-2 h-8 w-8 text-muted-foreground hover:bg-secondary"
-        onClick={copyToClipboard}
-      >
-        {hasCopied ? (
-          <Check className="h-4 w-4 text-primary" />
-        ) : (
-          <Clipboard className="h-4 w-4" />
-        )}
-        <span className="sr-only">Copy code</span>
-      </Button>
-      <pre className="w-full overflow-x-auto text-sm font-code text-secondary-foreground">
+    <div className={cn('relative rounded-lg border bg-secondary/50', className)}>
+      <div className="absolute right-2 top-2 flex items-center gap-2">
+        {language && <span className="text-xs text-muted-foreground">{language}</span>}
+        <Button
+          size="icon"
+          variant="ghost"
+          className="h-8 w-8 text-muted-foreground hover:bg-secondary"
+          onClick={copyToClipboard}
+          aria-label={hasCopied ? 'Code copied' : 'Copy code to clipboard'}
+        >
+          {hasCopied ? (
+            <Check className="h-4 w-4 text-primary" />
+          ) : (
+            <Clipboard className="h-4 w-4" />
+          )}
+        </Button>
+      </div>
+      <pre className="w-full overflow-x-auto p-4 pt-12 text-sm font-code text-secondary-foreground">
         <code>{code}</code>
       </pre>
     </div>
