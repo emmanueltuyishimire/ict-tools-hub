@@ -37,7 +37,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Subnet Calculator', slug: 'subnet-calculator', description: 'Calculate network ranges, broadcast addresses, and available hosts for any subnet.' },
       { name: 'Subnet Mask Converter', slug: 'subnet-mask-converter', description: 'Convert between CIDR, wildcard, and subnet masks.' },
       { name: 'VLSM Calculator', slug: 'vlsm-calculator', description: 'Design efficient network schemes with Variable Length Subnet Masking.' },
-      { name: 'Network Bandwidth Estimator', slug: 'bandwidth-estimator', description: 'Estimate network bandwidth requirements.' },
+      { name: 'Network Bandwidth Estimator', slug: 'bandwidth-estimator', description: 'Estimate network bandwidth requirements based on usage.' },
       { name: 'Ping / Latency Estimator', slug: 'latency-estimator', description: 'Estimate ping and latency over distances.' },
       { name: 'Data Transfer Time Calculator', slug: 'data-transfer-calculator', description: 'Calculate time to transfer data.' },
       { name: 'MAC Address Validator', slug: 'mac-validator', description: 'Validate MAC address format.' },
