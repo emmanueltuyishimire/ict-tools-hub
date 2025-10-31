@@ -205,7 +205,7 @@ export function NetworkMaskValidator() {
                         <li><strong>Enter the Subnet Mask:</strong> Type or paste the mask you want to check into the input field. The tool expects the standard dot-decimal format (e.g., `255.255.240.0`).</li>
                         <li><strong>Get Instant Feedback:</strong> The tool validates the mask in real-time. A status box will immediately appear, telling you if the mask is valid or invalid.</li>
                         <li><strong>Understand the Error:</strong> If the mask is invalid, the message will explain why—for example, if it contains a number over 255 or if its binary structure is incorrect.</li>
-                        <li><strong>Review the Properties:</strong> For a valid mask, a "Mask Properties" table will show you its equivalent CIDR prefix, the corresponding wildcard mask used in ACLs, and the full 32-bit binary representation.</li>
+                        <li><strong>Review the Properties:</strong> For a valid mask, a "Mask Properties" table will show you its equivalent CIDR prefix, the corresponding wildcard mask used in ACLs, the full 32-bit binary representation, and the number of hosts it supports.</li>
                     </ol>
                      <Alert>
                         <Lightbulb className="h-4 w-4" />
@@ -252,6 +252,57 @@ export function NetworkMaskValidator() {
                 </CardContent>
             </Card>
 
+            <div className="grid md:grid-cols-2 gap-8">
+                <Card>
+                    <CardHeader>
+                        <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                            <li><strong>The "256 Rule":</strong> To quickly find the block size of a subnet, find the "interesting" octet (the one that isn't 255 or 0) and subtract it from 256. For a mask of `255.255.255.224`, the interesting octet is 224. The block size is 256 - 224 = 32. This means your network IDs will be multiples of 32 (0, 32, 64, etc.).</li>
+                            <li><strong>CIDR to Wildcard:</strong> A `/24` mask has 8 host bits (32-24=8). The wildcard mask will have 8 corresponding '1's at the end, making it `0.0.0.255`. A `/27` has 5 host bits, so its wildcard is `0.0.0.31` (2^5 - 1).</li>
+                            <li><strong>Binary Check in Your Head:</strong> Valid subnet mask octets can only be certain numbers: 255, 254, 252, 248, 240, 224, 192, 128, or 0. If you see an octet like `253` or `191` in a subnet mask, it's almost certainly invalid.</li>
+                            <li><strong>Use `/31` on WAN Links:</strong> When connecting two routers, use a `/31` mask (255.255.255.254) to conserve IP addresses. This provides two usable IPs with no wasted network or broadcast addresses, a modern best practice defined in RFC 3021.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                         <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                    </CardHeader>
+                    <CardContent>
+                         <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                            <li><strong>Non-Contiguous Bits:</strong> The number one error is creating a mask like `255.255.0.255`. This is invalid because the binary `1`s are not in a single block. This validator will always catch this fundamental error.</li>
+                            <li><strong>Octet Value Out of Range:</strong> Entering a number greater than 255 in any octet (e.g., `255.255.256.0`). This is a common typo but makes the mask completely invalid.</li>
+                            <li><strong>Confusing Mask and IP:</strong> Applying the validation rules for a mask to a regular IP address. An IP address can have any octet value from 0-255, while a mask is restricted to specific values that maintain binary continuity.</li>
+                            <li><strong>Using Subnet Mask in ACLs:</strong> Many beginners use a subnet mask in a router's Access Control List, which almost always requires a wildcard mask. This tool helps you find the correct wildcard for any given subnet mask.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+            </div>
+            
+            <section>
+                <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-card p-6 rounded-lg">
+                        <h3 className="font-semibold text-lg mb-2">Validating Legacy Configurations</h3>
+                        <p className="text-sm text-muted-foreground">A network engineer inherits an old network's documentation which specifies a subnet mask of `255.255.254.0`. Before planning a migration, they use this validator to confirm it is a valid `/23` mask and to find its properties, including the wildcard mask `0.0.1.255`, which they'll need for new firewall rules.</p>
+                    </div>
+                     <div className="bg-card p-6 rounded-lg">
+                        <h3 className="font-semibold text-lg mb-2">Troubleshooting a Network Script</h3>
+                        <p className="text-sm text-muted-foreground">A sysadmin's automated network provisioning script is failing. They check the script's variables and find it's trying to apply a mask of `255.240.255.0`. By pasting this into the validator, they get an immediate "Invalid" result because the binary is non-contiguous, instantly identifying the typo in their script (`255.255.240.0` was intended).</p>
+                    </div>
+                     <div className="bg-card p-6 rounded-lg">
+                        <h3 className="font-semibold text-lg mb-2">Studying for a Certification Exam</h3>
+                        <p className="text-sm text-muted-foreground">A student is practicing for their Network+ exam and encounters a question asking if `255.255.191.0` is a valid mask. They manually convert `191` to binary (`10111111`) and see that it breaks the contiguous '1's rule. They then use this tool to instantly verify their conclusion is correct, reinforcing their learning process.</p>
+                    </div>
+                     <div className="bg-card p-6 rounded-lg">
+                        <h3 className="font-semibold text-lg mb-2">Sanity-Checking Network Plans</h3>
+                        <p className="text-sm text-muted-foreground">During a network design review meeting, a junior admin suggests using a `/21` mask. A senior admin, as a quick sanity check, uses a validator or converter to confirm that a `/21` corresponds to `255.255.248.0` and provides 2046 usable hosts, ensuring everyone in the meeting is on the same page about the scale of the proposed network.</p>
+                    </div>
+                </div>
+            </section>
+            
             <section>
                 <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
                 <Card>
@@ -270,8 +321,35 @@ export function NetworkMaskValidator() {
                 </Card>
             </section>
 
+             <section>
+                <h2 className="text-2xl font-bold mb-4">Related Tools & Articles</h2>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <Link href="/tools/subnet-calculator" className="block">
+                        <Card className="hover:border-primary transition-colors h-full">
+                            <CardHeader>
+                                <CardTitle className="text-base flex items-center justify-between">Subnet Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                <CardDescription className="text-xs">Apply a valid mask to an IP address to calculate network ranges, broadcast addresses, and more.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+                    <Link href="/tools/subnet-mask-converter" className="block">
+                        <Card className="hover:border-primary transition-colors h-full">
+                            <CardHeader>
+                                <CardTitle className="text-base flex items-center justify-between">Subnet Mask Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                <CardDescription className="text-xs">Seamlessly convert between CIDR, Subnet Mask, and Wildcard Mask formats.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+                    <Link href="/tools/ip-to-binary" className="block">
+                        <Card className="hover:border-primary transition-colors h-full">
+                            <CardHeader>
+                                <CardTitle className="text-base flex items-center justify-between">IP to Binary Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                <CardDescription className="text-xs">Visualize any mask in its raw binary form to understand the core validation rule.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+                </div>
+            </section>
         </div>
     );
 }
-
-    
