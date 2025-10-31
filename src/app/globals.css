@@ -2,8 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  body {
+    @apply font-body;
+  }
+
+  code,
+  pre {
+    font-family: theme('fontFamily.code');
+  }
+
+  .font-code {
+    font-family: theme('fontFamily.code');
+  }
 }
 
 @layer base {
