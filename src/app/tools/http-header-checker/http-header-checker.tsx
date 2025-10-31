@@ -1,8 +1,7 @@
 
 'use client';
 
-import { useFormState } from 'react-dom';
-import { useRef, useEffect } from 'react';
+import { useActionState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -14,7 +13,8 @@ import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Search, Globe, Code, Key, Cookie, Calendar, RefreshCw } from 'lucide-react';
 import Link from 'next/link';
 import { checkHeaders, type FormState } from './actions';
-import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
+
 
 const initialState: FormState = null;
 
@@ -62,7 +62,7 @@ const headerExamples = [
 ];
 
 export function HttpHeaderChecker() {
-    const [state, formAction] = useFormState(checkHeaders, initialState);
+    const [state, formAction] = useActionState(checkHeaders, initialState);
     const formRef = useRef<HTMLFormElement>(null);
     const resultRef = useRef<HTMLDivElement>(null);
     
@@ -105,9 +105,6 @@ export function HttpHeaderChecker() {
             </Card>
 
             <div ref={resultRef}>
-                 {/* This is a placeholder for pending state, real pending state is handled by useFormStatus in a real app */}
-                 {/* <Skeleton className="h-64 w-full" /> */}
-
                 {state && (
                     <div aria-live="polite">
                         {!state.success ? (
@@ -160,7 +157,7 @@ export function HttpHeaderChecker() {
                     <ol>
                         <li><strong>Enter the URL:</strong> Type or paste the full web address you want to inspect. The tool will automatically add `https://` if you forget it.</li>
                         <li><strong>Check Headers:</strong> Click the "Check Headers" button. Our server makes a request to the URL you provided. We do this from our server to avoid browser security issues (CORS) that can block such requests.</li>
-                        <li><strong>Analyze the Status Line:</strong> The first result is the most important. It tells you the outcome of the request. A `200 OK` means success. A `301 Moved Permanently` means the page has moved. A `404 Not Found` means the page doesn't exist, and a `500 Internal Server Error` indicates a problem on the server side.</li>
+                        <li><strong>Analyze the Status Line:</strong> The first result is the most important. It tells you the outcome of the request. A `200 OK` means success. A `301 Moved Permanently` means the page has moved. A `404 Not Found` means the page does't exist, and a `500 Internal Server Error` indicates a problem on the server side.</li>
                         <li><strong>Inspect the Header Table:</strong> Below the status, you'll find a detailed table of all the headers the server sent back. This is where you can debug caching issues (`Cache-Control`), check redirect locations (`Location`), verify security policies (`Content-Security-Policy`), and see what web server software is being used (`Server`).</li>
                     </ol>
                 </Card>
@@ -182,7 +179,6 @@ export function HttpHeaderChecker() {
                     </section>
                     <section>
                         <h3 className="font-bold text-xl">Key Headers and Their Meanings</h3>
-                        <p>While there are hundreds of possible headers, some are fundamental to the web's operation. Here are a few you will commonly encounter with this tool:</p>
                         <div className="space-y-4">
                            {headerExamples.map(header => (
                             <div key={header.header} className="flex items-start gap-4">
@@ -216,7 +212,7 @@ export function HttpHeaderChecker() {
                                 <AccordionItem value={`item-${index}`} key={index}>
                                     <AccordionTrigger>{item.question}</AccordionTrigger>
                                     <AccordionContent>
-                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/`([^`]+)`/g, "<code class='font-code bg-muted p-1 rounded-sm'>$1</code>") }} />
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/`([^`]+)`/g, "<code className='font-code bg-muted p-1 rounded-sm'>$1</code>") }} />
                                     </AccordionContent>
                                 </AccordionItem>
                             ))}
