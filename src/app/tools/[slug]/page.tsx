@@ -6,6 +6,7 @@ import { Construction } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { BinaryToIpConverter } from '@/app/tools/binary-to-ip/binary-to-ip-converter';
+import { IpToBinaryConverter } from '@/app/tools/ip-to-binary/ip-to-binary-converter';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -21,6 +22,7 @@ type ToolPageProps = {
 
 const toolComponents: Record<string, React.ComponentType> = {
     'binary-to-ip': BinaryToIpConverter,
+    'ip-to-binary': IpToBinaryConverter,
 };
 
 
