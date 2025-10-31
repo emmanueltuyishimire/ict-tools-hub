@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Construction } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { BinaryToIpConverter } from '@/app/tools/binary-to-ip/binary-to-ip-converter';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -18,20 +19,35 @@ type ToolPageProps = {
   };
 };
 
+const toolComponents: Record<string, React.ComponentType> = {
+    'binary-to-ip': BinaryToIpConverter,
+};
+
+
 export default function ToolPage({ params }: ToolPageProps) {
   const tool = allTools.find((t) => t.slug === params.slug);
 
   if (!tool) {
     notFound();
   }
-
-  const bgImage = PlaceHolderImages.find(img => img.id === 'tech-background');
+  
+  const ToolComponent = toolComponents[params.slug];
 
   return (
     <>
       <PageHeader title={tool.name} description={tool.description} />
+      
+      {ToolComponent ? <ToolComponent /> : <ComingSoon />}
+    </>
+  );
+}
 
-      <Card className="mt-8 overflow-hidden">
+function ComingSoon() {
+    const bgImage = PlaceHolderImages.find(img => img.id === 'tech-background');
+    const tool = allTools.find((t) => t.slug === 'binary-to-ip');
+    
+    return (
+        <Card className="mt-8 overflow-hidden">
         <CardHeader className="relative h-48 md:h-64 flex items-center justify-center text-center p-0">
           {bgImage && (
             <Image
@@ -54,6 +70,5 @@ export default function ToolPage({ params }: ToolPageProps) {
           </p>
         </CardContent>
       </Card>
-    </>
-  );
+    )
 }
