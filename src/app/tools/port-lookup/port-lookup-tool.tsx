@@ -259,7 +259,9 @@ export function PortLookupTool() {
                             {faqData.map((item, index) => (
                                 <AccordionItem value={`item-${index}`} key={index}>
                                     <AccordionTrigger>{item.question}</AccordionTrigger>
-                                    <AccordionContent dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                    <AccordionContent>
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                    </AccordionContent>
                                 </AccordionItem>
                             ))}
                         </Accordion>
