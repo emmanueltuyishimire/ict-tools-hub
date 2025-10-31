@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { BinaryToIpConverter } from '@/app/tools/binary-to-ip/binary-to-ip-converter';
 import { IpToBinaryConverter } from '@/app/tools/ip-to-binary/ip-to-binary-converter';
+import { SubnetCalculator } from '@/app/tools/subnet-calculator/subnet-calculator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -23,6 +24,7 @@ type ToolPageProps = {
 const toolComponents: Record<string, React.ComponentType> = {
     'binary-to-ip': BinaryToIpConverter,
     'ip-to-binary': IpToBinaryConverter,
+    'subnet-calculator': SubnetCalculator,
 };
 
 

@@ -12,6 +12,7 @@ import {
   Boxes,
   Sparkles,
   FileCode2,
+  Calculator,
 } from 'lucide-react';
 
 export type Tool = {
@@ -33,7 +34,7 @@ export const toolCategories: ToolCategory[] = [
     tools: [
       { name: 'IP Address to Binary Converter', slug: 'ip-to-binary', description: 'Convert IPv4 addresses to binary format.' },
       { name: 'Binary to IP Address Converter', slug: 'binary-to-ip', description: 'Convert binary strings to IPv4 addresses.' },
-      { name: 'Subnet Calculator', slug: 'subnet-calculator', description: 'Calculate subnets, hosts, and network ranges.' },
+      { name: 'Subnet Calculator', slug: 'subnet-calculator', description: 'Calculate network ranges, broadcast addresses, and available hosts for any subnet.' },
       { name: 'Subnet Mask Converter', slug: 'subnet-mask-converter', description: 'Convert between CIDR, wildcard, and subnet masks.' },
       { name: 'VLSM Calculator', slug: 'vlsm-calculator', description: 'Calculate variable length subnet masks.' },
       { name: 'Network Bandwidth Estimator', slug: 'bandwidth-estimator', description: 'Estimate network bandwidth requirements.' },
