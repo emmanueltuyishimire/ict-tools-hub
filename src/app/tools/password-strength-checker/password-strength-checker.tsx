@@ -208,7 +208,7 @@ export function PasswordStrengthChecker() {
                         <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                             <li><strong>Use a Password Manager:</strong> The single best thing you can do for your security. A password manager can generate and store long, unique, random passwords for every website. You only need to remember one strong master password.</li>
                             <li><strong>Embrace Passphrases:</strong> Create a long password from a memorable but random sequence of words. `Correct-Horse-Battery-Staple` is a famous example. It's easy to remember but incredibly hard to crack.</li>
-                            <li><strong>Enable Two-Factor Authentication (2FA):</strong> 2FA adds a second layer of security, usually a code from your phone. Even if an attacker steals your password, they can't log in without this second factor. Enable it everywhere you can.</li>
+                            <li><strong>Enable Two-Factor Authentication (2FA):</strong> 2FA adds a second layer of security, usually a code from your phone. Even if an attacker steals your password, they can't log in without this second factor. Enable it everywhere you can. Explore our <Link href="/tools/totp-demo" className="text-primary hover:underline">Two-Factor Auth TOTP Demo</Link> to see how it works.</li>
                             <li><strong>Be Unique:</strong> Never reuse passwords across different websites. If one site is breached, attackers will use your leaked credentials to try to access your other accounts.</li>
                         </ul>
                     </CardContent>

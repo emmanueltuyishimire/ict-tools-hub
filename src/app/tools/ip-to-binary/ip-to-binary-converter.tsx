@@ -269,7 +269,7 @@ export function IpToBinaryConverter() {
                     <section>
                         <h3 className="font-bold text-xl">The Dual Identity of an IP Address</h3>
                         <p>Every device on the internet has an IP address, which acts like a digital home address for sending and receiving data. For convenience, we see them as four decimal numbers separated by dots, like <code className="font-code bg-muted p-1 rounded-sm">172.16.254.1</code>. This is called "dot-decimal notation." However, computers, routers, and switches don't understand decimal numbers. They communicate in binary—the language of "on" and "off" signals, represented by 1s and 0s.</p>
-                        <p>Therefore, every IPv4 address has a dual identity: a human-friendly decimal version and a machine-readable 32-bit binary version. The dot-decimal format is merely a convenient abstraction. To perform critical networking tasks like subnetting or configuring security rules, you must be able to translate between these two identities. Our <Link href="/tools/binary-to-ip" className='text-primary hover:underline'>Binary to IP Converter</Link> automates the reverse translation, but understanding the manual process is key to mastering networking concepts.</p>
+                        <p>Therefore, every IPv4 address has a dual identity: a human-friendly decimal version and a machine-readable 32-bit binary version. The dot-decimal format is merely a convenient abstraction. To perform critical networking tasks like <Link href="/tools/subnet-calculator" className='text-primary hover:underline'>subnetting</Link> or configuring security rules, you must be able to translate between these two identities. Our <Link href="/tools/binary-to-ip" className='text-primary hover:underline'>Binary to IP Converter</Link> automates the reverse translation, but understanding the manual process is key to mastering networking concepts.</p>
                     </section>
                     
                     <section>
@@ -354,12 +354,12 @@ export function IpToBinaryConverter() {
                 <div className="grid md:grid-cols-2 gap-6">
                     <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Designing a Subnetting Scheme</h3>
-                        <p className="text-sm text-muted-foreground">A network architect is tasked with dividing a large `/22` network block into smaller subnets for different departments. To determine the network and broadcast addresses for a new `/26` subnet, they first convert the base IP address to binary. This allows them to visually see where the network bits end and the host bits begin, making it easy to calculate the new subnet ranges accurately.
+                        <p className="text-sm text-muted-foreground">A network architect is tasked with dividing a large `/22` network block into smaller subnets. To determine the network and broadcast addresses for a new `/26` subnet, they first convert the base IP address to binary. This allows them to visually see where the network bits end and the host bits begin, making it easy to calculate the new subnet ranges accurately.
                         </p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Configuring a Firewall ACL</h3>
-                        <p className="text-sm text-muted-foreground">A security admin needs to write a firewall rule (Access Control List) to block a specific range of IP addresses, from `172.16.10.32` to `172.16.10.47`. To create the most efficient rule, they convert both IPs to binary. This helps them calculate the correct wildcard mask (`0.0.0.15`) needed for the ACL entry, ensuring only the intended addresses are blocked.</p>
+                        <p className="text-sm text-muted-foreground">A security admin needs to write a firewall rule (Access Control List) to block a specific range of IP addresses, from `172.16.10.32` to `172.16.10.47`. To create the most efficient rule, they convert both IPs to binary. This helps them calculate the correct <Link href="/tools/subnet-mask-converter" className='text-primary hover:underline'>wildcard mask</Link> (`0.0.0.15`) needed for the ACL entry, ensuring only the intended addresses are blocked.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Passing for a Certification Exam</h3>
