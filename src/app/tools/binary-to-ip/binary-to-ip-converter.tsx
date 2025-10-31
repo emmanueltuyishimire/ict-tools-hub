@@ -31,7 +31,7 @@ export function BinaryToIpConverter() {
     }
 
     try {
-      const octets = binaryInput.match(/.{1,8}/g);
+      let octets = binaryInput.match(/.{1,8}/g);
       if (!octets || octets.length !== 4) {
         // This check is for inputs with dots that might be malformed
         const inputWithDots = binary.split('.');
