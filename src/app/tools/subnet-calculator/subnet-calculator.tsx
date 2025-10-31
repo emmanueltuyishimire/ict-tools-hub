@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
@@ -373,23 +374,23 @@ export function SubnetCalculator() {
             </div>
 
             <section>
-                <h2 className="text-2xl font-bold mb-4">Practical Use Cases</h2>
+                <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
                 <div className="grid md:grid-cols-2 gap-6">
                     <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Network Design & Planning</h3>
-                        <p className="text-sm text-muted-foreground">When setting up a new office, an IT administrator uses the calculator to plan their IP scheme. They determine they need separate subnets for Servers, Staff, and Guest Wi-Fi. The calculator helps them allocate appropriate address space for each department, ensuring efficiency and security from the ground up.</p>
+                        <h3 className="font-semibold text-lg mb-2">New Office Network Setup</h3>
+                        <p className="text-sm text-muted-foreground">An IT administrator is setting up a new office with 120 employees. They are assigned the IP block `10.10.0.0/22`. To improve security and organization, they need separate networks for Servers (15 IPs), Staff (150 IPs), and Guest Wi-Fi (100 IPs). Using a subnet calculator, they plan a VLSM scheme, creating a `/27` for servers, a `/24` for staff, and another `/24` for guests, all within their assigned block. The calculator provides the exact IP ranges for each, ensuring no overlap and efficient use of addresses.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Certification Exam Study</h3>
-                        <p className="text-sm text-muted-foreground">A student preparing for a CompTIA Network+ or Cisco CCNA exam uses the calculator to quickly verify their manual subnetting practice problems. This builds speed and confidence, which is crucial for passing timed certification tests.</p>
+                        <h3 className="font-semibold text-lg mb-2">Troubleshooting Connectivity Issues</h3>
+                        <p className="text-sm text-muted-foreground">A user reports they can't access the internet from their desk at IP `192.168.2.130`. The help desk technician knows the network uses a `/25` mask (255.255.255.128). They plug the IP and mask into the subnet calculator and discover that the usable host range for that subnet is `192.168.2.1` to `192.168.2.126`. The user's IP is outside this range, instantly identifying a static IP misconfiguration as the problem.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Troubleshooting Connectivity</h3>
-                        <p className="text-sm text-muted-foreground">A help desk technician receives a report that a new printer is offline. By entering the printer's IP and the network's subnet mask into the calculator, they can instantly see if the IP address is valid for that subnet or if it's a broadcast address or outside the usable range, quickly diagnosing a common misconfiguration.</p>
+                        <h3 className="font-semibold text-lg mb-2">Configuring a Firewall Rule</h3>
+                        <p className="text-sm text-muted-foreground">A security engineer needs to create a firewall rule to allow a specific server at `172.16.30.5` to access a database server. To make the rule as strict as possible, they need to specify a single IP address. They use the subnet calculator with a `/32` mask (255.255.255.255) to confirm the network ID is the IP itself, and the wildcard mask is `0.0.0.0`. This ensures their firewall rule only applies to that one server and nothing else.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Configuring Firewalls and Routers</h3>
-                        <p className="text-sm text-muted-foreground">A security engineer needs to write a firewall rule (ACL) to block an entire subnet from accessing a server. They use the calculator to find the network ID and the wildcard mask, allowing them to write a single, efficient rule instead of dozens of rules for each individual IP.</p>
+                        <h3 className="font-semibold text-lg mb-2">Studying for a Certification Exam</h3>
+                        <p className="text-sm text-muted-foreground">A student preparing for the CCNA exam is given a complex practice question: "How many usable hosts are available in the subnet `199.45.12.64/26`?". They perform the calculation manually (32 - 26 = 6 host bits; 2^6 = 64 total hosts; 64 - 2 = 62 usable hosts). They then use the subnet calculator to quickly verify their answer is correct, building the speed and accuracy needed for the exam.</p>
                     </div>
                 </div>
             </section>
@@ -429,11 +430,11 @@ export function SubnetCalculator() {
                             </CardHeader>
                         </Card>
                     </Link>
-                    <Link href="/tools/vlsm-calculator" className="block">
+                    <Link href="/tools/subnet-mask-converter" className="block">
                         <Card className="hover:border-primary transition-colors h-full">
                             <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">VLSM Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">For advanced network design, use the Variable Length Subnet Mask calculator.</CardDescription>
+                                <CardTitle className="text-base flex items-center justify-between">Subnet Mask Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                <CardDescription className="text-xs">Seamlessly convert between CIDR, Subnet Mask, and Wildcard Mask formats.</CardDescription>
                             </CardHeader>
                         </Card>
                     </Link>

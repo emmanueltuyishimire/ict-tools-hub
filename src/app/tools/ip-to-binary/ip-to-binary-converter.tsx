@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
@@ -349,24 +350,24 @@ export function IpToBinaryConverter() {
             </div>
 
             <section>
-                <h2 className="text-2xl font-bold mb-4">Practical Use Cases</h2>
+                <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
                 <div className="grid md:grid-cols-2 gap-6">
                     <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Designing a Subnetting Scheme</h3>
-                        <p className="text-sm text-muted-foreground">A network architect needs to divide a large `/16` network into smaller `/24` subnets. They convert the base network address to binary to visually identify the network and host portions, then manipulate the bits to define the new, smaller subnet ranges.
+                        <p className="text-sm text-muted-foreground">A network architect is tasked with dividing a large `/22` network block into smaller subnets for different departments. To determine the network and broadcast addresses for a new `/26` subnet, they first convert the base IP address to binary. This allows them to visually see where the network bits end and the host bits begin, making it easy to calculate the new subnet ranges accurately.
                         </p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Configuring a Firewall ACL</h3>
-                        <p className="text-sm text-muted-foreground">A security admin needs to block a specific range of IP addresses. Instead of writing dozens of rules, they convert the start and end IPs of the range to binary to calculate a single wildcard mask that covers the entire range, creating a more efficient and readable Access Control List (ACL).</p>
+                        <p className="text-sm text-muted-foreground">A security admin needs to write a firewall rule (Access Control List) to block a specific range of IP addresses, from `172.16.10.32` to `172.16.10.47`. To create the most efficient rule, they convert both IPs to binary. This helps them calculate the correct wildcard mask (`0.0.0.15`) needed for the ACL entry, ensuring only the intended addresses are blocked.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Passing Certification Exams</h3>
-                        <p className="text-sm text-muted-foreground">A student studying for their CCNA exam uses this tool to quickly verify their manual IP-to-binary calculations. Repeatedly checking their work builds the speed and accuracy needed to solve complex subnetting problems under time pressure during the exam.</p>
+                        <p className="text-sm text-muted-foreground">A student preparing for their Cisco CCNA exam encounters a question that requires them to find the "magic number" for subnetting the address `192.168.100.0` with a `/28` mask. They quickly convert the mask's interesting octet (`240`) to binary (`11110000`) to understand its structure, helping them solve the problem quickly and accurately under time pressure.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Verifying Network Calculations</h3>
-                        <p className="text-sm text-muted-foreground">A junior network engineer is troubleshooting why a device at `192.168.1.192` can't communicate on a network with a `255.255.255.224` mask. By converting both to binary using our <Link href="/tools/subnet-calculator" className='text-primary hover:underline'>Subnet Calculator</Link>, they can clearly see that the IP address is the broadcast address for that subnet, not a usable host address, instantly identifying the configuration error.</p>
+                        <h3 className="font-semibold text-lg mb-2">Troubleshooting a Misconfigured Device</h3>
+                        <p className="text-sm text-muted-foreground">A junior network engineer is troubleshooting why a device at `192.168.1.192` can't communicate on a network with a `255.255.255.224` (`/27`) mask. By converting both the IP and the mask to binary using our <Link href="/tools/subnet-calculator" className='text-primary hover:underline'>Subnet Calculator</Link>, they can clearly see that the IP address (`...11000000`) is the broadcast address for that subnet (`...110xxxxx`), not a usable host address, instantly identifying the configuration error.</p>
                     </div>
                 </div>
             </section>

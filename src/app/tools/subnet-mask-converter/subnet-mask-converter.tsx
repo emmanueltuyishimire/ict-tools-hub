@@ -159,7 +159,7 @@ export function SubnetMaskConverter() {
         if (results && resultRef.current) {
             resultRef.current.focus();
         }
-    }, [inputType, inputValue, results]);
+    }, [inputType, inputValue]);
 
     const handleCopyToClipboard = (key: string, value: string) => {
         navigator.clipboard.writeText(value).then(() => {
@@ -373,6 +373,28 @@ export function SubnetMaskConverter() {
                 </Card>
             </div>
             
+            <section>
+                <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-card p-6 rounded-lg">
+                        <h3 className="font-semibold text-lg mb-2">Writing a Firewall Access Rule</h3>
+                        <p className="text-sm text-muted-foreground">A network security admin needs to write an ACL (Access Control List) on a Cisco router to permit traffic from the entire `192.168.50.0/24` subnet. The command requires a wildcard mask, not a subnet mask. The admin inputs `255.255.255.0` into the converter, instantly gets the correct wildcard mask `0.0.0.255`, and confidently writes the rule: `access-list 101 permit ip 192.168.50.0 0.0.0.255 any`.</p>
+                    </div>
+                     <div className="bg-card p-6 rounded-lg">
+                        <h3 className="font-semibold text-lg mb-2">Migrating from Classful to Classless</h3>
+                        <p className="text-sm text-muted-foreground">An engineer is updating legacy network documentation that uses old "Class C" terminology. To modernize the documentation and make it compatible with modern systems, they need to convert all instances of "Class C" to CIDR notation. They use the converter to confirm that a Class C network's default mask `255.255.255.0` is equivalent to `/24`, ensuring the new documentation is accurate.</p>
+                    </div>
+                     <div className="bg-card p-6 rounded-lg">
+                        <h3 className="font-semibold text-lg mb-2">Validating a Configuration Script</h3>
+                        <p className="text-sm text-muted-foreground">Before deploying a new network configuration script, a sysadmin does a final review. They notice a subnet mask written as `255.255.252.0`. To double-check its CIDR equivalent and the number of hosts it supports, they paste it into the converter. It confirms the mask is `/22` and supports 1024 hosts, verifying the script's intent and preventing a potential misconfiguration.</p>
+                    </div>
+                     <div className="bg-card p-6 rounded-lg">
+                        <h3 className="font-semibold text-lg mb-2">Quickly Understanding Network Size</h3>
+                        <p className="text-sm text-muted-foreground">During a team meeting, a colleague mentions they are working on the `/27` subnet. To quickly understand the scale of that network, another team member selects `/27` in the CIDR dropdown. They immediately see that it corresponds to `255.255.255.224` and provides 30 usable hosts, giving them instant context for the discussion without interrupting the flow.</p>
+                    </div>
+                </div>
+            </section>
+
              <section>
                 <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
                 <Card>
