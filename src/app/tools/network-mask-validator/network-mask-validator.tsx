@@ -50,7 +50,8 @@ const validateMask = (mask: string) => {
 
     const maskBinary = (maskLong >>> 0).toString(2).padStart(32, '0');
     // A valid mask must be a contiguous block of 1s followed by a contiguous block of 0s.
-    if (!/^1*0*$/.test(maskBinary)) {
+    // This regex checks if the string contains a '0' followed by a '1', which is illegal for a mask.
+    if (maskBinary.indexOf('0') < maskBinary.lastIndexOf('1')) {
         return { 
             isValid: false, 
             message: `Invalid subnet mask. The binary representation (${maskBinary.match(/.{1,8}/g)!.join('.')}) is not a contiguous block of 1s followed by 0s.`,
@@ -60,6 +61,8 @@ const validateMask = (mask: string) => {
 
     const cidr = maskLongToCidr(maskLong);
     const wildcardMask = longToIp(~maskLong >>> 0);
+    const totalHosts = Math.pow(2, 32 - cidr);
+    const usableHosts = totalHosts > 2 ? totalHosts - 2 : (totalHosts === 2 ? 2 : 0);
 
     return {
         isValid: true,
@@ -68,6 +71,8 @@ const validateMask = (mask: string) => {
             cidr: `/${cidr}`,
             wildcardMask,
             binaryMask: maskBinary.match(/.{1,8}/g)!.join('.'),
+            totalHosts,
+            usableHosts,
         }
     };
 };
@@ -122,13 +127,14 @@ export function NetworkMaskValidator() {
 
     const renderResultRow = (label: string, key: string, value: any) => {
         if (value === undefined || value === null) return null;
+        const displayValue = typeof value === 'number' ? value.toLocaleString() : value.toString();
         return (
             <TableRow key={key}>
                 <TableHead className="font-semibold w-[150px]">{label}</TableHead>
                 <TableCell className="font-code">
                     <div className="flex items-center justify-between gap-2">
-                        <span>{value}</span>
-                        <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => handleCopyToClipboard(key, value)} aria-label={`Copy ${label}`}>
+                        <span>{displayValue}</span>
+                        <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => handleCopyToClipboard(key, displayValue)} aria-label={`Copy ${label}`}>
                             {copiedKey === key ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
                         </Button>
                     </div>
@@ -181,6 +187,8 @@ export function NetworkMaskValidator() {
                                         {renderResultRow('CIDR Prefix', 'cidr', validationResult.details.cidr)}
                                         {renderResultRow('Wildcard Mask', 'wildcardMask', validationResult.details.wildcardMask)}
                                         {renderResultRow('Binary Mask', 'binaryMask', validationResult.details.binaryMask)}
+                                        {renderResultRow('Total Hosts', 'totalHosts', validationResult.details.totalHosts)}
+                                        {renderResultRow('Usable Hosts', 'usableHosts', validationResult.details.usableHosts)}
                                     </TableBody>
                                 </Table>
                             </CardContent>
