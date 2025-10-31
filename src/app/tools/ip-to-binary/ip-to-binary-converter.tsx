@@ -34,7 +34,7 @@ const faqData = [
     },
     {
         question: "What is the purpose of converting an IP to binary?",
-        answer: "Converting an IP to binary is fundamental for many networking tasks. It's essential for understanding and calculating subnets, configuring firewall rules with wildcard masks, and for low-level network troubleshooting. While humans use decimal notation, network devices operate purely in binary."
+        answer: "Converting an IP to binary is fundamental for many networking tasks. It's essential for understanding and calculating subnets, configuring firewall rules with wildcard masks, and for low-level network troubleshooting. While humans use decimal notation, network devices operate purely in binary. Our Subnet Calculator is a great place to see this in action."
     },
     {
         question: "What is 'dot-decimal notation'?",
@@ -254,7 +254,7 @@ export function IpToBinaryConverter() {
                         </AlertDescription>
                     </Alert>
                 </Card>
-            </section>
+            </Card>
 
             <Card className='bg-secondary/30 border-primary/20'>
                 <CardHeader>
@@ -268,7 +268,7 @@ export function IpToBinaryConverter() {
                     <section>
                         <h3 className="font-bold text-xl">The Dual Identity of an IP Address</h3>
                         <p>Every device on the internet has an IP address, which acts like a digital home address for sending and receiving data. For convenience, we see them as four decimal numbers separated by dots, like <code className="font-code bg-muted p-1 rounded-sm">172.16.254.1</code>. This is called "dot-decimal notation." However, computers, routers, and switches don't understand decimal numbers. They communicate in binary—the language of "on" and "off" signals, represented by 1s and 0s.</p>
-                        <p>Therefore, every IPv4 address has a dual identity: a human-friendly decimal version and a machine-readable 32-bit binary version. The dot-decimal format is merely a convenient abstraction. To perform critical networking tasks like subnetting or configuring security rules, you must be able to translate between these two identities. This tool automates that translation, but understanding the manual process is key to mastering networking concepts.</p>
+                        <p>Therefore, every IPv4 address has a dual identity: a human-friendly decimal version and a machine-readable 32-bit binary version. The dot-decimal format is merely a convenient abstraction. To perform critical networking tasks like subnetting or configuring security rules, you must be able to translate between these two identities. Our <Link href="/tools/binary-to-ip" className='text-primary hover:underline'>Binary to IP Converter</Link> automates the reverse translation, but understanding the manual process is key to mastering networking concepts.</p>
                     </section>
                     
                     <section>
@@ -366,7 +366,7 @@ export function IpToBinaryConverter() {
                     </div>
                      <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Verifying Network Calculations</h3>
-                        <p className="text-sm text-muted-foreground">A junior network engineer is troubleshooting why a device at `192.168.1.192` can't communicate on a network with a `255.255.255.224` mask. By converting both to binary, they can clearly see that the IP address is the broadcast address for that subnet, not a usable host address, instantly identifying the configuration error.</p>
+                        <p className="text-sm text-muted-foreground">A junior network engineer is troubleshooting why a device at `192.168.1.192` can't communicate on a network with a `255.255.255.224` mask. By converting both to binary using our <Link href="/tools/subnet-calculator" className='text-primary hover:underline'>Subnet Calculator</Link>, they can clearly see that the IP address is the broadcast address for that subnet, not a usable host address, instantly identifying the configuration error.</p>
                     </div>
                 </div>
             </section>

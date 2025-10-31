@@ -35,7 +35,7 @@ const faqData = [
     },
     {
       question: "How are binary numbers used in subnet masks?",
-      answer: "A subnet mask uses a string of consecutive '1's followed by '0's to define the network and host portions of an IP address. The '1's correspond to the network ID, and the '0's correspond to the host ID. For example, the mask `255.255.255.0` is `11111111.11111111.11111111.00000000` in binary, indicating the first 24 bits are for the network."
+      answer: "A subnet mask uses a string of consecutive '1's followed by '0's to define the network and host portions of an IP address. The '1's correspond to the network ID, and the '0's correspond to the host ID. For example, the mask `255.255.255.0` is `11111111.11111111.11111111.00000000` in binary, indicating the first 24 bits are for the network. You can explore this further with our Subnet Calculator."
     },
     {
       question: "What is the highest and lowest number an octet can represent?",
@@ -310,7 +310,7 @@ export function BinaryToIpConverter() {
                 <section>
                     <h3 className="font-bold text-xl">How Binary Relates to IP Addresses: The Language of Computers</h3>
                     <p>Computers operate in binary, a base-2 number system that uses only two digits: 0 and 1. Each digit is called a bit. While humans find it easier to work with decimal (base-10) numbers, all digital data is ultimately stored and processed as binary. To bridge this gap, we must be able to convert between these systems.</p>
-                    <p>An IPv4 address is fundamentally a 32-bit binary number. The dot-decimal notation is just a convenient abstraction. Understanding this binary foundation is not just academic; it's essential for advanced networking tasks like subnetting, access control list (ACL) configuration, and network troubleshooting. When you configure a subnet mask like <code className="font-code bg-muted p-1 rounded-sm">255.255.255.0</code>, you're actually telling the network hardware to look at the first 24 bits of an IP address to identify its network portion. In binary, that mask is <code className="font-code bg-muted p-1 rounded-sm">11111111.11111111.11111111.00000000</code>.</p>
+                    <p>An IPv4 address is fundamentally a 32-bit binary number. The dot-decimal notation is just a convenient abstraction. Understanding this binary foundation is not just academic; it's essential for advanced networking tasks like subnetting, access control list (ACL) configuration, and network troubleshooting. When you use a <Link href="/tools/subnet-calculator">Subnet Calculator</Link> to configure a mask like <code className="font-code bg-muted p-1 rounded-sm">255.255.255.0</code>, you're actually telling the network hardware to look at the first 24 bits of an IP address to identify its network portion. In binary, that mask is <code className="font-code bg-muted p-1 rounded-sm">11111111.11111111.11111111.00000000</code>.</p>
                     
                     <h4 className='font-semibold text-lg'>Step-by-Step Manual Conversion: A Practical Tutorial</h4>
                     <p>Let's manually convert the binary string <code className="font-code bg-muted p-1 rounded-sm">11000000.10101000.00000001.00000001</code> to a decimal IP address. This process demystifies what our tool does automatically.</p>
@@ -367,7 +367,7 @@ export function BinaryToIpConverter() {
                         <li><strong>Memorize Key Patterns:</strong> Learn common binary patterns. For example, <code className="font-code bg-muted p-1 rounded-sm">11111111</code> is always 255, and <code className="font-code bg-muted p-1 rounded-sm">10000000</code> is always 128. This speeds up mental conversions.</li>
                         <li><strong>The "Split and Conquer" Hack:</strong> When converting from decimal to binary, you don't always need complex math. For 192, ask: "Is it >= 128?" Yes (1). Remainder: 64. "Is 64 >= 64?" Yes (1). Remainder: 0. The rest are zeros. Result: <code className="font-code bg-muted p-1 rounded-sm">11000000</code>.</li>
                         <li><strong>Use Spaces for Readability:</strong> When writing binary, use spaces or dots. The tool strips them for conversion, but they make it easier for you to proofread your input.</li>
-                        <li><strong>Work Backwards:</strong> If you're unsure about a conversion, use our <Link href="/tools/ip-to-binary">IP to Binary Converter</Link> to check your work. Reversing the process is a great way to solidify your understanding.</li>
+                        <li><strong>Work Backwards:</strong> If you're unsure about a conversion, use our <Link href="/tools/ip-to-binary" className='text-primary hover:underline'>IP to Binary Converter</Link> to check your work. Reversing the process is a great way to solidify your understanding.</li>
                     </ul>
                 </CardContent>
             </Card>
