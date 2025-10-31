@@ -254,7 +254,7 @@ export function IpToBinaryConverter() {
                         </AlertDescription>
                     </Alert>
                 </Card>
-            </Card>
+            </section>
 
             <Card className='bg-secondary/30 border-primary/20'>
                 <CardHeader>
