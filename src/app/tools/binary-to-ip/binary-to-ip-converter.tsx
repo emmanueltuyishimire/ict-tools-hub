@@ -10,6 +10,98 @@ import { Label } from '@/components/ui/label';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { CodeBlock } from '@/components/code-block';
 import Link from 'next/link';
+import { StructuredData } from '@/components/structured-data';
+
+const faqData = [
+    {
+      question: "Why is an IPv4 address 32 bits?",
+      answer: "An IPv4 address is 32 bits long because it was designed with a structure of four octets (4 x 8 = 32 bits). This structure allows for approximately 4.3 billion (2^32) unique addresses. At the time of its creation, this was considered more than enough for the foreseeable future of the internet."
+    },
+    {
+      question: "Can a binary IP be shorter or longer than 32 bits?",
+      answer: "No, a valid IPv4 address must be exactly 32 bits long. If your binary string is shorter, you likely need to pad it with leading zeros in one or more octets (e.g., `1010` becomes `00001010`). If it's longer, it's not a valid IPv4 address. This tool will show an error for any input that isn't 32 bits."
+    },
+    {
+      question: "What's the main difference between IPv4 and IPv6?",
+      answer: "The primary difference is the length and format. IPv4 is a 32-bit address represented in decimal, while IPv6 is a 128-bit address represented in hexadecimal. IPv6 was created to solve the problem of IPv4 address exhaustion, offering a vastly larger address space (2^128)."
+    },
+    {
+      question: "What is an octet?",
+      answer: "In networking, an octet is a group of 8 bits. An IPv4 address is composed of four octets, each of which can represent a decimal number from 0 (binary `00000000`) to 255 (binary `11111111`)."
+    },
+    {
+      question: "Do I need to include the dots in the binary string?",
+      answer: "No, it's optional. You can provide a continuous 32-bit string, and the tool will automatically divide it into four 8-bit octets for conversion. However, using dots can make it easier for you to read and verify your input."
+    },
+    {
+      question: "How are binary numbers used in subnet masks?",
+      answer: "A subnet mask uses a string of consecutive '1's followed by '0's to define the network and host portions of an IP address. The '1's correspond to the network ID, and the '0's correspond to the host ID. For example, the mask `255.255.255.0` is `11111111.11111111.11111111.00000000` in binary, indicating the first 24 bits are for the network."
+    },
+    {
+      question: "What is the highest and lowest number an octet can represent?",
+      answer: "The lowest value is 0 (binary `00000000`). The highest value is 255 (binary `11111111`), which is calculated by adding all the positional values: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1."
+    },
+    {
+      question: "Is `192.168.1.1` a public or private IP address?",
+      answer: "It is a private IP address. Private IP address ranges (like 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16) are reserved for use within local networks and are not routable on the public internet."
+    },
+    {
+      question: "Can I convert an IPv6 address with this tool?",
+      answer: "No, this tool is specifically designed for IPv4 addresses. IPv6 addresses are 128 bits long and are represented in hexadecimal format, so they require a different conversion process. We will have a separate tool for IPv6 conversions."
+    },
+    {
+      question: "Why does my conversion fail even if I have 32 bits?",
+      answer: "The most likely reason is an invalid character. The input must only contain '0's and '1's (and optional dots or spaces, which are stripped). Any other character, including letters or other numbers, will result in an error. Double-check your input for typos."
+    }
+];
+
+const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer,
+        },
+    })),
+};
+
+const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Convert a Binary String to an IP Address',
+    description: 'A step-by-step guide to converting a 32-bit binary string into its standard decimal IPv4 address representation.',
+    step: [
+        {
+            '@type': 'HowToStep',
+            name: 'Enter the Binary String',
+            text: 'In the input field labeled "Binary IPv4 Address," type or paste the 32-bit binary string you want to convert.',
+            subSteps: [
+                "You can format the binary string with dots separating the four 8-bit octets (e.g., 11000000.10101000.00000001.00000001).",
+                "You can also use a continuous 32-bit string (e.g., 11000000101010000000000100000001). The tool will automatically segment it."
+            ]
+        },
+        {
+            '@type': 'HowToStep',
+            name: 'Convert',
+            text: 'Click the "Convert" button. The tool will validate the input for correctness (32 bits, only 0s and 1s).',
+        },
+        {
+            '@type': 'HowToStep',
+            name: 'View and Copy the Result',
+            text: 'The converted IPv4 address will appear in the read-only result field. You can click the clipboard icon to instantly copy the IP address for use elsewhere.',
+        },
+        {
+            '@type': 'HowToStep',
+            name: 'Clear',
+            text: 'Click the "Clear" button to reset the input field, the result, and any error messages, preparing the tool for a new conversion.',
+        }
+    ],
+    totalTime: 'PT1M', // Estimated time: 1 minute
+};
+
 
 export function BinaryToIpConverter() {
   const [binary, setBinary] = useState('11000000.10101000.00000001.00000001');
@@ -104,6 +196,8 @@ export function BinaryToIpConverter() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-12">
+        <StructuredData data={faqSchema} />
+        <StructuredData data={howToSchema} />
         <Card>
             <CardHeader>
                 <CardTitle>Binary to IP Address Converter</CardTitle>
@@ -325,66 +419,14 @@ export function BinaryToIpConverter() {
             <Card>
                 <CardContent className="p-6">
                      <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="item-1">
-                            <AccordionTrigger>Why is an IPv4 address 32 bits?</AccordionTrigger>
-                            <AccordionContent>
-                            An IPv4 address is 32 bits long because it was designed with a structure of four octets (4 x 8 = 32 bits). This structure allows for approximately 4.3 billion (2<sup>32</sup>) unique addresses. At the time of its creation, this was considered more than enough for the foreseeable future of the internet.
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-2">
-                            <AccordionTrigger>Can a binary IP be shorter or longer than 32 bits?</AccordionTrigger>
-                            <AccordionContent>
-                            No, a valid IPv4 address must be exactly 32 bits long. If your binary string is shorter, you likely need to pad it with leading zeros in one or more octets (e.g., `1010` becomes `00001010`). If it's longer, it's not a valid IPv4 address. This tool will show an error for any input that isn't 32 bits.
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-3">
-                            <AccordionTrigger>What's the main difference between IPv4 and IPv6?</AccordionTrigger>
-                            <AccordionContent>
-                            The primary difference is the length and format. IPv4 is a 32-bit address represented in decimal, while IPv6 is a 128-bit address represented in hexadecimal. IPv6 was created to solve the problem of IPv4 address exhaustion, offering a vastly larger address space (2<sup>128</sup>).
-                            </AccordionContent>
-                        </AccordionItem>
-                         <AccordionItem value="item-4">
-                            <AccordionTrigger>What is an octet?</AccordionTrigger>
-                            <AccordionContent>
-                            In networking, an octet is a group of 8 bits. An IPv4 address is composed of four octets, each of which can represent a decimal number from 0 (binary `00000000`) to 255 (binary `11111111`).
-                            </AccordionContent>
-                        </AccordionItem>
-                         <AccordionItem value="item-5">
-                            <AccordionTrigger>Do I need to include the dots in the binary string?</AccordionTrigger>
-                            <AccordionContent>
-                            No, it's optional. You can provide a continuous 32-bit string, and the tool will automatically divide it into four 8-bit octets for conversion. However, using dots can make it easier for you to read and verify your input.
-                            </AccordionContent>
-                        </AccordionItem>
-                         <AccordionItem value="item-6">
-                            <AccordionTrigger>How are binary numbers used in subnet masks?</AccordionTrigger>
-                            <AccordionContent>
-                            A subnet mask uses a string of consecutive '1's followed by '0's to define the network and host portions of an IP address. The '1's correspond to the network ID, and the '0's correspond to the host ID. For example, the mask `255.255.255.0` is `11111111.11111111.11111111.00000000` in binary, indicating the first 24 bits are for the network.
-                            </AccordionContent>
-                        </AccordionItem>
-                         <AccordionItem value="item-7">
-                            <AccordionTrigger>What is the highest and lowest number an octet can represent?</AccordionTrigger>
-                            <AccordionContent>
-                            The lowest value is 0 (binary `00000000`). The highest value is 255 (binary `11111111`), which is calculated by adding all the positional values: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1.
-                            </AccordionContent>
-                        </AccordionItem>
-                         <AccordionItem value="item-8">
-                            <AccordionTrigger>Is `192.168.1.1` a public or private IP address?</AccordionTrigger>
-                            <AccordionContent>
-                            It is a private IP address. Private IP address ranges (like 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16) are reserved for use within local networks and are not routable on the public internet.
-                            </AccordionContent>
-                        </AccordionItem>
-                         <AccordionItem value="item-9">
-                            <AccordionTrigger>Can I convert an IPv6 address with this tool?</AccordionTrigger>
-                            <AccordionContent>
-                            No, this tool is specifically designed for IPv4 addresses. IPv6 addresses are 128 bits long and are represented in hexadecimal format, so they require a different conversion process. We will have a separate tool for IPv6 conversions.
-                            </AccordionContent>
-                        </AccordionItem>
-                         <AccordionItem value="item-10">
-                            <AccordionTrigger>Why does my conversion fail even if I have 32 bits?</AccordionTrigger>
-                            <AccordionContent>
-                            The most likely reason is an invalid character. The input must only contain '0's and '1's (and optional dots or spaces, which are stripped). Any other character, including letters or other numbers, will result in an error. Double-check your input for typos.
-                            </AccordionContent>
-                        </AccordionItem>
+                        {faqData.map((item, index) => (
+                            <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger>{item.question}</AccordionTrigger>
+                                <AccordionContent>
+                                    {item.answer}
+                                </AccordionContent>
+                            </AccordionItem>
+                        ))}
                     </Accordion>
                 </CardContent>
             </Card>
@@ -431,5 +473,3 @@ export function BinaryToIpConverter() {
     </div>
   );
 }
-
-    
