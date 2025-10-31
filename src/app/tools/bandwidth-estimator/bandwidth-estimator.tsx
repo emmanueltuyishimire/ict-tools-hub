@@ -9,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
 import { StructuredData } from '@/components/structured-data';
-import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Plus, Trash2, SlidersHorizontal, Network, User, Activity, Percent } from 'lucide-react';
+import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Plus, Trash2, SlidersHorizontal, Network, User, Activity, Percent, Users, Briefcase, Gamepad2, Film } from 'lucide-react';
 import Link from 'next/link';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
@@ -25,6 +25,50 @@ const activityData = {
     'music-streaming': { name: 'Music Streaming', bandwidth: 0.5 },
     'social-media': { name: 'Social Media & Email', bandwidth: 1 },
 };
+
+const presets = [
+    {
+        icon: Users,
+        title: "Family Household",
+        description: "A busy family with multiple streaming, browsing, and social media activities.",
+        rows: [
+            { activity: 'hd-streaming', devices: 2 },
+            { activity: '4k-streaming', devices: 1 },
+            { activity: 'online-gaming', devices: 1 },
+            { activity: 'social-media', devices: 4 },
+        ]
+    },
+    {
+        icon: Briefcase,
+        title: "Remote Work Power User",
+        description: "Professionals working from home with heavy reliance on video calls and cloud services.",
+         rows: [
+            { activity: 'video-conferencing', devices: 2 },
+            { activity: 'large-downloads', devices: 1 },
+            { activity: 'web-browsing', devices: 2 },
+            { activity: 'music-streaming', devices: 1 },
+        ]
+    },
+     {
+        icon: Gamepad2,
+        title: "Gamer's Den",
+        description: "A setup focused on competitive online gaming and live streaming.",
+        rows: [
+            { activity: 'online-gaming', devices: 2 },
+            { activity: '4k-streaming', devices: 1 },
+            { activity: 'large-downloads', devices: 1 }, // For game downloads
+        ]
+    },
+     {
+        icon: Film,
+        title: "Streaming Enthusiast",
+        description: "For the cinephile who streams everything in the highest quality.",
+        rows: [
+            { activity: '4k-streaming', devices: 3 },
+            { activity: 'music-streaming', devices: 2 },
+        ]
+    }
+];
 
 const faqData = [
     { question: "What is network bandwidth?", answer: "Network bandwidth is the maximum rate at which data can be transferred across a network path. It's often measured in megabits per second (Mbps). Think of it like the width of a highway—a wider highway can handle more cars (data) at once, preventing traffic jams (latency and buffering)." },
@@ -63,7 +107,7 @@ type UsageRow = { id: number; activity: string; devices: number | '' };
 type Result = { totalRequired: number; recommended: number; breakdown: any[] };
 
 export function BandwidthEstimator() {
-    let nextId = 2;
+    let nextId = useRef(2);
     const [usageRows, setUsageRows] = useState<UsageRow[]>([
         { id: 1, activity: 'hd-streaming', devices: 2 },
     ]);
@@ -71,10 +115,11 @@ export function BandwidthEstimator() {
     const [results, setResults] = useState<Result | null>(null);
     const [error, setError] = useState('');
     const resultRef = useRef<HTMLDivElement>(null);
+    const calculatorRef = useRef<HTMLDivElement>(null);
 
     const handleCalculate = () => {
         setError('');
-        const validRows = usageRows.filter(row => row.devices > 0 && activityData[row.activity]);
+        const validRows = usageRows.filter(row => row.devices && row.devices > 0 && activityData[row.activity]);
         if (validRows.length === 0) {
             setError('Please add at least one activity with a valid number of devices.');
             return;
@@ -99,22 +144,34 @@ export function BandwidthEstimator() {
 
     useEffect(() => {
         if (results && resultRef.current) {
+            resultRef.current.scrollIntoView({ behavior: 'smooth' });
             resultRef.current.focus();
         }
     }, [results]);
 
     const handleAddRow = () => {
-        setUsageRows([...usageRows, { id: nextId++, activity: 'web-browsing', devices: 1 }]);
+        setUsageRows([...usageRows, { id: nextId.current++, activity: 'web-browsing', devices: 1 }]);
     };
 
     const handleRemoveRow = (id: number) => {
         setUsageRows(usageRows.filter(row => row.id !== id));
     };
+    
+    const handlePresetClick = (presetRows: {activity: string; devices: number}[]) => {
+        const newRows = presetRows.map((row, index) => ({
+            id: nextId.current++,
+            ...row
+        }));
+        setUsageRows(newRows);
+        if (calculatorRef.current) {
+            calculatorRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
-    const handleRowChange = (id: number, field: 'activity' | 'devices', value: string) => {
+    const handleRowChange = (id: number, field: 'activity' | 'devices', value: string | number) => {
         const newRows = usageRows.map(row => {
             if (row.id === id) {
-                const updatedValue = field === 'devices' ? (value === '' ? '' : parseInt(value, 10)) : value;
+                const updatedValue = field === 'devices' ? (value === '' ? '' : parseInt(value as string, 10)) : value;
                 return { ...row, [field]: updatedValue };
             }
             return row;
@@ -126,76 +183,93 @@ export function BandwidthEstimator() {
         <div className="max-w-4xl mx-auto space-y-12">
             <StructuredData data={faqSchema} />
             <StructuredData data={howToSchema} />
-            <Card>
-                <CardHeader>
-                    <CardTitle>Bandwidth Estimator</CardTitle>
-                    <CardDescription>
-                        Define your household or office usage to get a tailored bandwidth recommendation.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                    <div className='space-y-4'>
-                        <Label>User Activities</Label>
-                        {usageRows.map((row, index) => (
-                            <div key={row.id} className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
-                                <div className="sm:col-span-7">
-                                    <Select value={row.activity} onValueChange={(v) => handleRowChange(row.id, 'activity', v)}>
-                                        <SelectTrigger><SelectValue /></SelectTrigger>
-                                        <SelectContent>
-                                            {Object.entries(activityData).map(([key, data]) => (
-                                                <SelectItem key={key} value={key}>{data.name}</SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
+            
+            <section>
+                 <h2 className="text-2xl font-bold mb-4 text-center">Start with a Preset or Build Your Own</h2>
+                 <p className="text-muted-foreground text-center mb-6">Not sure where to begin? Select a preset that matches your environment to get a head start.</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {presets.map((preset) => (
+                        <Card key={preset.title} className="flex flex-col text-center items-center p-4 hover:shadow-lg hover:border-primary/50 transition-all cursor-pointer" onClick={() => handlePresetClick(preset.rows)}>
+                            <preset.icon className="h-10 w-10 text-primary mb-3" />
+                            <h3 className="font-semibold">{preset.title}</h3>
+                            <p className="text-xs text-muted-foreground mt-1">{preset.description}</p>
+                        </Card>
+                    ))}
+                </div>
+            </section>
+            
+            <div ref={calculatorRef}>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Bandwidth Estimator</CardTitle>
+                        <CardDescription>
+                            Define your household or office usage to get a tailored bandwidth recommendation.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        <div className='space-y-4'>
+                            <Label>User Activities</Label>
+                            {usageRows.map((row, index) => (
+                                <div key={row.id} className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                                    <div className="sm:col-span-7">
+                                        <Select value={row.activity} onValueChange={(v) => handleRowChange(row.id, 'activity', v)}>
+                                            <SelectTrigger><SelectValue /></SelectTrigger>
+                                            <SelectContent>
+                                                {Object.entries(activityData).map(([key, data]) => (
+                                                    <SelectItem key={key} value={key}>{data.name}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div className="sm:col-span-4">
+                                        <Input
+                                            type="number"
+                                            min="1"
+                                            value={row.devices}
+                                            onChange={(e) => handleRowChange(row.id, 'devices', e.target.value)}
+                                            placeholder="No. of Devices"
+                                        />
+                                    </div>
+                                    <div className="sm:col-span-1">
+                                        <Button size="icon" variant="ghost" onClick={() => handleRemoveRow(row.id)} aria-label="Remove Row">
+                                            <Trash2 className="h-4 w-4 text-destructive"/>
+                                        </Button>
+                                    </div>
                                 </div>
-                                <div className="sm:col-span-4">
-                                    <Input
-                                        type="number"
-                                        min="1"
-                                        value={row.devices}
-                                        onChange={(e) => handleRowChange(row.id, 'devices', e.target.value)}
-                                        placeholder="No. of Devices"
-                                    />
-                                </div>
-                                <div className="sm:col-span-1">
-                                    <Button size="icon" variant="ghost" onClick={() => handleRemoveRow(row.id)} aria-label="Remove Row">
-                                        <Trash2 className="h-4 w-4 text-destructive"/>
-                                    </Button>
-                                </div>
-                            </div>
-                        ))}
-                        <Button variant="outline" size="sm" onClick={handleAddRow}><Plus className="mr-2 h-4 w-4" /> Add Activity</Button>
-                    </div>
-
-                    <div className="space-y-4 pt-4">
-                        <div className='flex justify-between items-center'>
-                             <Label htmlFor="concurrency">Peak Usage Concurrency</Label>
-                             <span className='font-bold text-primary'>{concurrency}%</span>
+                            ))}
+                            <Button variant="outline" size="sm" onClick={handleAddRow}><Plus className="mr-2 h-4 w-4" /> Add Activity</Button>
                         </div>
-                        <Slider
-                            id="concurrency"
-                            min={10}
-                            max={100}
-                            step={5}
-                            value={[concurrency]}
-                            onValueChange={(value) => setConcurrency(value[0])}
-                        />
-                        <p className="text-sm text-muted-foreground">
-                            Estimate what percentage of these activities will happen at the exact same time during your busiest hours.
-                        </p>
-                    </div>
 
-                    <Button onClick={handleCalculate} className="w-full sm:w-auto"><Network className="mr-2 h-4 w-4" /> Estimate Bandwidth</Button>
-                    
-                    {error && (
-                        <Alert variant="destructive" role="alert">
-                            <AlertCircle className="h-4 w-4" />
-                            <AlertTitle>Input Error</AlertTitle>
-                            <AlertDescription>{error}</AlertDescription>
-                        </Alert>
-                    )}
-                </CardContent>
-            </Card>
+                        <div className="space-y-4 pt-4">
+                            <div className='flex justify-between items-center'>
+                                 <Label htmlFor="concurrency">Peak Usage Concurrency</Label>
+                                 <span className='font-bold text-primary'>{concurrency}%</span>
+                            </div>
+                            <Slider
+                                id="concurrency"
+                                min={10}
+                                max={100}
+                                step={5}
+                                value={[concurrency]}
+                                onValueChange={(value) => setConcurrency(value[0])}
+                            />
+                            <p className="text-sm text-muted-foreground">
+                                Estimate what percentage of these activities will happen at the exact same time during your busiest hours.
+                            </p>
+                        </div>
+
+                        <Button onClick={handleCalculate} className="w-full sm:w-auto"><Network className="mr-2 h-4 w-4" /> Estimate Bandwidth</Button>
+                        
+                        {error && (
+                            <Alert variant="destructive" role="alert">
+                                <AlertCircle className="h-4 w-4" />
+                                <AlertTitle>Input Error</AlertTitle>
+                                <AlertDescription>{error}</AlertDescription>
+                            </Alert>
+                        )}
+                    </CardContent>
+                </Card>
+            </div>
             
             {results && (
                 <div ref={resultRef} tabIndex={-1} aria-live="polite">
@@ -246,6 +320,7 @@ export function BandwidthEstimator() {
                 <Card className="prose prose-sm max-w-none text-foreground p-6">
                     <p>Not sure what internet speed you need? This tool helps you move beyond marketing claims and get a data-driven estimate tailored to your specific usage. Follow these simple steps:</p>
                     <ol>
+                        <li><strong>Start with a Preset (Optional):</strong> Select one of the quick-start presets like "Family Household" or "Remote Worker" to populate the calculator with a common scenario. This is the fastest way to get a baseline estimate.</li>
                         <li><strong>List Your Activities:</strong> For each primary online activity (like streaming, gaming, or video calls), click "+ Add Activity". Choose the activity from the dropdown list.</li>
                         <li><strong>Enter Device Count:</strong> In the "No. of Devices" field, enter how many devices will be doing that activity *simultaneously*. For example, if two people might be streaming Netflix in HD at the same time, enter '2' for "HD Video Streaming".</li>
                         <li><strong>Adjust for Concurrency:</strong> The "Peak Usage Concurrency" slider is key. It's rare for every device to be maxed out at once. A typical household might have 70-80% concurrency during peak evening hours. A busy office might be higher. Adjust the slider to what feels realistic for your busiest time.</li>
@@ -400,3 +475,5 @@ export function BandwidthEstimator() {
         </div>
     );
 }
+
+    
