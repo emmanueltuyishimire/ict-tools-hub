@@ -128,7 +128,7 @@ export function LatencyToDistanceEstimator() {
                 {/* Left Column */}
                 <div className="space-y-4">
                      <div>
-                        <Label htmlFor="latency">Latency (RTT)</Label>
+                        <Label htmlFor="latency">Latency (RTT) (ms)</Label>
                         <Input id="latency" type="number" value={formData.latency} onChange={e => handleInputChange('latency', parseFloat(e.target.value))} />
                         <p className="text-xs text-muted-foreground mt-1">RTT (e.g., ping) will be halved to approximate one-way propagation time.</p>
                     </div>
@@ -295,5 +295,5 @@ export function LatencyToDistanceEstimator() {
                 <p className="mt-2 max-w-3xl mx-auto text-muted-foreground">Whether you’re a curious student, a gamer wondering about server performance, or simply someone fascinated by how fast light can carry your data, this calculator helps you visualize the incredible speed — and limits — of modern communication. It reminds us that the internet isn’t just a cloud in the sky but a vast, physical web of glass fibers and electrical signals connecting billions of people in near real time.</p>
             </div>
         </div>
-  );
+    );
 }
