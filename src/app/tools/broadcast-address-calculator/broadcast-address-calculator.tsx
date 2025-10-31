@@ -256,12 +256,12 @@ export function BroadcastAddressCalculator() {
                 <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
                     <section>
                         <h3 className="font-bold text-xl">What is a Broadcast Address? The Network's Megaphone</h3>
-                        <p>In any given IP subnet, three types of addresses exist: the Network ID (which identifies the network itself), the host addresses (which are assigned to individual devices), and the **Broadcast Address**. The broadcast address is a special, reserved IP that acts as a megaphone for the subnet. Any packet sent to this address is not delivered to a single device but is instead processed by **every single host** on that local network segment.</p>
+                        <p>In any given IP subnet, three types of addresses exist: the Network ID (which identifies the network itself), the host addresses (which are assigned to individual devices), and the <strong>Broadcast Address</strong>. The broadcast address is a special, reserved IP that acts as a megaphone for the subnet. Any packet sent to this address is not delivered to a single device but is instead processed by <strong>every single host</strong> on that local network segment.</p>
                         <p>It is always the very last IP address in a subnet range. For example, in the common home network of `192.168.1.0/24`, the range is `192.168.1.0` to `192.168.1.255`. Here, `192.168.1.0` is the Network ID, and `192.168.1.255` is the broadcast address. Neither can be assigned to your computer or phone. Our <Link href="/tools/subnet-calculator" className="text-primary hover:underline">Subnet Calculator</Link> can show you this full range for any network.</p>
                     </section>
                     <section>
                         <h3 className="font-bold text-xl">How the Broadcast Address is Calculated</h3>
-                        <p>The calculation is a straightforward binary operation. It involves taking the **Network ID** of the subnet and flipping all the host bits from '0' to '1'.</p>
+                        <p>The calculation is a straightforward binary operation. It involves taking the <strong>Network ID</strong> of the subnet and flipping all the host bits from '0' to '1'.</p>
                         <p>Let's use an example: IP `172.16.10.100` with a `/22` mask (`255.255.252.0`).</p>
                         <ol className="list-decimal pl-5 space-y-2">
                            <li><strong>Find the Network ID:</strong> A logical AND operation between the IP and the mask gives us the Network ID. (Our tool does this for you, but the result is `172.16.8.0`).</li>
