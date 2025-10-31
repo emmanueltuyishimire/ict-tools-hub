@@ -1,3 +1,4 @@
+
 import {
   type LucideIcon,
   Network,
@@ -40,7 +41,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Network Bandwidth Estimator', slug: 'bandwidth-estimator', description: 'Estimate network bandwidth requirements based on usage.' },
       { name: 'Ping / Latency Estimator', slug: 'latency-estimator', description: 'Estimate ping and latency over distances.' },
       { name: 'Data Transfer Time Calculator', slug: 'data-transfer-calculator', description: 'Calculate time to transfer data.' },
-      { name: 'MAC Address Validator', slug: 'mac-validator', description: 'Validate MAC address format.' },
+      { name: 'MAC Address Validator', slug: 'mac-validator', description: 'Validate MAC address format and find the vendor.' },
       { name: 'Port Number Lookup', slug: 'port-lookup', description: 'Look up common network port numbers.' },
       { name: 'Network Mask Validator', slug: 'network-mask-validator', description: 'Validate a network mask.' },
       { name: 'Public vs Private IP Checker', slug: 'ip-privacy-checker', description: 'Check if an IP is public or private.' },
