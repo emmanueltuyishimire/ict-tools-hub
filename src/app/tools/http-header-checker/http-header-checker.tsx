@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
 import { StructuredData } from '@/components/structured-data';
-import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Search, Globe, Code, Key, Cookie, Calendar, RefreshCw } from 'lucide-react';
+import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Search, Globe, Code, Key, Cookie, Calendar, RefreshCw, File as FileIcon } from 'lucide-react';
 import Link from 'next/link';
 import { checkHeaders, type FormState } from './actions';
 import { cn } from '@/lib/utils';
@@ -52,7 +52,7 @@ const howToSchema = {
 };
 
 const headerExamples = [
-    { header: 'Content-Type', description: 'Indicates the media type of the resource (e.g., `text/html`, `application/json`).', icon: File },
+    { header: 'Content-Type', description: 'Indicates the media type of the resource (e.g., `text/html`, `application/json`).', icon: FileIcon },
     { header: 'Cache-Control', description: 'Directives for caching in both requests and responses (e.g., `max-age=3600`, `no-cache`).', icon: RefreshCw },
     { header: 'Location', description: 'Used in 3xx redirects to specify the new URL the client should go to.', icon: Globe },
     { header: 'Server', description: 'Information about the software used by the origin server.', icon: Code },
@@ -212,7 +212,7 @@ export function HttpHeaderChecker() {
                                 <AccordionItem value={`item-${index}`} key={index}>
                                     <AccordionTrigger>{item.question}</AccordionTrigger>
                                     <AccordionContent>
-                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/`([^`]+)`/g, "<code className='font-code bg-muted p-1 rounded-sm'>$1</code>") }} />
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/`([^`]+)`/g, "<code class='font-code bg-muted p-1 rounded-sm'>$1</code>") }} />
                                     </AccordionContent>
                                 </AccordionItem>
                             ))}
