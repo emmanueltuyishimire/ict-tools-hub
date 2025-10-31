@@ -9,7 +9,7 @@ import { Check, Clipboard, AlertCircle } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 
 export function BinaryToIpConverter() {
-  const [binary, setBinary] = useState('');
+  const [binary, setBinary] = useState('11000000.10101000.00000001.00000001');
   const [ip, setIp] = useState('');
   const [error, setError] = useState('');
   const [hasCopied, setHasCopied] = useState(false);
@@ -41,11 +41,12 @@ export function BinaryToIpConverter() {
     try {
       let octets;
       if (binaryInput.includes('.')) {
-        octets = binaryInput.split('.');
-        if (octets.length !== 4 || octets.some(o => o.length > 8 || !/^[01]+$/.test(o))) {
+        const inputWithDots = binaryInput.split('.');
+        if (inputWithDots.length !== 4 || inputWithDots.some(o => o.length > 8 || !/^[01]+$/.test(o))) {
             setError('Invalid format. Please use four 8-bit octets separated by dots.');
             return;
         }
+        octets = inputWithDots;
       } else {
          octets = binaryInput.match(/.{1,8}/g);
       }

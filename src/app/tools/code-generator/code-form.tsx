@@ -46,8 +46,8 @@ export function CodeForm() {
     defaultValues: {
       task: 'generate',
       language: 'JS',
-      requirements: '',
-      codeSnippet: '',
+      requirements: 'Create a JavaScript function that returns a random item from an array.',
+      codeSnippet: 'function sortArray(arr) {\n  return arr.sort();\n}\n\nconst numbers = [3, 1, 4, 1, 5, 9];\nconsole.log(sortArray(numbers)); \n// Why is it sorting [1, 1, 3, 4, 5, 9] instead of numerically?',
     },
   });
 
