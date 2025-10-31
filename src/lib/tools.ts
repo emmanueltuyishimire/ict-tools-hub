@@ -49,7 +49,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'IP Range Generator', slug: 'ip-range-generator', description: 'Generate a list of IP addresses in a range.' },
       { name: 'Broadcast Address Calculator', slug: 'broadcast-address-calculator', description: 'Calculate the broadcast address of a network.' },
       { name: 'Host Count Calculator', slug: 'host-count-calculator', description: 'Calculate the number of hosts in a subnet.' },
-      { name: 'Network Address Calculator', slug: 'network-address-calculator', description: 'Calculate the network address.' },
+      { name: 'Network Address Calculator', slug: 'network-address-calculator', description: 'Calculate the network address (Network ID) of a subnet.' },
       { name: 'CIDR to Subnet List Generator', slug: 'cidr-to-subnet-list', description: 'Generate subnets from a CIDR.' },
       { name: 'CIDR to Wildcard Mask Converter', slug: 'cidr-to-wildcard', description: 'Convert CIDR to wildcard mask.' },
       { name: 'IP Summarization Tool', slug: 'ip-summarization', description: 'Summarize a list of IP networks.' },

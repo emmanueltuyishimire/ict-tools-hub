@@ -23,6 +23,8 @@ import { IpPrivacyChecker } from '@/app/tools/ip-privacy-checker/ip-privacy-chec
 import { IpClassFinder } from '@/app/tools/ip-class-finder/ip-class-finder';
 import { IpRangeGenerator } from '@/app/tools/ip-range-generator/ip-range-generator';
 import { BroadcastAddressCalculator } from '@/app/tools/broadcast-address-calculator/broadcast-address-calculator';
+import { HostCountCalculator } from '@/app/tools/host-count-calculator/host-count-calculator';
+import { NetworkAddressCalculator } from '@/app/tools/network-address-calculator/network-address-calculator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -53,6 +55,8 @@ const toolComponents: Record<string, React.ComponentType> = {
     'ip-class-finder': IpClassFinder,
     'ip-range-generator': IpRangeGenerator,
     'broadcast-address-calculator': BroadcastAddressCalculator,
+    'host-count-calculator': HostCountCalculator,
+    'network-address-calculator': NetworkAddressCalculator,
 };
 
 
