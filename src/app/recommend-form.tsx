@@ -1,5 +1,5 @@
 'use client';
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -24,7 +24,7 @@ type FormValues = z.infer<typeof formSchema>;
 const initialState: AiToolRecommendationOutput | { error: string } | null = null;
 
 export function RecommendForm() {
-  const [state, formAction] = useFormState(aiToolRecommendation, initialState);
+  const [state, formAction] = useActionState(aiToolRecommendation, initialState);
   const resultRef = React.useRef<HTMLDivElement>(null);
 
   const form = useForm<FormValues>({
