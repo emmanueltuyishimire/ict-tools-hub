@@ -367,7 +367,7 @@ export function LatencyEstimator() {
                             <CardHeader>
                                 <CardTitle className="text-base flex items-center justify-between">Subnet Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
                                 <CardDescription className="text-xs">Proper network design can reduce the number of hops and improve latency.</CardDescription>
-                            </Header>
+                            </CardHeader>
                         </Card>
                     </Link>
                 </div>
