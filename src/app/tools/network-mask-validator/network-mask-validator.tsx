@@ -234,29 +234,34 @@ export function NetworkMaskValidator() {
                     </section>
                      <section>
                         <h3 className="font-bold text-xl">CIDR, Subnet Mask, and Wildcard Mask: Three Sides of the Same Coin</h3>
-                        <p>Network masks can be represented in three different ways, each used in different contexts. Our <Link href="/tools/subnet-mask-converter" className="text-primary hover:underline">Subnet Mask Converter</pre>
-        <p>This is where the router sees the IP address and performs a logical AND operation to find the Network ID.</p>
-        <p>The first 24 bits (where the mask has '1's) are preserved, defining the network as <code className="font-code bg-muted p-1 rounded-sm">192.168.1.0</code>. The last 8 bits (where the mask has '0's) are available for hosts, allowing for 2<sup>8</sup> = 256 addresses within that network. By "borrowing" bits from the host portion and adding them to the network portion (e.g., changing the mask to /25), we can create two smaller subnets.</p>
-      </section>
-      <section>
-        <h3 className="font-bold text-xl">Decoding CIDR Notation</h3>
-        <p>Classless Inter-Domain Routing (CIDR) was introduced to replace the old classful system. CIDR notation is simply a shorthand for the subnet mask. It's represented by a forward slash followed by a number, like `/24`. This number indicates exactly how many consecutive '1's are at the beginning of the subnet mask. It's far more efficient and flexible than writing out `255.255.255.0`. You can use our <Link href="/tools/subnet-mask-converter" className='text-primary hover:underline'>Subnet Mask Converter</Link> to switch between formats.</p>
-        <div className="overflow-x-auto my-4">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b"><th className="p-2 text-left">CIDR</th><th className="p-2 text-left">Subnet Mask</th><th className="p-2 text-left">Total Hosts</th></tr>
-            </thead>
-            <tbody>
-              <tr className="border-b"><td className="p-2 font-code">/8</td><td className="p-2 font-code">255.0.0.0</td><td className="p-2">16,777,216</td></tr>
-              <tr className="border-b"><td className="p-2 font-code">/16</td><td className="p-2 font-code">255.255.0.0</td><td className="p-2">65,536</td></tr>
-              <tr className="border-b"><td className="p-2 font-code">/24</td><td className="p-2 font-code">255.255.255.0</td><td className="p-2">256</td></tr>
-              <tr><td className="p-2 font-code">/30</td><td className="p-2 font-code">255.255.255.252</td><td className="p-2">4</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p>A `/30` network is a common example for point-to-point links between two routers. It provides 4 total IP addresses: one for the network ID, one for the broadcast address, and two usable IPs for the routers at each end of the link. This is extremely efficient, wasting no addresses.</p>
-      </section>
-    </CardContent>
-  </Card>
-</div>
+                        <p>Network masks can be represented in three different ways, each used in different contexts. Our <Link href="/tools/subnet-mask-converter" className="text-primary hover:underline">Subnet Mask Converter</Link> allows you to switch between them seamlessly.</p>
+                        <ul className="list-disc pl-5">
+                            <li><strong>Subnet Mask:</strong> The standard dot-decimal format (e.g., `255.255.255.0`). Used for configuring host IP addresses.</li>
+                            <li><strong>CIDR Notation:</strong> A shorthand with a forward slash (e.g., `/24`). Modern, concise, and widely used in routing and cloud environments.</li>
+                            <li><strong>Wildcard Mask:</strong> The inverse of the subnet mask (e.g., `0.0.0.255`). Used primarily in Access Control Lists (ACLs) to specify ranges of IP addresses.</li>
+                        </ul>
+                    </section>
+                </CardContent>
+            </Card>
 
+            <section>
+                <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+                <Card>
+                    <CardContent className="p-6">
+                        <Accordion type="single" collapsible className="w-full">
+                            {faqData.map((item, index) => (
+                                <AccordionItem value={`item-${index}`} key={index}>
+                                    <AccordionTrigger>{item.question}</AccordionTrigger>
+                                    <AccordionContent>
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                    </AccordionContent>
+                                </AccordionItem>
+                            ))}
+                        </Accordion>
+                    </CardContent>
+                </Card>
+            </section>
+
+        </div>
+    );
+}
