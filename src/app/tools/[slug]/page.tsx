@@ -18,6 +18,8 @@ import { PasswordStrengthChecker } from '@/app/tools/password-strength-checker/p
 import { DataTransferTimeCalculator } from '@/app/tools/data-transfer-calculator/data-transfer-calculator';
 import { MacValidator } from '@/app/tools/mac-validator/mac-validator';
 import { PortLookupTool } from '@/app/tools/port-lookup/port-lookup-tool';
+import { NetworkMaskValidator } from '@/app/tools/network-mask-validator/network-mask-validator';
+import { IpPrivacyChecker } from '@/app/tools/ip-privacy-checker/ip-privacy-checker';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -43,6 +45,8 @@ const toolComponents: Record<string, React.ComponentType> = {
     'data-transfer-calculator': DataTransferTimeCalculator,
     'mac-validator': MacValidator,
     'port-lookup': PortLookupTool,
+    'network-mask-validator': NetworkMaskValidator,
+    'ip-privacy-checker': IpPrivacyChecker,
 };
 
 
