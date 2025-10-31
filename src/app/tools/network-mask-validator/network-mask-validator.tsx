@@ -227,8 +227,8 @@ export function NetworkMaskValidator() {
                         <h3 className="font-bold text-xl">The Cardinal Rule: Contiguous Binary '1's</h3>
                         <p>While we write subnet masks in dot-decimal notation for convenience, their true form is binary. A subnet mask's validity is determined by one strict rule: **its binary representation must be an unbroken sequence of '1's from left to right, followed by an unbroken sequence of '0's.** The '1's mark the network portion, and the '0's mark the host portion.</p>
                         <div className="grid md:grid-cols-2 gap-4 my-4 font-code text-sm">
-                            <div className="bg-muted p-2 rounded"><strong>Valid Mask: 255.255.255.0</strong><br/>11111111.11111111.11111111.00000000<br/><span class="text-green-600">✓ Correct: All 1s followed by all 0s.</span></div>
-                            <div className="bg-muted p-2 rounded"><strong>Invalid Mask: 255.255.0.255</strong><br/>11111111.11111111.00000000.11111111<br/><span class="text-red-600">✗ Incorrect: 0s appear before the final 1s.</span></div>
+                            <div className="bg-muted p-2 rounded"><strong>Valid Mask: 255.255.255.0</strong><br/>11111111.11111111.11111111.00000000<br/><span className="text-green-600">✓ Correct: All 1s followed by all 0s.</span></div>
+                            <div className="bg-muted p-2 rounded"><strong>Invalid Mask: 255.255.0.255</strong><br/>11111111.11111111.00000000.11111111<br/><span className="text-red-600">✗ Incorrect: 0s appear before the final 1s.</span></div>
                         </div>
                         <p>This rule is non-negotiable because it creates a clear and unambiguous boundary between the network and host parts of an address. An invalid mask with interspersed 0s and 1s would create confusion that network protocols are not designed to handle. Our <Link href="/tools/ip-to-binary" className='text-primary hover:underline'>IP to Binary Converter</Link> can help you visualize this for any mask.</p>
                     </section>
@@ -265,3 +265,5 @@ export function NetworkMaskValidator() {
         </div>
     );
 }
+
+    
