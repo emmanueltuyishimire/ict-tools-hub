@@ -177,6 +177,28 @@ export default function ResponseTimeCalculatorPage() {
         </div>
 
        <section>
+          <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Diagnosing a Slow E-commerce Site</h3>
+                  <p className="text-sm text-muted-foreground">An e-commerce store owner notices their site feels sluggish. They use the Response Time Calculator and find their TTFB is over 1200ms. By testing both a product page and a simple static image, they see the image has a low TTFB, but the product page is slow. This tells them the problem is not their server's connection but likely slow database queries retrieving product information.</p>
+              </div>
+               <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Choosing a Hosting Provider</h3>
+                  <p className="text-sm text-muted-foreground">A developer is choosing between two hosting providers. They set up identical, simple websites on each. By using this tool to test the TTFB of each site from the same location, they can get a direct, objective comparison of the server hardware and network quality, helping them make an informed decision.</p>
+              </div>
+               <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Verifying a Caching Implementation</h3>
+                  <p className="text-sm text-muted-foreground">After installing a caching plugin on their WordPress blog, a user wants to see if it's working. They test their homepage and note a TTFB of 800ms. They refresh the page a second time to ensure it's cached, then test again. The new TTFB is 90ms. This dramatic drop confirms that the page is being served from the cache correctly.</p>
+              </div>
+               <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Justifying a CDN</h3>
+                  <p className="text-sm text-muted-foreground">A business has many customers in Australia, but their server is in Ireland. Using a VPN or an online tester, they check their TTFB from an Australian location and find it's over 1000ms. This provides a powerful argument to management for investing in a Content Delivery Network (CDN) to reduce network latency and better serve their international customers.</p>
+              </div>
+          </div>
+      </section>
+
+       <section>
           <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
           <Card>
               <CardContent className="p-6">
