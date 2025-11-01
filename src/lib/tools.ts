@@ -98,7 +98,6 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Time Complexity Estimator', slug: 'big-o-calculator', description: 'Understand and visualize Big O notation.' },
       { name: 'Prime Number Checker', slug: 'prime-checker', description: 'Check if a number is prime.' },
       { name: 'Prime Number Generator', slug: 'prime-number-generator', description: 'Generate prime numbers.' },
-      { name: 'Fibonacci Sequence Generator', slug: 'fibonacci-generator', description: 'Generate Fibonacci sequence.' },
       { name: 'Factorial Calculator', slug: 'factorial-calculator', description: 'Calculate the factorial of a number.' },
       { name: 'Algorithm Step Simulator', slug: 'algorithm-simulator', description: 'Simulate steps of simple algorithms.' },
       { name: 'Random String Generator', slug: 'random-string-generator', description: 'Generate a random string.' },
@@ -107,6 +106,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Variable Name Validator', slug: 'variable-name-validator', description: 'Validate variable names.' },
       { name: 'Function / Formula Tester', slug: 'function-tester', description: 'Test a function or formula.' },
       { name: 'Unicode / ASCII Converter', slug: 'unicode-ascii-converter', description: 'Convert between Unicode and ASCII.' },
+      { name: 'Fibonacci Sequence Generator', slug: 'fibonacci-generator', description: 'Generate Fibonacci sequence.' },
     ],
   },
   {
@@ -185,32 +185,6 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Column Type Converter', slug: 'column-type-converter', description: 'Suggest column type conversions.' },
       { name: 'SQL Injection Tester', slug: 'sql-injection-tester', description: 'Educational SQL injection tester.' },
       { name: 'Database Health Checker', slug: 'db-health-checker', description: 'Basic database health checks.' },
-    ],
-  },
-  {
-    name: 'Networking Education',
-    icon: BookOpen,
-    tools: [
-      { name: 'CIDR / Subnet Practice Generator', slug: 'subnet-practice', description: 'Generate subnetting practice problems.' },
-      { name: 'IP Quiz / Practice Tool', slug: 'ip-quiz', description: 'Practice IP addressing quizzes.' },
-      { name: 'Network Topology Mapper', slug: 'topology-mapper-static', description: 'Static network topology mapper.' },
-      { name: 'Port Scanner (educational)', slug: 'port-scanner-edu', description: 'Educational port scanner.' },
-      { name: 'DNS Lookup Simulator', slug: 'dns-lookup-simulator', description: 'Simulate DNS lookups.' },
-      { name: 'OSI Layer Quiz Tool', slug: 'osi-quiz', description: 'Quiz on the OSI model layers.' },
-      { name: 'Packet Size Estimator', slug: 'packet-size-estimator', description: 'Estimate network packet sizes.' },
-      { name: 'Firewall Rule Simulator', slug: 'firewall-simulator', description: 'Simulate firewall rules.' },
-      { name: 'VPN Bandwidth Estimator', slug: 'vpn-bandwidth-estimator', description: 'Estimate VPN bandwidth needs.' },
-      { name: 'MAC Address Quiz Tool', slug: 'mac-address-quiz', description: 'Quiz on MAC addresses.' },
-      { name: 'Network Mask Quiz', slug: 'network-mask-quiz', description: 'Quiz on network masks.' },
-      { name: 'IP Class Quiz', slug: 'ip-class-quiz', description: 'Quiz on IP address classes.' },
-      { name: 'Broadcast Address Quiz', slug: 'broadcast-address-quiz', description: 'Quiz on broadcast addresses.' },
-      { name: 'Host Calculation Quiz', slug: 'host-calculation-quiz', description: 'Quiz on calculating hosts.' },
-      { name: 'Subnetting Challenge Tool', slug: 'subnetting-challenge', description: 'Challenge your subnetting skills.' },
-      { name: 'Routing Table Simulator', slug: 'routing-table-simulator', description: 'Simulate a routing table.' },
-      { name: 'NAT Simulation Tool', slug: 'nat-simulator', description: 'Simulate Network Address Translation.' },
-      { name: 'VLAN ID Calculator', slug: 'vlan-id-calculator', description: 'Calculate VLAN IDs.' },
-      { name: 'IP Summary Quiz', slug: 'ip-summary-quiz', description: 'Quiz on IP summarization.' },
-      { name: 'DNS Zone File Quiz', slug: 'dns-zone-file-quiz', description: 'Quiz on DNS zone files.' },
     ],
   },
   {
@@ -307,5 +281,3 @@ export const mainNavLinks = [
         description: 'Generate and debug code with AI.'
     }
 ]
-
-    
