@@ -20,19 +20,41 @@ export function CompressionEstimator() {
     const results = useMemo(() => {
         if (originalSize === '' || originalSize <= 0) return null;
 
-        const sizeInKb = unit === 'MB' ? originalSize * 1024 : originalSize;
+        let sizeInKb;
+        switch (unit) {
+            case 'TB':
+                sizeInKb = originalSize * 1024 * 1024 * 1024;
+                break;
+            case 'GB':
+                sizeInKb = originalSize * 1024 * 1024;
+                break;
+            case 'MB':
+                sizeInKb = originalSize * 1024;
+                break;
+            case 'KB':
+            default:
+                sizeInKb = originalSize;
+                break;
+        }
         
         const gzipSize = sizeInKb * GZIP_RATIO;
         const brotliSize = sizeInKb * BROTLI_RATIO;
 
+        const formatSize = (kb: number) => {
+            if (kb < 1024) return `${kb.toFixed(2)} KB`;
+            if (kb < 1024 * 1024) return `${(kb / 1024).toFixed(2)} MB`;
+            if (kb < 1024 * 1024 * 1024) return `${(kb / (1024 * 1024)).toFixed(2)} GB`;
+            return `${(kb / (1024 * 1024 * 1024)).toFixed(2)} TB`;
+        }
+
         return {
             original: sizeInKb,
             gzip: {
-                size: gzipSize,
+                size: formatSize(gzipSize),
                 savings: ((sizeInKb - gzipSize) / sizeInKb) * 100,
             },
             brotli: {
-                size: brotliSize,
+                size: formatSize(brotliSize),
                 savings: ((sizeInKb - brotliSize) / sizeInKb) * 100,
             }
         };
@@ -63,6 +85,8 @@ export function CompressionEstimator() {
                         <SelectContent>
                             <SelectItem value="KB">KB</SelectItem>
                             <SelectItem value="MB">MB</SelectItem>
+                            <SelectItem value="GB">GB</SelectItem>
+                            <SelectItem value="TB">TB</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
@@ -82,7 +106,7 @@ export function CompressionEstimator() {
                                     <CardTitle className="text-lg">Gzip Compression</CardTitle>
                                 </CardHeader>
                                 <CardContent className="p-2 text-center">
-                                    <p className="text-3xl font-bold text-primary">{results.gzip.size.toFixed(2)} KB</p>
+                                    <p className="text-3xl font-bold text-primary">{results.gzip.size}</p>
                                     <p className="text-sm font-semibold text-green-600 flex items-center justify-center gap-1">
                                         <TrendingDown />
                                         {results.gzip.savings.toFixed(0)}% Savings
@@ -94,7 +118,7 @@ export function CompressionEstimator() {
                                     <CardTitle className="text-lg">Brotli Compression</CardTitle>
                                 </CardHeader>
                                 <CardContent className="p-2 text-center">
-                                    <p className="text-3xl font-bold text-primary">{results.brotli.size.toFixed(2)} KB</p>
+                                    <p className="text-3xl font-bold text-primary">{results.brotli.size}</p>
                                      <p className="text-sm font-semibold text-green-600 flex items-center justify-center gap-1">
                                         <TrendingDown />
                                         {results.brotli.savings.toFixed(0)}% Savings
