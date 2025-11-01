@@ -58,7 +58,14 @@ const BigOCalculatorPage = () => {
     const faqSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") } }))
+        mainEntity: faqData.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>")
+            }
+        }))
     };
 
     return (
@@ -217,7 +224,7 @@ const BigOCalculatorPage = () => {
                                     <CardDescription className="text-xs">Understand how recursive function calls can lead to different time complexities like O(2^n).</CardDescription>
                                 </CardHeader>
                             </Card>
-                        </Link>
+                         </Link>
                          <Link href="/tools/data-transfer-calculator" className="block">
                             <Card className="hover:border-primary transition-colors h-full">
                                 <CardHeader>
@@ -225,7 +232,7 @@ const BigOCalculatorPage = () => {
                                     <CardDescription className="text-xs">While Big O measures operations, this tool measures how long data takes to transfer, another key aspect of performance.</CardDescription>
                                 </CardHeader>
                             </Card>
-                        </Link>
+                         </Link>
                     </div>
                 </section>
             </div>
@@ -234,3 +241,5 @@ const BigOCalculatorPage = () => {
 }
 
 export default BigOCalculatorPage;
+
+    
