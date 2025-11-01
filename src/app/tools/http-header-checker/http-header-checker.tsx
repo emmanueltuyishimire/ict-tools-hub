@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { useActionState, useRef, useEffect } from 'react';
@@ -95,8 +94,7 @@ export function HttpHeaderChecker() {
                                     id="url-input"
                                     name="url"
                                     type="text"
-                                    defaultValue="google.com"
-                                    placeholder="e.g., https://example.com"
+                                    placeholder="example.com"
                                     className="font-code"
                                     aria-label="URL to check"
                                 />

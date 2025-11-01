@@ -61,8 +61,7 @@ export function ResponseTimeCalculator() {
                                     id="url-input"
                                     name="url"
                                     type="text"
-                                    defaultValue="https://google.com"
-                                    placeholder="e.g., https://example.com"
+                                    placeholder="example.com"
                                     className="font-code"
                                     aria-label="URL to test"
                                 />
