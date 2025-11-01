@@ -17,10 +17,9 @@ const faqData = [
     { question: "Why do I need to encode HTML entities?", answer: "You need to encode them to prevent the browser from misinterpreting your text as HTML code. For example, if you want to display the text '<p>This is a paragraph.</p>' literally on your webpage, you must encode the '<' and '>' characters as '&lt;' and '&gt;'. Otherwise, the browser would render it as an actual HTML paragraph." },
     { question: "What is the difference between an entity name and an entity number?", answer: "Most entities have both a name (e.g., `&copy;` for copyright) and a number (e.g., `&#169;`). They render the same character. Names are easier to remember, but numbers are better supported across all character sets. This tool uses named entities where available." },
     { question: "Is this safe for sensitive data?", answer: "Yes. All encoding and decoding operations happen entirely within your browser. No data is sent to any server." },
-    { question: "What are 'unreserved' characters?", answer: "Unreserved characters are those that do not have a special meaning in a URL and do not need to be encoded. They include uppercase and lowercase letters (A-Z, a-z), digits (0-9), and the special characters `-`, `_`, `.`, and `~`." },
     { question: "What happens if I try to decode a string that isn't properly encoded?", answer: "The decoder will only convert valid entity sequences (like `&amp;` or `&#169;`). Any other text will remain as-is. If it encounters a malformed entity (like `&amp`), it might not convert it correctly." },
     { question: "Can I encode non-ASCII characters like 'é' or '€'?", answer: "Yes. This tool encodes a wide range of common non-ASCII characters into their respective HTML entities (e.g., `&eacute;` and `&euro;`), ensuring they are displayed correctly in any HTML document." },
-    { question: "How is this different from URL encoding?", answer: "HTML entity encoding is for safely displaying text within an HTML document. URL encoding (or percent-encoding) is for safely passing data within a URL's query string. They solve different problems and use different formats. You can use our URL Encoder/Decoder for that purpose." },
+    { question: "How is this different from URL encoding?", answer: "HTML entity encoding is for safely displaying text within an HTML document. URL encoding (or percent-encoding) is for safely passing data within a URL's query string. They solve different problems and use different formats. You can use our <a href='/tools/url-encoder-decoder' class='text-primary hover:underline'>URL Encoder/Decoder</a> for that purpose." },
     { question: "Should I encode all special characters?", answer: "It is best practice to encode at least the five main reserved HTML characters: & < > \" '. Encoding other characters like the copyright symbol © ensures they are displayed correctly regardless of the document's character set." },
     { question: "Why does a space sometimes appear as `&nbsp;`?", answer: "The `&nbsp;` entity stands for Non-Breaking Space. It's used when you want to ensure that a space is rendered and prevents a line break from occurring at that point, which can be useful for formatting." },
 ];
@@ -50,9 +49,9 @@ const keyTerminologies = [
 export default function HtmlEntityEncoderDecoderPage() {
   return (
     <>
+      <StructuredData data={faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))} />
+      <StructuredData data={howToSchema} />
       <div className="max-w-4xl mx-auto space-y-12">
-          <StructuredData data={faqData} />
-          <StructuredData data={howToSchema} />
           <PageHeader
               title="HTML Entity Encoder / Decoder"
               description="Convert text to HTML entities to safely display special characters and code, or decode entities back to plain text."
@@ -63,7 +62,7 @@ export default function HtmlEntityEncoderDecoderPage() {
               <Card className="prose prose-sm max-w-none text-foreground p-6">
                   <p>This tool provides real-time, two-way conversion between plain text and HTML entities.</p>
                   <ol>
-                      <li><strong>Live Conversion:</strong> As you type in one box, the other updates instantly.</li>
+                      <li><strong>Live Conversion:</strong> As you type in one box, the other will update instantly with the converted content.</li>
                       <li><strong>To Encode:</strong> Type plain text with special characters (e.g., <strong>&lt;h1&gt;Title&lt;/h1&gt;</strong>) into the top "Decoded" box. The safe HTML entity version will appear in the "Encoded" box.</li>
                       <li><strong>To Decode:</strong> Paste text containing HTML entities (e.g., <strong>&amp;lt;p&amp;gt;</strong>) into the bottom "Encoded" box to see the original plain text.</li>
                       <li><strong>Swap & Copy:</strong> Use the `Swap` button (<ArrowRightLeft className="inline h-4 w-4" />) to instantly switch the contents of the two boxes. Use the `Copy` icon (<Copy className="inline h-4 w-4" />) above either box to copy its content to your clipboard.</li>
@@ -142,7 +141,7 @@ export default function HtmlEntityEncoderDecoderPage() {
                               <AccordionItem value={`item-${index}`} key={index}>
                                   <AccordionTrigger>{item.question}</AccordionTrigger>
                                   <AccordionContent>
-                                    <div dangerouslySetInnerHTML={{ __html: item.answer.replace('URL Encoder/Decoder', "<a href='/tools/url-encoder-decoder' class='text-primary hover:underline'>URL Encoder/Decoder</a>") }} />
+                                    <div dangerouslySetInnerHTML={{ __html: item.answer }} />
                                   </AccordionContent>
                               </AccordionItem>
                           ))}

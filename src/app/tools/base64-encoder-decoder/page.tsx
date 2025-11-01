@@ -59,11 +59,11 @@ export default function Base64Page() {
     <>
       <StructuredData data={faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))} />
       <StructuredData data={howToSchema} />
-      <PageHeader
-          title="Base64 Encoder / Decoder"
-          description="Convert text data into a Base64 encoded string, or decode a Base64 string back to its original form. All operations are done securely in your browser."
-      />
       <div className="max-w-4xl mx-auto space-y-12">
+        <PageHeader
+            title="Base64 Encoder / Decoder"
+            description="Convert text data into a Base64 encoded string, or decode a Base64 string back to its original form. All operations are done securely in your browser."
+        />
         <Base64EncoderDecoder />
         <section>
           <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
@@ -182,7 +182,7 @@ export default function Base64Page() {
                           <AccordionItem value={`item-${index}`} key={index}>
                               <AccordionTrigger>{item.question}</AccordionTrigger>
                               <AccordionContent>
-                                <div dangerouslySetInnerHTML={{ __html: item.answer.replace('URL Encoder/Decoder', "<a href='/tools/url-encoder-decoder' class='text-primary hover:underline'>URL Encoder/Decoder</a>") }} />
+                                <div dangerouslySetInnerHTML={{ __html: item.answer }} />
                               </AccordionContent>
                           </AccordionItem>
                       ))}
