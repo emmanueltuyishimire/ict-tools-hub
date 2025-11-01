@@ -6,6 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const metadata = {
     title: 'Webpage Load Time Estimator | ICT Toolbench',
@@ -114,11 +115,11 @@ export default function WebpageLoadTimeEstimatorPage() {
               <section>
                   <h3 className="font-bold text-xl">It's Not Just About Download Speed</h3>
                   <p>
-                    A common misconception is that page load time is simply the total page size divided by the connection speed. The reality is far more complex. A website's loading process is a sequence of steps, and many things can create a bottleneck. Our estimator models a simplified version of this, factoring in the two most important components: **Bandwidth** (speed) and **Latency** (delay).
+                    A common misconception is that page load time is simply the total page size divided by the connection speed. The reality is far more complex. A website's loading process is a sequence of steps, and many things can create a bottleneck. Our estimator models a simplified version of this, factoring in the two most important components: <strong>Bandwidth</strong> (speed) and <strong>Latency</strong> (delay).
                   </p>
                   <ul className="list-disc pl-5">
                     <li><strong>Bandwidth:</strong> This is your connection's capacity, determining how quickly you can download the file data itself. A 5MB page will naturally download faster on a 100 Mbps connection than on a 10 Mbps connection. You can explore this with our <Link href="/tools/data-transfer-calculator" className="text-primary hover:underline">Data Transfer Time Calculator</Link>.</li>
-                    <li><strong>Latency:</strong> This is the round-trip delay for every request. Before your browser can download a single file, it must send a request to the server and wait for a response. This delay, often called 'ping', happens for *every single resource* on your page. A page with 100 small images will feel very slow on a high-latency satellite connection, even if the bandwidth is high.</li>
+                    <li><strong>Latency:</strong> This is the round-trip delay for every request. Before your browser can download a single file, it must send a request to the server and wait for a response. This delay, often called 'ping', happens for <em>every single resource</em> on your page. A page with 100 small images will feel very slow on a high-latency satellite connection, even if the bandwidth is high.</li>
                   </ul>
               </section>
               <section>
