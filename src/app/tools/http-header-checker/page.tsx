@@ -3,8 +3,8 @@ import { PageHeader } from '@/components/page-header';
 import { HttpHeaderChecker } from './http-header-checker';
 
 export const metadata = {
-    title: 'HTTP Header Checker | ICT Toolbench',
-    description: 'Inspect the HTTP response headers for any URL. Analyze status codes, cache-control, security headers, and more with this free online tool.',
+    title: 'Live HTTP Header Checker | Check & Analyze Response Headers | ICT Toolbench',
+    description: 'Instantly inspect the HTTP response headers of any URL in real-time. Analyze status codes, cache-control, redirects, and security headers (CSP, HSTS) with our free tool. Essential for developers, SEOs, and sysadmins.',
 };
 
 export default function HttpHeaderCheckerPage() {
@@ -18,3 +18,4 @@ export default function HttpHeaderCheckerPage() {
     </>
   );
 }
+

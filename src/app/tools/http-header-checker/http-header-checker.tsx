@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
 import { StructuredData } from '@/components/structured-data';
-import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Search, Globe, Code, Key, Cookie, Calendar, RefreshCw, File as FileIcon } from 'lucide-react';
+import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Search, Globe, Code, Key, Cookie, Calendar, RefreshCw, FileIcon, Info } from 'lucide-react';
 import Link from 'next/link';
 import { checkHeaders, type FormState } from './actions';
 import { cn } from '@/lib/utils';
@@ -203,6 +203,57 @@ export function HttpHeaderChecker() {
                 </CardContent>
             </Card>
 
+            <div className="grid md:grid-cols-2 gap-8">
+                <Card>
+                    <CardHeader>
+                        <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                            <li><strong>Use `curl` for quick checks:</strong> On the command line, you can use `curl -I https://example.com` to quickly fetch only the headers of a URL without downloading the body.</li>
+                            <li><strong>Debug API Calls:</strong> This tool is perfect for debugging third-party APIs. If a request is failing, check the headers to see the `Content-Type`, `Server` info, and any custom headers that might give you a clue.</li>
+                            <li><strong>Check Redirect Chains:</strong> If a URL is redirecting unexpectedly, check the `Location` header to see where it's sending you. This is the first step in diagnosing redirect loops.</li>
+                            <li><strong>Verify CDN Caching:</strong> When using a Content Delivery Network (CDN), check for headers like `X-Cache` or `CF-Cache-Status`. A `HIT` value means the content was served from the CDN's cache, which is fast. A `MISS` means it had to go back to the origin server, which is slower.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                         <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                    </CardHeader>
+                    <CardContent>
+                         <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                            <li><strong>Using 302 for Permanent Redirects:</strong> A 302 is a "Temporary Redirect". Using it for a permanent URL change can cause SEO issues, as search engines may not transfer the link equity to the new page. Always use 301 for permanent moves.</li>
+                            <li><strong>Aggressive Caching on Dynamic Content:</strong> Setting a long `Cache-Control: max-age` on content that changes frequently (like a user's profile page) can lead to users seeing stale, outdated information.</li>
+                             <li><strong>Missing Security Headers:</strong> Forgetting to implement headers like `Strict-Transport-Security` (HSTS) or `Content-Security-Policy` (CSP) leaves your site vulnerable to common attacks like man-in-the-middle and cross-site scripting (XSS).</li>
+                            <li><strong>Incorrect `Content-Type`:</strong> Serving JSON data with a `Content-Type` of `text/html` can cause browsers and client applications to fail to parse the response correctly.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+            </div>
+
+            <section>
+                <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-card p-6 rounded-lg">
+                        <h3 className="font-semibold text-lg mb-2">Debugging an SEO Redirect Issue</h3>
+                        <p className="text-sm text-muted-foreground">An SEO specialist notices that an old blog post's traffic has dropped to zero after a site migration. They enter the old URL into the Header Checker and see the server is responding with a `404 Not Found` instead of the expected `301 Moved Permanently` and `Location` header. This instantly tells them the redirect was never implemented, and they can file a ticket to have it fixed.</p>
+                    </div>
+                     <div className="bg-card p-6 rounded-lg">
+                        <h3 className="font-semibold text-lg mb-2">Optimizing Website Performance</h3>
+                        <p className="text-sm text-muted-foreground">A web developer wants to improve their site's load time. They check the headers for their main CSS file and notice the `Cache-Control` header is set to `no-cache`. This means browsers are re-downloading the file on every single page load. They change the server configuration to set a long `max-age` (e.g., `max-age=31536000`), and the site's performance for returning visitors improves dramatically.</p>
+                    </div>
+                     <div className="bg-card p-6 rounded-lg">
+                        <h3 className="font-semibold text-lg mb-2">Verifying a Security Fix</h3>
+                        <p className="text-sm text-muted-foreground">After a security audit, a sysadmin is tasked with implementing HSTS. After deploying the change, they use the Header Checker to inspect their site's response. They look for the `Strict-Transport-Security` header and confirm its presence and correct `max-age` value, providing clear proof that the security measure is active.</p>
+                    </div>
+                     <div className="bg-card p-6 rounded-lg">
+                        <h3 className="font-semibold text-lg mb-2">Integrating with a Third-Party API</h3>
+                        <p className="text-sm text-muted-foreground">A developer is trying to get data from a third-party API but their requests are failing. They use the Header Checker on the API endpoint and inspect the response. They discover an `X-Rate-Limit-Remaining: 0` header, which tells them they have exhausted their API quota for the hour. They can now adjust their code to handle rate limiting gracefully.</p>
+                    </div>
+                </div>
+            </section>
+            
             <section>
                 <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
                 <Card>
@@ -219,6 +270,36 @@ export function HttpHeaderChecker() {
                         </Accordion>
                     </CardContent>
                 </Card>
+            </section>
+            
+             <section>
+                <h2 className="text-2xl font-bold mb-4">Related Tools & Articles</h2>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <Link href="/tools/dns-lookup" className="block">
+                        <Card className="hover:border-primary transition-colors h-full">
+                            <CardHeader>
+                                <CardTitle className="text-base flex items-center justify-between">DNS Lookup Tool<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                <CardDescription className="text-xs">Find the IP address your domain points to before you check its headers.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+                    <Link href="/tools/ssl-checker" className="block">
+                        <Card className="hover:border-primary transition-colors h-full">
+                            <CardHeader>
+                                <CardTitle className="text-base flex items-center justify-between">SSL Checker<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                <CardDescription className="text-xs">Verify the SSL certificate details for a secure (HTTPS) site.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+                    <Link href="/tools/url-encoder-decoder" className="block">
+                        <Card className="hover:border-primary transition-colors h-full">
+                            <CardHeader>
+                                <CardTitle className="text-base flex items-center justify-between">URL Encoder / Decoder<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                <CardDescription className="text-xs">Encode special characters in a URL before you check its headers.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
+                </div>
             </section>
         </div>
     );
