@@ -34,6 +34,7 @@ import { UrlEncoderDecoder } from '@/app/tools/url-encoder-decoder/url-encoder-d
 import { HtmlEntityEncoderDecoder } from '@/app/tools/html-entity-encoder-decoder/html-entity-encoder-decoder';
 import { SslChecker } from '@/app/tools/ssl-checker/ssl-checker';
 import { CodeMinifier } from '@/app/tools/code-minifier/code-minifier';
+import { RobotsTxtTool } from '@/app/tools/robots-txt-tool/robots-txt-tool';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -75,6 +76,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'html-entity-encoder-decoder': HtmlEntityEncoderDecoder,
     'ssl-checker': SslChecker,
     'code-minifier': CodeMinifier,
+    'robots-txt-tool': RobotsTxtTool,
 };
 
 
