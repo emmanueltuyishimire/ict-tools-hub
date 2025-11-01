@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { BigOCalculator } from './big-o-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -53,11 +54,11 @@ const keyTerminologies = [
     { term: 'Space Complexity', definition: 'A measure of the amount of memory space an algorithm requires in relation to the size of its input.' }
 ];
 
-export default function BigOCalculatorPage() {
+const BigOCalculatorPage = () => {
     const faqSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
+        mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") } }))
     };
 
     return (
@@ -232,4 +233,4 @@ export default function BigOCalculatorPage() {
     );
 }
 
-    
+export default BigOCalculatorPage;
