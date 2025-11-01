@@ -104,6 +104,15 @@ const howToSchema = {
     totalTime: 'PT3M',
 };
 
+const keyTerminologies = [
+    { term: 'Bandwidth', definition: 'The maximum rate of data transfer across a given path, measured in bits per second (bps).' },
+    { term: 'Latency (Ping)', definition: 'The time it takes for a data packet to travel from your device to a server and back. Lower is better.' },
+    { term: 'Mbps', definition: 'Megabits per second. A standard unit for measuring network bandwidth.' },
+    { term: 'Download Speed', definition: 'The rate at which data is transferred from the internet to your device.' },
+    { term: 'Upload Speed', definition: 'The rate at which data is transferred from your device to the internet.' },
+    { term: 'Concurrency', definition: 'The number of activities or devices using the network simultaneously.' },
+];
+
 type UsageRow = { id: number; activity: string; devices: number | '' };
 type Result = { totalRequired: number; recommended: number; breakdown: any[] };
 
@@ -338,6 +347,22 @@ export function BandwidthEstimator() {
                 </Card>
             </section>
             
+            <section>
+                 <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                 <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                 </Card>
+            </section>
+
             <Card className='bg-secondary/30 border-primary/20'>
                 <CardHeader>
                     <div className='flex items-center gap-2 text-primary'>

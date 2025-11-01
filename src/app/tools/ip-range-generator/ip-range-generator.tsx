@@ -62,6 +62,14 @@ const howToSchema = {
     totalTime: 'PT1M',
 };
 
+const keyTerminologies = [
+    { term: 'IP Range', definition: 'A continuous sequence of IP addresses, typically defined by a start and end address or a CIDR block.' },
+    { term: 'CIDR Block', definition: 'A method of representing an IP network range using an IP address and a prefix length (e.g., 192.168.1.0/24).' },
+    { term: 'Usable Host Range', definition: 'The subset of IPs within a CIDR block that can be assigned to devices, excluding the network and broadcast addresses.' },
+    { term: 'DHCP Scope', definition: 'A defined range of IP addresses on a DHCP server that it is allowed to lease to client devices.' },
+    { term: 'Whitelist/Blacklist', definition: 'A security practice where a list of permitted (whitelist) or blocked (blacklist) IP addresses is created to control access.' },
+];
+
 // --- Component ---
 export function IpRangeGenerator() {
     const [mode, setMode] = useState<'cidr' | 'range'>('cidr');
@@ -269,6 +277,22 @@ export function IpRangeGenerator() {
                 </Card>
             </section>
             
+             <section>
+                 <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                 <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                 </Card>
+            </section>
+
             <Card className='bg-secondary/30 border-primary/20'>
                 <CardHeader>
                     <div className='flex items-center gap-2 text-primary'>

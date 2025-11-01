@@ -51,6 +51,15 @@ const howToSchema = {
     totalTime: 'PT1M',
 };
 
+const keyTerminologies = [
+    { term: 'Host', definition: 'Any network-connected device that is assigned an IP address, such as a computer, phone, or server.' },
+    { term: 'CIDR Prefix', definition: 'A number (e.g., /24) that represents the number of network bits in a subnet mask, defining the size of the network.' },
+    { term: 'Usable Hosts', definition: 'The number of IP addresses in a subnet that can actually be assigned to devices. It excludes the reserved Network ID and Broadcast Address.' },
+    { term: 'Network ID', definition: 'The first IP address in a subnet, which identifies the network itself and cannot be assigned to a host.' },
+    { term: 'Broadcast Address', definition: 'The last IP address in a subnet, used to send a message to all hosts on that network simultaneously.' },
+    { term: 'Point-to-Point Link', definition: 'A network connection that directly links two devices, typically two routers. A /31 subnet is most efficient for this.' },
+];
+
 export function HostCountCalculator() {
     const [cidr, setCidr] = useState('24');
 
@@ -149,6 +158,22 @@ export function HostCountCalculator() {
                         <li><strong>Note the Subnet Mask:</strong> For reference, the tool also shows you the full dot-decimal subnet mask that corresponds to your chosen CIDR prefix.</li>
                     </ol>
                 </Card>
+            </section>
+            
+            <section>
+                 <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                 <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                 </Card>
             </section>
 
              <Card className='bg-secondary/30 border-primary/20'>

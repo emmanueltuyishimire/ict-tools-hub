@@ -98,6 +98,15 @@ const howToSchema = {
     totalTime: 'PT1M',
 };
 
+const keyTerminologies = [
+    { term: 'Classful Addressing', definition: 'The original IPv4 allocation method dividing the address space into five fixed classes (A, B, C, D, E).' },
+    { term: 'First Octet', definition: 'The first of the four decimal numbers in an IPv4 address, which determines its class in classful addressing.' },
+    { term: 'Default Subnet Mask', definition: 'A predefined subnet mask automatically associated with a classful address (/8 for Class A, /16 for B, /24 for C).' },
+    { term: 'CIDR (Classless Inter-Domain Routing)', definition: 'The modern system that replaced classful addressing, allowing for flexible network sizes using prefix notation (e.g., /22).' },
+    { term: 'Loopback Address', definition: 'A special address (127.0.0.1) that a device uses to send traffic to itself, used for testing.' },
+    { term: 'Multicast', definition: 'A communication method where a message is sent to a group of interested destinations simultaneously (Class D).' },
+];
+
 export function IpClassFinder() {
     const [ipAddress, setIpAddress] = useState('172.16.10.5');
     const result = useMemo(() => getIpClassDetails(ipAddress), [ipAddress]);
@@ -171,6 +180,22 @@ export function IpClassFinder() {
                 </Card>
             </section>
             
+            <section>
+                 <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                 <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                 </Card>
+            </section>
+
             <Card className='bg-secondary/30 border-primary/20'>
                 <CardHeader>
                     <div className='flex items-center gap-2 text-primary'>

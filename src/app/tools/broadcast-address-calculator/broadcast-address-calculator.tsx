@@ -66,6 +66,15 @@ const howToSchema = {
     totalTime: 'PT1M',
 };
 
+const keyTerminologies = [
+    { term: 'Broadcast Address', definition: 'A special IP address in a subnet that sends a message to all devices on that subnet simultaneously.' },
+    { term: 'Network ID', definition: 'The first IP address in a subnet, which is used to identify the network itself. It cannot be assigned to a device.' },
+    { term: 'Subnet Mask', definition: 'A 32-bit number that divides an IP address into network and host portions.' },
+    { term: 'CIDR (Classless Inter-Domain Routing)', definition: 'A compact notation for representing a subnet mask, written as a slash followed by a number (e.g., /24).' },
+    { term: 'Host', definition: 'Any device on a network that is assigned an IP address (e.g., a computer, phone, or printer).' },
+    { term: 'ARP (Address Resolution Protocol)', definition: 'A protocol that uses broadcasts to map a known IP address to its unknown physical MAC address on a local network.' },
+];
+
 export function BroadcastAddressCalculator() {
     const [ipAddress, setIpAddress] = useState('192.168.1.100');
     const [cidr, setCidr] = useState('24');
@@ -243,6 +252,22 @@ export function BroadcastAddressCalculator() {
                         </AlertDescription>
                     </Alert>
                 </Card>
+            </section>
+
+            <section>
+                 <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                 <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                 </Card>
             </section>
 
             <Card className='bg-secondary/30 border-primary/20'>

@@ -58,6 +58,15 @@ const howToSchema = {
     totalTime: 'PT1M',
 };
 
+const keyTerminologies = [
+    { term: 'Summarization (Aggregation)', definition: 'The process of combining multiple smaller, contiguous network routes into a single, larger summary route.' },
+    { term: 'Supernet', definition: 'The single, larger network block that results from route summarization.' },
+    { term: 'Contiguous Networks', definition: 'A set of networks that form a continuous, unbroken block of IP address space, making them ideal for summarization.' },
+    { term: 'Routing Table', definition: 'A data table stored in a router that lists the routes to particular network destinations.' },
+    { term: 'Route Flapping', definition: 'A situation where a route repeatedly appears and disappears in a routing table, which can cause network instability. Summarization helps contain this.' },
+    { term: 'VLSM (Variable Length Subnet Masking)', definition: 'The technique of dividing a network into subnets of different sizes. Summarization is the reverse process.' },
+];
+
 export function IpSummarizationTool() {
     const [networkList, setNetworkList] = useState('192.168.0.0/24\n192.168.1.0/24\n192.168.2.0/24\n192.168.3.0/24');
     const [results, setResults] = useState<any>(null);
@@ -258,6 +267,22 @@ export function IpSummarizationTool() {
                 </Card>
             </section>
             
+             <section>
+                 <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                 <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                 </Card>
+            </section>
+
             <Card className='bg-secondary/30 border-primary/20'>
                 <CardHeader>
                     <div className='flex items-center gap-2 text-primary'>

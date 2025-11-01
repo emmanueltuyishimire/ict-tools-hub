@@ -58,6 +58,14 @@ const howToSchema = {
     totalTime: 'PT1M',
 };
 
+const keyTerminologies = [
+    { term: 'Wildcard Mask', definition: 'A 32-bit quantity used in ACLs to specify a range of IP addresses, working as an inverted subnet mask.' },
+    { term: 'Subnet Mask', definition: 'A 32-bit number that divides an IP address into network and host portions.' },
+    { term: 'CIDR (Classless Inter-Domain Routing)', definition: 'A compact notation (e.g., /24) representing a subnet mask by counting its leading `1` bits.' },
+    { term: 'ACL (Access Control List)', definition: 'A set of rules applied to a router or firewall interface to control which packets are permitted or denied.' },
+    { term: 'OSPF (Open Shortest Path First)', definition: 'An interior gateway routing protocol that uses wildcard masks to identify which networks to advertise.' },
+];
+
 // --- Component ---
 export function CidrToWildcardConverter() {
     const [cidr, setCidr] = useState('24');
@@ -181,6 +189,22 @@ export function CidrToWildcardConverter() {
                 </Card>
             </section>
             
+            <section>
+                 <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                 <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                 </Card>
+            </section>
+
             <Card className='bg-secondary/30 border-primary/20'>
                 <CardHeader>
                     <div className='flex items-center gap-2 text-primary'>
@@ -325,4 +349,5 @@ export function CidrToWildcardConverter() {
         </div>
     );
 }
+
 

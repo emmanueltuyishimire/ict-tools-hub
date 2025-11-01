@@ -91,6 +91,15 @@ const howToSchema = {
     totalTime: 'PT1M',
 };
 
+const keyTerminologies = [
+    { term: 'Public IP', definition: 'A globally unique, internet-routable address assigned by an ISP.' },
+    { term: 'Private IP', definition: 'An address from a reserved range (RFC 1918) for use within a local network only. Not routable on the internet.' },
+    { term: 'NAT (Network Address Translation)', definition: 'A router function that translates private IPs to a public IP, allowing multiple devices to share one public address.' },
+    { term: 'Link-Local Address (APIPA)', definition: 'An automatically self-assigned address from the 169.254.x.x range when a DHCP server is unavailable.' },
+    { term: 'Loopback Address', definition: 'A special address (127.x.x.x) that a device uses to send traffic to itself (localhost).' },
+    { term: 'ISP (Internet Service Provider)', definition: 'A company that provides internet access to customers and assigns public IP addresses.' },
+];
+
 // --- Component ---
 export function IpPrivacyChecker() {
     const [ipAddress, setIpAddress] = useState('172.16.10.30');
@@ -160,6 +169,22 @@ export function IpPrivacyChecker() {
                         </AlertDescription>
                     </Alert>
                 </Card>
+            </section>
+
+            <section>
+                 <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                 <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                 </Card>
             </section>
 
             <Card className='bg-secondary/30 border-primary/20'>

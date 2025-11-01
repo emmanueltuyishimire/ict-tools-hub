@@ -72,6 +72,15 @@ const howToSchema = {
     totalTime: 'PT1M',
 };
 
+const keyTerminologies = [
+    { term: 'Bit', definition: 'The smallest unit of data, a single 0 or 1. Network speeds are measured in bits per second.' },
+    { term: 'Byte', definition: 'A group of 8 bits. File sizes are measured in bytes.' },
+    { term: 'Mbps', definition: 'Megabits per second. A standard measure of network speed (millions of bits per second).' },
+    { term: 'GB vs. GiB', definition: 'GB (gigabyte) is a base-10 unit (1 billion bytes). GiB (gibibyte) is a base-2 unit (1,073,741,824 bytes). This difference is why storage capacity often appears smaller on your computer than on the packaging.' },
+    { term: 'Network Overhead', definition: 'Extra data (headers, trailers) added to your file for routing and error-checking, which consumes a small part of your bandwidth.' },
+    { term: 'Asymmetrical Connection', definition: 'An internet connection where the download speed is much faster than the upload speed (common for cable and DSL).' },
+];
+
 export function DataTransferTimeCalculator() {
     const [fileSize, setFileSize] = useState<number | ''>(100);
     const [fileUnit, setFileUnit] = useState('GB');
@@ -243,6 +252,22 @@ export function DataTransferTimeCalculator() {
                 </Card>
             </section>
             
+            <section>
+                 <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                 <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                 </Card>
+            </section>
+
             <Card className='bg-secondary/30 border-primary/20'>
                 <CardHeader>
                     <div className='flex items-center gap-2 text-primary'>

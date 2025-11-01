@@ -103,6 +103,13 @@ const howToSchema = {
     totalTime: 'PT1M', // Estimated time: 1 minute
 };
 
+const keyTerminologies = [
+    { term: 'Binary', definition: 'A base-2 number system that uses only two digits, 0 and 1. This is the fundamental language of computers.' },
+    { term: 'Bit', definition: 'A single binary digit (a 0 or a 1), which is the smallest unit of data in computing.' },
+    { term: 'Octet', definition: 'A group of 8 bits. An IPv4 address is composed of four octets.' },
+    { term: 'IPv4 Address', definition: 'A 32-bit numerical label assigned to each device connected to a computer network that uses the Internet Protocol for communication.' },
+    { term: 'Dot-Decimal Notation', definition: 'The human-readable format for IPv4 addresses, where the 32-bit address is written as four decimal numbers separated by dots (e.g., 192.168.1.1).' },
+];
 
 export function BinaryToIpConverter() {
   const [binary, setBinary] = useState('11000000.10101000.00000001.00000001');
@@ -287,6 +294,22 @@ export function BinaryToIpConverter() {
                         Try pasting <code className="font-code bg-muted p-1 rounded-sm">00001010.00000000.00000000.00000001</code> and hitting "Convert". You should see the result <code className="font-code bg-muted p-1 rounded-sm">10.0.0.1</code>.
                     </AlertDescription>
                 </Alert>
+            </Card>
+        </section>
+
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+            <Card>
+                <CardContent className="p-6">
+                    <dl className="space-y-4">
+                        {keyTerminologies.map((item) => (
+                            <div key={item.term}>
+                                <dt className="font-semibold">{item.term}</dt>
+                                <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                            </div>
+                        ))}
+                    </dl>
+                </CardContent>
             </Card>
         </section>
 

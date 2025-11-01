@@ -58,6 +58,14 @@ const howToSchema = {
     totalTime: 'PT1M',
 };
 
+const keyTerminologies = [
+    { term: 'FLSM (Fixed-Length Subnet Masking)', definition: 'A subnetting method where a larger network is divided into multiple smaller subnets that are all the same size.' },
+    { term: 'CIDR (Classless Inter-Domain Routing)', definition: 'A compact method for specifying an IP address and its associated routing prefix (e.g., 192.168.1.0/24).' },
+    { term: 'Major Network', definition: 'The large, original block of IP addresses that you intend to divide into smaller subnets.' },
+    { term: 'Subnet', definition: 'A smaller, logical subdivision of a larger IP network.' },
+    { term: 'Usable Host Range', definition: 'The range of IP addresses within a subnet that can be assigned to individual devices, excluding the reserved network and broadcast addresses.' },
+];
+
 type SubnetResult = {
     networkId: string;
     hostRange: string;
@@ -251,6 +259,22 @@ export function CidrToSubnetListGenerator() {
                 </Card>
             </section>
             
+            <section>
+                 <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                 <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                 </Card>
+            </section>
+
             <Card className='bg-secondary/30 border-primary/20'>
                 <CardHeader>
                     <div className='flex items-center gap-2 text-primary'>
@@ -328,15 +352,15 @@ export function CidrToSubnetListGenerator() {
                 <div className="grid md:grid-cols-2 gap-6">
                     <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Data Center Rack Allocation</h3>
-                        <p>A data center administrator has been assigned the network block `10.40.128.0/20`. Each server rack requires a small subnet for its management interfaces, and every rack is identical. They decide to give each rack a `/28` subnet. Using this tool, they generate a complete list of the 256 possible `/28` subnets within their `/20` block. This list is then used to automate the configuration of each rack's top-of-rack switch.</p>
+                        <p className="text-sm text-muted-foreground">A data center administrator has been assigned the network block `10.40.128.0/20`. Each server rack requires a small subnet for its management interfaces, and every rack is identical. They decide to give each rack a `/28` subnet. Using this tool, they generate a complete list of the 256 possible `/28` subnets within their `/20` block. This list is then used to automate the configuration of each rack's top-of-rack switch.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Creating Lab Environments for Training</h3>
-                        <p>A networking instructor is preparing a lab for a class of 30 students. The lab network is `172.16.0.0/23`. To give each student their own identical network to work in, the instructor needs to create 30 small subnets. They decide to give each student a `/28` network (14 usable hosts). Using the generator, they create a list of the 32 possible `/28` subnets and assign one to each student, printing out the list of network IDs and host ranges for the lab manual.</p>
+                        <p className="text-sm text-muted-foreground">A networking instructor is preparing a lab for a class of 30 students. The lab network is `172.16.0.0/23`. To give each student their own identical network to work in, the instructor needs to create 30 small subnets. They decide to give each student a `/28` network (14 usable hosts). Using the generator, they create a list of the 32 possible `/28` subnets and assign one to each student, printing out the list of network IDs and host ranges for the lab manual.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Branch Office IP Planning</h3>
-                        <p>A company is opening 15 new small branch offices, and the network team has been allocated the `192.168.0.0/19` block for this purpose. Since all offices are of a similar size, they decide each one will get a `/24` network. They use this tool with the `/19` major network and `/24` new CIDR to generate a list of the 32 available `/24` subnets. They allocate the first 15 subnets from this list to the new offices and reserve the rest for future expansion.</p>
+                        <p className="text-sm text-muted-foreground">A company is opening 15 new small branch offices, and the network team has been allocated the `192.168.0.0/19` block for this purpose. Since all offices are of a similar size, they decide each one will get a `/24` network. They use this tool with the `/19` major network and `/24` new CIDR to generate a list of the 32 available `/24` subnets. They allocate the first 15 subnets from this list to the new offices and reserve the rest for future expansion.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Planning Firewall Policy Groups</h3>
