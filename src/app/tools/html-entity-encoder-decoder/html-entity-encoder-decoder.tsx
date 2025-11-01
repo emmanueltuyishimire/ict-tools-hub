@@ -60,14 +60,12 @@ export function HtmlEntityEncoderDecoder() {
     
     // --- Encoding/Decoding Logic ---
     const encodeEntities = (text: string): string => {
-        if (typeof document === 'undefined') return '';
         const element = document.createElement('div');
         element.innerText = text;
         return element.innerHTML;
     }
 
     const decodeEntities = (text: string): string => {
-        if (typeof document === 'undefined') return '';
         const element = document.createElement('div');
         element.innerHTML = text;
         return element.textContent || '';
@@ -228,6 +226,35 @@ export function HtmlEntityEncoderDecoder() {
                 </CardContent>
             </Card>
 
+            <div className="grid md:grid-cols-2 gap-8">
+                <Card>
+                    <CardHeader>
+                        <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips &amp; Quick Hacks</CardTitle></div>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                            <li><strong>Use for Code Snippets:</strong> When displaying code examples on a blog or documentation site, always run the code through an HTML entity encoder to ensure it renders as text, not as live HTML.</li>
+                            <li><strong>Check Your Framework:</strong> Most modern web frameworks (like React, Angular, Vue) automatically encode dynamic content to prevent XSS. Understand how your framework handles this so you don't encode data twice.</li>
+                            <li><strong>Use in RSS/XML Feeds:</strong> Content within XML tags must also be entity-encoded to prevent parsing errors. An ampersand in your blog post title, for instance, must be converted to `&amp;amp;`.</li>
+                            <li><strong>Decode for Processing:</strong> If you pull data from a database that is already encoded, use the decoder to get the raw text back before performing any text manipulation or analysis in your scripts.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                         <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                    </CardHeader>
+                    <CardContent>
+                         <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                            <li><strong>Not Encoding User Input:</strong> The biggest security mistake. Never render user-provided content directly into HTML without first encoding it. This is a direct invitation for XSS attacks.</li>
+                            <li><strong>Double Encoding:</strong> Encoding content that has already been encoded. This will result in ampersands being converted (`&` becomes `&amp;`), leading to garbled output like `&amp;lt;p&amp;gt;`.</li>
+                            <li><strong>Confusing with URL Encoding:</strong> Using HTML entity encoding on a URL parameter, or vice-versa. A space is `&nbsp;` in HTML but `%20` in a URL. They are not interchangeable.</li>
+                            <li><strong>Assuming Only `<` and `>` Matter:</strong> Forgetting to encode ampersands (`&`), quotes (`"`), and single quotes (`'`) can also break HTML attributes or create security vulnerabilities.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+            </div >
+            
             <section>
                 <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
                 <div className="grid md:grid-cols-2 gap-6">
