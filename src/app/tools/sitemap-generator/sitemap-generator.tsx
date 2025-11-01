@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useId } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -12,14 +12,12 @@ import { Copy, Check, Plus, Trash2 } from 'lucide-react';
 import { CodeBlock } from '@/components/code-block';
 
 type UrlEntry = {
-    id: number;
+    id: string;
     loc: string;
     lastmod: string;
     changefreq: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
     priority: string;
 };
-
-let nextId = 1;
 
 const getTodayString = () => {
     const today = new Date();
@@ -27,22 +25,23 @@ const getTodayString = () => {
 };
 
 export function SitemapGenerator() {
-    const [urls, setUrls] = useState<UrlEntry[]>([
-        { id: nextId++, loc: 'https://example.com/', lastmod: getTodayString(), changefreq: 'daily', priority: '1.0' },
-        { id: nextId++, loc: 'https://example.com/about', lastmod: getTodayString(), changefreq: 'monthly', priority: '0.8' }
+    const [urls, setUrls] = useState<UrlEntry[]>(() => [
+        { id: `id-${Math.random()}`, loc: 'https://example.com/', lastmod: getTodayString(), changefreq: 'daily', priority: '1.0' },
+        { id: `id-${Math.random()}`, loc: 'https://example.com/about', lastmod: getTodayString(), changefreq: 'monthly', priority: '0.8' }
     ]);
     const [generatedSitemap, setGeneratedSitemap] = useState('');
     const [hasCopied, setHasCopied] = useState(false);
+    const baseId = useId();
 
     const handleAddUrl = () => {
-        setUrls([...urls, { id: nextId++, loc: '', lastmod: getTodayString(), changefreq: 'monthly', priority: '0.5' }]);
+        setUrls([...urls, { id: `id-${Math.random()}`, loc: '', lastmod: getTodayString(), changefreq: 'monthly', priority: '0.5' }]);
     };
 
-    const handleRemoveUrl = (id: number) => {
+    const handleRemoveUrl = (id: string) => {
         setUrls(urls.filter(url => url.id !== id));
     };
 
-    const handleUrlChange = (id: number, field: keyof Omit<UrlEntry, 'id'>, value: string) => {
+    const handleUrlChange = (id: string, field: keyof Omit<UrlEntry, 'id'>, value: string) => {
         setUrls(urls.map(url => (url.id === id ? { ...url, [field]: value } : url)));
     };
 
@@ -80,58 +79,61 @@ export function SitemapGenerator() {
             <CardContent className="space-y-6">
                 <div className="space-y-4">
                     <Label>URL List</Label>
-                    {urls.map((urlEntry, index) => (
-                        <div key={urlEntry.id} className="grid grid-cols-1 md:grid-cols-12 gap-2 p-3 border rounded-lg">
-                            <div className="md:col-span-12 space-y-2">
-                                <Label htmlFor={`loc-${urlEntry.id}`} className="text-xs text-muted-foreground">URL</Label>
-                                <Input
-                                    id={`loc-${urlEntry.id}`}
-                                    value={urlEntry.loc}
-                                    onChange={(e) => handleUrlChange(urlEntry.id, 'loc', e.target.value)}
-                                    placeholder="https://example.com/your-page"
-                                    className="font-code"
-                                />
+                    {urls.map((urlEntry, index) => {
+                        const uniqueId = `${baseId}-${urlEntry.id}`;
+                        return (
+                            <div key={uniqueId} className="grid grid-cols-1 md:grid-cols-12 gap-2 p-3 border rounded-lg">
+                                <div className="md:col-span-12 space-y-2">
+                                    <Label htmlFor={`loc-${uniqueId}`} className="text-xs text-muted-foreground">URL</Label>
+                                    <Input
+                                        id={`loc-${uniqueId}`}
+                                        value={urlEntry.loc}
+                                        onChange={(e) => handleUrlChange(urlEntry.id, 'loc', e.target.value)}
+                                        placeholder="https://example.com/your-page"
+                                        className="font-code"
+                                    />
+                                </div>
+                                <div className="md:col-span-4 space-y-2">
+                                    <Label htmlFor={`lastmod-${uniqueId}`} className="text-xs text-muted-foreground">Last Modified</Label>
+                                    <Input
+                                        id={`lastmod-${uniqueId}`}
+                                        type="date"
+                                        value={urlEntry.lastmod}
+                                        onChange={(e) => handleUrlChange(urlEntry.id, 'lastmod', e.target.value)}
+                                    />
+                                </div>
+                                <div className="md:col-span-4 space-y-2">
+                                    <Label htmlFor={`changefreq-${uniqueId}`} className="text-xs text-muted-foreground">Change Frequency</Label>
+                                    <Select value={urlEntry.changefreq} onValueChange={(v) => handleUrlChange(urlEntry.id, 'changefreq', v)}>
+                                        <SelectTrigger id={`changefreq-${uniqueId}`}><SelectValue /></SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="always">Always</SelectItem>
+                                            <SelectItem value="hourly">Hourly</SelectItem>
+                                            <SelectItem value="daily">Daily</SelectItem>
+                                            <SelectItem value="weekly">Weekly</SelectItem>
+                                            <SelectItem value="monthly">Monthly</SelectItem>
+                                            <SelectItem value="yearly">Yearly</SelectItem>
+                                            <SelectItem value="never">Never</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="md:col-span-3 space-y-2">
+                                    <Label htmlFor={`priority-${uniqueId}`} className="text-xs text-muted-foreground">Priority</Label>
+                                    <Select value={urlEntry.priority} onValueChange={(v) => handleUrlChange(urlEntry.id, 'priority', v)}>
+                                         <SelectTrigger id={`priority-${uniqueId}`}><SelectValue /></SelectTrigger>
+                                        <SelectContent>
+                                            {Array.from({ length: 11 }, (_, i) => (1 - i * 0.1).toFixed(1)).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                 <div className="md:col-span-1 flex items-end">
+                                    <Button size="icon" variant="ghost" onClick={() => handleRemoveUrl(urlEntry.id)} aria-label="Remove URL">
+                                        <Trash2 className="h-4 w-4 text-destructive"/>
+                                    </Button>
+                                </div>
                             </div>
-                            <div className="md:col-span-4 space-y-2">
-                                <Label htmlFor={`lastmod-${urlEntry.id}`} className="text-xs text-muted-foreground">Last Modified</Label>
-                                <Input
-                                    id={`lastmod-${urlEntry.id}`}
-                                    type="date"
-                                    value={urlEntry.lastmod}
-                                    onChange={(e) => handleUrlChange(urlEntry.id, 'lastmod', e.target.value)}
-                                />
-                            </div>
-                            <div className="md:col-span-4 space-y-2">
-                                <Label htmlFor={`changefreq-${urlEntry.id}`} className="text-xs text-muted-foreground">Change Frequency</Label>
-                                <Select value={urlEntry.changefreq} onValueChange={(v) => handleUrlChange(urlEntry.id, 'changefreq', v)}>
-                                    <SelectTrigger id={`changefreq-${urlEntry.id}`}><SelectValue /></SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="always">Always</SelectItem>
-                                        <SelectItem value="hourly">Hourly</SelectItem>
-                                        <SelectItem value="daily">Daily</SelectItem>
-                                        <SelectItem value="weekly">Weekly</SelectItem>
-                                        <SelectItem value="monthly">Monthly</SelectItem>
-                                        <SelectItem value="yearly">Yearly</SelectItem>
-                                        <SelectItem value="never">Never</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                            <div className="md:col-span-3 space-y-2">
-                                <Label htmlFor={`priority-${urlEntry.id}`} className="text-xs text-muted-foreground">Priority</Label>
-                                <Select value={urlEntry.priority} onValueChange={(v) => handleUrlChange(urlEntry.id, 'priority', v)}>
-                                     <SelectTrigger id={`priority-${urlEntry.id}`}><SelectValue /></SelectTrigger>
-                                    <SelectContent>
-                                        {Array.from({ length: 11 }, (_, i) => (1 - i * 0.1).toFixed(1)).map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                             <div className="md:col-span-1 flex items-end">
-                                <Button size="icon" variant="ghost" onClick={() => handleRemoveUrl(urlEntry.id)} aria-label="Remove URL">
-                                    <Trash2 className="h-4 w-4 text-destructive"/>
-                                </Button>
-                            </div>
-                        </div>
-                    ))}
+                        )
+                    })}
                      <Button variant="outline" onClick={handleAddUrl}>
                         <Plus className="h-4 w-4 mr-2" />
                         Add URL
