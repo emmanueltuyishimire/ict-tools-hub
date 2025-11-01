@@ -63,6 +63,7 @@ import { AlgorithmStepSimulator } from '@/app/tools/algorithm-simulator/algorith
 import { RandomStringGenerator } from '@/app/tools/random-string-generator/random-string-generator';
 import { RandomNumberGenerator } from '@/app/tools/random-number-generator/random-number-generator';
 import { CodeSnippetFormatter } from '@/app/tools/code-snippet-formatter/code-snippet-formatter';
+import { VariableNameValidator } from '@/app/tools/variable-name-validator/variable-name-validator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -133,6 +134,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'random-string-generator': RandomStringGenerator,
     'random-number-generator': RandomNumberGenerator,
     'code-snippet-formatter': CodeSnippetFormatter,
+    'variable-name-validator': VariableNameValidator,
 };
 
 
