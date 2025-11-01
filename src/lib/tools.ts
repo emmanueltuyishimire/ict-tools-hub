@@ -105,7 +105,6 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Random Number Generator', slug: 'random-number-generator', description: 'Generate a random number within a specified range.' },
       { name: 'Code Snippet Formatter', slug: 'code-snippet-formatter', description: 'Format a code snippet.' },
       { name: 'Variable Name Validator', slug: 'variable-name-validator', description: 'Validate variable names.' },
-      { name: 'Function / Formula Tester', slug: 'function-tester', description: 'Test JavaScript functions and formulas.' },
       { name: 'Unicode / ASCII Converter', slug: 'unicode-ascii-converter', description: 'Convert between Unicode and ASCII.' },
     ],
   },
