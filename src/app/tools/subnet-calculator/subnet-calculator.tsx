@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
@@ -39,7 +40,7 @@ const faqData = [
     { question: "What's the difference between a Network ID and a Broadcast Address?", answer: "The Network ID is the very first address in a subnet and is used to identify the network itself; it cannot be assigned to a host. The Broadcast Address is the very last address and is used to send messages to all hosts on that specific subnet." },
     { question: "Why are there only 254 usable hosts in a /24 network?", answer: "A /24 network has 2^(32-24) = 2^8 = 256 total addresses. However, two addresses are reserved: the first one for the Network ID and the last one for the Broadcast Address. This leaves 256 - 2 = 254 addresses available for hosts (computers, printers, etc.)." },
     { question: "Can I use this calculator for IPv6?", answer: "No, this calculator is specifically designed for IPv4 subnetting. IPv6 uses a completely different addressing scheme (128-bit, hexadecimal) and requires a different set of tools and calculations." },
-    { question: "What is a subnet mask?", answer: "A subnet mask is a 32-bit number that separates the network portion of an IP address from the host portion. The '1's in the mask represent the network bits, and the '0's represent the host bits. You can visualize this using our IP to Binary Converter." },
+    { question: "What is a subnet mask?", answer: "A subnet mask is a 32-bit number that separates the network portion of an IP address from the host portion. The '1's in the mask represent the network bits, and the '0's represent the host bits. You can visualize this using our <a href='/tools/ip-to-binary' class='text-primary hover:underline'>IP to Binary Converter</a>." },
     { question: "What is a Wildcard Mask?", answer: "A wildcard mask is an inverted subnet mask, often used in firewall and router Access Control Lists (ACLs). It tells the device which bits of an IP address to pay attention to. You can calculate it by subtracting the subnet mask from `255.255.255.255`." },
     { question: "What does 'Usable Host Range' mean?", answer: "This is the range of IP addresses within a subnet that can be assigned to devices. It starts from the IP address immediately after the Network ID and ends just before the Broadcast Address." },
     { question: "How do I choose the right subnet size?", answer: "Choose a subnet size based on the number of devices you need to support. Always plan for growth. For example, if you need 50 hosts, a /26 network (62 usable hosts) is a good fit, whereas a /27 (30 usable hosts) would be too small." },
@@ -49,7 +50,7 @@ const faqData = [
 const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })),
+    mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1'>") } })),
 };
 
 const howToSchema = {
@@ -422,11 +423,11 @@ export function SubnetCalculator() {
                             </CardHeader>
                         </Card>
                     </Link>
-                    <Link href="/tools/binary-to-ip" className="block">
+                    <Link href="/tools/vlsm-calculator" className="block">
                         <Card className="hover:border-primary transition-colors h-full">
                             <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">Binary to IP Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">The reverse process: convert a 32-bit binary string back into a standard IPv4 address.</CardDescription>
+                                <CardTitle className="text-base flex items-center justify-between">VLSM Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                <CardDescription className="text-xs">Design a highly efficient network plan by creating subnets of different sizes.</CardDescription>
                             </CardHeader>
                         </Card>
                     </Link>

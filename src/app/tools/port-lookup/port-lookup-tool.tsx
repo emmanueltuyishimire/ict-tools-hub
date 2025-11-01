@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -51,7 +52,7 @@ const faqData = [
     { question: "What does it mean if a port is 'open'?", answer: "An 'open' port means that an application or service on the host is actively listening for connections on that port. A 'closed' port means that there is no application listening. A 'filtered' or 'blocked' port means that a firewall or other security device is preventing access to the port, so its status (open or closed) cannot be determined." },
     { question: "Why do some services use both TCP and UDP?", answer: "A prime example is DNS (port 53). It uses UDP for standard queries because it's fast and a single packet is usually sufficient. However, it uses TCP for zone transfers (copying a large amount of DNS data between servers) because TCP's reliability is needed to ensure the entire zone file is transferred correctly." },
     { question: "Is it safe to have open ports on my router?", answer: "It depends on the port and the service. Your router must have port 80/443 open for you to browse the web. However, having unnecessary ports open, especially for services like Telnet or RDP that are directly exposed to the internet, is a major security risk. You should only open ports that are absolutely necessary and ensure the services running on them are secure and up-to-date. A strong password is also critical, which you can verify with our <a href='/tools/password-strength-checker' class='text-primary hover:underline'>Password Strength Checker</a>." },
-    { question: "How does a firewall use port numbers?", answer: "Firewalls are the primary gatekeepers of network traffic, and they operate heavily based on port numbers. A firewall can be configured with rules to allow or block traffic based on source IP, destination IP, and destination port. For example, a common rule is 'Allow inbound traffic on port 443 (HTTPS) but block all other inbound traffic'. You can use our <a href='/tools/subnet-calculator' class='text-primary hover:underline'>Subnet Calculator</a> to define the IP ranges used in these rules." },
+    { question: "How does a firewall use port numbers?", answer: "Firewalls are the primary gatekeepers of network traffic, and they operate heavily based on port numbers. A firewall can be configured with rules to allow or block traffic based on source IP, destination IP, and destination port. For example, a common rule is 'Allow inbound traffic on port 443 (HTTPS) but block all other inbound traffic'. You can use our <a href='/tools/cidr-to-wildcard' class='text-primary hover:underline'>CIDR to Wildcard Mask Converter</a> to create the address ranges used in these rules." },
     { question: "What is NAT and how does it use ports?", answer: "NAT (Network Address Translation) is a method used by routers to allow multiple devices on a private network (using private IPs like 192.168.x.x) to share a single public IP address. When a device on your network connects to a website, the router temporarily assigns a unique high-numbered port to that connection, keeping track of which internal device made the request. When the website replies, the router sends the response to the correct device based on that port mapping. Our <a href='/tools/mac-validator' class='text-primary hover:underline'>MAC Address Validator</a> can help you identify the unique hardware addresses of devices on your private network." },
 ];
 
@@ -73,6 +74,15 @@ const howToSchema = {
     ],
     totalTime: 'PT1M',
 };
+
+const keyTerminologies = [
+    { term: 'Port Number', definition: 'A 16-bit number (0-65535) that identifies a specific process or service on a network device.' },
+    { term: 'TCP (Transmission Control Protocol)', definition: 'A reliable, connection-oriented protocol that ensures data is delivered in order and without errors.' },
+    { term: 'UDP (User Datagram Protocol)', definition: 'A fast, connectionless protocol that sends data without guaranteeing delivery. Used for time-sensitive applications like gaming and DNS.' },
+    { term: 'Well-Known Ports', definition: 'Ports 0-1023, reserved by IANA for essential system services like HTTP (80) and SSH (22).' },
+    { term: 'Firewall', definition: 'A network security device that monitors and controls incoming and outgoing network traffic based on predetermined security rules, often using port numbers.' },
+    { term: 'NAT (Network Address Translation)', definition: 'A method used by routers to map multiple private IP addresses to a single public IP address, using port numbers to track connections.' },
+];
 
 export function PortLookupTool() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -161,6 +171,22 @@ export function PortLookupTool() {
                 </Card>
             </section>
 
+             <section>
+                <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                 <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                 </Card>
+            </section>
+
              <Card className='bg-secondary/30 border-primary/20'>
                 <CardHeader>
                     <div className='flex items-center gap-2 text-primary'>
@@ -173,7 +199,7 @@ export function PortLookupTool() {
                     <section>
                         <h3 className="font-bold text-xl">What is a Network Port? The Internet's Mail Slots</h3>
                         <p>Imagine a large office building. The building's street address is like an IP address—it gets you to the right location. However, once you're inside, you need to know which office or person to deliver a package to. Network ports are like the mail slots or office numbers within that building. They are virtual endpoints that allow a single computer, with a single IP address, to handle many different types of network traffic simultaneously.</p>
-                        <p>A port is represented by a 16-bit number, ranging from 0 to 65535. When your computer connects to a web server, it's not just connecting to the server's IP address; it's connecting to a specific port on that IP address, usually port 443 for secure web traffic (HTTPS). At the same time, your email client might be connecting to port 993 (IMAPS) on a mail server. Ports ensure that the web page data goes to your browser and the email data goes to your email client, preventing them from getting mixed up. This is a fundamental concept that you can explore further with our <Link href="/tools/subnet-calculator" className="text-primary hover:underline">Subnet Calculator</Link>, which helps define the network where these IPs and ports operate.</p>
+                        <p>A port is represented by a 16-bit number, ranging from 0 to 65535. When your computer connects to a web server, it's not just connecting to the server's IP address; it's connecting to a specific port on that IP address, usually port 443 for secure web traffic (HTTPS). At the same time, your email client might be connecting to port 993 (IMAPS) on a mail server. Ports ensure that the web page data goes to your browser and the email data goes to your email client, preventing them from getting mixed up. This is a fundamental concept that you can explore further with our <Link href="/tools/ip-class-finder" className="text-primary hover:underline">IP Class Finder</Link>, which helps define the network where these IPs and ports operate.</p>
                     </section>
                      <section>
                         <h3 className="font-bold text-xl">TCP vs. UDP: The Reliable Messenger vs. The Speedy Courier</h3>
@@ -222,7 +248,7 @@ export function PortLookupTool() {
                          <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                             <li><strong>Exposing Unnecessary Ports:</strong> The most common security vulnerability. Never expose ports for services like databases (3306, 5432) or remote desktop (3389) directly to the internet. Access should be restricted by a firewall or managed through a VPN.</li>
                             <li><strong>Confusing TCP and UDP:</strong> Blocking port 53 for TCP but not UDP will not fully block DNS, as standard queries use UDP. When creating firewall rules, you must be specific about which protocol you are targeting for a given port.</li>
-                             <li><strong>Assuming a Service is on its Standard Port:</strong> Just because a port is open doesn't mean the expected service is running on it. An attacker could run a malicious service on a port that is typically trusted, like port 53. Validating the machine's identity with a tool like the <Link href="/tools/mac-validator" className="text-primary hover:underline">MAC Address Validator</Link> can be part of a deeper security check.</li>
+                             <li><strong>Assuming a Service is on its Standard Port:</strong> Just because a port is open doesn't mean the expected service is running on it. An attacker could run a malicious service on a port that is typically trusted, like port 53. Validating the machine's identity with a tool like the <Link href="/tools/http-header-checker" className="text-primary hover:underline">HTTP Header Checker</Link> can be part of a deeper security check.</li>
                             <li><strong>Ignoring Egress Filtering:</strong> Many people focus on blocking *inbound* traffic, but it's also important to control *outbound* traffic (egress filtering). Blocking outbound connections on unused ports can prevent a compromised machine on your network from communicating with an attacker's command-and-control server.</li>
                         </ul>
                     </CardContent>
@@ -280,11 +306,11 @@ export function PortLookupTool() {
                             </CardHeader>
                         </Card>
                     </Link>
-                    <Link href="/tools/firewall-simulator" className="block">
+                    <Link href="/tools/http-header-checker" className="block">
                         <Card className="hover:border-primary transition-colors h-full">
                             <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">Firewall Rule Simulator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Practice creating rules that allow or block traffic based on port numbers.</CardDescription>
+                                <CardTitle className="text-base flex items-center justify-between">HTTP Header Checker<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                <CardDescription className="text-xs">Check for security headers that control how browsers interact with ports.</CardDescription>
                             </CardHeader>
                         </Card>
                     </Link>

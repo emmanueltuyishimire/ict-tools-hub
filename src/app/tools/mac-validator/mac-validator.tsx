@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
@@ -102,6 +103,15 @@ const howToSchema = {
     ],
     totalTime: 'PT1M',
 };
+
+const keyTerminologies = [
+    { term: 'MAC Address', definition: 'A unique 48-bit hardware identifier assigned to a Network Interface Controller (NIC) for communication on a local network.' },
+    { term: 'IP Address', definition: 'A logical 32-bit (IPv4) or 128-bit (IPv6) address that identifies a device on a network and is used for routing traffic across the internet.' },
+    { term: 'OUI (Organizationally Unique Identifier)', definition: 'The first 24 bits (6 hex digits) of a MAC address, assigned by the IEEE to a specific hardware manufacturer.' },
+    { term: 'NIC (Network Interface Controller)', definition: 'The physical hardware component (e.g., Ethernet port, Wi-Fi card) that connects a device to a network.' },
+    { term: 'ARP (Address Resolution Protocol)', definition: 'A protocol used on a local network to map a known IP address to its corresponding physical MAC address.' },
+    { term: 'Layer 2 (Data Link Layer)', definition: 'The second layer of the OSI model, responsible for node-to-node data transfer between two directly connected devices. MAC addresses operate at this layer.' },
+];
 
 // --- Component ---
 export function MacValidator() {
@@ -220,6 +230,22 @@ export function MacValidator() {
                     </Alert>
                 </Card>
             </section>
+
+             <section>
+                <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                 <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                 </Card>
+            </section>
             
             <Card className='bg-secondary/30 border-primary/20'>
                 <CardHeader>
@@ -233,7 +259,7 @@ export function MacValidator() {
                     <section>
                         <h3 className="font-bold text-xl">What is a MAC Address? The Unsung Hero of Local Networking</h3>
                         <p>Every device capable of connecting to a network—your computer, smartphone, router, smart TV—has a built-in hardware component called a Network Interface Controller (NIC). The MAC (Media Access Control) address is a unique 48-bit number burned into this hardware by the manufacturer. Think of it as the device's permanent, physical "serial number" for networking.</p>
-                        <p>While an <Link href="/tools/ip-to-binary" className="text-primary hover:underline">IP address</Link> acts as a routable, logical address (like a home address that can change when you move), the MAC address is a non-routable, physical address used for communication within the same local network segment. It operates at Layer 2 (the Data Link Layer) of the OSI model, which is responsible for node-to-node data transfer between two directly connected devices.</p>
+                        <p>While an <Link href="/tools/ip-class-finder" className="text-primary hover:underline">IP address</Link> acts as a routable, logical address (like a home address that can change when you move), the MAC address is a non-routable, physical address used for communication within the same local network segment. It operates at Layer 2 (the Data Link Layer) of the OSI model, which is responsible for node-to-node data transfer between two directly connected devices.</p>
                     </section>
                     <section>
                         <h3 className="font-bold text-xl">The Structure of a MAC Address: Vendor and Device ID</h3>
@@ -267,7 +293,7 @@ export function MacValidator() {
                            <li>Your computer sends an ARP request to the broadcast MAC address (`FF:FF:FF:FF:FF:FF`). This message essentially shouts to the entire local network, "Who has the IP address `192.168.1.150`?"</li>
                            <li>Every device on the local network receives this message, but only the printer recognizes its own IP address.</li>
                            <li>The printer sends an ARP reply directly back to your computer's MAC address, saying, "I have that IP, and my MAC address is `E4:B9:7A:F1:2C:3D`."</li>
-                           <li>Your computer stores this pairing in its ARP table (a temporary cache) and can now send data directly to the printer's MAC address. For a look at how IP addresses function in this flow, you can use our <Link href="/tools/subnet-calculator" className='text-primary hover:underline'>Subnet Calculator</Link>.</li>
+                           <li>Your computer stores this pairing in its ARP table (a temporary cache) and can now send data directly to the printer's MAC address. For a look at how IP addresses function in this flow, you can use our <Link href="/tools/ip-privacy-checker" className='text-primary hover:underline'>IP Privacy Checker</Link> to understand the local vs. global nature of these addresses.</li>
                         </ol>
                          <p>When you want to connect to a website on the internet, this process happens between your computer and your router. Your computer sends the data to your router's MAC address, and the router then forwards the packet onto the internet using IP addresses.</p>
                     </section>
@@ -360,11 +386,11 @@ export function MacValidator() {
                             </CardHeader>
                         </Card>
                     </Link>
-                    <Link href="/tools/random-mac-generator" className="block">
+                    <Link href="/tools/ip-privacy-checker" className="block">
                         <Card className="hover:border-primary transition-colors h-full">
                             <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">Random MAC Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Generate random MAC addresses for testing or privacy purposes.</CardDescription>
+                                <CardTitle className="text-base flex items-center justify-between">Public vs Private IP Checker<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                <CardDescription className="text-xs">Check if the corresponding IP is routable on the internet.</CardDescription>
                             </CardHeader>
                         </Card>
                     </Link>

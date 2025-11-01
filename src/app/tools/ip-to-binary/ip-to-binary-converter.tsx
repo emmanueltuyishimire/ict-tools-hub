@@ -384,7 +384,7 @@ export function IpToBinaryConverter() {
                     </div>
                      <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Configuring a Firewall ACL</h3>
-                        <p className="text-sm text-muted-foreground">A security admin needs to write a firewall rule (Access Control List) to block a specific range of IP addresses, from `172.16.10.32` to `172.16.10.47`. To create the most efficient rule, they convert both IPs to binary. This helps them calculate the correct <Link href="/tools/subnet-mask-converter" className='text-primary hover:underline'>wildcard mask</Link> (`0.0.0.15`) needed for the ACL entry, ensuring only the intended addresses are blocked.</p>
+                        <p className="text-sm text-muted-foreground">A security admin needs to write a firewall rule (Access Control List) to block a specific range of IP addresses, from `172.16.10.32` to `172.16.10.47`. To create the most efficient rule, they convert both IPs to binary. This helps them calculate the correct <Link href="/tools/cidr-to-wildcard" className='text-primary hover:underline'>wildcard mask</Link> (`0.0.0.15`) needed for the ACL entry, ensuring only the intended addresses are blocked.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Passing for a Certification Exam</h3>

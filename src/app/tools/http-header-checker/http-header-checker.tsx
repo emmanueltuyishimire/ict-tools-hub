@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useActionState, useRef, useEffect } from 'react';
@@ -94,7 +95,7 @@ export function HttpHeaderChecker() {
                                     id="url-input"
                                     name="url"
                                     type="text"
-                                    defaultValue="https://google.com"
+                                    defaultValue="google.com"
                                     placeholder="e.g., https://example.com"
                                     className="font-code"
                                     aria-label="URL to check"
@@ -333,19 +334,19 @@ export function HttpHeaderChecker() {
              <section>
                 <h2 className="text-2xl font-bold mb-4">Related Tools & Articles</h2>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <Link href="/tools/ssl-expiry-checker" className="block">
+                        <Card className="hover:border-primary transition-colors h-full">
+                            <CardHeader>
+                                <CardTitle className="text-base flex items-center justify-between">SSL Certificate Checker<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                <CardDescription className="text-xs">Verify the SSL certificate that enables HTTPS and secures your headers.</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
                     <Link href="/tools/dns-lookup" className="block">
                         <Card className="hover:border-primary transition-colors h-full">
                             <CardHeader>
                                 <CardTitle className="text-base flex items-center justify-between">DNS Lookup Tool<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
                                 <CardDescription className="text-xs">Find the IP address your domain points to before you check its headers.</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </Link>
-                    <Link href="/tools/ssl-checker" className="block">
-                        <Card className="hover:border-primary transition-colors h-full">
-                            <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">SSL Checker<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Verify the SSL certificate details for a secure (HTTPS) site.</CardDescription>
                             </CardHeader>
                         </Card>
                     </Link>

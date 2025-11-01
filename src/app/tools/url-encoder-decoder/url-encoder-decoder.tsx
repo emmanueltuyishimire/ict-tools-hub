@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState, useCallback, useRef, useEffect } from 'react';
@@ -57,7 +58,7 @@ const keyTerminologies = [
 
 export function UrlEncoderDecoder() {
     const [decoded, setDecoded] = useState('Hello World! This is a test & example?');
-    const [encoded, setEncoded] = useState('Hello%20World!%20This%20is%20a%20test%20%26%20example%3F');
+    const [encoded, setEncoded] = useState('');
     const [lastChanged, setLastChanged] = useState<'decoded' | 'encoded'>('decoded');
     const [copied, setCopied] = useState<'decoded' | 'encoded' | null>(null);
 
@@ -77,25 +78,12 @@ export function UrlEncoderDecoder() {
         if (lastChanged === 'decoded') {
             try {
                 const newEncoded = encodeURIComponent(decoded);
-                if (newEncoded !== encoded) {
-                    setEncoded(newEncoded);
-                }
-            } catch (e) {
-                // Could show an error for malformed strings if necessary
-            }
+                setEncoded(newEncoded);
+            } catch (e) {}
         } else if (lastChanged === 'encoded') {
             try {
-                 // The decodeURIComponent function can throw an error for malformed URIs.
-                 // Let's decode only if it contains a '%' which is a sign of encoding.
-                 // Otherwise, we just sync the decoded input with the encoded one.
-                 if (encoded.includes('%')) {
-                     const newDecoded = decodeURIComponent(encoded);
-                     if (newDecoded !== decoded) {
-                        setDecoded(newDecoded);
-                     }
-                 } else if (decoded !== encoded) {
-                     setDecoded(encoded);
-                 }
+                const newDecoded = decodeURIComponent(encoded);
+                setDecoded(newDecoded);
             } catch (e) {
                 // Malformed URI, do nothing to prevent crashing and allow user to fix it
             }
@@ -242,7 +230,7 @@ export function UrlEncoderDecoder() {
                         <h3 className="font-bold text-xl">`encodeURIComponent` vs. `encodeURI`</h3>
                         <p>JavaScript provides two main functions for this purpose, and it's crucial to know which one to use. This tool uses `encodeURIComponent` because it is the correct choice for most web development tasks.</p>
                         <ul className="list-disc pl-5">
-                            <li><strong>`encodeURIComponent()`:</strong> This function is aggressive. It assumes you are encoding a piece of a URL, like a query parameter's value or a path segment. It encodes all characters that have special meaning, including ` / ? : @ & = + $ # `. You should use this when building a URL from parts, for example: <br/> <code className="font-code bg-muted p-1 rounded-sm">const query = encodeURIComponent("Q&A about cats"); const url = `https://example.com/search?q=${"$"}{'{'}query{'}'}`;</code></li>
+                           <li><strong>`encodeURIComponent()`:</strong> This function is aggressive. It assumes you are encoding a piece of a URL, like a query parameter's value or a path segment. It encodes all characters that have special meaning, including ` / ? : @ & = + $ # `. You should use this when building a URL from parts, for example: <br/> <code className="font-code bg-muted p-1 rounded-sm">const query = encodeURIComponent("Q&A about cats"); const url = `https://example.com/search?q=${"$"}{'{'}query{'}'}`;</code></li>
                             <li><strong>`encodeURI()`:</strong> This function is less aggressive. It assumes you are passing it a full, valid URI and you don't want to break its structure. Therefore, it does *not* encode the reserved characters listed above. It is useful for encoding a URL that a user might have typed with spaces or non-ASCII characters, but it's generally less common.</li>
                         </ul>
                     </section>
