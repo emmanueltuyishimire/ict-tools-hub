@@ -1,30 +1,16 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
 import { StructuredData } from '@/components/structured-data';
-import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, Copy, Check, Link as LinkIcon, RefreshCw, ArrowRightLeft } from 'lucide-react';
+import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, Copy, Check, Link as LinkIcon, ArrowRightLeft } from 'lucide-react';
 import Link from 'next/link';
-
-// --- Encoding/Decoding Logic ---
-function encodeEntities(text: string): string {
-    if (typeof document === 'undefined') return '';
-    const element = document.createElement('div');
-    element.innerText = text;
-    return element.innerHTML;
-}
-
-function decodeEntities(text: string): string {
-    if (typeof document === 'undefined') return '';
-    const element = document.createElement('div');
-    element.innerHTML = text;
-    return element.textContent || '';
-}
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 // --- FAQ & Schema Data ---
 const faqData = [
@@ -71,6 +57,21 @@ export function HtmlEntityEncoderDecoder() {
     const [encoded, setEncoded] = useState('');
     const [lastChanged, setLastChanged] = useState<'decoded' | 'encoded'>('decoded');
     const [copied, setCopied] = useState<'decoded' | 'encoded' | null>(null);
+    
+    // --- Encoding/Decoding Logic ---
+    const encodeEntities = (text: string): string => {
+        if (typeof document === 'undefined') return '';
+        const element = document.createElement('div');
+        element.innerText = text;
+        return element.innerHTML;
+    }
+
+    const decodeEntities = (text: string): string => {
+        if (typeof document === 'undefined') return '';
+        const element = document.createElement('div');
+        element.innerHTML = text;
+        return element.textContent || '';
+    }
 
     useEffect(() => {
         if (lastChanged === 'decoded') {
@@ -185,7 +186,7 @@ export function HtmlEntityEncoderDecoder() {
                     <CardContent className="p-6">
                         <dl className="space-y-4">
                             {keyTerminologies.map((item) => (
-                                <div key={item.term}>
+                                <div key={item.term} key={item.term}>
                                     <dt className="font-semibold">{item.term}</dt>
                                     <dd className="text-muted-foreground text-sm">{item.definition}</dd>
                                 </div>
@@ -205,16 +206,16 @@ export function HtmlEntityEncoderDecoder() {
                 </CardHeader>
                 <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
                     <section>
-                        <h3 className="font-bold text-xl">Why Can't I Just Type `&lt;` in my HTML?</h3>
-                        <p>The HyperText Markup Language (HTML) is built on a system of tags, which are defined by angle brackets (`<` and `>`). When a web browser parses an HTML document, it interprets any text inside these brackets as an instruction—to create a heading, a paragraph, a link, etc. This creates a problem: what if you want to literally display the text `<p>` on your page, perhaps as part of a code tutorial?</p>
-                        <p>If you simply type `<p>`, the browser will try to render a new paragraph element, not display the text. This is where <strong>HTML entities</strong> come in. They are a special syntax that tells the browser, "Don't interpret this as code; display it as the literal character it represents." By converting `<p>` to `&lt;p&gt;`, you ensure the browser shows the text instead of executing the tag.</p>
+                        <h3 className="font-bold text-xl">Why Can&apos;t I Just Type `&lt;` in my HTML?</h3>
+                        <p>The HyperText Markup Language (HTML) is built on a system of tags, which are defined by angle brackets (`&lt;` and `&gt;`). When a web browser parses an HTML document, it interprets any text inside these brackets as an instruction—to create a heading, a paragraph, a link, etc. This creates a problem: what if you want to literally display the text `&lt;p&gt;` on your page, perhaps as part of a code tutorial?</p>
+                        <p>If you simply type `&lt;p&gt;`, the browser will try to render a new paragraph element, not display the text. This is where <strong>HTML entities</strong> come in. They are a special syntax that tells the browser, &quot;Don&apos;t interpret this as code; display it as the literal character it represents.&quot; By converting `&lt;p&gt;` to `&amp;lt;p&amp;gt;`, you ensure the browser shows the text instead of executing the tag.</p>
                     </section>
                     <section>
                         <h3 className="font-bold text-xl">Named vs. Numeric Entities</h3>
                         <p>There are two primary ways to write an HTML entity:</p>
                         <ul className="list-disc pl-5">
-                           <li><strong>Named Entities:</strong> These are human-readable mnemonics for common characters. They are easy to remember but are only available for a limited set of characters. For example, `&copy;` for the copyright symbol (©) or `&amp;` for an ampersand (&amp;).</li>
-                           <li><strong>Numeric Entities:</strong> These can represent any character in the Unicode character set. They use the character's unique Unicode code point, written as either decimal (`&#...;`) or hexadecimal (`&#x...;`). For example, the copyright symbol can also be written as `&#169;` (decimal) or `&#xA9;` (hex).</li>
+                           <li><strong>Named Entities:</strong> These are human-readable mnemonics for common characters. They are easy to remember but are only available for a limited set of characters. For example, `&amp;copy;` for the copyright symbol (©) or `&amp;amp;` for an ampersand (&amp;).</li>
+                           <li><strong>Numeric Entities:</strong> These can represent any character in the Unicode character set. They use the character&apos;s unique Unicode code point, written as either decimal (`&amp;#...;`) or hexadecimal (`&amp;#x...;`). For example, the copyright symbol can also be written as `&amp;#169;` (decimal) or `&amp;#xA9;` (hex).</li>
                         </ul>
                         <p>While named entities are convenient, numeric entities are more universal and guarantee that any character can be represented correctly.</p>
                     </section>
@@ -222,7 +223,7 @@ export function HtmlEntityEncoderDecoder() {
                         <h3 className="font-bold text-xl">A Critical Defense Against Cross-Site Scripting (XSS)</h3>
                         <p>Beyond just displaying text correctly, HTML entity encoding is a cornerstone of web security. One of the most common web vulnerabilities is <strong>Cross-Site Scripting (XSS)</strong>. An XSS attack occurs when a malicious user injects a script into a web page that is then viewed by other users.</p>
                         <p>Imagine a blog comment section where a user submits the following comment: `&lt;script&gt;alert('You have been hacked!');&lt;/script&gt;`. If the website stores and renders this comment directly without encoding it, every user who views that comment will have that JavaScript executed in their browser. This could be used to steal cookies, redirect users to malicious sites, or deface the page.</p>
-                        <p>By properly encoding the user's input before displaying it, the malicious comment becomes: `&amp;lt;script&amp;gt;alert('You have been hacked!');&amp;lt;/script&amp;gt;`. The browser will now render this as harmless text on the page, completely neutralizing the attack. <strong>Never trust user input; always encode it before rendering it in HTML.</strong></p>
+                        <p>By properly encoding the user&apos;s input before displaying it, the malicious comment becomes: `&amp;lt;script&amp;gt;alert(&apos;You have been hacked!&apos;);&amp;lt;/script&amp;gt;`. The browser will now render this as harmless text on the page, completely neutralizing the attack. <strong>Never trust user input; always encode it before rendering it in HTML.</strong></p>
                     </section>
                 </CardContent>
             </Card>
