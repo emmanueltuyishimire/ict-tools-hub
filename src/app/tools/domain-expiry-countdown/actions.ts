@@ -114,8 +114,15 @@ export async function checkDomainExpiry(
       return { success: false, message: `Could not find expiration date for ${domain}. The domain may not be registered or WHOIS data is protected.` };
     }
     
-    // Validate that the date string is parsable
-    const expiryDateObj = new Date(parsedData.expiryDate);
+    // Attempt to parse the date string more robustly
+    let expiryDateObj = new Date(parsedData.expiryDate);
+    // If parsing fails, try to fix common incomplete formats like 'YYYY-MM-DDTHH'
+    if (isNaN(expiryDateObj.getTime())) {
+      const cleanedDateString = parsedData.expiryDate.split('T')[0]; // Get YYYY-MM-DD part
+      expiryDateObj = new Date(cleanedDateString);
+    }
+    
+    // Final check
     if (isNaN(expiryDateObj.getTime())) {
         return { success: false, message: `Could not parse the expiration date returned by the WHOIS server: "${parsedData.expiryDate}". The format is unrecognized.` };
     }
