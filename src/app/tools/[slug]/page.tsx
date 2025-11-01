@@ -28,6 +28,8 @@ import { NetworkAddressCalculator } from '@/app/tools/network-address-calculator
 import { CidrToSubnetListGenerator } from '@/app/tools/cidr-to-subnet-list/cidr-to-subnet-list-generator';
 import { CidrToWildcardConverter } from '@/app/tools/cidr-to-wildcard/cidr-to-wildcard-converter';
 import { IpSummarizationTool } from '@/app/tools/ip-summarization/ip-summarization-tool';
+import { HttpHeaderChecker } from '@/app/tools/http-header-checker/http-header-checker';
+import { SslExpiryChecker } from '@/app/tools/ssl-expiry-checker/ssl-expiry-checker';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -63,6 +65,8 @@ const toolComponents: Record<string, React.ComponentType> = {
     'cidr-to-subnet-list': CidrToSubnetListGenerator,
     'cidr-to-wildcard': CidrToWildcardConverter,
     'ip-summarization': IpSummarizationTool,
+    'http-header-checker': HttpHeaderChecker,
+    'ssl-expiry-checker': SslExpiryChecker,
 };
 
 
