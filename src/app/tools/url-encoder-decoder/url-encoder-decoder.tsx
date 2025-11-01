@@ -71,31 +71,42 @@ export function UrlEncoderDecoder() {
         setEncoded(value);
         setLastChanged('encoded');
     };
-
+    
     useEffect(() => {
-        if (lastChanged === 'decoded') {
-            try {
-                setEncoded(encodeURIComponent(decoded));
-            } catch (e) {
-                // handle potential URIError if needed, though unlikely with encode
-            }
-        }
-    }, [decoded, lastChanged]);
+        let timeoutId: NodeJS.Timeout;
 
-    useEffect(() => {
-        if (lastChanged === 'encoded') {
-            try {
-                setDecoded(decodeURIComponent(encoded));
-            } catch (e) {
-                // handle malformed URI error, maybe show an alert
+        const processChange = () => {
+            if (lastChanged === 'decoded') {
+                try {
+                    const newEncoded = encodeURIComponent(decoded);
+                    if (newEncoded !== encoded) {
+                        setEncoded(newEncoded);
+                    }
+                } catch (e) {
+                    // Could show an error for malformed strings if necessary
+                }
+            } else if (lastChanged === 'encoded') {
+                try {
+                    const newDecoded = decodeURIComponent(encoded);
+                    if (newDecoded !== decoded) {
+                        setDecoded(newDecoded);
+                    }
+                } catch (e) {
+                    // Malformed URI, do nothing to prevent crashing
+                }
             }
-        }
-    }, [encoded, lastChanged]);
+        };
+
+        // Debounce the change to avoid rapid updates
+        timeoutId = setTimeout(processChange, 100);
+
+        return () => clearTimeout(timeoutId);
+    }, [decoded, encoded, lastChanged]);
+
 
     const handleSwap = () => {
         setDecoded(encoded);
         setEncoded(decoded);
-        // This ensures the correct useEffect will run after the swap
         setLastChanged(lastChanged === 'decoded' ? 'encoded' : 'decoded');
     };
     
@@ -223,7 +234,7 @@ export function UrlEncoderDecoder() {
                                  <TableRow><TableCell>?</TableCell><TableCell className="font-code">%3F</TableCell><TableCell>Reserved character for starting the query string.</TableCell></TableRow>
                                  <TableRow><TableCell>/</TableCell><TableCell className="font-code">%2F</TableCell><TableCell>Reserved character for separating path segments.</TableCell></TableRow>
                                  <TableRow><TableCell>#</TableCell><TableCell className="font-code">%23</TableCell><TableCell>Reserved character for identifying URL fragments.</TableCell></TableRow>
-                               </TBODY>
+                               </TableBody>
                            </Table>
                         </div>
                         <p>By encoding these characters, you ensure that they are treated as literal data by the receiving server, rather than as structural parts of the URL.</p>
@@ -232,7 +243,7 @@ export function UrlEncoderDecoder() {
                         <h3 className="font-bold text-xl">`encodeURIComponent` vs. `encodeURI`</h3>
                         <p>JavaScript provides two main functions for this purpose, and it's crucial to know which one to use. This tool uses `encodeURIComponent` because it is the correct choice for most web development tasks.</p>
                         <ul className="list-disc pl-5">
-                            <li><strong>`encodeURIComponent()`:</strong> This function is aggressive. It assumes you are encoding a piece of a URL, like a query parameter's value or a path segment. It encodes all characters that have special meaning, including ` / ? : @ & = + $ # `. You should use this when building a URL from parts, for example: <br/> <code className="font-code bg-muted p-1 rounded-sm">const query = encodeURIComponent("Q&A about cats"); const url = `https://example.com/search?q=${"\'\'"}{query}`;</code></li>
+                            <li><strong>`encodeURIComponent()`:</strong> This function is aggressive. It assumes you are encoding a piece of a URL, like a query parameter's value or a path segment. It encodes all characters that have special meaning, including ` / ? : @ & = + $ # `. You should use this when building a URL from parts, for example: <br/> <code className="font-code bg-muted p-1 rounded-sm">const query = encodeURIComponent("Q&A about cats"); const url = `https://example.com/search?q=${'\'\''}{query}`;</code></li>
                             <li><strong>`encodeURI()`:</strong> This function is less aggressive. It assumes you are passing it a full, valid URI and you don't want to break its structure. Therefore, it does *not* encode the reserved characters listed above. It is useful for encoding a URL that a user might have typed with spaces or non-ASCII characters, but it's generally less common.</li>
                         </ul>
                     </section>
@@ -338,3 +349,5 @@ export function UrlEncoderDecoder() {
         </div>
     );
 }
+
+    
