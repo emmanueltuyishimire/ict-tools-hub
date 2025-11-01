@@ -8,8 +8,13 @@ import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-r
 import Link from 'next/link';
 
 export const metadata = {
-    title: 'Binary, Decimal, Hex Converter | ICT Toolbench',
-    description: 'A real-time number base converter for binary, decimal, and hexadecimal values. An essential tool for developers, engineers, and computer science students.',
+    title: 'Binary, Decimal, & Hex Converter | Real-Time Number Base Tool | ICT Toolbench',
+    description: 'A real-time number base converter for binary, decimal, and hexadecimal values. An essential tool for developers, engineers, and computer science students to master number systems.',
+    openGraph: {
+        title: 'Binary, Decimal, & Hex Converter | ICT Toolbench',
+        description: 'Instantly convert between binary, decimal, and hexadecimal. Includes educational guides, examples, and pro tips for developers and students.',
+        url: '/tools/number-converter',
+    }
 };
 
 const faqData = [
@@ -20,7 +25,9 @@ const faqData = [
     { question: "Can this tool handle large numbers?", answer: "Yes, this tool uses JavaScript's `BigInt` to handle arbitrarily large integers, so you can convert very large numbers between bases without losing precision, which can be a problem with standard number types." },
     { question: "What is a 'nibble'?", answer: "A nibble is a four-bit aggregation, or half of an octet (an 8-bit byte). A single hexadecimal digit can represent one nibble. For example, the byte `10100101` can be seen as two nibbles: `1010` (A in hex) and `0101` (5 in hex), making the hex representation `A5`." },
     { question: "How does this relate to IP addresses?", answer: "An IPv4 address is a 32-bit binary number, typically represented as four 8-bit decimal octets (e.g., 192.168.1.1). Understanding binary-to-decimal conversion is essential for subnetting. You can explore this further with our <a href='/tools/ip-to-binary' class='text-primary hover:underline'>IP to Binary Converter</a>." },
-    { question: "How does this relate to colors on the web?", answer: "Hexadecimal color codes (e.g., `#FF0000` for red) are a common way to represent RGB colors. Each pair of hex digits represents the intensity (0-255) of the red, green, and blue color channels. Our <a href='/tools/color-converter' class='text-primary hover:underline'>Hex ↔ RGB Color Converter</a> is specifically designed for this purpose." }
+    { question: "How does this relate to colors on the web?", answer: "Hexadecimal color codes (e.g., `#FF0000` for red) are a common way to represent RGB colors. Each pair of hex digits represents the intensity (0-255) of the red, green, and blue color channels. Our <a href='/tools/color-converter' class='text-primary hover:underline'>Hex ↔ RGB Color Converter</a> is specifically designed for this purpose." },
+    { question: "How do you manually convert from decimal to binary?", answer: "To convert a number like 192, find the largest power of 2 that fits into it (128), subtract it, and repeat for the remainder until you reach 0. For 192: it's 1*128 (remainder 64), then 1*64 (remainder 0). So, the 8-bit binary is `11000000`." },
+    { question: "What is the maximum value for an 8-bit, 16-bit, or 32-bit number?", answer: "For an n-bit unsigned number, the maximum value is 2^n - 1. An 8-bit number's max value is 255. A 16-bit number's max value is 65,535. A 32-bit number's max value is 4,294,967,295." }
 ];
 
 const howToSchema = {
@@ -48,12 +55,16 @@ const keyTerminologies = [
 export default function NumberConverterPage() {
   return (
     <>
-      <StructuredData data={faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))} />
+      <StructuredData data={{
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
+      }} />
       <StructuredData data={howToSchema} />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
           title="Binary ↔ Decimal ↔ Hex Converter"
-          description="A real-time number base conversion tool for developers, engineers, and students working with binary, decimal, and hexadecimal systems."
+          description="A real-time number base conversion tool for developers, engineers, and students working with binary, decimal, and hexadecimal systems. Instantly see how numbers are represented across the foundational bases of computing."
         />
         
         <NumberConverter />
@@ -69,23 +80,7 @@ export default function NumberConverterPage() {
               </ol>
           </Card>
         </section>
-
-        <section>
-           <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
-           <Card>
-              <CardContent className="p-6">
-                  <dl className="space-y-4">
-                      {keyTerminologies.map((item) => (
-                          <div key={item.term}>
-                              <dt className="font-semibold">{item.term}</dt>
-                              <dd className="text-muted-foreground text-sm">{item.definition}</dd>
-                          </div>
-                      ))}
-                  </dl>
-              </CardContent>
-           </Card>
-        </section>
-
+        
         <Card className='bg-secondary/30 border-primary/20'>
           <CardHeader>
               <div className='flex items-center gap-2 text-primary'>
@@ -101,20 +96,61 @@ export default function NumberConverterPage() {
                     Humans naturally think in <strong>Decimal (Base-10)</strong> because we have ten fingers. It's the system we learn from childhood, with digits 0 through 9. But computers are built on transistors that have only two states: on or off. This makes <strong>Binary (Base-2)</strong>, with its two digits 0 and 1, the native language of all digital hardware.
                   </p>
                   <p>
-                    While binary is perfect for computers, long strings of 1s and 0s are very difficult for humans to read. This is where <strong>Hexadecimal (Base-16)</strong> comes in. Hexadecimal uses digits 0-9 and A-F. It serves as a compact, human-friendly shorthand for binary because one hex digit can represent exactly four binary digits (a nibble). This makes it ideal for representing memory addresses, file headers, and color codes without the unwieldy length of a pure binary string.
+                    While binary is perfect for computers, long strings of 1s and 0s are very difficult for humans to read. This is where <strong>Hexadecimal (Base-16)</strong> comes in. Hexadecimal uses digits 0-9 and letters A-F. It serves as a compact, human-friendly shorthand for binary because one hex digit can represent exactly four binary digits (a nibble). This makes it ideal for representing memory addresses, file headers, and color codes without the unwieldy length of a pure binary string.
+                  </p>
+                  <p>
+                    Understanding how to convert between these bases is not just an academic exercise; it's a fundamental skill for anyone working in technology. It's the bridge between human logic and computer execution.
                   </p>
               </section>
               <section>
-                  <h3 className="font-bold text-xl">Real-World Examples</h3>
-                  <ul className="list-disc pl-5">
-                     <li><strong>Colors in CSS:</strong> A hex color code like `#3B82F6` is actually three hexadecimal numbers combined: `3B` for red, `82` for green, and `F6` for blue. In decimal, this is `rgb(59, 130, 246)`.</li>
-                     <li><strong>Networking:</strong> An IPv4 address is a 32-bit binary number. We write it as four decimal numbers (e.g., `192.168.1.1`) for readability.</li>
-                     <li><strong>File Permissions in Linux:</strong> File permissions are often represented in octal (base-8), another compact system. The permission `755` is three octal numbers representing the permissions for the owner, group, and others.</li>
-                     <li><strong>Low-Level Debugging:</strong> When inspecting a program's memory, developers use hexadecimal because it maps directly to the binary data stored in RAM, making it easier to read than a raw binary dump.</li>
-                  </ul>
+                  <h3 className="font-bold text-xl">Manual Conversion: From Decimal to Binary and Hex</h3>
+                   <p>Understanding how the conversion works manually solidifies the concepts. Let's convert the decimal number <strong>214</strong>.</p>
+                    <h4>Decimal to Binary</h4>
+                    <p>We use powers of 2. Find the largest power of 2 that fits into 214 and subtract it, then repeat with the remainder.</p>
+                    <ol className='list-decimal pl-5'>
+                        <li>The largest power of 2 less than 214 is 128 (2<sup>7</sup>). 214 - 128 = 86. (Bit 7 is <strong>1</strong>)</li>
+                        <li>The largest power of 2 less than 86 is 64 (2<sup>6</sup>). 86 - 64 = 22. (Bit 6 is <strong>1</strong>)</li>
+                        <li>22 is less than 32 (2<sup>5</sup>). (Bit 5 is <strong>0</strong>)</li>
+                        <li>The largest power of 2 less than 22 is 16 (2<sup>4</sup>). 22 - 16 = 6. (Bit 4 is <strong>1</strong>)</li>
+                        <li>6 is less than 8 (2<sup>3</sup>). (Bit 3 is <strong>0</strong>)</li>
+                        <li>The largest power of 2 less than 6 is 4 (2<sup>2</sup>). 6 - 4 = 2. (Bit 2 is <strong>1</strong>)</li>
+                        <li>The largest power of 2 less than 2 is 2 (2<sup>1</sup>). 2 - 2 = 0. (Bit 1 is <strong>1</strong>)</li>
+                        <li>The remainder is 0, so the last bit is 0. (Bit 0 is <strong>0</strong>)</li>
+                    </ol>
+                    <p>Combining these gives the 8-bit binary number: <strong>11010110</strong>.</p>
+                     <h4>Decimal to Hexadecimal</h4>
+                    <p>We use division by 16 and find the remainders.</p>
+                    <ol className='list-decimal pl-5'>
+                       <li>Divide 214 by 16: 214 / 16 = 13 with a remainder of 6.</li>
+                       <li>The remainder, 6, is our last hex digit.</li>
+                       <li>The quotient, 13, corresponds to the hex digit 'D'.</li>
+                    </ol>
+                    <p>Reading the digits from bottom to top gives us the hexadecimal number: <strong>D6</strong>.</p>
               </section>
           </CardContent>
         </Card>
+
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Web Development (CSS Colors)</h3>
+                    <p className="text-sm text-muted-foreground">A web designer provides a color in RGB format, `rgb(239, 68, 68)`. The developer needs the hex code for their CSS stylesheet. They enter `239`, `68`, `68` into a converter to get the hex equivalent `#EF4444` for the `background-color` property. This can be done directly with our <Link href="/tools/color-converter" className='text-primary hover:underline'>Hex ↔ RGB Color Converter</Link>.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Networking (Subnetting)</h3>
+                    <p className="text-sm text-muted-foreground">A network engineer is calculating a subnet mask. They know the mask's last octet is `240`. To understand how many bits this mask uses, they convert `240` to binary, which is `11110000`. This tells them the mask uses the first 4 bits of the last octet, which is crucial for their <Link href="/tools/subnet-calculator" className='text-primary hover:underline'>subnet calculations</Link>.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Low-Level Programming/Debugging</h3>
+                    <p className="text-sm text-muted-foreground">A C++ programmer is debugging a memory issue. The debugger shows a memory address as `0x7FFF5FBFFD60`. To understand the bit-level flags or structure at that address, they might convert parts of the hex value to binary to see which specific flags are turned on or off.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Character Encoding (UTF-8)</h3>
+                    <p className="text-sm text-muted-foreground">A developer is working with character encodings. They see that the Euro symbol (€) is represented in a URL as `%E2%82%AC`. By converting the hex values `E2`, `82`, and `AC` to binary, they can see the underlying three-byte UTF-8 sequence used to represent that character.</p>
+                </div>
+            </div>
+        </section>
 
         <div className="grid md:grid-cols-2 gap-8">
             <Card>
@@ -145,74 +181,68 @@ export default function NumberConverterPage() {
         </div>
 
         <section>
-            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-card p-6 rounded-lg">
-                    <h3 className="font-semibold text-lg mb-2">Web Development (CSS Colors)</h3>
-                    <p className="text-sm text-muted-foreground">A web designer provides a color in RGB format, `rgb(239, 68, 68)`. The developer needs the hex code for their CSS stylesheet. They enter `239`, `68`, `68` into a converter to get the hex equivalent `#EF4444` for the `background-color` property.</p>
-                </div>
-                 <div className="bg-card p-6 rounded-lg">
-                    <h3 className="font-semibold text-lg mb-2">Networking (Subnetting)</h3>
-                    <p className="text-sm text-muted-foreground">A network engineer is calculating a subnet mask. They know the mask is `255.255.255.240`. To understand how many bits this mask uses, they convert `240` to binary, which is `11110000`. This tells them the mask uses the first 4 bits of the last octet, which is crucial for their subnet calculations.</p>
-                </div>
-                 <div className="bg-card p-6 rounded-lg">
-                    <h3 className="font-semibold text-lg mb-2">Low-Level Programming/Debugging</h3>
-                    <p className="text-sm text-muted-foreground">A C++ programmer is debugging a memory issue. The debugger shows a memory address as `0x7FFF5FBFFD60`. To understand the bit-level flags or structure at that address, they might convert parts of the hex value to binary to see which specific flags are turned on or off.</p>
-                </div>
-                 <div className="bg-card p-6 rounded-lg">
-                    <h3 className="font-semibold text-lg mb-2">Character Encoding (UTF-8)</h3>
-                    <p className="text-sm text-muted-foreground">A developer is working with character encodings. They see that the Euro symbol (€) is represented in a URL as `%E2%82%AC`. By converting the hex values `E2`, `82`, and `AC` to binary, they can see the underlying three-byte UTF-8 sequence used to represent that character.</p>
-                </div>
-            </div>
-        </section>
+           <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+           <Card>
+              <CardContent className="p-6">
+                  <dl className="space-y-4">
+                      {keyTerminologies.map((item) => (
+                          <div key={item.term}>
+                              <dt className="font-semibold">{item.term}</dt>
+                              <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                          </div>
+                      ))}
+                  </dl>
+              </CardContent>
+           </Card>
+      </section>
 
-         <section>
-            <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
-            <Card>
-                <CardContent className="p-6">
-                    <Accordion type="single" collapsible className="w-full">
-                        {faqData.map((item, index) => (
-                            <AccordionItem value={`item-${index}`} key={index}>
-                                <AccordionTrigger>{item.question}</AccordionTrigger>
-                                <AccordionContent>
-                                    <div dangerouslySetInnerHTML={{ __html: item.answer }} />
-                                </AccordionContent>
-                            </AccordionItem>
-                        ))}
-                    </Accordion>
-                </CardContent>
-            </Card>
-        </section>
+       <section>
+          <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+          <Card>
+              <CardContent className="p-6">
+                  <Accordion type="single" collapsible className="w-full">
+                      {faqData.map((item, index) => (
+                          <AccordionItem value={`item-${index}`} key={index}>
+                              <AccordionTrigger>{item.question}</AccordionTrigger>
+                              <AccordionContent>
+                                  <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                              </AccordionContent>
+                          </AccordionItem>
+                      ))}
+                  </Accordion>
+              </CardContent>
+          </Card>
+      </section>
 
-        <section>
-            <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <Link href="/tools/ip-to-binary" className="block">
-                    <Card className="hover:border-primary transition-colors h-full">
-                        <CardHeader>
-                            <CardTitle className="text-base flex items-center justify-between">IP to Binary Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                            <CardDescription className="text-xs">See a practical application of decimal-to-binary conversion in networking.</CardDescription>
-                        </CardHeader>
-                    </Card>
-                </Link>
-                <Link href="/tools/color-converter" className="block">
-                    <Card className="hover:border-primary transition-colors h-full">
-                        <CardHeader>
-                            <CardTitle className="text-base flex items-center justify-between">Hex ↔ RGB Color Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                            <CardDescription className="text-xs">A specialized converter for the hexadecimal color codes used in web design.</CardDescription>
-                        </CardHeader>
-                    </Card>
-                </Link>
-                <Link href="/tools/base64-encoder-decoder" className="block">
-                    <Card className="hover:border-primary transition-colors h-full">
-                        <CardHeader>
-                            <CardTitle className="text-base flex items-center justify-between">Base64 Encoder/Decoder<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                            <CardDescription className="text-xs">Explore another base-system (Base64) used for encoding data, not just numbers.</CardDescription>
-                        </CardHeader>
-                    </Card>
-                </Link>
-            </div>
-        </section>
+      <section>
+          <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <Link href="/tools/ip-to-binary" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">IP to Binary Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">See a practical application of decimal-to-binary conversion in networking.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+              <Link href="/tools/color-converter" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">Hex ↔ RGB Color Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">A specialized converter for the hexadecimal color codes used in web design.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+              <Link href="/tools/base64-encoder-decoder" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">Base64 Encoder/Decoder<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">Explore another base-system (Base64) used for encoding data, not just numbers.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+          </div>
+      </section>
       </div>
     </>
   );
