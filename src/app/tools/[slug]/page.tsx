@@ -30,6 +30,7 @@ import { CidrToWildcardConverter } from '@/app/tools/cidr-to-wildcard/cidr-to-wi
 import { IpSummarizationTool } from '@/app/tools/ip-summarization/ip-summarization-tool';
 import { HttpHeaderChecker } from '@/app/tools/http-header-checker/http-header-checker';
 import { SslExpiryChecker } from '@/app/tools/ssl-expiry-checker/ssl-expiry-checker';
+import { UrlEncoderDecoder } from '@/app/tools/url-encoder-decoder/url-encoder-decoder';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -67,6 +68,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'ip-summarization': IpSummarizationTool,
     'http-header-checker': HttpHeaderChecker,
     'ssl-expiry-checker': SslExpiryChecker,
+    'url-encoder-decoder': UrlEncoderDecoder,
 };
 
 
@@ -120,3 +122,4 @@ function ComingSoon() {
 }
 
     
+
