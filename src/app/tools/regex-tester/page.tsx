@@ -169,7 +169,6 @@ export default function RegexTesterPage() {
               </CardContent>
           </Card>
       </section>
-      </div>
     </>
   );
 }
