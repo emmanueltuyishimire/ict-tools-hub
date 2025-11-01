@@ -171,10 +171,10 @@ export function HtmlEntityEncoderDecoder() {
                 <Card className="prose prose-sm max-w-none text-foreground p-6">
                     <p>This tool provides a real-time converter for HTML entities, which is essential for displaying special characters or code snippets on a web page safely.</p>
                     <ol>
-                        <li>&lt;strong&gt;Live Conversion:&lt;/strong&gt; The tool works instantly. Start typing in either the "Decoded" (top) or "Encoded" (bottom) box, and the other box will update in real-time.</li>
-                        <li>&lt;strong&gt;To Encode:&lt;/strong&gt; Type plain text with special characters (e.g., `5 > 3`) into the "Decoded" box. The safe HTML entity version (`5 &gt; 3`) will appear in the "Encoded" box.</li>
-                        <li>&lt;strong&gt;To Decode:&lt;/strong&gt; Paste text containing HTML entities (e.g., `&copy; 2024`) into the "Encoded" box. The plain text version (`© 2024`) will appear in the "Decoded" box.</li>
-                        <li>&lt;strong&gt;Swap &amp; Copy:&lt;/strong&gt; Use the `Swap` button to switch the contents of the two boxes. Use the `Copy` icon above either box to copy its contents to your clipboard.</li>
+                        <li><strong>Live Conversion:</strong> The tool works instantly. Start typing in either the "Decoded" (top) or "Encoded" (bottom) box, and the other box will update in real-time.</li>
+                        <li><strong>To Encode:</strong> Type plain text with special characters (e.g., `5 > 3`) into the "Decoded" box. The safe HTML entity version (`5 &gt; 3`) will appear in the "Encoded" box.</li>
+                        <li><strong>To Decode:</strong> Paste text containing HTML entities (e.g., `&copy; 2024`) into the "Encoded" box. The plain text version (`© 2024`) will appear in the "Decoded" box.</li>
+                        <li><strong>Swap &amp; Copy:</strong> Use the `Swap` button to switch the contents of the two boxes. Use the `Copy` icon above either box to copy its contents to your clipboard.</li>
                     </ol>
                 </Card>
             </section>
@@ -207,22 +207,22 @@ export function HtmlEntityEncoderDecoder() {
                     <section>
                         <h3 className="font-bold text-xl">Why Can't I Just Type `&lt;` in my HTML?</h3>
                         <p>The HyperText Markup Language (HTML) is built on a system of tags, which are defined by angle brackets (`<` and `>`). When a web browser parses an HTML document, it interprets any text inside these brackets as an instruction—to create a heading, a paragraph, a link, etc. This creates a problem: what if you want to literally display the text `<p>` on your page, perhaps as part of a code tutorial?</p>
-                        <p>If you simply type `<p>`, the browser will try to render a new paragraph element, not display the text. This is where &lt;strong&gt;HTML entities&lt;/strong&gt; come in. They are a special syntax that tells the browser, "Don't interpret this as code; display it as the literal character it represents." By converting `<p>` to `&lt;p&gt;`, you ensure the browser shows the text instead of executing the tag.</p>
+                        <p>If you simply type `<p>`, the browser will try to render a new paragraph element, not display the text. This is where <strong>HTML entities</strong> come in. They are a special syntax that tells the browser, "Don't interpret this as code; display it as the literal character it represents." By converting `<p>` to `&lt;p&gt;`, you ensure the browser shows the text instead of executing the tag.</p>
                     </section>
                     <section>
                         <h3 className="font-bold text-xl">Named vs. Numeric Entities</h3>
                         <p>There are two primary ways to write an HTML entity:</p>
                         <ul className="list-disc pl-5">
-                           <li>&lt;strong&gt;Named Entities:&lt;/strong&gt; These are human-readable mnemonics for common characters. They are easy to remember but are only available for a limited set of characters. For example, `&copy;` for the copyright symbol (©) or `&amp;` for an ampersand (&amp;).</li>
-                           <li>&lt;strong&gt;Numeric Entities:&lt;/strong&gt; These can represent any character in the Unicode character set. They use the character's unique Unicode code point, written as either decimal (`&amp;#...;`) or hexadecimal (`&amp;#x...;`). For example, the copyright symbol can also be written as `&amp;#169;` (decimal) or `&amp;#xA9;` (hex).</li>
+                           <li><strong>Named Entities:</strong> These are human-readable mnemonics for common characters. They are easy to remember but are only available for a limited set of characters. For example, `&copy;` for the copyright symbol (©) or `&amp;` for an ampersand (&amp;).</li>
+                           <li><strong>Numeric Entities:</strong> These can represent any character in the Unicode character set. They use the character's unique Unicode code point, written as either decimal (`&#...;`) or hexadecimal (`&#x...;`). For example, the copyright symbol can also be written as `&#169;` (decimal) or `&#xA9;` (hex).</li>
                         </ul>
                         <p>While named entities are convenient, numeric entities are more universal and guarantee that any character can be represented correctly.</p>
                     </section>
                      <section>
                         <h3 className="font-bold text-xl">A Critical Defense Against Cross-Site Scripting (XSS)</h3>
-                        <p>Beyond just displaying text correctly, HTML entity encoding is a cornerstone of web security. One of the most common web vulnerabilities is &lt;strong&gt;Cross-Site Scripting (XSS)&lt;/strong&gt;. An XSS attack occurs when a malicious user injects a script into a web page that is then viewed by other users.</p>
+                        <p>Beyond just displaying text correctly, HTML entity encoding is a cornerstone of web security. One of the most common web vulnerabilities is <strong>Cross-Site Scripting (XSS)</strong>. An XSS attack occurs when a malicious user injects a script into a web page that is then viewed by other users.</p>
                         <p>Imagine a blog comment section where a user submits the following comment: `&lt;script&gt;alert('You have been hacked!');&lt;/script&gt;`. If the website stores and renders this comment directly without encoding it, every user who views that comment will have that JavaScript executed in their browser. This could be used to steal cookies, redirect users to malicious sites, or deface the page.</p>
-                        <p>By properly encoding the user's input before displaying it, the malicious comment becomes: `&amp;lt;script&amp;gt;alert('You have been hacked!');&amp;lt;/script&amp;gt;`. The browser will now render this as harmless text on the page, completely neutralizing the attack. &lt;strong&gt;Never trust user input; always encode it before rendering it in HTML.&lt;/strong&gt;</p>
+                        <p>By properly encoding the user's input before displaying it, the malicious comment becomes: `&amp;lt;script&amp;gt;alert('You have been hacked!');&amp;lt;/script&amp;gt;`. The browser will now render this as harmless text on the page, completely neutralizing the attack. <strong>Never trust user input; always encode it before rendering it in HTML.</strong></p>
                     </section>
                 </CardContent>
             </Card>
@@ -268,5 +268,4 @@ export function HtmlEntityEncoderDecoder() {
             </section>
         </div>
     );
-
-    
+}
