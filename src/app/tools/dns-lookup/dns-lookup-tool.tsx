@@ -30,7 +30,6 @@ function SubmitButton() {
 export function DnsLookupTool() {
     const [state, formAction] = useActionState(lookupDns, initialState);
     const resultRef = useRef<HTMLDivElement>(null);
-    const { pending } = useFormStatus();
 
     useEffect(() => {
         if(state && resultRef.current) {
@@ -101,6 +100,7 @@ export function DnsLookupTool() {
                                     placeholder="example.com"
                                     className="font-code"
                                     aria-label="Domain to lookup"
+                                    defaultValue="google.com"
                                 />
                             </div>
                             <div className="sm:col-span-2 space-y-2">
@@ -119,40 +119,28 @@ export function DnsLookupTool() {
             </Card>
             
              <div ref={resultRef}>
-                 {pending && (
-                    <Card>
-                        <CardHeader>
-                            <Skeleton className="h-8 w-1/2" />
-                            <Skeleton className="h-4 w-3/4" />
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <Skeleton className="h-24 w-full" />
-                        </CardContent>
-                    </Card>
-                 )}
-                {state && !pending &&(
+                {state?.message && state?.success === false && (
+                    <Alert variant="destructive">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertTitle>Lookup Failed</AlertTitle>
+                        <AlertDescription>{state.message}</AlertDescription>
+                    </Alert>
+                )}
+                {state?.success === true && state.records && (
                     <div aria-live="polite">
-                        {!state.success ? (
-                            <Alert variant="destructive">
-                                <AlertCircle className="h-4 w-4" />
-                                <AlertTitle>Lookup Failed</AlertTitle>
-                                <AlertDescription>{state.message}</AlertDescription>
-                            </Alert>
-                        ) : (
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>{state.recordType} Records for {state.domain}</CardTitle>
-                                    <CardDescription>
-                                        Successfully retrieved {state.records?.length || 0} record(s).
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="rounded-md border bg-muted/50 p-4">
-                                        {renderRecords()}
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        )}
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>{state.recordType} Records for {state.domain}</CardTitle>
+                                <CardDescription>
+                                    Successfully retrieved {state.records?.length || 0} record(s).
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="rounded-md border bg-muted/50 p-4">
+                                    {renderRecords()}
+                                </div>
+                            </CardContent>
+                        </Card>
                     </div>
                 )}
             </div>
