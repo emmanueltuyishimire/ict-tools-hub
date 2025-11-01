@@ -24,7 +24,6 @@ const RegexTesterPage = () => {
     <>
       <StructuredData data={faqSchemaData} />
       <StructuredData data={howToSchema} />
-
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
             title="Regex Tester / Generator"
@@ -109,7 +108,7 @@ const RegexTesterPage = () => {
                 </CardHeader>
                 <CardContent>
                      <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                        <li><strong>Greedy Matching:</strong> Forgetting that `*` and `+` are "greedy" and will match as much as possible. When matching HTML tags, a pattern like `<.*>` on `<h1>A</h1><p>B</p>` will match the entire string. Use the lazy quantifier `<.*?>` to match just `<h1>` and `</h1>`.</li>
+                        <li><strong>Greedy Matching:</strong> Forgetting that `*` and `+` are "greedy" and will match as much as possible. When matching HTML tags, a pattern like `&lt;.*&gt;` on `&lt;h1&gt;A&lt;/h1&gt;&lt;p&gt;B&lt;/p&gt;` will match the entire string. Use the lazy quantifier `&lt;.*?&gt;` to match just `&lt;h1&gt;` and `&lt;/h1&gt;`.</li>
                         <li><strong>Forgetting the Global Flag:</strong> A common source of confusion in code is when a regex only replaces the first occurrence of a pattern. This is because the `g` flag was omitted.</li>
                         <li><strong>Complex Email Validation:</strong> Trying to write a perfect, RFC-compliant regex for email validation. The official standard is incredibly complex. It's almost always better to use a simple regex to check the basic format and then verify the email by sending a confirmation link.</li>
                         <li><strong>Catastrophic Backtracking:</strong> Creating a regex with nested quantifiers like `(a*)*` can cause the engine to hang on certain strings. Avoid complex nested "star" or "plus" quantifiers where possible.</li>
