@@ -114,13 +114,13 @@ const PrimeNumberGeneratorPage = () => {
                      <li>All remaining unmarked numbers in the list are prime.</li>
                   </ol>
                   <p>
-                    This method is highly efficient because it avoids redundant checks. For example, once it eliminates all multiples of 2, it never has to check another even number. The same applies to multiples of 3, 5, and so on. Our <a href='/tools/algorithm-visualizer' className='text-primary hover:underline'>Algorithm Visualizer</a> can provide a graphical representation of how sieving algorithms work.
+                    This method is highly efficient because it avoids redundant checks. For example, once it eliminates all multiples of 2, it never has to check another even number. The same applies to multiples of 3, 5, and so on.
                   </p>
               </section>
               <section>
                   <h3>Trial Division: Simple but Slow</h3>
                   <p>
-                    The most basic method of checking if a single number `n` is prime is <strong>trial division</strong>. This involves dividing `n` by every integer from 2 up to the square root of `n`. If any division results in a whole number (i.e., no remainder), then `n` is composite. If no such divisor is found, `n` is prime. You can see this in action in our <a href='/tools/prime-checker' className='text-primary hover:underline'>Prime Number Checker</a> tool.
+                    The most basic method of checking if a single number `n` is prime is <strong>trial division</strong>. This involves dividing `n` by every integer from 2 up to the square root of `n`. If any division results in a whole number (i.e., no remainder), then `n` is composite. If no such divisor is found, `n` is prime. You can see this in action in our <Link href='/tools/prime-checker' className='text-primary hover:underline'>Prime Number Checker</Link> tool.
                   </p>
                   <p>
                     While effective for a single number, this method is very inefficient for generating a list of primes. To find all primes up to 1,000,000, you would have to perform millions of division operations. The Sieve of Eratosthenes, by contrast, finds them all in a single, much faster pass.
@@ -129,10 +129,10 @@ const PrimeNumberGeneratorPage = () => {
               <section>
                   <h3>Primality Testing for Massive Numbers</h3>
                   <p>
-                    What about the enormous prime numbers used in cryptography, which can have hundreds of digits? Trial division and even the Sieve are far too slow for this. For these numbers, computer scientists use **probabilistic primality tests**, such as the Miller-Rabin test.
+                    What about the enormous prime numbers used in cryptography, which can have hundreds of digits? Trial division and even the Sieve are far too slow for this. For these numbers, computer scientists use <strong>probabilistic primality tests</strong>, such as the Miller-Rabin test.
                   </p>
                   <p>
-                    These tests don't prove with 100% certainty that a number is prime. Instead, they provide a result that is either "definitely composite" or "probably prime." By running the test multiple times, the probability of a composite number being falsely identified as prime becomes astronomically low (e.g., less than 1 in 4<sup>100</sup>), making it a statistical certainty for all practical purposes. These algorithms are essential for generating the large prime numbers needed for RSA key pairs, a process you can learn about with our <a href='/tools/key-pair-generator' className='text-primary hover:underline'>Public/Private Key Pair Generator</a>.
+                    These tests don't prove with 100% certainty that a number is prime. Instead, they provide a result that is either "definitely composite" or "probably prime." By running the test multiple times, the probability of a composite number being falsely identified as prime becomes astronomically low (e.g., less than 1 in 4<sup>100</sup>), making it a statistical certainty for all practical purposes. These algorithms are essential for generating the large prime numbers needed for RSA key pairs.
                   </p>
               </section>
           </CardContent>
@@ -232,5 +232,3 @@ const PrimeNumberGeneratorPage = () => {
 };
 
 export default PrimeNumberGeneratorPage;
-
-    

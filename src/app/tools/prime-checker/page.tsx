@@ -109,17 +109,17 @@ const PrimeCheckerPage = () => {
               </section>
               <section>
                   <h3 className="font-bold text-xl">How Primality Testing Works</h3>
-                  <p>How does a computer determine if a number is prime? The simplest method is <strong>trial division</strong>.</p>
+                  <p>How does a computer determine if a number is prime? The simplest method is <strong>trial division</strong>. For generating a list of primes, an even better method is the Sieve of Eratosthenes, which you can explore with our <Link href='/tools/prime-number-generator' className='text-primary hover:underline'>Prime Number Generator</Link>. For checking a single number, trial division is effective:</p>
                   <ol className="list-decimal pl-5">
-                     <li>Take the input number, `n`.</li>
-                     <li>Check if `n` is less than or equal to 1. If so, it's not prime.</li>
-                     <li>Check if `n` is 2. If so, it is prime.</li>
-                     <li>Check if `n` is divisible by 2. If so, it's not prime.</li>
-                     <li>Loop through all odd numbers from 3 up to the square root of `n`. For each number `i`, check if `n` is divisible by `i`. If you find any divisor, you can immediately stop and conclude that `n` is not prime.</li>
-                     <li>If the loop finishes without finding any divisors, `n` must be a prime number.</li>
+                     <li>Take the input number, <code>n</code>.</li>
+                     <li>Check if <code>n</code> is less than or equal to 1. If so, it's not prime.</li>
+                     <li>Check if <code>n</code> is 2. If so, it is prime.</li>
+                     <li>Check if <code>n</code> is divisible by 2. If so, it's not prime.</li>
+                     <li>Loop through all odd numbers from 3 up to the square root of <code>n</code>. For each number <code>i</code>, check if <code>n</code> is divisible by <code>i</code>. If you find any divisor, you can immediately stop and conclude that <code>n</code> is not prime.</li>
+                     <li>If the loop finishes without finding any divisors, <code>n</code> must be a prime number.</li>
                   </ol>
                   <p>
-                    We only need to check up to the square root of `n` because if `n` has a factor larger than its square root, it must also have a corresponding factor smaller than its square root. This optimization makes the process much faster. For very large numbers, more advanced and probabilistic algorithms like the Miller-Rabin test are used, as trial division becomes too slow.
+                    We only need to check up to the square root of <code>n</code> because if <code>n</code> has a factor larger than its square root, it must also have a corresponding factor smaller than its square root. This optimization makes the process much faster. For very large numbers, more advanced and probabilistic algorithms like the Miller-Rabin test are used, as trial division becomes too slow.
                   </p>
               </section>
               <section>
@@ -142,7 +142,7 @@ const PrimeCheckerPage = () => {
                 <CardContent>
                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                         <li><strong>Divisibility Rules:</strong> Before testing a large number, use simple divisibility rules. If a number ends in 0 or 5, it's divisible by 5. If the sum of its digits is divisible by 3, the number is divisible by 3.</li>
-                        <li><strong>The Sieve of Eratosthenes:</strong> If you need to find all primes up to a certain limit, the Sieve of Eratosthenes is a highly efficient algorithm. You can generate a list of numbers and systematically cross out multiples of primes.</li>
+                        <li><strong>The Sieve of Eratosthenes:</strong> If you need to find all primes up to a certain limit, the Sieve of Eratosthenes is a highly efficient algorithm. You can use our <Link href="/tools/prime-number-generator" className="text-primary hover:underline">Prime Number Generator</Link> to see it in action.</li>
                         <li><strong>Prime Numbers are Infinite:</strong> The ancient Greek mathematician Euclid proved that there is an infinite number of prime numbers.</li>
                     </ul>
                 </CardContent>
@@ -155,7 +155,7 @@ const PrimeCheckerPage = () => {
                      <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                         <li><strong>Forgetting that 1 is Not Prime:</strong> By definition, a prime number must be greater than 1. The number 1 is a special case and is considered a "unit".</li>
                         <li><strong>Assuming All Odd Numbers are Prime:</strong> While 2 is the only even prime, not all odd numbers are prime. For example, 9 is odd but is composite (3 × 3).</li>
-                        <li><strong>Testing Divisors Too Far:</strong> When checking for factors of a number `n`, you only need to test up to its square root. Any factor larger than the square root would have a corresponding factor smaller than it, which you would have already found.</li>
+                        <li><strong>Testing Divisors Too Far:</strong> When checking for factors of a number <code>n</code>, you only need to test up to its square root. Any factor larger than the square root would have a corresponding factor smaller than it, which you would have already found.</li>
                     </ul>
                 </CardContent>
             </Card>
@@ -196,6 +196,14 @@ const PrimeCheckerPage = () => {
       <section>
           <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+               <Link href="/tools/prime-number-generator" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">Prime Number Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">Generate a list of prime numbers up to a specified limit.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
               <Link href="/tools/fibonacci-generator" className="block">
                   <Card className="hover:border-primary transition-colors h-full">
                       <CardHeader>
