@@ -63,7 +63,6 @@ export const toolCategories: ToolCategory[] = [
       { name: 'HTTP Header Checker', slug: 'http-header-checker', description: 'Check the HTTP status code of a URL.' },
       { name: 'SSL Certificate Expiration Checker', slug: 'ssl-expiry-checker', description: 'Check SSL certificate expiration.' },
       { name: 'URL Encoder / Decoder', slug: 'url-encoder-decoder', description: 'Encode or decode URLs.' },
-      { name: 'HTML Entity Encoder / Decoder', slug: 'html-entity-encoder-decoder', description: 'Encode or decode HTML entities.' },
       { name: 'HTML / CSS / JS Minifier', slug: 'code-minifier', description: 'Minify HTML, CSS, or JavaScript code.' },
       { name: 'Robots.txt Validator / Generator', slug: 'robots-txt-tool', description: 'Validate or generate a robots.txt file.' },
       { name: 'Sitemap Generator (static)', slug: 'sitemap-generator', description: 'Generate a static XML sitemap.' },
