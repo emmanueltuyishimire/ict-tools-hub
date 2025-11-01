@@ -47,6 +47,7 @@ import { CacheExpirationCalculator } from '@/app/tools/cache-expiry-calculator/c
 import { CompressionEstimator } from '@/app/tools/compression-estimator/compression-estimator';
 import { CdnBandwidthEstimator } from '@/app/tools/cdn-bandwidth-estimator/cdn-bandwidth-estimator';
 import { CodeFormatter } from '@/app/tools/code-formatter/code-formatter';
+import { HttpRequestSizeCalculator } from '@/app/tools/http-request-size-calculator/http-request-size-calculator';
 import { RegexTester } from '@/app/tools/regex-tester/regex-tester';
 import { Base64EncoderDecoder } from '@/app/tools/base64-encoder-decoder/base64-encoder-decoder';
 import { ColorConverter } from '@/app/tools/color-converter/color-converter';
