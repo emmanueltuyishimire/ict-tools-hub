@@ -9,16 +9,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 
-export const metadata = {
-    title: 'Regex Tester & Generator | ICT Toolbench',
-    description: 'Test your regular expressions in real-time. Our online regex tester supports JavaScript syntax and highlights matches, groups, and provides detailed match information.',
-    openGraph: {
-        title: 'Regex Tester & Generator | ICT Toolbench',
-        description: 'A real-time JavaScript regex tester with syntax highlighting, match explanations, and a quick reference cheat sheet.',
-        url: '/tools/regex-tester',
-    }
-};
-
 const RegexTesterPage = () => {
   return (
     <>
@@ -122,15 +112,15 @@ const RegexTesterPage = () => {
             <div className="grid md:grid-cols-2 gap-6">
                 <div className="bg-card p-6 rounded-lg">
                     <h3 className="font-semibold text-lg mb-2">Form Input Validation</h3>
-                    <p className="text-sm text-muted-foreground">A developer needs to ensure that a username only contains letters, numbers, and underscores, and is between 3 and 16 characters long. They use the regex <code className="font-code bg-muted p-1 rounded-sm">^[a-zA-Z0-9_]{3,16}$</code> to instantly validate the input on the client-side before it's even sent to the server.</p>
+                    <p className="text-sm text-muted-foreground">A developer needs to ensure that a username only contains letters, numbers, and underscores, and is between 3 and 16 characters long. They use the regex <code className="font-code bg-muted p-1 rounded-sm">^[a-zA-Z0-9_]&#123;3,16&#125;$</code> to instantly validate the input on the client-side before it's even sent to the server.</p>
                 </div>
                 <div className="bg-card p-6 rounded-lg">
                     <h3 className="font-semibold text-lg mb-2">Parsing Log Files</h3>
-                    <p className="text-sm text-muted-foreground">A system administrator needs to find all error messages from a large server log. They use a regex like <code className="font-code bg-muted p-1 rounded-sm">^(\\d{4}-\\d{2}-\\d{2}).*ERROR: (.*)$</code> with the 'g' and 'm' flags. This allows them to capture the date (group 1) and the specific error message (group 2) from every line that contains "ERROR:", ignoring all other log entries.</p>
+                    <p className="text-sm text-muted-foreground">A system administrator needs to find all error messages from a large server log. They use a regex like <code className="font-code bg-muted p-1 rounded-sm">^(\\d&#123;4&#125;-\\d&#123;2&#125;-\\d&#123;2&#125;).*ERROR: (.*)$</code> with the 'g' and 'm' flags. This allows them to capture the date (group 1) and the specific error message (group 2) from every line that contains "ERROR:", ignoring all other log entries.</p>
                 </div>
                 <div className="bg-card p-6 rounded-lg">
                     <h3 className="font-semibold text-lg mb-2">Code Refactoring (Find & Replace)</h3>
-                    <p className="text-sm text-muted-foreground">A developer is refactoring code and needs to change all instances of a deprecated function `getUser(id)` to a new async function `fetchUser({ id })`. They use a regex find-and-replace in their code editor. Find: <code className="font-code bg-muted p-1 rounded-sm">getUser\\((\\w+)\\)</code>. Replace: <code className="font-code bg-muted p-1 rounded-sm">fetchUser({{ id: $1 }})</code>. This instantly updates hundreds of files correctly, saving hours of manual work.</p>
+                    <p className="text-sm text-muted-foreground">A developer is refactoring code and needs to change all instances of a deprecated function `getUser(id)` to a new async function `fetchUser(&#123; id &#125;)`. They use a regex find-and-replace in their code editor. Find: <code className="font-code bg-muted p-1 rounded-sm">getUser\\((\\w+)\\)</code>. Replace: <code className="font-code bg-muted p-1 rounded-sm">fetchUser(&#123; id: $1 &#125;)</code>. This instantly updates hundreds of files correctly, saving hours of manual work.</p>
                 </div>
                 <div className="bg-card p-6 rounded-lg">
                     <h3 className="font-semibold text-lg mb-2">URL Rewriting</h3>
