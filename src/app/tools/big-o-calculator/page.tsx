@@ -172,7 +172,7 @@ const BigOCalculatorPage = () => {
                             </ul>
                         </CardContent>
                     </Card>
-                </div>
+                </section>
                 
                  <section>
                     <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
@@ -243,5 +243,3 @@ const BigOCalculatorPage = () => {
 };
 
 export default BigOCalculatorPage;
-
-    
