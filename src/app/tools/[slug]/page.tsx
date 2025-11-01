@@ -38,6 +38,7 @@ import { RobotsTxtTool } from '@/app/tools/robots-txt-tool/robots-txt-tool';
 import { SitemapGenerator } from '@/app/tools/sitemap-generator/sitemap-generator';
 import { ResponseTimeCalculator } from '@/app/tools/response-time-calculator/response-time-calculator';
 import { DomainExpiryCountdown } from '@/app/tools/domain-expiry-countdown/domain-expiry-countdown';
+import { UptimeCalculator } from '@/app/tools/uptime-calculator/uptime-calculator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -83,6 +84,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'sitemap-generator': SitemapGenerator,
     'response-time-calculator': ResponseTimeCalculator,
     'domain-expiry-countdown': DomainExpiryCountdown,
+    'uptime-calculator': UptimeCalculator,
 };
 
 
