@@ -2,6 +2,7 @@
 'use client';
 
 import { useActionState, useRef, useEffect } from 'react';
+import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -10,12 +11,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
 import { StructuredData } from '@/components/structured-data';
-import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Search, Globe, Code, Key, Cookie, Calendar, RefreshCw, FileIcon, Info, ShieldCheck, Clock, Server, Building } from 'lucide-react';
+import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, ShieldCheck, Clock, Building } from 'lucide-react';
 import Link from 'next/link';
 import { checkSsl, type FormState } from './actions';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
-
 
 const initialState: FormState = null;
 
@@ -62,12 +62,20 @@ const keyTerminologies = [
     { term: 'Chain of Trust', definition: 'The hierarchy of certificates, from an end-entity certificate up to a trusted root CA, that allows a browser to verify a certificate\'s authenticity.' },
 ];
 
+function SubmitButton() {
+    const { pending } = useFormStatus();
+    return (
+        <Button type="submit" disabled={pending} className="w-full sm:w-auto">
+            <ShieldCheck className="mr-2 h-4 w-4" /> 
+            {pending ? 'Checking...' : 'Check Certificate'}
+        </Button>
+    );
+}
+
 export function SslExpiryChecker() {
     const [state, formAction] = useActionState(checkSsl, initialState);
-    const formRef = useRef<HTMLFormElement>(null);
     const resultRef = useRef<HTMLDivElement>(null);
-
-    const isPending = formRef.current?.matches(':form-pending') ?? false;
+    const { pending } = useFormStatus();
 
     useEffect(() => {
         if(state && resultRef.current) {
@@ -97,7 +105,7 @@ export function SslExpiryChecker() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form ref={formRef} action={formAction} className="space-y-4">
+                    <form action={formAction} className="space-y-4">
                         <div className="flex flex-col sm:flex-row gap-2">
                             <div className="flex-grow space-y-2">
                                 <Label htmlFor="domain-input" className="sr-only">Domain</Label>
@@ -111,14 +119,14 @@ export function SslExpiryChecker() {
                                     aria-label="Domain to check"
                                 />
                             </div>
-                            <Button type="submit" disabled={isPending} className="w-full sm:w-auto"><ShieldCheck className="mr-2 h-4 w-4" /> {isPending ? 'Checking...' : 'Check Certificate'}</Button>
+                            <SubmitButton />
                         </div>
                     </form>
                 </CardContent>
             </Card>
 
             <div ref={resultRef}>
-                 {isPending && (
+                 {pending && (
                     <Card>
                         <CardHeader><CardTitle>Checking Certificate...</CardTitle></CardHeader>
                         <CardContent className="space-y-4">
@@ -132,7 +140,7 @@ export function SslExpiryChecker() {
                         </CardContent>
                     </Card>
                  )}
-                {state && (
+                {state && !pending &&(
                     <div aria-live="polite">
                         {!state.success ? (
                             <Alert variant="destructive">
@@ -153,7 +161,7 @@ export function SslExpiryChecker() {
                                          <Card className="p-4 bg-muted/50">
                                              <Clock className="mx-auto h-7 w-7 text-muted-foreground mb-2" />
                                              <p className="text-sm text-muted-foreground">Days Remaining</p>
-                                             <p className={cn("text-2xl font-bold", state.daysRemaining < 30 ? 'text-destructive' : 'text-green-600')}>{state.daysRemaining}</p>
+                                             <p className={cn("text-2xl font-bold", state.daysRemaining && state.daysRemaining < 30 ? 'text-destructive' : 'text-green-600')}>{state.daysRemaining}</p>
                                          </Card>
                                          <Card className="p-4 bg-muted/50">
                                              <Building className="mx-auto h-7 w-7 text-muted-foreground mb-2" />
