@@ -40,6 +40,7 @@ import { ResponseTimeCalculator } from '@/app/tools/response-time-calculator/res
 import { DomainExpiryCountdown } from '@/app/tools/domain-expiry-countdown/domain-expiry-countdown';
 import { UptimeCalculator } from '@/app/tools/uptime-calculator/uptime-calculator';
 import { DnsLookupTool } from '@/app/tools/dns-lookup/dns-lookup-tool';
+import { ReverseDnsLookupTool } from '@/app/tools/reverse-dns-lookup/reverse-dns-lookup-tool';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -87,6 +88,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'domain-expiry-countdown': DomainExpiryCountdown,
     'uptime-calculator': UptimeCalculator,
     'dns-lookup': DnsLookupTool,
+    'reverse-dns-lookup': ReverseDnsLookupTool,
 };
 
 
@@ -138,5 +140,7 @@ function ComingSoon() {
       </Card>
     )
 }
+
+    
 
     
