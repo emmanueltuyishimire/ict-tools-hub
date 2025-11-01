@@ -54,14 +54,17 @@ const keyTerminologies = [
 export default function JsonFormatterPage() {
   return (
     <>
-      <StructuredData data={faqData} />
+      <StructuredData data={{
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData,
+      }} />
       <StructuredData data={howToSchema} />
-      <PageHeader
-        title="JSON Formatter & Validator"
-        description="Paste your JSON to format, beautify, and validate it. Our tool helps you debug JSON data by making it readable and identifying syntax errors."
-      />
-      
       <div className="max-w-4xl mx-auto space-y-12">
+        <PageHeader
+          title="JSON Formatter & Validator"
+          description="Paste your JSON to format, beautify, and validate it. Our tool helps you debug JSON data by making it readable and identifying syntax errors."
+        />
         <JsonFormatter />
 
         <section>
