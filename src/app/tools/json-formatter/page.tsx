@@ -36,7 +36,7 @@ const howToSchema = {
     step: [
         { '@type': 'HowToStep', name: 'Paste Your JSON', text: 'Paste your raw, unformatted, or minified JSON text into the input text area.' },
         { '@type': 'HowToStep', name: 'Format and Validate', text: 'Click the "Format / Validate" button.' },
-        { '@type': 'HowToStep', name: 'Review the Output', text: 'If your JSON is valid, it will appear beautifully formatted in the output box. If it is invalid, a clear error message will be displayed, often indicating the line and character where the syntax error occurred.' },
+        { '@type': 'HowToStep', name: 'Review the Output', text: 'If your JSON is valid, it will appear beautifully formatted in the output box. If it is invalid, a clear error message will be displayed, often indicating the line and character where the error occurred.' },
         { '@type': 'HowToStep', name: 'Copy the Formatted JSON', text: 'Use the "Copy" button to copy the clean, formatted JSON to your clipboard for use in your projects or documentation.' },
     ],
     totalTime: 'PT1M'
