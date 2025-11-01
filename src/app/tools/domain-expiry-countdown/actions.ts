@@ -114,19 +114,26 @@ export async function checkDomainExpiry(
       return { success: false, message: `Could not find expiration date for ${domain}. The domain may not be registered or WHOIS data is protected.` };
     }
     
+    // Validate that the date string is parsable
+    const expiryDateObj = new Date(parsedData.expiryDate);
+    if (isNaN(expiryDateObj.getTime())) {
+        return { success: false, message: `Could not parse the expiration date returned by the WHOIS server: "${parsedData.expiryDate}". The format is unrecognized.` };
+    }
+
+    const creationDateObj = parsedData.creationDate ? new Date(parsedData.creationDate) : null;
+    const updatedDateObj = parsedData.updatedDate ? new Date(parsedData.updatedDate) : null;
+
     return {
       success: true,
       message: 'WHOIS data retrieved successfully.',
       domain: domain,
-      expiryDate: new Date(parsedData.expiryDate).toISOString(),
+      expiryDate: expiryDateObj.toISOString(),
       registrar: parsedData.registrar,
-      updatedDate: parsedData.updatedDate ? new Date(parsedData.updatedDate).toISOString() : undefined,
-      creationDate: parsedData.creationDate ? new Date(parsedData.creationDate).toISOString() : undefined,
+      updatedDate: updatedDateObj && !isNaN(updatedDateObj.getTime()) ? updatedDateObj.toISOString() : undefined,
+      creationDate: creationDateObj && !isNaN(creationDateObj.getTime()) ? creationDateObj.toISOString() : undefined,
     };
 
   } catch (error: any) {
     return { success: false, message: `Failed to fetch WHOIS data: ${error.message}` };
   }
 }
-
-    
