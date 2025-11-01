@@ -117,6 +117,28 @@ const RegexTesterPage = () => {
             </Card>
         </div>
 
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Form Input Validation</h3>
+                    <p className="text-sm text-muted-foreground">A developer needs to ensure that a username only contains letters, numbers, and underscores, and is between 3 and 16 characters long. They use the regex <code className="font-code bg-muted p-1 rounded-sm">^[a-zA-Z0-9_]{3,16}$</code> to instantly validate the input on the client-side before it's even sent to the server.</p>
+                </div>
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Parsing Log Files</h3>
+                    <p className="text-sm text-muted-foreground">A system administrator needs to find all error messages from a large server log. They use a regex like <code className="font-code bg-muted p-1 rounded-sm">^(\\d{4}-\\d{2}-\\d{2}).*ERROR: (.*)$</code> with the 'g' and 'm' flags. This allows them to capture the date (group 1) and the specific error message (group 2) from every line that contains "ERROR:", ignoring all other log entries.</p>
+                </div>
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Code Refactoring (Find & Replace)</h3>
+                    <p className="text-sm text-muted-foreground">A developer is refactoring code and needs to change all instances of a deprecated function `getUser(id)` to a new async function `fetchUser({ id })`. They use a regex find-and-replace in their code editor. Find: <code className="font-code bg-muted p-1 rounded-sm">getUser\\((\\w+)\\)</code>. Replace: <code className="font-code bg-muted p-1 rounded-sm">fetchUser({{ id: $1 }})</code>. This instantly updates hundreds of files correctly, saving hours of manual work.</p>
+                </div>
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">URL Rewriting</h3>
+                    <p className="text-sm text-muted-foreground">A webmaster wants to create user-friendly URLs. They want a URL like `/product/123` to be internally handled by the script `/products.php?id=123`. They configure their web server (like Apache or Nginx) with a rewrite rule that uses the regex <code className="font-code bg-muted p-1 rounded-sm">^/product/(\\d+)$</code> to capture the product ID and redirect the request server-side.</p>
+                </div>
+            </div>
+        </section>
+
        <section>
           <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
           <Card>
