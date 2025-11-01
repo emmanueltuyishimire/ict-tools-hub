@@ -387,7 +387,7 @@ export function IpToBinaryConverter() {
                     </div>
                      <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Passing for a Certification Exam</h3>
-                        <p className="text-sm text-muted-foreground">A student preparing for their Cisco CCNA exam encounters a question that requires them to find the "magic number" for subnetting the address `192.168.100.0` with a `/28` mask. They quickly convert the mask's interesting octet (`240`) to binary (`11110000`) to understand its structure, helping them solve the problem quickly and accurately under time pressure.</p>
+                        <p className="text-sm text-muted-foreground">A student preparing for their CCNA exam encounters a question that requires them to find the "magic number" for subnetting the address `192.168.100.0` with a `/28` mask. They quickly convert the mask's interesting octet (`240`) to binary (`11110000`) to understand its structure, helping them solve the problem quickly and accurately under time pressure.</p>
                     </div>
                      <div className="bg-card p-6 rounded-lg">
                         <h3 className="font-semibold text-lg mb-2">Troubleshooting a Misconfigured Device</h3>

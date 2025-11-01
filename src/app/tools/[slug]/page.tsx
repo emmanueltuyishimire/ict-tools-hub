@@ -47,11 +47,11 @@ import { CacheExpirationCalculator } from '@/app/tools/cache-expiry-calculator/c
 import { CompressionEstimator } from '@/app/tools/compression-estimator/compression-estimator';
 import { CdnBandwidthEstimator } from '@/app/tools/cdn-bandwidth-estimator/cdn-bandwidth-estimator';
 import { CodeFormatter } from '@/app/tools/code-formatter/code-formatter';
-import { HttpRequestSizeCalculator } from '@/app/tools/http-request-size-calculator/http-request-size-calculator';
 import { RegexTester } from '@/app/tools/regex-tester/regex-tester';
 import { Base64EncoderDecoder } from '@/app/tools/base64-encoder-decoder/base64-encoder-decoder';
 import { ColorConverter } from '@/app/tools/color-converter/color-converter';
 import { ColorPaletteGenerator } from '@/app/tools/color-palette-generator/color-palette-generator';
+import { NumberConverter } from '@/app/tools/number-converter/number-converter';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -111,6 +111,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'base64-encoder-decoder': Base64EncoderDecoder,
     'color-converter': ColorConverter,
     'color-palette-generator': ColorPaletteGenerator,
+    'number-converter': NumberConverter,
 };
 
 
