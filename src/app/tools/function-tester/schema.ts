@@ -1,4 +1,3 @@
-
 export const faqData = [
     { question: "What is a JavaScript function?", answer: "A JavaScript function is a reusable block of code designed to perform a particular task. A function is executed when 'called' or 'invoked'. It can take parameters (inputs) and can return a value (output)." },
     { question: "Is this tool a full development environment (IDE)?", answer: "No. This tool is a simple sandbox for quickly testing isolated functions or formulas. It is not a full IDE and lacks features like a file system, debugger (other than `console.log`), or package management." },

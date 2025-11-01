@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { FunctionTester } from './function-tester';
@@ -19,8 +18,7 @@ export const metadata = {
     }
 };
 
-const FunctionTesterPage = () => {
-  const faqSchema = {
+const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqData.map(item => ({
@@ -31,23 +29,24 @@ const FunctionTesterPage = () => {
             text: item.answer.replace(/<[^>]*>?/gm, ''),
         },
     })),
-  };
+};
 
-  const softwareAppSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Function / Formula Tester",
-    "operatingSystem": "All",
-    "applicationCategory": "DeveloperApplication",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "description": "A client-side JavaScript sandbox for testing functions and code snippets safely and instantly.",
-    "url": "https://www.icttoolbench.com/tools/function-tester"
-  };
+const softwareAppSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Function / Formula Tester",
+  "operatingSystem": "All",
+  "applicationCategory": "DeveloperApplication",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "A client-side JavaScript sandbox for testing functions and code snippets safely and instantly.",
+  "url": "https://www.icttoolbench.com/tools/function-tester"
+};
 
+const FunctionTesterPage = () => {
   return (
     <>
       <StructuredData data={faqSchema} />
