@@ -127,7 +127,7 @@ export default function HtmlEntityEncoderDecoderPage() {
                           <li><strong>Forgetting to Encode:</strong> Pasting code directly into an HTML file without encoding it first is a common mistake that can break your page layout or cause parts of your page to disappear.</li>
                           <li><strong>Double Encoding:</strong> Accidentally running already-encoded text through the encoder again. This will encode the ampersands (e.g., <code>&amp;amp;lt;</code>), resulting in incorrect output.</li>
                           <li><strong>Confusing with URL Encoding:</strong> HTML entity encoding and <Link href="/tools/url-encoder-decoder" className="text-primary hover:underline">URL Encoding</Link> are for different purposes. Use entity encoding for displaying content in HTML, and URL encoding for passing data in URLs.</li>
-                          <li><strong>Encoding Inside `script` Tags:</strong> You should not HTML-encode content inside a `<script>` tag. The JavaScript engine expects raw code, and encoding it will cause syntax errors.</li>
+                          <li><strong>Encoding Inside `&lt;script&gt;` Tags:</strong> You should not HTML-encode content inside a `&lt;script&gt;` tag. The JavaScript engine expects raw code, and encoding it will cause syntax errors.</li>
                       </ul>
                   </CardContent>
               </Card>
