@@ -24,12 +24,12 @@ const faqData = [
     { question: "Why is Whois data public?", answer: "Whois data has historically been public to promote a stable and transparent internet. It allows network administrators, security professionals, and law enforcement to find the contact person for a domain to resolve technical issues or investigate malicious activity. However, privacy concerns have led to changes in its accessibility." },
     { question: "What is Whois privacy and how does it work?", answer: "Whois privacy (or domain privacy) is a service offered by domain registrars that replaces the registrant's personal contact information (name, address, email) in the public Whois record with the information of a proxy service. This helps protect domain owners from spam and unwanted contact, though the registrar still maintains the true ownership data." },
     { question: "Can I find out who owns a domain with privacy protection enabled?", answer: "Generally, no. The purpose of Whois privacy is to anonymize the owner. While the registrar's proxy information is public, they will not reveal the owner's details unless compelled by a legal order or a valid dispute under ICANN policies." },
-    { question: "What is the difference between a Registrant, Registrar, and Registry?", answer: "The **Registrant** is the person or company who owns the domain. The **Registrar** is the accredited company (e.g., GoDaddy, Namecheap) that the registrant uses to register and manage the domain. The **Registry** is the top-level organization that manages the top-level domain (TLD), such as Verisign for `.com` or Nominet for `.uk`." },
+    { question: "What is the difference between a Registrant, Registrar, and Registry?", answer: "The <strong>Registrant</strong> is the person or company who owns the domain. The <strong>Registrar</strong> is the accredited company (e.g., GoDaddy, Namecheap) that the registrant uses to register and manage the domain. The <strong>Registry</strong> is the top-level organization that manages the top-level domain (TLD), such as Verisign for `.com` or Nominet for `.uk`." },
     { question: "What does 'Domain Status: clientTransferProhibited' mean?", answer: "This is a common and recommended security status. It means that the domain is locked at the registrar level to prevent unauthorized transfers to another registrar. You would need to unlock the domain through your registrar's control panel before you can initiate a transfer." },
     { question: "Is Whois data always accurate?", answer: "Under ICANN's policies, registrants are required to provide accurate contact information. However, the data is not always up-to-date or correct. Malicious actors often use fake information. The 'Updated Date' in a Whois record can give a clue as to how recently the information was confirmed." },
     { question: "How can I use this tool for security investigations?", answer: "Security analysts use Whois to investigate phishing or malware-hosting domains. By looking at the creation date, registrar, and nameservers, they can identify newly registered malicious domains, find other domains registered by the same entity, and report abuse to the registrar." },
     { question: "Why does the tool sometimes show a 'referral' or need to query another server?", answer: "The Whois system is distributed. A query to a central server (like `whois.iana.org`) will often provide a referral to the specific Whois server for that TLD's registry (e.g., `whois.verisign-grs.com` for `.com`). This tool automatically follows these referrals to get the most detailed record." },
-    { question: "Can I use this for ccTLDs (country-code domains)?", answer: "Yes, for many ccTLDs. However, some country-code TLDs have their own unique Whois policies, formats, and servers, which can sometimes result in limited or differently formatted data compared to generic TLDs like `.com` or `.net`." }
+    { question: "Can I use this for ccTLDs (country-code domains)?", answer: "Yes, for many ccTLDs. However, some country-code domains (like .de, .cn, .uk) have their own unique Whois policies, formats, and servers, which can sometimes result in limited or differently formatted data compared to generic TLDs like `.com` or `.net`." }
 ];
 
 const howToSchema = {
@@ -164,11 +164,33 @@ export default function WhoisLookupPage() {
                       <li><strong>Relying on Outdated Data:</strong> Whois data can sometimes be cached. A real-time lookup tool like this one is better than relying on potentially old data from other sources.</li>
                       <li><strong>Assuming Public Data is the Owner:</strong> With domain privacy, the listed registrant is a proxy service, not the actual owner. Don't mistake the privacy service for the real person behind the domain.</li>
                       <li><strong>Misinterpreting Domain Status:</strong> Codes like `clientTransferProhibited` are normal security measures, not an indication of a problem. Codes like `redemptionPeriod` or `pendingDelete`, however, are urgent and mean the domain is at risk of being lost.</li>
-                      <li><strong>Ignoring ccTLD Differences:</strong> Country-code domains (like .de, .cn, .uk) often have different Whois servers and may provide different levels of detail than generic TLDs like .com.</li>
+                      <li><strong>Ignoring ccTLD Differences:</strong> Country-code domains (like .de, .cn, .uk) often have their own Whois servers and may provide different levels of detail than generic TLDs like .com.</li>
                   </ul>
               </CardContent>
           </Card>
       </div>
+
+       <section>
+          <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Finding a Domain Registrar</h3>
+                  <p className="text-sm text-muted-foreground">A small business owner has forgotten where they registered their domain years ago and needs to renew it. They use the Whois lookup tool, find the "Registrar" field (e.g., "GoDaddy"), and now know exactly which company to contact to manage their domain and prevent it from expiring.</p>
+              </div>
+               <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Investigating a Suspicious Email</h3>
+                  <p className="text-sm text-muted-foreground">You receive a convincing-looking email from "yourbank-security.com". Before clicking anything, you perform a Whois lookup on the domain. The results show it was just registered yesterday. This is a massive red flag, confirming it's a phishing attempt, and you safely delete the email.</p>
+              </div>
+               <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Researching a Potential Business Partner</h3>
+                  <p className="text-sm text-muted-foreground">You are considering doing business with a new online company. As part of your due diligence, you run a Whois lookup on their domain. You see that the domain has been registered for over 10 years and is registered to their official company name, which adds a layer of credibility and suggests they are a stable, long-standing entity.</p>
+              </div>
+               <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Checking a Domain's Availability</h3>
+                  <p className="text-sm text-muted-foreground">A startup founder has a great idea for a new app and wants to see if "new-cool-app.com" is available. They perform a Whois lookup. The result comes back with "No match for domain" or "NOT FOUND". This tells them the domain is not currently registered, and they can proceed to purchase it from a registrar.</p>
+              </div>
+          </div>
+      </section>
 
        <section>
           <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
@@ -178,7 +200,9 @@ export default function WhoisLookupPage() {
                       {faqData.map((item, index) => (
                           <AccordionItem value={`item-${index}`} key={index}>
                               <AccordionTrigger>{item.question}</AccordionTrigger>
-                              <AccordionContent>{item.answer}</AccordionContent>
+                              <AccordionContent>
+                                  <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                              </AccordionContent>
                           </AccordionItem>
                       ))}
                   </Accordion>
@@ -220,4 +244,3 @@ export default function WhoisLookupPage() {
   );
 }
 
-    
