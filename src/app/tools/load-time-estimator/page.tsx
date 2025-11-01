@@ -94,7 +94,7 @@ export default function WebpageLoadTimeEstimatorPage() {
                   <dl className="space-y-4">
                       {keyTerminologies.map((item) => (
                           <div key={item.term}>
-                              <strong>{item.term}</strong>
+                              <dt className='font-semibold'>{item.term}</dt>
                               <dd className="text-muted-foreground text-sm">{item.definition}</dd>
                           </div>
                       ))}
@@ -140,23 +140,74 @@ export default function WebpageLoadTimeEstimatorPage() {
           </CardContent>
       </Card>
       
-        <section>
-            <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+      <div className="grid md:grid-cols-2 gap-8">
             <Card>
-                <CardContent className="p-6">
-                    <Accordion type="single" collapsible className="w-full">
-                        {faqData.map((item, index) => (
-                            <AccordionItem value={`item-${index}`} key={index}>
-                                <AccordionTrigger>{item.question}</AccordionTrigger>
-                                <AccordionContent>
-                                    <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} />
-                                </AccordionContent>
-                            </AccordionItem>
-                        ))}
-                    </Accordion>
+                <CardHeader>
+                    <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Find Real-World Data:</strong> Use your browser's Developer Tools (F12), go to the "Network" tab, and load your page. It will show you the total page size and the total number of requests, which you can plug into this tool for a more accurate estimate.</li>
+                        <li><strong>Simulate Mobile Networks:</strong> In Chrome DevTools, you can throttle your network to simulate "Slow 3G" or "Fast 3G". Use the estimator with these lower bandwidth and higher latency values (e.g., 2 Mbps, 150ms latency) to understand the mobile user experience.</li>
+                        <li><strong>Prioritize "Above the Fold":</strong> Focus your optimization efforts on the content that appears on the screen without scrolling. Techniques like inlining critical CSS can make the page appear to load much faster, even if the total load time is the same.</li>
+                        <li><strong>Use a CDN:</strong> A Content Delivery Network (CDN) drastically reduces latency by serving your assets from a server geographically closer to the user. Model this in the estimator by using a low latency value (e.g., 20ms) even for users far away.</li>
+                    </ul>
                 </CardContent>
             </Card>
-        </section>
+            <Card>
+                <CardHeader>
+                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Ignoring Image Optimization:</strong> Uncompressed JPEG or PNG images are often the single largest contributor to page weight. Use modern formats like WebP and compress all images before uploading.</li>
+                        <li><strong>Forgetting About TTFB:</strong> This tool doesn't model Time to First Byte (server response time). A slow server can add hundreds of milliseconds of delay before any downloading even begins. Use our <Link href="/tools/response-time-calculator" className="text-primary hover:underline">Response Time Calculator</Link> to check this.</li>
+                        <li><strong>Too Many Render-Blocking Scripts:</strong> Loading large JavaScript files in the `<head>` of your HTML forces the browser to download and parse them before it can render any content. Defer non-critical scripts to load asynchronously.</li>
+                        <li><strong>Not Minifying Code:</strong> Un-minified CSS and JavaScript files contain extra spaces, comments, and long variable names that increase file size. Use our <Link href="/tools/code-minifier" className="text-primary hover:underline">Code Minifier</Link> or an automated build tool to shrink them.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+        </div>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Justifying Optimization Work</h3>
+                  <p className="text-sm text-muted-foreground">A developer wants to convince a client to invest in performance optimization. They plug the current page stats (e.g., 3MB total size) into the estimator, showing a 5-second load time on a mobile connection. They then adjust the numbers to a target (e.g., 1.5MB total size) and show the new estimated load time of 2.5 seconds, providing a concrete business case for the work.</p>
+              </div>
+               <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Choosing a Website Theme</h3>
+                  <p className="text-sm text-muted-foreground">A blogger is choosing between two WordPress themes. They test the demo page for each theme using their browser's dev tools. Theme A is 1.2MB with 40 requests. Theme B is 3.5MB with 95 requests. By plugging both sets of numbers into the estimator, they can clearly see that Theme A will provide a significantly better user experience, especially for mobile visitors.</p>
+              </div>
+               <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Impact of a New Feature</h3>
+                  <p className="text-sm text-muted-foreground">A marketing team wants to add a large, interactive JavaScript-based map to the homepage. The development team uses the estimator to model the impact. They add the feature's size (e.g., +400KB of JS) and number of requests (+5) to the current page stats. This allows them to show the marketing team that the new feature will add approximately 0.8 seconds to the load time, leading to a discussion about how to lazy-load the feature to mitigate the impact.</p>
+              </div>
+               <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Setting Performance Budgets</h3>
+                  <p className="text-sm text-muted-foreground">A performance-conscious team sets a "performance budget" for their new project: the page must load in under 3 seconds on a "Fast 3G" connection. They use the estimator with their target network conditions (e.g., 1.6 Mbps, 150ms latency) and work backwards to determine the maximum page size and number of requests they can afford, guiding their entire development process.</p>
+              </div>
+          </div>
+      </section>
+
+       <section>
+          <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+          <Card>
+              <CardContent className="p-6">
+                  <Accordion type="single" collapsible className="w-full">
+                      {faqData.map((item, index) => (
+                          <AccordionItem value={`item-${index}`} key={index}>
+                              <AccordionTrigger>{item.question}</AccordionTrigger>
+                              <AccordionContent>
+                                <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                              </AccordionContent>
+                          </AccordionItem>
+                      ))}
+                  </Accordion>
+              </CardContent>
+          </Card>
+      </section>
 
       </div>
     </>
