@@ -60,6 +60,7 @@ export const toolCategories: ToolCategory[] = [
     icon: Server,
     tools: [
       { name: 'HTTP Header Checker', slug: 'http-header-checker', description: 'Check the HTTP status code of a URL.' },
+      { name: 'HTTP Request Size Calculator', slug: 'http-request-size-calculator', description: 'Estimate the size of an HTTP request.' },
       { name: 'SSL Certificate Expiration Checker', slug: 'ssl-expiry-checker', description: 'Check SSL certificate expiration.' },
       { name: 'URL Encoder / Decoder', slug: 'url-encoder-decoder', description: 'Encode or decode URLs.' },
       { name: 'HTML Entity Encoder / Decoder', slug: 'html-entity-encoder-decoder', description: 'Encode or decode HTML entities.' },
@@ -310,3 +311,4 @@ export const mainNavLinks = [
     
 
     
+
