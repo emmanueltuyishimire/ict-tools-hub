@@ -6,6 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const metadata = {
     title: 'Reverse DNS Lookup Tool | IP to Hostname | ICT Toolbench',
@@ -200,7 +201,7 @@ export default function ReverseDnsLookupPage() {
                   <Card className="hover:border-primary transition-colors h-full">
                       <CardHeader>
                           <CardTitle className="text-base flex items-center justify-between">Whois Lookup<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                          <CardDescription className="text-xs">Find ownership and administrative details for a domain name.</CardDescription>
+                          <CardDescription className="text-xs">Find the ownership and administrative details for a domain name.</CardDescription>
                       </CardHeader>
                   </Card>
               </Link>
@@ -210,5 +211,3 @@ export default function ReverseDnsLookupPage() {
     </>
   );
 }
-
-    
