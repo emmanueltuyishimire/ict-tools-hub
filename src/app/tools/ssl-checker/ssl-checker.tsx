@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
 import { StructuredData } from '@/components/structured-data';
@@ -233,16 +233,16 @@ export function SslChecker() {
                 <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
                     <section>
                         <h3 className="font-bold text-xl">What is an SSL/TLS Certificate?</h3>
-                        <p>At its core, an SSL/TLS certificate is a small data file hosted on a web server that enables two fundamental security features: **encryption** and **authentication**. When you visit a website with a valid SSL certificate (indicated by `https://` in the URL), your browser and the server perform a "TLS handshake." This process establishes an encrypted channel, scrambling all data passed between them. This prevents eavesdroppers or "man-in-the-middle" attackers from reading your sensitive information, such as passwords, credit card numbers, or personal messages.</p>
+                        <p>At its core, an SSL/TLS certificate is a small data file hosted on a web server that enables two fundamental security features: <strong>encryption</strong> and <strong>authentication</strong>. When you visit a website with a valid SSL certificate (indicated by `https://` in the URL), your browser and the server perform a "TLS handshake." This process establishes an encrypted channel, scrambling all data passed between them. This prevents eavesdroppers or "man-in-the-middle" attackers from reading your sensitive information, such as passwords, credit card numbers, or personal messages.</p>
                         <p>Just as importantly, the certificate also serves as a digital passport for the website. It proves that the domain you are visiting is owned and operated by a legitimate entity, not an imposter. This authentication is based on a concept called the "chain of trust."</p>
                     </section>
                     <section>
                         <h3 className="font-bold text-xl">The Chain of Trust: From Root to Leaf</h3>
-                        <p>Your browser doesn't inherently trust every website's SSL certificate. Instead, it trusts a small, curated list of highly secure organizations known as **Certificate Authorities (CAs)**. These include well-known names like DigiCert, Let's Encrypt, and GlobalSign. The public certificates of these CAs, called **Root Certificates**, are pre-installed in your browser and operating system.</p>
+                        <p>Your browser doesn't inherently trust every website's SSL certificate. Instead, it trusts a small, curated list of highly secure organizations known as <strong>Certificate Authorities (CAs)</strong>. These include well-known names like DigiCert, Let's Encrypt, and GlobalSign. The public certificates of these CAs, called <strong>Root Certificates</strong>, are pre-installed in your browser and operating system.</p>
                         <p>The chain of trust works as follows:</p>
                         <ol className="list-decimal pl-5 space-y-2">
-                           <li>A Root CA issues an **Intermediate Certificate** to another organization, effectively delegating its trust.</li>
-                           <li>This Intermediate CA then issues an **End-Entity Certificate** (or "leaf" certificate) to a website owner (e.g., `google.com`) after verifying their identity.</li>
+                           <li>A Root CA issues an <strong>Intermediate Certificate</strong> to another organization, effectively delegating its trust.</li>
+                           <li>This Intermediate CA then issues an <strong>End-Entity Certificate</strong> (or "leaf" certificate) to a website owner (e.g., `google.com`) after verifying their identity.</li>
                            <li>When you visit `google.com`, the server presents its End-Entity certificate along with the Intermediate certificate. Your browser checks if the End-Entity certificate was signed by the Intermediate. It then checks if the Intermediate certificate was signed by a Root CA that it already trusts.</li>
                            <li>If this chain is complete and unbroken all the way back to a trusted root, the browser accepts the certificate as valid and displays the padlock icon. If any link in the chain is broken, expired, or untrusted, you will see a security warning.</li>
                         </ol>
