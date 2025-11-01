@@ -61,6 +61,7 @@ import { FibonacciGeneratorTool } from '@/app/tools/fibonacci-generator/fibonacc
 import { FactorialCalculator } from '@/app/tools/factorial-calculator/factorial-calculator';
 import { AlgorithmStepSimulator } from '@/app/tools/algorithm-simulator/algorithm-simulator';
 import { RandomStringGenerator } from '@/app/tools/random-string-generator/random-string-generator';
+import { RandomNumberGenerator } from '@/app/tools/random-number-generator/random-number-generator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -129,6 +130,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'factorial-calculator': FactorialCalculator,
     'algorithm-simulator': AlgorithmStepSimulator,
     'random-string-generator': RandomStringGenerator,
+    'random-number-generator': RandomNumberGenerator,
 };
 
 
