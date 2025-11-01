@@ -8,7 +8,7 @@ export const faqData = [
     { question: "What is the time complexity of Linear Search?", answer: "The time complexity of Linear Search is O(n) in the worst case, as it may have to check every single element in the list. On average, it checks n/2 elements." },
     { question: "Is Linear Search a good algorithm?", answer: "For small or unsorted lists, Linear Search is perfectly fine and simple to implement. For large, sorted lists, more efficient algorithms like Binary Search (which has a complexity of O(log n)) are far superior." },
     { question: "How does the 'Step' function in the simulator work?", answer: "Each 'step' in our simulator represents a single, meaningful action in the algorithm. For Bubble Sort, a step is one comparison and a potential swap. For Linear Search, a step is the inspection of one element. This helps to break down the process into understandable chunks." },
-    { question: "Can I use my own data in the simulator?", answer: "This version of the simulator uses a pre-defined or randomly generated dataset to ensure a clear and controlled demonstration. Custom data input is a feature we are considering for the future." },
+    { question: "Can I use my own data in the simulator?", answer: "This version of the simulator uses a pre-defined or randomly generated dataset to ensure a clear and controlled demonstration. You can use our <a href='/tools/random-number-generator' class='text-primary hover:underline'>Random Number Generator</a> to create datasets to manually test against. Custom data input is a feature we are considering for the future." },
     { question: "What other algorithms can I visualize?", answer: "Currently, this tool simulates Bubble Sort and Linear Search. We plan to add more fundamental algorithms in the future, such as Insertion Sort, Selection Sort, and Binary Search." }
 ];
 
@@ -33,4 +33,6 @@ export const keyTerminologies = [
     { term: 'Linear Search', definition: 'A sequential search algorithm that starts at one end and goes through each element of a list until the desired element is found. It has a time complexity of O(n).' },
     { term: 'Comparison', definition: 'The act of comparing two elements to determine their relative order, a fundamental operation in many sorting algorithms.' },
     { term: 'Swap', definition: 'The act of exchanging the positions of two elements in an array or list.' },
+    { term: 'Step', definition: 'A single, discrete operation within an algorithm, such as one comparison or one swap.' },
+    { term: 'Data Structure', definition: 'A particular way of organizing and storing data in a computer so that it can be accessed and modified efficiently. An array is a basic data structure.' },
 ];

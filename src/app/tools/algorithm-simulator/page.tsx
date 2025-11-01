@@ -5,9 +5,17 @@ import { AlgorithmStepSimulator } from './algorithm-simulator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
+import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 export const metadata = {
     title: 'Algorithm Step Simulator | Visualize Sorting & Searching | ICT Toolbench',
@@ -67,7 +75,7 @@ const AlgorithmSimulatorPage = () => {
                         <p>This tool is designed to provide an intuitive, visual understanding of how algorithms process data. Follow these steps to get started:</p>
                         <ol>
                             <li><strong>Select an Algorithm:</strong> Choose which algorithm you'd like to see in action from the dropdown menu, such as <strong>Bubble Sort</strong> or <strong>Linear Search</strong>.</li>
-                            <li><strong>Prepare Your Data:</strong> Use the <strong>Randomize</strong> button to create a new array of numbers. If you've selected a search algorithm, an input will appear for you to enter the number you want to find.</li>
+                            <li><strong>Prepare Your Data:</strong> Use the <strong>Randomize</strong> button to create a new array of numbers. If you've selected a search algorithm, an input will appear for you to enter the number you want to find. You can generate custom numbers with our <Link href="/tools/random-number-generator">Random Number Generator</Link>.</li>
                             <li><strong>Control the Simulation:</strong>
                                 <ul>
                                     <li>Click <strong>Play</strong> to watch the algorithm run automatically at a set speed.</li>
@@ -80,21 +88,64 @@ const AlgorithmSimulatorPage = () => {
                         </ol>
                     </Card>
                 </section>
+                
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 1: Visualizing Bubble Sort</CardTitle>
+                                <CardDescription>Understand how Bubble Sort handles a simple, unsorted array.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                               <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> You want to see how Bubble Sort sorts the array `[60, 20, 40]`. </p>
+                               <div className="prose prose-sm max-w-none">
+                                   <ol>
+                                       <li><strong>Setup:</strong> Select "Bubble Sort" from the algorithm list. Manually create this array or use the randomize function until you get a small array.</li>
+                                       <li><strong>Pass 1, Step 1:</strong> Click "Step". The simulator highlights `60` and `20`. The log reads: `Comparing elements at index 0 (60) and 1 (20).` Since 60 > 20, a swap is needed.</li>
+                                       <li><strong>Pass 1, Step 2:</strong> Click "Step". The log reads: `Swapping 60 and 20.` Click "Step" again. The array becomes `[20, 60, 40]`.</li>
+                                       <li><strong>Pass 1, Step 3:</strong> Click "Step". The simulator highlights `60` and `40`. Since 60 > 40, another swap occurs. The array becomes `[20, 40, 60]`.</li>
+                                       <li><strong>End of Pass 1:</strong> The largest element, `60`, is now in its correct final position. The simulator will color it green.</li>
+                                       <li><strong>Pass 2:</strong> The simulator compares `20` and `40`. Since they are in the correct order, no swap occurs. The algorithm finishes, as the list is now sorted. This visual feedback makes the O(n²) nature of Bubble Sort, which you can analyze with our <Link href="/tools/big-o-calculator">Time Complexity Estimator</Link>, much clearer.</li>
+                                   </ol>
+                               </div>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 2: Finding a Value with Linear Search</CardTitle>
+                                <CardDescription>Observe the straightforward but methodical process of a Linear Search.</CardDescription>
+                            </CardHeader>
+                             <CardContent className="space-y-4">
+                               <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> You want to find the number `55` in the array `[10, 85, 30, 55, 40]`.</p>
+                               <div className="prose prose-sm max-w-none">
+                                   <ol>
+                                       <li><strong>Setup:</strong> Select "Linear Search", and in the "Value to Find" input, type `55`.</li>
+                                       <li><strong>Step 1:</strong> Click "Step". The simulator highlights the first element, `10`. The log indicates it's checking index 0. The value does not match `55`.</li>
+                                       <li><strong>Step 2:</strong> Click "Step". The simulator moves to the next element, `85`, and highlights it. No match.</li>
+                                       <li><strong>Step 3:</strong> Click "Step". The simulator highlights `30`. No match.</li>
+                                       <li><strong>Step 4:</strong> Click "Step". The simulator highlights `55`. The log indicates: `Target 55 found at index 3.` The element is colored green to show a successful find, and the simulation ends.</li>
+                                   </ol>
+                               </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
 
                 <section>
-                    <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
-                    <Card>
-                        <CardContent className="p-6">
-                            <dl className="space-y-4">
-                                {keyTerminologies.map((item) => (
-                                    <div key={item.term}>
-                                        <dt className="font-semibold">{item.term}</dt>
-                                        <dd className="text-muted-foreground text-sm">{item.definition}</dd>
-                                    </div>
-                                ))}
-                            </dl>
-                        </CardContent>
-                    </Card>
+                   <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                   <Card>
+                      <CardContent className="p-6">
+                          <dl className="space-y-4">
+                              {keyTerminologies.map((item) => (
+                                  <div key={item.term}>
+                                      <dt className="font-semibold">{item.term}</dt>
+                                      <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                  </div>
+                              ))}
+                          </dl>
+                      </CardContent>
+                   </Card>
                 </section>
 
                 <Card className='bg-secondary/30 border-primary/20'>
@@ -130,8 +181,56 @@ const AlgorithmSimulatorPage = () => {
                                 Its primary advantage is its simplicity and the fact that it works on any list, sorted or unsorted. Its disadvantage is its inefficiency for large lists, with a time complexity of <strong>O(n)</strong>. In the worst-case scenario (the item is the last element or not in the list at all), it must inspect every single item. For searching large, sorted datasets, much faster algorithms like Binary Search are preferred.
                             </p>
                         </section>
+                         <section>
+                            <h3>Why Visualization Matters in Learning</h3>
+                            <p>
+                                Reading about algorithms in a textbook can be abstract and dry. Visualizing an algorithm transforms these abstract steps into a concrete, dynamic process. By watching the elements highlight, move, and settle into place, you build a strong mental model of the algorithm's behavior. This simulator helps you see:
+                            </p>
+                            <ul className="list-disc pl-5">
+                                <li><strong>The Flow of Logic:</strong> You can follow the comparisons and swaps exactly as the computer would, step by step.</li>
+                                <li><strong>Performance Differences:</strong> When more algorithms are added, you'll be able to run them on the same dataset and visually see why one is faster than another.</li>
+                                <li><strong>Edge Cases:</strong> You can see how an algorithm performs on an already-sorted list versus a reverse-sorted list, which often represent best-case and worst-case scenarios.</li>
+                            </ul>
+                        </section>
                     </CardContent>
                 </Card>
+
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
+                     <Card>
+                        <CardContent className="p-6">
+                            <ul className="space-y-4">
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Focus on One Step at a Time</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            Don't just hit "Play". Use the "Step" button to walk through the algorithm slowly. Read the log message at each step and make sure you understand why the algorithm is making that specific move. This deliberate practice is the key to deep understanding.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Predict the Next Move</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            Pause the simulation and ask yourself: "What will happen next?" Which elements will be compared? Will a swap occur? Making a prediction and then verifying it with the next step is a powerful active learning technique.
+                                        </p>
+                                    </div>
+                                </li>
+                                 <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Connect to Big O Notation</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            As you watch, think about the number of operations. For Bubble Sort, notice how it makes multiple passes over the list. This is a visual representation of its O(n²) complexity. Compare this to the single pass of Linear Search (O(n)). Use our <Link href="/tools/big-o-calculator" className="text-primary hover:underline">Time Complexity Estimator</Link> to explore these concepts further.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </CardContent>
+                     </Card>
+                </section>
 
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
@@ -195,6 +294,14 @@ const AlgorithmSimulatorPage = () => {
                                 <CardHeader>
                                     <CardTitle className="text-base flex items-center justify-between">Random Number Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
                                     <CardDescription className="text-xs">Generate different datasets to test how the algorithms perform with different inputs.</CardDescription>
+                                </CardHeader>
+                            </Card>
+                        </Link>
+                         <Link href="/tools/recursion-simulator" className="block">
+                            <Card className="hover:border-primary transition-colors h-full">
+                                <CardHeader>
+                                    <CardTitle className="text-base flex items-center justify-between">Recursion Simulator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                    <CardDescription className="text-xs">Visualize recursive function calls, a common technique in more advanced algorithms.</CardDescription>
                                 </CardHeader>
                             </Card>
                         </Link>
