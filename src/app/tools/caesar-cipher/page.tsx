@@ -1,0 +1,168 @@
+
+import { PageHeader } from '@/components/page-header';
+import { CaesarCipher } from './caesar-cipher';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { StructuredData } from '@/components/structured-data';
+import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, ArrowRightLeft, Copy } from 'lucide-react';
+import Link from 'next/link';
+
+export const metadata = {
+    title: 'Caesar Cipher Encoder / Decoder | ICT Toolbench',
+    description: 'Explore the classic Caesar cipher with our real-time encoder and decoder. Choose any shift value from 1 to 25 to encrypt and decrypt messages instantly.',
+};
+
+const faqData = [
+    { question: "What is a Caesar cipher?", answer: "A Caesar cipher is one of the oldest and simplest forms of encryption. It is a substitution cipher where each letter in the plaintext is shifted a certain number of places down the alphabet. For example, with a shift of 3, 'A' would become 'D', 'B' would become 'E', and so on. The alphabet wraps around, so 'Z' with a shift of 3 would become 'C'." },
+    { question: "Is the Caesar cipher secure?", answer: "Absolutely not. It is extremely insecure by modern standards. Since there are only 25 possible shifts, an attacker can easily try all of them in a brute-force attack to find the original message. It should only be used for educational purposes or simple puzzles." },
+    { question: "How does this tool work?", answer: "This tool takes your text and a chosen shift value (from 1 to 25). For each letter in the text, it calculates its new position in the alphabet based on the shift and reconstructs the new message. The same process works in reverse for decoding." },
+    { question: "What is the difference between this and ROT13?", answer: "ROT13 is a specific type of Caesar cipher where the shift value is always 13. Because 13 is half of 26, ROT13 is its own inverse (encoding and decoding use the same operation). This tool allows you to use any shift from 1 to 25, making it a more general Caesar cipher implementation. You can try our dedicated <a href='/tools/rot13-encoder-decoder' class='text-primary hover:underline'>ROT13 tool</a> to see this in action." },
+    { question: "What happens to numbers, spaces, and symbols?", answer: "In a standard Caesar cipher, any characters that are not letters of the alphabet are left unchanged. This tool follows that convention, only shifting the letters A-Z (both uppercase and lowercase)." },
+    { question: "Who was Caesar and did he really use this?", answer: "The cipher is named after Julius Caesar, the Roman general and statesman, who, according to the historian Suetonius, used it with a shift of three to protect his military communications. If a message was intercepted, it would be unreadable to anyone who didn't know the secret shift key." },
+    { question: "What is 'brute-force attack' in this context?", answer: "A brute-force attack is a trial-and-error method used to decode encrypted data. For a Caesar cipher, an attacker would simply try decoding the message with a shift of 1, then a shift of 2, then 3, and so on, up to 25. One of these attempts will produce readable text, breaking the cipher instantly." },
+    { question: "Is it possible to have a shift greater than 25?", answer: "While you could, it would be redundant. A shift of 26 would result in the original text. A shift of 27 would be identical to a shift of 1, as the alphabet wraps around. Therefore, only shifts from 1 to 25 produce unique ciphers." },
+    { question: "What is a 'substitution cipher'?", answer: "A substitution cipher is a method of encryption where units of plaintext are replaced with ciphertext according to a regular system. In a simple substitution cipher like Caesar's, each letter is replaced by another letter. More complex ciphers can substitute letters for symbols or groups of letters." },
+    { question: "How could I make this cipher stronger?", answer: "A simple Caesar cipher is weak because every letter is shifted by the same amount. A stronger (but still breakable) version would be a 'polyalphabetic cipher' like the Vigenère cipher, where the shift value changes for each letter based on a keyword. Modern encryption, like AES, is vastly more complex and not based on simple letter substitution." },
+];
+
+const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Use the Caesar Cipher Tool',
+    description: 'A step-by-step guide to encoding and decoding text with a Caesar cipher.',
+    step: [
+        { '@type': 'HowToStep', name: 'Select a Shift Value', text: 'Use the slider to choose a shift value between 1 and 25. This is your secret key.' },
+        { '@type': 'HowToStep', name: 'Enter Text', text: 'To encode, type your message into the top "Decoded" box. To decode, paste the ciphertext into the bottom "Encoded" box.' },
+        { '@type': 'HowToStep', name: 'View Instant Results', text: 'The tool will automatically apply the shift to your text and display the result in the other box in real-time.' },
+        { '@type': 'HowToStep', name: 'Copy or Swap', text: 'Use the copy icon to copy the output. Use the swap button to switch the contents of the two text boxes.' },
+    ],
+    totalTime: 'PT1M'
+};
+
+const keyTerminologies = [
+    { term: 'Caesar Cipher', definition: 'A substitution cipher where each letter is shifted a fixed number of places down the alphabet.' },
+    { term: 'Shift Key', definition: 'The number of positions each letter is shifted in a Caesar cipher. This is the "secret" needed to decode the message.' },
+    { term: 'Plaintext', definition: 'The original, readable message before encryption.' },
+    { term: 'Ciphertext', definition: 'The encrypted, unreadable message after the cipher has been applied.' },
+    { term: 'Brute-Force Attack', definition: 'An attack method that involves systematically trying all possible keys (in this case, all 25 shifts) until the correct one is found.' },
+    { term: 'Cryptography', definition: 'The practice and study of techniques for secure communication in the presence of third parties.' },
+];
+
+export default function CaesarCipherPage() {
+  return (
+    <>
+      <StructuredData data={faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))} />
+      <StructuredData data={howToSchema} />
+      <div className="max-w-4xl mx-auto space-y-12">
+        <PageHeader
+          title="Caesar Cipher Encoder / Decoder"
+          description="Encrypt and decrypt messages using the classic Caesar cipher. Choose any shift value to transform your text and learn the fundamentals of substitution ciphers."
+        />
+        <CaesarCipher />
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
+          <Card className="prose prose-sm max-w-none text-foreground p-6">
+              <p>This tool lets you experiment with one of history's most famous ciphers. It works in real-time for both encoding and decoding.</p>
+              <ol>
+                  <li><strong>Select the Shift Value:</strong> Use the slider to pick your "secret key"—the number of places you want to shift the letters (from 1 to 25). A shift of 3 is the classic Caesar cipher.</li>
+                  <li><strong>Enter Your Text:</strong> Type your plaintext message into the top "Decoded" box to encrypt it, or paste your ciphertext into the bottom "Encoded" box to decrypt it.</li>
+                  <li><strong>See the Instant Result:</strong> The translated text will appear in the other box as you type.</li>
+                  <li><strong>Swap or Copy:</strong> Use the swap button (<ArrowRightLeft className="inline h-4 w-4" />) to switch the plaintext and ciphertext. Use the copy button (<Copy className="inline h-ax w-4" />) to grab the output.</li>
+              </ol>
+          </Card>
+        </section>
+
+        <section>
+           <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+           <Card>
+              <CardContent className="p-6">
+                  <dl className="space-y-4">
+                      {keyTerminologies.map((item) => (
+                          <div key={item.term}>
+                              <dt className="font-semibold">{item.term}</dt>
+                              <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                          </div>
+                      ))}
+                  </dl>
+              </CardContent>
+           </Card>
+        </section>
+
+        <Card className='bg-secondary/30 border-primary/20'>
+          <CardHeader>
+              <div className='flex items-center gap-2 text-primary'>
+                  <BookOpen className="h-6 w-6" aria-hidden="true" />
+                  <CardTitle className="text-primary">Educational Deep Dive: A Foundation of Cryptography</CardTitle>
+              </div>
+              <CardDescription>Explore the history of the Caesar cipher, how it works, and why its weaknesses paved the way for modern encryption.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
+              <section>
+                  <h3 className="font-bold text-xl">The First Military-Grade Encryption</h3>
+                  <p>
+                    The Caesar cipher is named after Julius Caesar, who used it to protect sensitive military communications over 2,000 years ago. By shifting each letter by a pre-agreed number (his was a shift of 3), he could send messages that would be meaningless to an enemy if intercepted. Only a receiver who knew the "key" (the shift value) could reverse the process and read the original message. This represents one of the earliest documented uses of a substitution cipher for tactical advantage.
+                  </p>
+              </section>
+              <section>
+                  <h3 className="font-bold text-xl">How it Works: Modular Arithmetic</h3>
+                  <p>The cipher's logic is based on modular arithmetic. Each letter is assigned a number (A=0, B=1, etc.). To encrypt, you add the shift value to the letter's number and take the result modulo 26 (the number of letters in the alphabet). To decrypt, you subtract the shift value.</p>
+                  <p>For example, with a shift of 3, the letter 'X' (value 23) becomes:</p>
+                  <p className="font-code bg-muted p-2 rounded-md">(23 + 3) mod 26 = 26 mod 26 = 0</p>
+                  <p>A value of 0 corresponds to the letter 'A'. So, 'X' becomes 'A'. The special case of this is <a href="/tools/rot13-encoder-decoder" className="text-primary hover:underline">ROT13</a>, where the shift is 13. Since 13 is half of 26, adding 13 twice brings you back to the start, making it its own inverse.</p>
+              </section>
+              <section>
+                  <h3 className="font-bold text-xl">Why It's Insecure: Frequency Analysis</h3>
+                  <p>
+                    The Caesar cipher is trivial to break. Since there are only 25 possible keys, an attacker can simply try every key until one produces readable text (a brute-force attack). Even more powerfully, it can be broken with **frequency analysis**. In any language, certain letters appear more frequently than others (in English, 'E', 'T', and 'A' are the most common). By analyzing the ciphertext and seeing which letter appears most often, a cryptanalyst can make an educated guess about what that letter corresponds to (likely 'E') and thereby deduce the shift key. This weakness is inherent in all monoalphabetic substitution ciphers and led to the development of more complex polyalphabetic ciphers.
+                  </p>
+              </section>
+          </CardContent>
+        </Card>
+
+        <div className="grid md:grid-cols-2 gap-8">
+            <Card>
+                <CardHeader>
+                    <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Brute-Force Decoding:</strong> If you receive a Caesar-encrypted message but don't know the key, you can simply use this tool and slide the shift value from 1 to 25. One of the positions will reveal the original message.</li>
+                        <li><strong>Puzzles and Games:</strong> The Caesar cipher is a perfect tool for creating simple puzzles for escape rooms, scavenger hunts, or educational games for children.</li>
+                        <li><strong>Understanding Modulo:</strong> This tool is a great visual demonstration of modular arithmetic, a core concept in computer science, cryptography, and mathematics.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader>
+                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Using it for Security:</strong> The most critical mistake. The Caesar cipher provides no real security. Never use it to protect any information that is even remotely sensitive.</li>
+                        <li><strong>Forgetting the Key:</strong> If you encrypt a message and forget the shift value, you'll have to brute-force it yourself to get it back (though with only 25 options, this is easy).</li>
+                        <li><strong>Assuming it Works on All Characters:</strong> Remember that numbers and symbols are not affected. If your message contains them, they will remain in the ciphertext, which can be a clue for a cryptanalyst.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+        </div>
+
+       <section>
+          <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+          <Card>
+              <CardContent className="p-6">
+                  <Accordion type="single" collapsible className="w-full">
+                      {faqData.map((item, index) => (
+                          <AccordionItem value={`item-${index}`} key={index}>
+                              <AccordionTrigger>{item.question}</AccordionTrigger>
+                              <AccordionContent><div dangerouslySetInnerHTML={{ __html: item.answer }} /></AccordionContent>
+                          </AccordionItem>
+                      ))}
+                  </Accordion>
+              </CardContent>
+          </Card>
+      </section>
+      </div>
+    </>
+  );
+}
