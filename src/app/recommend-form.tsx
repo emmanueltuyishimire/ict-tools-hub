@@ -1,5 +1,5 @@
 'use client';
-import { useActionState } from 'react';
+import { useActionState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -7,7 +7,7 @@ import { aiToolRecommendation, type AiToolRecommendationOutput } from '@/ai/flow
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { allTools } from '@/lib/tools';
@@ -21,10 +21,35 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const initialState: AiToolRecommendationOutput | { error: string } | null = null;
+type ActionState = AiToolRecommendationOutput | { error: string } | null;
+
+const initialState: ActionState = null;
+
+// This wrapper correctly handles the arguments from useActionState
+async function formActionHandler(
+  previousState: ActionState,
+  formData: FormData
+): Promise<ActionState> {
+  const parsed = formSchema.safeParse({
+    taskDescription: formData.get('taskDescription'),
+  });
+
+  if (!parsed.success) {
+    return { error: 'Invalid input. Please describe your task.' };
+  }
+
+  try {
+    const result = await aiToolRecommendation(parsed.data);
+    return result;
+  } catch (e: any) {
+    return { error: e.message || 'An unexpected error occurred.' };
+  }
+}
+
 
 export function RecommendForm() {
-  const [state, formAction] = useActionState(aiToolRecommendation, initialState);
+  const [state, formAction] = useActionState(formActionHandler, initialState);
+  const [isPending, startTransition] = useTransition();
   const resultRef = React.useRef<HTMLDivElement>(null);
 
   const form = useForm<FormValues>({
@@ -34,18 +59,24 @@ export function RecommendForm() {
     },
   });
 
-  const { formState } = form;
-
   React.useEffect(() => {
     if (state && resultRef.current) {
       resultRef.current.focus();
     }
   }, [state]);
 
+  const onFormSubmit = (data: FormValues) => {
+    const formData = new FormData();
+    formData.append('taskDescription', data.taskDescription);
+    startTransition(() => {
+      formAction(formData);
+    });
+  };
+
   return (
     <div>
       <Form {...form}>
-        <form action={formAction} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onFormSubmit)} className="space-y-6">
           <FormField
             control={form.control}
             name="taskDescription"
@@ -68,14 +99,14 @@ export function RecommendForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={formState.isSubmitting}>
-             {formState.isSubmitting ? 'Thinking...' : 'Get Recommendations'}
+          <Button type="submit" disabled={isPending}>
+             {isPending ? 'Thinking...' : 'Get Recommendations'}
           </Button>
         </form>
       </Form>
 
       <div ref={resultRef} tabIndex={-1} aria-live="polite" role="region">
-        {formState.isSubmitting && (
+        {isPending && (
           <div className="mt-8" aria-label="Loading recommendations">
               <div className="flex items-center space-x-4 mb-4">
                   <Skeleton className="h-12 w-12 rounded-full" />
