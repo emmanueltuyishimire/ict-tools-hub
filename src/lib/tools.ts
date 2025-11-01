@@ -100,7 +100,6 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Prime Number Generator', slug: 'prime-number-generator', description: 'Generate a list of prime numbers.' },
       { name: 'Fibonacci Sequence Generator', slug: 'fibonacci-generator', description: 'Generate the Fibonacci sequence.' },
       { name: 'Factorial Calculator', slug: 'factorial-calculator', description: 'Calculate the factorial of a number.' },
-      { name: 'Algorithm Step Simulator', slug: 'algorithm-simulator', description: 'Simulate steps of simple algorithms.' },
       { name: 'Random String Generator', slug: 'random-string-generator', description: 'Generate a random string.' },
       { name: 'Random Number Generator', slug: 'random-number-generator', description: 'Generate a random number.' },
       { name: 'Code Snippet Formatter', slug: 'code-snippet-formatter', description: 'Format a code snippet.' },
@@ -193,6 +192,7 @@ export const toolCategories: ToolCategory[] = [
     tools: [
       { name: 'Big-O Complexity Quiz', slug: 'big-o-quiz', description: 'Quiz on Big-O complexity.' },
       { name: 'Algorithm Visualizer', slug: 'algorithm-visualizer', description: 'Visualize sorting/searching algorithms.' },
+      { name: 'Algorithm Step Simulator', slug: 'algorithm-simulator', description: 'Simulate steps of simple algorithms.' },
       { name: 'Recursion Calculator / Simulator', slug: 'recursion-simulator', description: 'Simulate recursive functions.' },
       { name: 'Logic Gate Simulator', slug: 'logic-gate-simulator', description: 'Simulate logic gates.' },
       { name: 'Truth Table Generator', slug: 'truth-table-generator', description: 'Generate truth tables.' },

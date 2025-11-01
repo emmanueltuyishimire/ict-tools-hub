@@ -60,6 +60,8 @@ import { PrimeChecker } from '@/app/tools/prime-checker/prime-checker';
 import { PrimeNumberGeneratorTool } from '@/app/tools/prime-number-generator/prime-number-generator';
 import { FibonacciGeneratorTool } from '@/app/tools/fibonacci-generator/fibonacci-generator';
 import { FactorialCalculator } from '@/app/tools/factorial-calculator/factorial-calculator';
+import { BigOCalculator } from '@/app/tools/big-o-calculator/big-o-calculator';
+import { AlgorithmStepSimulator } from '@/app/tools/algorithm-simulator/algorithm-simulator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -127,6 +129,8 @@ const toolComponents: Record<string, React.ComponentType> = {
     'prime-number-generator': PrimeNumberGeneratorTool,
     'fibonacci-generator': FibonacciGeneratorTool,
     'factorial-calculator': FactorialCalculator,
+    'big-o-calculator': BigOCalculator,
+    'algorithm-simulator': AlgorithmStepSimulator,
 };
 
 
