@@ -117,6 +117,28 @@ export default function Base64Page() {
           </CardContent>
         </Card>
 
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Embedding Images in HTML/CSS</h3>
+                    <p className="text-sm text-muted-foreground">A developer wants to include a tiny icon in their CSS without an extra HTTP request. They Base64-encode the icon image and embed it directly in the CSS using a Data URI: `background-image: url('data:image/png;base64,iVBORw0KGgo...');`. This is a common optimization for small, critical assets.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Transmitting Binary Data in JSON</h3>
+                    <p className="text-sm text-muted-foreground">An application needs to send a small thumbnail image as part of a JSON API response. Since JSON only supports text, the server Base64-encodes the image binary into a string. The client application can then receive the JSON, extract the Base64 string, and decode it back into an image to display to the user.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Basic HTTP Authentication</h3>
+                    <p className="text-sm text-muted-foreground">The 'Basic' HTTP authentication scheme requires the username and password to be sent in the `Authorization` header. The credentials are combined as `username:password` and then Base64-encoded. While not secure (as it's easily decoded), it's a simple, standardized way to transport the credentials in a text-safe format.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Email Attachments</h3>
+                    <p className="text-sm text-muted-foreground">The original use case for Base64. When you attach a file (like a PDF or image) to an email, the email client encodes the file's binary data into a Base64 string so it can be safely transmitted as part of the plain-text email message body (MIME standard).</p>
+                </div>
+            </div>
+        </section>
+
         <div className="grid md:grid-cols-2 gap-8">
             <Card>
                 <CardHeader>
@@ -145,6 +167,54 @@ export default function Base64Page() {
                 </CardContent>
             </Card>
         </div>
+
+       <section>
+          <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+          <Card>
+              <CardContent className="p-6">
+                  <Accordion type="single" collapsible className="w-full">
+                      {faqData.map((item, index) => (
+                          <AccordionItem value={`item-${index}`} key={index}>
+                              <AccordionTrigger>{item.question}</AccordionTrigger>
+                              <AccordionContent>
+                                <div dangerouslySetInnerHTML={{ __html: item.answer.replace('URL Encoder/Decoder', "<a href='/tools/url-encoder-decoder' class='text-primary hover:underline'>URL Encoder/Decoder</a>") }} />
+                              </AccordionContent>
+                          </AccordionItem>
+                      ))}
+                  </Accordion>
+              </CardContent>
+          </Card>
+      </section>
+
+      <section>
+          <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <Link href="/tools/url-encoder-decoder" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">URL Encoder / Decoder<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">For encoding strings to be safely used in URLs, which is different from Base64.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+              <Link href="/tools/hash-generator" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">Hash Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">For creating one-way cryptographic hashes of data, used for security and data integrity.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+              <Link href="/tools/file-integrity-checker" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">File Integrity Checker<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">Another method for representing binary data, focused on creating a unique checksum.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+          </div>
+      </section>
       </div>
     </>
   );
