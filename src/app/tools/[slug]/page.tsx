@@ -36,6 +36,7 @@ import { SslChecker } from '@/app/tools/ssl-checker/ssl-checker';
 import { CodeMinifier } from '@/app/tools/code-minifier/code-minifier';
 import { RobotsTxtTool } from '@/app/tools/robots-txt-tool/robots-txt-tool';
 import { SitemapGenerator } from '@/app/tools/sitemap-generator/sitemap-generator';
+import { ResponseTimeCalculator } from '@/app/tools/response-time-calculator/response-time-calculator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -79,6 +80,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'code-minifier': CodeMinifier,
     'robots-txt-tool': RobotsTxtTool,
     'sitemap-generator': SitemapGenerator,
+    'response-time-calculator': ResponseTimeCalculator,
 };
 
 
