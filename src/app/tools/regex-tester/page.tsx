@@ -3,12 +3,11 @@ import React from "react";
 import { PageHeader } from "@/components/page-header";
 import { StructuredData } from "@/components/structured-data";
 import { RegexTester } from "./regex-tester";
+import { faqSchemaData, howToSchema, keyTerminologies, faqData } from "./schema";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
-import { faqSchemaData, howToSchema, keyTerminologies, faqData } from "./schema";
-
 
 export const metadata = {
     title: 'Regex Tester & Generator | ICT Toolbench',
@@ -23,11 +22,9 @@ export const metadata = {
 const RegexTesterPage = () => {
   return (
     <>
-      {/* Structured Data for SEO */}
       <StructuredData data={faqSchemaData} />
       <StructuredData data={howToSchema} />
 
-      {/* Main content */}
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
             title="Regex Tester / Generator"
