@@ -28,6 +28,12 @@ const faqData = [
     { question: "Why is my regex causing the page to freeze?", answer: "This can happen due to a phenomenon called 'catastrophic backtracking.' It occurs with poorly written regexes that have nested quantifiers and multiple paths to a match. When a match fails, the engine has to backtrack through an exponentially large number of possibilities, causing it to hang. A common example is `(a*)*$`. Be careful with nested quantifiers." },
 ];
 
+const faqSchemaData = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
+};
+
 const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
@@ -54,14 +60,13 @@ const keyTerminologies = [
 export default function RegexTesterPage() {
   return (
     <>
-      <StructuredData data={faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))} />
+      <StructuredData data={faqSchemaData} />
       <StructuredData data={howToSchema} />
-      <PageHeader
-        title="Regex Tester / Generator"
-        description="Test your regular expressions against sample text in real-time. Our tool uses the JavaScript regex engine and provides match highlighting and detailed group information."
-      />
-      
       <div className="max-w-4xl mx-auto space-y-12">
+        <PageHeader
+            title="Regex Tester / Generator"
+            description="Test your regular expressions against sample text in real-time. Our tool uses the JavaScript regex engine and provides match highlighting and detailed group information."
+        />
         <RegexTester />
 
         <section>
