@@ -97,8 +97,8 @@ export default function NumberConverterPage() {
           <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
               <section>
                   <h3 className="font-bold text-xl">Why We Don't All Use Base-10</h3>
-                  <p>Humans naturally think in **Decimal (Base-10)** because we have ten fingers. It's the system we learn from childhood, with digits 0 through 9. But computers are built on transistors that have only two states: on or off. This makes **Binary (Base-2)**, with its two digits 0 and 1, the native language of all digital hardware.</p>
-                  <p>While binary is perfect for computers, long strings of 1s and 0s are very difficult for humans to read. This is where **Hexadecimal (Base-16)** comes in. Hexadecimal uses digits 0-9 and A-F. It serves as a compact, human-friendly shorthand for binary because one hex digit can represent exactly four binary digits (a nibble). This makes it ideal for representing memory addresses, file headers, and color codes without the unwieldy length of a pure binary string.</p>
+                  <p>Humans naturally think in <strong>Decimal (Base-10)</strong> because we have ten fingers. It's the system we learn from childhood, with digits 0 through 9. But computers are built on transistors that have only two states: on or off. This makes <strong>Binary (Base-2)</strong>, with its two digits 0 and 1, the native language of all digital hardware.</p>
+                  <p>While binary is perfect for computers, long strings of 1s and 0s are very difficult for humans to read. This is where <strong>Hexadecimal (Base-16)</strong> comes in. Hexadecimal uses digits 0-9 and A-F. It serves as a compact, human-friendly shorthand for binary because one hex digit can represent exactly four binary digits (a nibble). This makes it ideal for representing memory addresses, file headers, and color codes without the unwieldy length of a pure binary string.</p>
               </section>
               <section>
                   <h3 className="font-bold text-xl">Real-World Examples</h3>
@@ -111,6 +111,56 @@ export default function NumberConverterPage() {
               </section>
           </CardContent>
         </Card>
+
+        <div className="grid md:grid-cols-2 gap-8">
+            <Card>
+                <CardHeader>
+                    <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Grouping Binary:</strong> To make long binary strings readable, group them into nibbles (4 bits). `11011010` is easier to read as `1101 1010`. Each nibble corresponds to one hex digit.</li>
+                        <li><strong>Powers of 2:</strong> Memorizing powers of two (1, 2, 4, 8, 16, 32, 64, 128) is the key to fast manual binary-to-decimal conversion.</li>
+                        <li><strong>Hex to Binary in Your Head:</strong> To convert a hex digit to binary, just convert its decimal equivalent to a 4-bit number. `C` is 12, which is `8+4`, so its binary is `1100`.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader>
+                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Invalid Characters:</strong> Using digits other than 0 or 1 in binary, or letters other than A-F in hexadecimal.</li>
+                        <li><strong>Forgetting `0x` or `0b`:</strong> In many programming languages, you must prefix hexadecimal numbers with `0x` (e.g., `0xFF`) and binary numbers with `0b` (e.g., `0b1101`) for the compiler to understand them.</li>
+                        <li><strong>Case Sensitivity:</strong> Hexadecimal is case-insensitive (`ff` is the same as `FF`), but consistency is good practice.</li>
+                        <li><strong>Manual Calculation Errors:</strong> It's easy to make a mistake when manually converting large numbers. Always use a tool like this one to double-check important values.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+        </div>
+
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Web Development (CSS Colors)</h3>
+                    <p className="text-sm text-muted-foreground">A web designer provides a color in RGB format, `rgb(239, 68, 68)`. The developer needs the hex code for their CSS stylesheet. They enter `239`, `68`, `68` into a converter to get the hex equivalent `#EF4444` for the `background-color` property.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Networking (Subnetting)</h3>
+                    <p className="text-sm text-muted-foreground">A network engineer is calculating a subnet mask. They know the mask is `255.255.255.240`. To understand how many bits this mask uses, they convert `240` to binary, which is `11110000`. This tells them the mask uses the first 4 bits of the last octet, which is crucial for their subnet calculations.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Low-Level Programming/Debugging</h3>
+                    <p className="text-sm text-muted-foreground">A C++ programmer is debugging a memory issue. The debugger shows a memory address as `0x7FFF5FBFFD60`. To understand the bit-level flags or structure at that address, they might convert parts of the hex value to binary to see which specific flags are turned on or off.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Character Encoding (UTF-8)</h3>
+                    <p className="text-sm text-muted-foreground">A developer is working with character encodings. They see that the Euro symbol (€) is represented in a URL as `%E2%82%AC`. By converting the hex values `E2`, `82`, and `AC` to binary, they can see the underlying three-byte UTF-8 sequence used to represent that character.</p>
+                </div>
+            </div>
+        </section>
 
          <section>
             <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
