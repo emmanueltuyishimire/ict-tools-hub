@@ -35,9 +35,15 @@ const FunctionTesterPage = () => {
     "url": "https://www.icttoolbench.com/tools/function-tester"
   };
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))
+  }
+
   return (
     <>
-      <StructuredData data={faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))} />
+      <StructuredData data={faqSchema} />
       <StructuredData data={howToSchema} />
       <StructuredData data={softwareAppSchema} />
       <div className="max-w-4xl mx-auto space-y-12">
@@ -215,4 +221,3 @@ const FunctionTesterPage = () => {
 };
 
 export default FunctionTesterPage;
-
