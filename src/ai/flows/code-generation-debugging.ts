@@ -52,9 +52,9 @@ Language: {{{language}}}
 Requirements: {{{requirements}}}
 Code Snippet:
 {{#if codeSnippet}}
-```{{{language}}}
+\`\`\`{{{language}}}
 {{{codeSnippet}}}
-```
+\`\`\`
 {{/if}}
 
 
@@ -63,7 +63,7 @@ Output:
 Debugging Suggestions:
 {{else}}
 Generated Code:
-```{{{language}}}
+\`\`\`{{{language}}}
 {{/if}}
 `,
 });
