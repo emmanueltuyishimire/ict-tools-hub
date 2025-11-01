@@ -37,6 +37,7 @@ import { CodeMinifier } from '@/app/tools/code-minifier/code-minifier';
 import { RobotsTxtTool } from '@/app/tools/robots-txt-tool/robots-txt-tool';
 import { SitemapGenerator } from '@/app/tools/sitemap-generator/sitemap-generator';
 import { ResponseTimeCalculator } from '@/app/tools/response-time-calculator/response-time-calculator';
+import { DomainExpiryCountdown } from '@/app/tools/domain-expiry-countdown/domain-expiry-countdown';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -81,6 +82,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'robots-txt-tool': RobotsTxtTool,
     'sitemap-generator': SitemapGenerator,
     'response-time-calculator': ResponseTimeCalculator,
+    'domain-expiry-countdown': DomainExpiryCountdown,
 };
 
 
@@ -132,3 +134,5 @@ function ComingSoon() {
       </Card>
     )
 }
+
+    
