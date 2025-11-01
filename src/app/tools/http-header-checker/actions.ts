@@ -4,7 +4,7 @@
 import { z } from 'zod';
 
 const formSchema = z.object({
-  url: z.string().url('Please enter a valid URL.'),
+  url: z.string().min(1, 'Please enter a URL.'),
 });
 
 export type FormState = {
@@ -65,6 +65,12 @@ export async function checkHeaders(
   } catch (error: any) {
     if (error.name === 'AbortError') {
         return { success: false, message: 'The request timed out. The server took too long to respond.' };
+    }
+    // Attempt to parse the URL to give a better error for invalid hostnames
+    try {
+        new URL(url);
+    } catch (urlError) {
+        return { success: false, message: 'Invalid URL. Please enter a correct domain or URL.' };
     }
     return {
       success: false,

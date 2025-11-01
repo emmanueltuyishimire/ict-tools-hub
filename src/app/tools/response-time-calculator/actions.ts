@@ -7,7 +7,7 @@ import https from 'https';
 import dns from 'dns';
 
 const formSchema = z.object({
-  url: z.string().url('Please enter a valid URL.'),
+  url: z.string().min(1, 'Please enter a URL.'),
 });
 
 export type FormState = {
@@ -39,7 +39,18 @@ export async function checkResponseTime(
     };
   }
 
-  const url = new URL(parsed.data.url);
+  let urlString = parsed.data.url;
+  if (!/^https?:\/\//i.test(urlString)) {
+    urlString = 'https://' + urlString;
+  }
+
+  let url;
+  try {
+      url = new URL(urlString);
+  } catch(e) {
+      return { success: false, message: 'Invalid URL format. Please enter a valid domain or URL.' };
+  }
+  
   const protocol = url.protocol === 'https:' ? https : http;
 
   const timings = {

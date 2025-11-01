@@ -37,7 +37,10 @@ export async function checkSsl(
     };
   }
 
-  const hostAndPort = parsed.data.domain.split(':');
+  // Remove protocol if present for parsing host and port
+  let domain = parsed.data.domain.replace(/^https?:\/\//, '');
+
+  const hostAndPort = domain.split(':');
   const host = hostAndPort[0];
   const port = hostAndPort.length > 1 ? parseInt(hostAndPort[1], 10) : 443;
   
