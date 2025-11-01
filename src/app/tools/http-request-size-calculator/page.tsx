@@ -168,6 +168,28 @@ export default function HttpRequestSizeCalculatorPage() {
         </div>
 
         <section>
+          <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Optimizing an IoT Device</h3>
+                  <p className="text-sm text-muted-foreground">An engineer for an IoT device that reports sensor data over a cellular network uses this tool. They find their verbose JSON payload (`{"sensor_id": "temp-1", "value": 23.5}`) creates a 450-byte request. By switching to a compact binary format, they reduce the body size and total request to under 100 bytes, quadrupling battery life and cutting data costs.</p>
+              </div>
+               <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Debugging a "413 Payload Too Large" Error</h3>
+                  <p className="text-sm text-muted-foreground">A developer is frustrated by a `413 Payload Too Large` error from their Nginx server when submitting a large form. By pasting the URL, headers, and form body into the calculator, they see the total request size is 1.1MB. This confirms the request is exceeding the server's default 1MB `client_max_body_size` limit, telling them exactly which setting to adjust.</p>
+              </div>
+               <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Improving Mobile App Performance</h3>
+                  <p className="text-sm text-muted-foreground">A mobile app feels sluggish on cellular data. The developers analyze their API requests with this tool and discover that every request includes over 1.5KB of data in the `Cookie` header, carrying unnecessary marketing and analytics data. By optimizing their cookie scope, they cut the header size by 90%, making API calls feel noticeably faster for users on slow networks.</p>
+              </div>
+               <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Choosing a GraphQL vs. REST Approach</h3>
+                  <p className="text-sm text-muted-foreground">A team is debating between a traditional REST API and GraphQL. They use the calculator to model a typical request. For REST, fetching user data requires a simple GET request of ~300 bytes. For GraphQL, the same request requires a POST with a JSON body, resulting in a ~650-byte request. While GraphQL offers flexibility, this calculation helps them understand the baseline overhead for every single query.</p>
+              </div>
+          </div>
+      </section>
+
+        <section>
             <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
             <Card>
                 <CardContent className="p-6">
