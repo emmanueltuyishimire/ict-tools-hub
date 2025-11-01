@@ -3,6 +3,7 @@
 
 
 
+
 import { allTools } from '@/lib/tools';
 import { notFound } from 'next/navigation';
 import { PageHeader } from '@/components/page-header';
@@ -59,7 +60,6 @@ import { NumberConverter } from '@/app/tools/number-converter/number-converter';
 import { HashGenerator } from '@/app/tools/hash-generator-md5-sha/hash-generator';
 import { Rot13EncoderDecoder } from '@/app/tools/rot13-encoder-decoder/rot13-encoder-decoder';
 import { CaesarCipher } from '@/app/tools/caesar-cipher/caesar-cipher';
-import { BigOCalculator } from '@/app/tools/big-o-calculator/big-o-calculator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -123,7 +123,6 @@ const toolComponents: Record<string, React.ComponentType> = {
     'hash-generator-md5-sha': HashGenerator,
     'rot13-encoder-decoder': Rot13EncoderDecoder,
     'caesar-cipher': CaesarCipher,
-    'big-o-calculator': BigOCalculator,
 };
 
 
@@ -179,6 +178,7 @@ function ComingSoon() {
     
 
     
+
 
 
 

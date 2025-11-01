@@ -94,7 +94,6 @@ export const toolCategories: ToolCategory[] = [
       { name: 'MD5 / SHA Hash Generator', slug: 'hash-generator-md5-sha', description: 'Generate MD5 and SHA hashes.' },
       { name: 'ROT13 Encoder / Decoder', slug: 'rot13-encoder-decoder', description: 'Encode or decode using ROT13 cipher.' },
       { name: 'Caesar Cipher Encoder / Decoder', slug: 'caesar-cipher', description: 'Encode or decode using Caesar cipher.' },
-      { name: 'Time Complexity Estimator', slug: 'big-o-calculator', description: 'Estimate Big O time complexity.' },
       { name: 'Prime Number Checker', slug: 'prime-checker', description: 'Check if a number is prime.' },
       { name: 'Fibonacci Sequence Generator', slug: 'fibonacci-generator', description: 'Generate Fibonacci sequence.' },
       { name: 'Factorial Calculator', slug: 'factorial-calculator', description: 'Calculate the factorial of a number.' },
