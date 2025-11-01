@@ -100,7 +100,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Prime Number Generator', slug: 'prime-number-generator', description: 'Generate a list of prime numbers.' },
       { name: 'Fibonacci Sequence Generator', slug: 'fibonacci-generator', description: 'Generate the Fibonacci sequence.' },
       { name: 'Factorial Calculator', slug: 'factorial-calculator', description: 'Calculate the factorial of a number.' },
-      { name: 'Random String Generator', slug: 'random-string-generator', description: 'Generate a random string.' },
+      { name: 'Random String Generator', slug: 'random-string-generator', description: 'Generate a random string of specified length and complexity.' },
       { name: 'Random Number Generator', slug: 'random-number-generator', description: 'Generate a random number.' },
       { name: 'Code Snippet Formatter', slug: 'code-snippet-formatter', description: 'Format a code snippet.' },
       { name: 'Variable Name Validator', slug: 'variable-name-validator', description: 'Validate variable names.' },

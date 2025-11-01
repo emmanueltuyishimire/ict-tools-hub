@@ -47,7 +47,6 @@ import { CacheExpirationCalculator } from '@/app/tools/cache-expiry-calculator/c
 import { CompressionEstimator } from '@/app/tools/compression-estimator/compression-estimator';
 import { CdnBandwidthEstimator } from '@/app/tools/cdn-bandwidth-estimator/cdn-bandwidth-estimator';
 import { CodeFormatter } from '@/app/tools/code-formatter/code-formatter';
-import { HttpRequestSizeCalculator } from '@/app/tools/http-request-size-calculator/http-request-size-calculator';
 import { RegexTester } from '@/app/tools/regex-tester/regex-tester';
 import { Base64EncoderDecoder } from '@/app/tools/base64-encoder-decoder/base64-encoder-decoder';
 import { ColorConverter } from '@/app/tools/color-converter/color-converter';
@@ -60,8 +59,8 @@ import { PrimeChecker } from '@/app/tools/prime-checker/prime-checker';
 import { PrimeNumberGeneratorTool } from '@/app/tools/prime-number-generator/prime-number-generator';
 import { FibonacciGeneratorTool } from '@/app/tools/fibonacci-generator/fibonacci-generator';
 import { FactorialCalculator } from '@/app/tools/factorial-calculator/factorial-calculator';
-import { BigOCalculator } from '@/app/tools/big-o-calculator/big-o-calculator';
 import { AlgorithmStepSimulator } from '@/app/tools/algorithm-simulator/algorithm-simulator';
+import { RandomStringGenerator } from '@/app/tools/random-string-generator/random-string-generator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -116,7 +115,6 @@ const toolComponents: Record<string, React.ComponentType> = {
     'compression-estimator': CompressionEstimator,
     'cdn-bandwidth-estimator': CdnBandwidthEstimator,
     'code-formatter': CodeFormatter,
-    'http-request-size-calculator': HttpRequestSizeCalculator,
     'regex-tester': RegexTester,
     'base64-encoder-decoder': Base64EncoderDecoder,
     'color-converter': ColorConverter,
@@ -129,8 +127,8 @@ const toolComponents: Record<string, React.ComponentType> = {
     'prime-number-generator': PrimeNumberGeneratorTool,
     'fibonacci-generator': FibonacciGeneratorTool,
     'factorial-calculator': FactorialCalculator,
-    'big-o-calculator': BigOCalculator,
     'algorithm-simulator': AlgorithmStepSimulator,
+    'random-string-generator': RandomStringGenerator,
 };
 
 
