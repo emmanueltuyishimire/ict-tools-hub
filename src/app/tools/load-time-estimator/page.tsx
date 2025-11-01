@@ -31,6 +31,19 @@ const faqData = [
     { question: "Why is there a separate field for the HTML document?", answer: "The HTML document is the first file downloaded and is critical because it contains the instructions for what other resources (CSS, JS, images) the browser needs to fetch. Its download time is a key part of the 'Time to First Byte' (TTFB) and initial render process." }
 ];
 
+const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer.replace(/<[^>]*>?/gm, ''),
+        },
+    })),
+};
+
 const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
@@ -57,7 +70,7 @@ const keyTerminologies = [
 export default function WebpageLoadTimeEstimatorPage() {
   return (
     <>
-      <StructuredData data={faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))} />
+      <StructuredData data={faqSchema} />
       <StructuredData data={howToSchema} />
       <PageHeader
         title="Webpage Load Time Estimator"
@@ -162,7 +175,7 @@ export default function WebpageLoadTimeEstimatorPage() {
                      <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                         <li><strong>Ignoring Image Optimization:</strong> Uncompressed JPEG or PNG images are often the single largest contributor to page weight. Use modern formats like WebP and compress all images before uploading.</li>
                         <li><strong>Forgetting About TTFB:</strong> This tool doesn't model Time to First Byte (server response time). A slow server can add hundreds of milliseconds of delay before any downloading even begins. Use our <Link href="/tools/response-time-calculator" className="text-primary hover:underline">Response Time Calculator</Link> to check this.</li>
-                        <li><strong>Too Many Render-Blocking Scripts:</strong> Loading large JavaScript files in the `<head>` of your HTML forces the browser to download and parse them before it can render any content. Defer non-critical scripts to load asynchronously.</li>
+                        <li><strong>Too Many Render-Blocking Scripts:</strong> Loading large JavaScript files in the <strong>&lt;head&gt;</strong> of your HTML forces the browser to download and parse them before it can render any content. Defer non-critical scripts to load asynchronously.</li>
                         <li><strong>Not Minifying Code:</strong> Un-minified CSS and JavaScript files contain extra spaces, comments, and long variable names that increase file size. Use our <Link href="/tools/code-minifier" className="text-primary hover:underline">Code Minifier</Link> or an automated build tool to shrink them.</li>
                     </ul>
                 </CardContent>
