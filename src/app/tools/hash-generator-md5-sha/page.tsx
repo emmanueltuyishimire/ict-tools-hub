@@ -109,14 +109,14 @@ export default function HashGeneratorPage() {
               </section>
               <section>
                   <h3 className="font-bold text-xl">MD5 vs. SHA: A Tale of Two Algorithms</h3>
-                  <p>This tool generates hashes using different algorithms. It's vital to know which ones are safe to use.</p>
-                  <p><strong>MD5 (Message Digest 5)</strong> is a fast but old hashing algorithm. In the early 2000s, cryptographic weaknesses were discovered that made it possible for attackers to create "collisions" (two different inputs that create the same hash). Because of this, **MD5 is considered broken and must not be used for security purposes like password storage.** Its only modern use is as a basic checksum to verify file integrity against accidental corruption, not malicious tampering.</p>
-                  <p><strong>SHA (Secure Hash Algorithm)</strong> is a family of algorithms developed by the NSA.
-                    <ul>
-                        <li><strong>SHA-1:</strong> The successor to MD5, SHA-1 was widely used but is also now considered broken and deprecated as collision attacks have become practical.</li>
-                        <li><strong>SHA-2 (SHA-256, SHA-512):</strong> This is the current industry standard. SHA-256 is used extensively in blockchain technology (like Bitcoin) and for signing SSL certificates. SHA-512 offers even greater security with a larger hash output. For any new development, SHA-256 is the recommended minimum.</li>
-                    </ul>
+                  <p>
+                    <strong>MD5 (Message Digest 5)</strong> is a fast but old hashing algorithm. In the early 2000s, cryptographic weaknesses were discovered that made it possible for attackers to create "collisions" (two different inputs that create the same hash). Because of this, <strong>MD5 is considered broken and must not be used for security purposes like password storage.</strong> Its only modern use is as a basic checksum to verify file integrity against accidental corruption, not malicious tampering.
                   </p>
+                  <p><strong>SHA (Secure Hash Algorithm)</strong> is a family of algorithms developed by the NSA.</p>
+                  <ul>
+                      <li><strong>SHA-1:</strong> The successor to MD5, SHA-1 was widely used but is also now considered broken and deprecated as collision attacks have become practical.</li>
+                      <li><strong>SHA-2 (SHA-256, SHA-512):</strong> This is the current industry standard. SHA-256 is used extensively in blockchain technology (like Bitcoin) and for signing SSL certificates. SHA-512 offers even greater security with a larger hash output. For any new development, SHA-256 is the recommended minimum.</li>
+                  </ul>
               </section>
           </CardContent>
         </Card>
@@ -136,7 +136,7 @@ export default function HashGeneratorPage() {
             </Card>
             <Card>
                 <CardHeader>
-                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes</CardTitle></div>
+                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
                 </CardHeader>
                 <CardContent>
                      <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
