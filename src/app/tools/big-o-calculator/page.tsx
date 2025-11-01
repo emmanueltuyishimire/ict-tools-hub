@@ -63,8 +63,8 @@ const BigOCalculatorPage = () => {
             name: item.question,
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: item.answer.replace(/<a href='\/tools\/([^']*)' class='text-primary hover:underline'>/g, (match, p1) => {
-                    return `<a href='/tools/${p1}' class='text-primary hover:underline'>`;
+                text: item.answer.replace(/<a href='\/tools\/([^']*)' class='text-primary hover:underline'>/g, (match: string, p1: string) => {
+                    return `<a href='/tools/${p1}'>`;
                 })
             }
         }))
@@ -244,4 +244,4 @@ const BigOCalculatorPage = () => {
 
 export default BigOCalculatorPage;
 
-  
+    
