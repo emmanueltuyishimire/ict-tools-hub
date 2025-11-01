@@ -259,7 +259,7 @@ export function IpSummarizationTool() {
                     </ol>
                     <Alert>
                         <Lightbulb className="h-4 w-4" />
-                        <strong>Example:</strong>
+                        <AlertTitle>Example</AlertTitle>
                         <AlertDescription>
                             If you enter the four contiguous networks `192.168.0.0/24`, `192.168.1.0/24`, `192.168.2.0/24`, and `192.168.3.0/24`, the tool will correctly summarize them into a single, more efficient route: `192.168.0.0/22`.
                         </AlertDescription>
@@ -345,7 +345,7 @@ export function IpSummarizationTool() {
                             <li><strong>Summarize at Boundaries:</strong> Only summarize routes at logical network boundaries, such as between a corporate network and an ISP, or between major departments in a large enterprise. Don't summarize within a small local network, as you need specific routes to get to each subnet.</li>
                             <li><strong>Contiguous Blocks are Key:</strong> For summarization to be efficient, your IP addressing plan must be hierarchical and use contiguous blocks. This requires careful planning with a tool like our <Link href="/tools/vlsm-calculator" className="text-primary hover:underline">VLSM Calculator</Link>.</li>
                             <li><strong>Check for Inefficiency:</strong> If the calculator gives you a very large summary route (e.g., a /8 for a few /24s), it's a sign that your input networks are not contiguous and cannot be efficiently summarized.</li>
-                            <li><strong>Avoid Summarizing into `0.0.0.0/0`:</strong> Summarizing non-contiguous networks from different parts of the internet will likely result in the default route `0.0.0.0/0`, which is not a useful summary. The goal is to create the *smallest possible* supernet.</li>
+                            <li><strong>Avoid Summarizing into `0.0.0.0/0`:</strong> Summarizing non-contiguous networks from different parts of the internet will likely result in the default route `0.0.0.0/0`, which is not a useful summary. The goal is to create the <strong>smallest possible</strong> supernet.</li>
                         </ul>
                     </CardContent>
                 </Card>

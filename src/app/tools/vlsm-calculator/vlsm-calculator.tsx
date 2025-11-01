@@ -373,7 +373,7 @@ export function VlsmCalculator() {
                     </section>
                     <section>
                         <h3 className="font-bold text-xl">The VLSM Algorithm: A Step-by-Step Guide</h3>
-                        <p>VLSM follows a simple but strict algorithm to ensure that address space is not fragmented, which would prevent larger subnets from being allocated. The cardinal rule is: **Always allocate the largest subnets first.**</p>
+                        <p>VLSM follows a simple but strict algorithm to ensure that address space is not fragmented, which would prevent larger subnets from being allocated. The cardinal rule is: <strong>Always allocate the largest subnets first.</strong></p>
                         <p>Let's walk through a manual calculation for a major network of <strong>192.168.10.0/24</strong> with these requirements:</p>
                          <ul className="list-disc pl-5">
                             <li><strong>LAN A:</strong> 100 hosts</li>
