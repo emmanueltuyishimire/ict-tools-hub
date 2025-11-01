@@ -97,7 +97,7 @@ const formatPython = (code: string): string => {
     lines.forEach(line => {
         let trimmedLine = line.trim();
         
-        if (/^(elif|else|except|finally|case).*:/.test(trimmedLine) && indentLevel > 0) {
+        if (/^(elif|else|except|finally).*:/.test(trimmedLine) && indentLevel > 0) {
              indentLevel--;
         }
         
@@ -105,12 +105,8 @@ const formatPython = (code: string): string => {
             formattedCode += tab.repeat(indentLevel) + trimmedLine + '\n';
         }
 
-        if (trimmedLine.endsWith(':')) {
+        if (trimmedLine.endsWith(':') && !/^(elif|else|except|finally).*:/.test(trimmedLine)) {
             indentLevel++;
-        }
-         // Dedent after return/break/continue/pass
-        if (/^(return|break|continue|pass)/.test(trimmedLine) && indentLevel > 0) {
-             indentLevel--;
         }
     });
 
