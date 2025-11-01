@@ -43,6 +43,7 @@ import { DnsLookupTool } from '@/app/tools/dns-lookup/dns-lookup-tool';
 import { ReverseDnsLookupTool } from '@/app/tools/reverse-dns-lookup/reverse-dns-lookup-tool';
 import { WhoisLookupTool } from '@/app/tools/whois-lookup/whois-lookup-tool';
 import { WebpageLoadTimeEstimator } from '@/app/tools/load-time-estimator/load-time-estimator';
+import { CacheExpirationCalculator } from '@/app/tools/cache-expiry-calculator/cache-expiry-calculator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -93,6 +94,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'reverse-dns-lookup': ReverseDnsLookupTool,
     'whois-lookup': WhoisLookupTool,
     'load-time-estimator': WebpageLoadTimeEstimator,
+    'cache-expiry-calculator': CacheExpirationCalculator,
 };
 
 
