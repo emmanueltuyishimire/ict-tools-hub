@@ -49,106 +49,108 @@ const keyTerminologies = [
 
 export default function HtmlEntityEncoderDecoderPage() {
   return (
-    <div className="max-w-4xl mx-auto space-y-12">
-        <StructuredData data={faqData} />
-        <StructuredData data={howToSchema} />
-        <PageHeader
-            title="HTML Entity Encoder / Decoder"
-            description="Convert text to HTML entities to safely display special characters and code, or decode entities back to plain text."
-        />
-        <HtmlEntityEncoderDecoder />
-        <section>
-            <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
-            <Card className="prose prose-sm max-w-none text-foreground p-6">
-                <p>This tool provides real-time, two-way conversion between plain text and HTML entities.</p>
-                <ol>
-                    <li><strong>Live Conversion:</strong> As you type in one box, the other updates instantly.</li>
-                    <li><strong>To Encode:</strong> Type plain text with special characters (e.g., <strong>&lt;h1&gt;Title&lt;/h1&gt;</strong>) into the top "Decoded" box. The safe HTML entity version will appear in the "Encoded" box.</li>
-                    <li><strong>To Decode:</strong> Paste text containing HTML entities (e.g., <strong>&amp;lt;p&amp;gt;</strong>) into the bottom "Encoded" box to see the original plain text.</li>
-                    <li><strong>Swap & Copy:</strong> Use the `Swap` button (<ArrowRightLeft className="inline h-4 w-4" />) to instantly switch the contents of the two boxes. Use the `Copy` icon (<Copy className="inline h-4 w-4" />) above either box to copy its content to your clipboard.</li>
-                </ol>
-            </Card>
-        </section>
-        
-        <section>
-            <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
-            <Card>
-                <CardContent className="p-6">
-                    <dl className="space-y-4">
-                        {keyTerminologies.map((item) => (
-                            <div key={item.term}>
-                                <dt className="font-semibold">{item.term}</dt>
-                                <dd className="text-muted-foreground text-sm">{item.definition}</dd>
-                            </div>
-                        ))}
-                    </dl>
-                </CardContent>
-            </Card>
-        </section>
+    <>
+      <div className="max-w-4xl mx-auto space-y-12">
+          <StructuredData data={faqData} />
+          <StructuredData data={howToSchema} />
+          <PageHeader
+              title="HTML Entity Encoder / Decoder"
+              description="Convert text to HTML entities to safely display special characters and code, or decode entities back to plain text."
+          />
+          <HtmlEntityEncoderDecoder />
+          <section>
+              <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
+              <Card className="prose prose-sm max-w-none text-foreground p-6">
+                  <p>This tool provides real-time, two-way conversion between plain text and HTML entities.</p>
+                  <ol>
+                      <li><strong>Live Conversion:</strong> As you type in one box, the other updates instantly.</li>
+                      <li><strong>To Encode:</strong> Type plain text with special characters (e.g., <strong>&lt;h1&gt;Title&lt;/h1&gt;</strong>) into the top "Decoded" box. The safe HTML entity version will appear in the "Encoded" box.</li>
+                      <li><strong>To Decode:</strong> Paste text containing HTML entities (e.g., <strong>&amp;lt;p&amp;gt;</strong>) into the bottom "Encoded" box to see the original plain text.</li>
+                      <li><strong>Swap & Copy:</strong> Use the `Swap` button (<ArrowRightLeft className="inline h-4 w-4" />) to instantly switch the contents of the two boxes. Use the `Copy` icon (<Copy className="inline h-4 w-4" />) above either box to copy its content to your clipboard.</li>
+                  </ol>
+              </Card>
+          </section>
+          
+          <section>
+              <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+              <Card>
+                  <CardContent className="p-6">
+                      <dl className="space-y-4">
+                          {keyTerminologies.map((item) => (
+                              <div key={item.term}>
+                                  <dt className="font-semibold">{item.term}</dt>
+                                  <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                              </div>
+                          ))}
+                      </dl>
+                  </CardContent>
+              </Card>
+          </section>
 
-         <Card className='bg-secondary/30 border-primary/20'>
-            <CardHeader>
-                <div className='flex items-center gap-2 text-primary'>
-                    <BookOpen className="h-6 w-6" aria-hidden="true" />
-                    <CardTitle className="text-primary">Educational Deep Dive</CardTitle>
-                </div>
-                <CardDescription>Understand why displaying code and special symbols on a web page requires special handling.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
-                <section>
-                    <h3 className="font-bold text-xl">The Browser's Dilemma: Code vs. Content</h3>
-                    <p>A web browser's primary job is to interpret HTML code and render a visual page. This creates a problem: what if you want to <strong>display</strong> a piece of HTML code as text, instead of having the browser render it? If you write <code>&lt;p&gt;</code> in your HTML file, the browser will create a paragraph. It has no way of knowing you just wanted to show the literal characters '&lt;', 'p', and '&gt;'.</p>
-                    <p>HTML entities are the solution to this problem. They are a special syntax that tells the browser, "Do not interpret this as code; instead, display the character that this entity represents." By converting reserved characters into their entity equivalents, we can safely include any text or code snippet on a webpage without breaking the layout or structure.</p>
-                </section>
-            </CardContent>
-        </Card>
+           <Card className='bg-secondary/30 border-primary/20'>
+              <CardHeader>
+                  <div className='flex items-center gap-2 text-primary'>
+                      <BookOpen className="h-6 w-6" aria-hidden="true" />
+                      <CardTitle className="text-primary">Educational Deep Dive</CardTitle>
+                  </div>
+                  <CardDescription>Understand why displaying code and special symbols on a web page requires special handling.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
+                  <section>
+                      <h3 className="font-bold text-xl">The Browser's Dilemma: Code vs. Content</h3>
+                      <p>A web browser's primary job is to interpret HTML code and render a visual page. This creates a problem: what if you want to <strong>display</strong> a piece of HTML code as text, instead of having the browser render it? If you write <code>&lt;p&gt;</code> in your HTML file, the browser will create a paragraph. It has no way of knowing you just wanted to show the literal characters '&lt;', 'p', and '&gt;'.</p>
+                      <p>HTML entities are the solution to this problem. They are a special syntax that tells the browser, "Do not interpret this as code; instead, display the character that this entity represents." By converting reserved characters into their entity equivalents, we can safely include any text or code snippet on a webpage without breaking the layout or structure.</p>
+                  </section>
+              </CardContent>
+          </Card>
 
-        <div className="grid md:grid-cols-2 gap-8">
-            <Card>
-                <CardHeader>
-                    <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
-                </CardHeader>
-                <CardContent>
-                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                        <li><strong>Use for Code Snippets:</strong> Before displaying sample code (HTML, XML, etc.) on your website inside <code>&lt;code&gt;</code> or <code>&lt;pre&gt;</code> tags, run it through the encoder to ensure it renders as text.</li>
-                        <li><strong>Non-Breaking Spaces:</strong> Use the entity <code>&amp;nbsp;</code> when you need to ensure two words are not separated by a line break.</li>
-                        <li><strong>Copyright & Trademarks:</strong> Quickly find the entities for common symbols like Copyright (<code>&amp;copy;</code>), Registered Trademark (<code>&amp;reg;</code>), and Trademark (<code>&amp;trade;</code>).</li>
-                        <li><strong>Email Addresses:</strong> Encoding the '@' symbol (`&amp;#64;`) in email addresses displayed on a webpage can sometimes help to deter basic email-harvesting bots.</li>
-                    </ul>
-                </CardContent>
-            </Card>
-            <Card>
-                <CardHeader>
-                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
-                </CardHeader>
-                <CardContent>
-                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                        <li><strong>Forgetting to Encode:</strong> Pasting code directly into an HTML file without encoding it first is a common mistake that can break your page layout or cause parts of your page to disappear.</li>
-                        <li><strong>Double Encoding:</strong> Accidentally running already-encoded text through the encoder again. This will encode the ampersands (e.g., <code>&amp;amp;lt;</code>), resulting in incorrect output.</li>
-                        <li><strong>Confusing with URL Encoding:</strong> HTML entity encoding and <Link href="/tools/url-encoder-decoder" className="text-primary hover:underline">URL Encoding</Link> are for different purposes. Use entity encoding for displaying content in HTML, and URL encoding for passing data in URLs.</li>
-                        <li><strong>Encoding Inside `script` Tags:</strong> You should not HTML-encode content inside a `<script>` tag. The JavaScript engine expects raw code, and encoding it will cause syntax errors.</li>
-                    </ul>
-                </CardContent>
-            </Card>
-        </div>
-        
-        <section>
-            <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
-            <Card>
-                <CardContent className="p-6">
-                    <Accordion type="single" collapsible className="w-full">
-                        {faqData.map((item, index) => (
-                            <AccordionItem value={`item-${index}`} key={index}>
-                                <AccordionTrigger>{item.question}</AccordionTrigger>
-                                <AccordionContent>
-                                  <div dangerouslySetInnerHTML={{ __html: item.answer.replace('URL Encoder/Decoder', "<a href='/tools/url-encoder-decoder' class='text-primary hover:underline'>URL Encoder/Decoder</a>") }} />
-                                </AccordionContent>
-                            </AccordionItem>
-                        ))}
-                    </Accordion>
-                </CardContent>
-            </Card>
-        </section>
-    </div>
+          <div className="grid md:grid-cols-2 gap-8">
+              <Card>
+                  <CardHeader>
+                      <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
+                  </CardHeader>
+                  <CardContent>
+                      <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                          <li><strong>Use for Code Snippets:</strong> Before displaying sample code (HTML, XML, etc.) on your website inside <code>&lt;code&gt;</code> or <code>&lt;pre&gt;</code> tags, run it through the encoder to ensure it renders as text.</li>
+                          <li><strong>Non-Breaking Spaces:</strong> Use the entity <code>&amp;nbsp;</code> when you need to ensure two words are not separated by a line break.</li>
+                          <li><strong>Copyright & Trademarks:</strong> Quickly find the entities for common symbols like Copyright (<code>&amp;copy;</code>), Registered Trademark (<code>&amp;reg;</code>), and Trademark (<code>&amp;trade;</code>).</li>
+                          <li><strong>Email Addresses:</strong> Encoding the '@' symbol (`&amp;#64;`) in email addresses displayed on a webpage can sometimes help to deter basic email-harvesting bots.</li>
+                      </ul>
+                  </CardContent>
+              </Card>
+              <Card>
+                  <CardHeader>
+                       <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                  </CardHeader>
+                  <CardContent>
+                       <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                          <li><strong>Forgetting to Encode:</strong> Pasting code directly into an HTML file without encoding it first is a common mistake that can break your page layout or cause parts of your page to disappear.</li>
+                          <li><strong>Double Encoding:</strong> Accidentally running already-encoded text through the encoder again. This will encode the ampersands (e.g., <code>&amp;amp;lt;</code>), resulting in incorrect output.</li>
+                          <li><strong>Confusing with URL Encoding:</strong> HTML entity encoding and <Link href="/tools/url-encoder-decoder" className="text-primary hover:underline">URL Encoding</Link> are for different purposes. Use entity encoding for displaying content in HTML, and URL encoding for passing data in URLs.</li>
+                          <li><strong>Encoding Inside `script` Tags:</strong> You should not HTML-encode content inside a `<script>` tag. The JavaScript engine expects raw code, and encoding it will cause syntax errors.</li>
+                      </ul>
+                  </CardContent>
+              </Card>
+          </div>
+          
+          <section>
+              <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+              <Card>
+                  <CardContent className="p-6">
+                      <Accordion type="single" collapsible className="w-full">
+                          {faqData.map((item, index) => (
+                              <AccordionItem value={`item-${index}`} key={index}>
+                                  <AccordionTrigger>{item.question}</AccordionTrigger>
+                                  <AccordionContent>
+                                    <div dangerouslySetInnerHTML={{ __html: item.answer.replace('URL Encoder/Decoder', "<a href='/tools/url-encoder-decoder' class='text-primary hover:underline'>URL Encoder/Decoder</a>") }} />
+                                  </AccordionContent>
+                              </AccordionItem>
+                          ))}
+                      </Accordion>
+                  </CardContent>
+              </Card>
+          </section>
+      </div>
+    </>
   );
 }
