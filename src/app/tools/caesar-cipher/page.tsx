@@ -51,7 +51,7 @@ const keyTerminologies = [
 export default function CaesarCipherPage() {
   return (
     <>
-      <StructuredData data={faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))} />
+      <StructuredData data={{'@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))}} />
       <StructuredData data={howToSchema} />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
@@ -68,7 +68,7 @@ export default function CaesarCipherPage() {
                   <li><strong>Select the Shift Value:</strong> Use the slider to pick your "secret key"—the number of places you want to shift the letters (from 1 to 25). A shift of 3 is the classic Caesar cipher.</li>
                   <li><strong>Enter Your Text:</strong> Type your plaintext message into the top "Decoded" box to encrypt it, or paste your ciphertext into the bottom "Encoded" box to decrypt it.</li>
                   <li><strong>See the Instant Result:</strong> The translated text will appear in the other box as you type.</li>
-                  <li><strong>Swap or Copy:</strong> Use the swap button (<ArrowRightLeft className="inline h-4 w-4" />) to switch the plaintext and ciphertext. Use the copy button (<Copy className="inline h-ax w-4" />) to grab the output.</li>
+                  <li><strong>Swap or Copy:</strong> Use the swap button (<ArrowRightLeft className="inline h-4 w-4" />) to switch the plaintext and ciphertext. Use the copy button (<Copy className="inline h-4 w-4" />) to grab the output.</li>
               </ol>
           </Card>
         </section>
@@ -114,11 +114,33 @@ export default function CaesarCipherPage() {
               <section>
                   <h3 className="font-bold text-xl">Why It's Insecure: Frequency Analysis</h3>
                   <p>
-                    The Caesar cipher is trivial to break. Since there are only 25 possible keys, an attacker can simply try every key until one produces readable text (a brute-force attack). Even more powerfully, it can be broken with **frequency analysis**. In any language, certain letters appear more frequently than others (in English, 'E', 'T', and 'A' are the most common). By analyzing the ciphertext and seeing which letter appears most often, a cryptanalyst can make an educated guess about what that letter corresponds to (likely 'E') and thereby deduce the shift key. This weakness is inherent in all monoalphabetic substitution ciphers and led to the development of more complex polyalphabetic ciphers.
+                    The Caesar cipher is trivial to break. Since there are only 25 possible keys, an attacker can simply try every key until one produces readable text (a brute-force attack). Even more powerfully, it can be broken with <strong>frequency analysis</strong>. In any language, certain letters appear more frequently than others (in English, 'E', 'T', and 'A' are the most common). By analyzing the ciphertext and seeing which letter appears most often, a cryptanalyst can make an educated guess about what that letter corresponds to (likely 'E') and thereby deduce the shift key. This weakness is inherent in all monoalphabetic substitution ciphers and led to the development of more complex polyalphabetic ciphers.
                   </p>
               </section>
           </CardContent>
         </Card>
+        
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Educational Puzzles</h3>
+                    <p className="text-sm text-muted-foreground">The Caesar cipher is a classic tool for creating puzzles in escape rooms, scavenger hunts, and educational materials for children. It offers a fun and engaging way to introduce the basic concepts of cryptography without being overly complex.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Basic Data Obfuscation</h3>
+                    <p className="text-sm text-muted-foreground">While not secure, a Caesar cipher can be used for very basic obfuscation to hide plain text from a casual glance. For example, a developer might use it to lightly obscure a hint or answer in a game's source code.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Historical Context</h3>
+                    <p className="text-sm text-muted-foreground">Studying the Caesar cipher is a great way to understand the history of cryptography and appreciate the ingenuity of ancient military communications. It provides a baseline for understanding why modern, complex algorithms are necessary.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Learning Programming Logic</h3>
+                    <p className="text-sm text-muted-foreground">Implementing a Caesar cipher is a common and excellent beginner's exercise in programming. It teaches fundamental concepts like character encoding (ASCII), string manipulation, and modular arithmetic.</p>
+                </div>
+            </div>
+        </section>
 
         <div className="grid md:grid-cols-2 gap-8">
             <Card>
@@ -128,8 +150,8 @@ export default function CaesarCipherPage() {
                 <CardContent>
                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                         <li><strong>Brute-Force Decoding:</strong> If you receive a Caesar-encrypted message but don't know the key, you can simply use this tool and slide the shift value from 1 to 25. One of the positions will reveal the original message.</li>
-                        <li><strong>Puzzles and Games:</strong> The Caesar cipher is a perfect tool for creating simple puzzles for escape rooms, scavenger hunts, or educational games for children.</li>
-                        <li><strong>Understanding Modulo:</strong> This tool is a great visual demonstration of modular arithmetic, a core concept in computer science, cryptography, and mathematics.</li>
+                        <li><strong>Recognizing the Cipher:</strong> If a block of text seems to be gibberish but has the same letter frequency and word structure as normal text, it might be a simple substitution cipher like Caesar's.</li>
+                        <li><strong>Combining Ciphers:</strong> For slightly more advanced (but still insecure) fun, you can combine ROT13 with other simple ciphers, like a reversing cipher. First apply ROT13, then reverse the resulting string.</li>
                     </ul>
                 </CardContent>
             </Card>
@@ -140,7 +162,7 @@ export default function CaesarCipherPage() {
                 <CardContent>
                      <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                         <li><strong>Using it for Security:</strong> The most critical mistake. The Caesar cipher provides no real security. Never use it to protect any information that is even remotely sensitive.</li>
-                        <li><strong>Forgetting the Key:</strong> If you encrypt a message and forget the shift value, you'll have to brute-force it yourself to get it back (though with only 25 options, this is easy).</li>
+                        <li><strong>Forgetting the Key:</strong> If you encrypt a message with a specific shift and forget the value, you'll have to brute-force it yourself to get it back (though with only 25 options, this is easy).</li>
                         <li><strong>Assuming it Works on All Characters:</strong> Remember that numbers and symbols are not affected. If your message contains them, they will remain in the ciphertext, which can be a clue for a cryptanalyst.</li>
                     </ul>
                 </CardContent>
@@ -153,7 +175,7 @@ export default function CaesarCipherPage() {
               <CardContent className="p-6">
                   <Accordion type="single" collapsible className="w-full">
                       {faqData.map((item, index) => (
-                          <AccordionItem value={`item-${index}`} key={index}>
+                          <AccordionItem value={\`item-\${index}\`} key={index}>
                               <AccordionTrigger>{item.question}</AccordionTrigger>
                               <AccordionContent><div dangerouslySetInnerHTML={{ __html: item.answer }} /></AccordionContent>
                           </AccordionItem>
@@ -161,6 +183,28 @@ export default function CaesarCipherPage() {
                   </Accordion>
               </CardContent>
           </Card>
+      </section>
+      
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <Link href="/tools/rot13-encoder-decoder" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">ROT13 Encoder / Decoder<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">Try out the most famous and specific version of the Caesar cipher.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+              <Link href="/tools/hash-generator-md5-sha" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">Hash Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">Compare this simple cipher to modern, one-way hash functions used for real security.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+          </div>
       </section>
       </div>
     </>
