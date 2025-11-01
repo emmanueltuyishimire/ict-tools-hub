@@ -274,7 +274,6 @@ export function SubnetCalculator() {
                         <li><strong>Select the Subnet Mask:</strong> Use the dropdown menu to choose the correct subnet mask. For your convenience, we've listed them by CIDR prefix (e.g., /24) and included the corresponding dot-decimal notation (e.g., 255.255.255.0).</li>
                         <li><strong>Calculate:</strong> Click the "Calculate" button.</li>
                         <li><strong>Review the Results:</strong> The tool will instantly display a comprehensive table of results, including the network ID, broadcast address, usable host range, total and usable hosts, wildcard mask, and more.</li>
-                        <li><strong>Copy What You Need:</strong> Each piece of information has a convenient copy button next to it. Click it to copy the data directly to your clipboard, saving you time and preventing typos.</li>
                     </ol>
                     <Alert>
                         <Lightbulb className="h-4 w-4" />

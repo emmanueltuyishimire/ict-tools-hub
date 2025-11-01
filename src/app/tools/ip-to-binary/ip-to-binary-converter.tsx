@@ -254,7 +254,6 @@ export function IpToBinaryConverter() {
                         <li><strong>Convert:</strong> Click the "Convert" button. The tool validates that the address is in the correct format (four numbers between 0 and 255).</li>
                         <li><strong>View the Binary Result:</strong> The equivalent 32-bit binary string will appear below, with each 8-bit octet separated by a dot for clarity.</li>
                         <li><strong>Copy:</strong> Click the clipboard icon to copy the full binary string for use in your studies, configurations, or documentation.</li>
-                        <li><strong>Clear:</strong> Use the "Clear" button to reset the tool for a new conversion.</li>
                     </ol>
                     <Alert>
                         <Lightbulb className="h-4 w-4" />

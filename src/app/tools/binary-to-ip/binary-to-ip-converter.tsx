@@ -269,13 +269,12 @@ export function BinaryToIpConverter() {
             </CardContent>
         </Card>
 
-        {/* How to Use This Tool */}
         <section>
             <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
             <Card className="prose prose-sm max-w-none text-foreground p-6">
                 <p>This tool is designed for simplicity and accuracy. Here’s a quick guide:</p>
                 <ol>
-                    <li><strong>Enter the Binary String:</strong> In the input field labeled "Binary IPv4 Address," type or paste the 32-bit binary string you want to convert.</li>
+                    <li><strong>Enter the Binary String:</strong> In the input field, type or paste the 32-bit binary string you want to convert.</li>
                     <li><strong>Formatting:</strong> You can format the binary string in two ways:
                         <ul>
                             <li><strong>With dots:</strong> Separate the four 8-bit octets with periods (e.g., <code className="font-code bg-muted p-1 rounded-sm">11000000.10101000.00000001.00000001</code>).</li>
@@ -283,9 +282,7 @@ export function BinaryToIpConverter() {
                         </ul>
                     </li>
                     <li><strong>Convert:</strong> Click the "Convert" button. The tool will validate the input and, if valid, display the corresponding decimal IP address.</li>
-                    <li><strong>View the Result:</strong> The converted IP address will appear in a read-only field below.</li>
-                    <li><strong>Copy:</strong> Click the clipboard icon to instantly copy the IP address to your clipboard for use elsewhere.</li>
-                    <li><strong>Clear:</strong> The "Clear" button resets the input, output, and any error messages, preparing the tool for a new conversion.</li>
+                    <li><strong>View and Copy:</strong> The converted IP address will appear in a read-only field. Click the clipboard icon to instantly copy the result.</li>
                 </ol>
                 <Alert>
                     <Lightbulb className="h-4 w-4" />
@@ -313,7 +310,6 @@ export function BinaryToIpConverter() {
             </Card>
         </section>
 
-        {/* Educational Deep Dive */}
         <Card className='bg-secondary/30 border-primary/20'>
             <CardHeader>
                 <div className='flex items-center gap-2 text-primary'>
