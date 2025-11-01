@@ -81,7 +81,7 @@ export default function CaesarCipherPage() {
                   <li><strong>Select the Shift Value:</strong> Use the slider to pick your "secret key"—the number of places you want to shift the letters (from 1 to 25). A shift of 3 is the classic Caesar cipher.</li>
                   <li><strong>Enter Your Text:</strong> Type your plaintext message into the top "Decoded" box to encrypt it, or paste your ciphertext into the bottom "Encoded" box to decrypt it.</li>
                   <li><strong>See the Instant Result:</strong> The translated text will appear in the other box as you type.</li>
-                  <li><strong>Swap or Copy:</strong> Use the swap button (<ArrowRightLeft className="inline h-4 w-4" />) to switch the plaintext and ciphertext. Use the copy button (<Copy className="inline h-4 w-4" />) to grab the output.</li>
+                  <li><strong>Swap or Copy:</strong> Use the swap button (<ArrowRightLeft className="inline h-4 w-4" />) to instantly switch the contents of the two boxes. Use the copy button (<Copy className="inline h-4 w-4" />) to grab the output.</li>
               </ol>
           </Card>
         </section>
