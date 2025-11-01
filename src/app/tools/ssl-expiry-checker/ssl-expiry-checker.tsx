@@ -113,7 +113,7 @@ export function SslExpiryChecker() {
                                     id="domain-input"
                                     name="domain"
                                     type="text"
-                                    defaultValue="google.com"
+                                    defaultValue="example.com"
                                     placeholder="e.g., example.com or example.com:443"
                                     className="font-code"
                                     aria-label="Domain to check"
