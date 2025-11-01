@@ -9,6 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Label } from '@/components/ui/label';
 import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, Copy, Check, Link as LinkIcon, RefreshCw, ArrowRightLeft } from 'lucide-react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Link from 'next/link';
 
 // --- FAQ & Schema Data ---
@@ -73,34 +74,31 @@ export function UrlEncoderDecoder() {
     };
     
     useEffect(() => {
-        let timeoutId: NodeJS.Timeout;
-
-        const processChange = () => {
-            if (lastChanged === 'decoded') {
-                try {
-                    const newEncoded = encodeURIComponent(decoded);
-                    if (newEncoded !== encoded) {
-                        setEncoded(newEncoded);
-                    }
-                } catch (e) {
-                    // Could show an error for malformed strings if necessary
+        if (lastChanged === 'decoded') {
+            try {
+                const newEncoded = encodeURIComponent(decoded);
+                if (newEncoded !== encoded) {
+                    setEncoded(newEncoded);
                 }
-            } else if (lastChanged === 'encoded') {
-                try {
+            } catch (e) {
+                // Could show an error for malformed strings if necessary
+            }
+        } else if (lastChanged === 'encoded') {
+            try {
+                // Only decode if it's a potentially valid encoded string
+                if (encoded.includes('%')) {
                     const newDecoded = decodeURIComponent(encoded);
                     if (newDecoded !== decoded) {
                         setDecoded(newDecoded);
                     }
-                } catch (e) {
-                    // Malformed URI, do nothing to prevent crashing
+                } else if (decoded !== encoded) {
+                    // If no encoding chars, just sync decoded to encoded
+                    setDecoded(encoded);
                 }
+            } catch (e) {
+                // Malformed URI, do nothing to prevent crashing and allow user to fix it
             }
-        };
-
-        // Debounce the change to avoid rapid updates
-        timeoutId = setTimeout(processChange, 100);
-
-        return () => clearTimeout(timeoutId);
+        }
     }, [decoded, encoded, lastChanged]);
 
 
@@ -349,5 +347,3 @@ export function UrlEncoderDecoder() {
         </div>
     );
 }
-
-    
