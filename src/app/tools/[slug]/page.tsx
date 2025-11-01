@@ -62,6 +62,7 @@ import { FactorialCalculator } from '@/app/tools/factorial-calculator/factorial-
 import { AlgorithmStepSimulator } from '@/app/tools/algorithm-simulator/algorithm-simulator';
 import { RandomStringGenerator } from '@/app/tools/random-string-generator/random-string-generator';
 import { RandomNumberGenerator } from '@/app/tools/random-number-generator/random-number-generator';
+import { CodeSnippetFormatter } from '@/app/tools/code-snippet-formatter/code-snippet-formatter';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -131,6 +132,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'algorithm-simulator': AlgorithmStepSimulator,
     'random-string-generator': RandomStringGenerator,
     'random-number-generator': RandomNumberGenerator,
+    'code-snippet-formatter': CodeSnippetFormatter,
 };
 
 
