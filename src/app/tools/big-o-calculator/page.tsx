@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { BigOCalculator } from './big-o-calculator';
@@ -6,7 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
-import { faqData, howToSchema, keyTerminologies, faqSchema } from './schema';
+import { faqData, howToSchema, keyTerminologies } from './schema';
 import {
   Table,
   TableBody,
@@ -17,6 +18,19 @@ import {
 } from "@/components/ui/table"
 
 const BigOCalculatorPage = () => {
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer.replace(/<[^>]*>?/gm, ''),
+            },
+        })),
+    };
+
     return (
         <>
             <StructuredData data={faqSchema} />
@@ -70,7 +84,7 @@ const BigOCalculatorPage = () => {
                         <section>
                             <h3 className="font-bold text-xl">What is Big O Notation?</h3>
                             <p>
-                                Big O notation is a mathematical way to describe the performance and complexity of an algorithm. It answers the fundamental question: "As the input to my algorithm gets bigger, how much slower will it run?" It's not about measuring the exact time in seconds, but about describing the **growth rate** of the algorithm's runtime in the worst-case scenario. This allows developers to compare different solutions and choose the one that will remain efficient and scalable as data volumes increase.
+                                Big O notation is a mathematical way to describe the performance and complexity of an algorithm. It answers the fundamental question: "As the input to my algorithm gets bigger, how much slower will it run?" It's not about measuring the exact time in seconds, but about describing the <strong>growth rate</strong> of the algorithm's runtime in the worst-case scenario. This allows developers to compare different solutions and choose the one that will remain efficient and scalable as data volumes increase.
                             </p>
                             <p>
                                 When analyzing an algorithm, Big O simplifies the complexity by ignoring constant factors and lower-order terms. For example, an algorithm that takes `3n² + 10n + 5` operations is simply described as `O(n²)`. This is because as the input size `n` becomes very large, the `n²` term will overwhelmingly dominate the runtime, making the other terms insignificant.
@@ -104,7 +118,7 @@ const BigOCalculatorPage = () => {
                          <section>
                             <h3 className="font-bold text-xl">Time vs. Space Complexity</h3>
                             <p>
-                                While this tool focuses on **Time Complexity** (how long an algorithm takes to run), it's also important to consider **Space Complexity**. Space complexity measures how much additional memory (RAM) an algorithm requires as the input size grows. Sometimes, you can trade space for time, or vice-versa. An algorithm might be very fast but use a lot of memory, while another might be slower but more memory-efficient. A good developer understands this trade-off and chooses the best approach for the given constraints of the problem.
+                                While this tool focuses on <strong>Time Complexity</strong> (how long an algorithm takes to run), it's also important to consider <strong>Space Complexity</strong>. Space complexity measures how much additional memory (RAM) an algorithm requires as the input size grows. Sometimes, you can trade space for time, or vice-versa. An algorithm might be very fast but use a lot of memory, while another might be slower but more memory-efficient. A good developer understands this trade-off and chooses the best approach for the given constraints of the problem.
                             </p>
                         </section>
                     </CardContent>
