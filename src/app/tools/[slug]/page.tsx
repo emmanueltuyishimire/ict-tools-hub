@@ -1,5 +1,6 @@
 
 
+
 import { allTools } from '@/lib/tools';
 import { notFound } from 'next/navigation';
 import { PageHeader } from '@/components/page-header';
@@ -54,6 +55,7 @@ import { ColorConverter } from '@/app/tools/color-converter/color-converter';
 import { ColorPaletteGenerator } from '@/app/tools/color-palette-generator/color-palette-generator';
 import { NumberConverter } from '@/app/tools/number-converter/number-converter';
 import { HashGenerator } from '@/app/tools/hash-generator-md5-sha/hash-generator';
+import { Rot13EncoderDecoder } from '@/app/tools/rot13-encoder-decoder/rot13-encoder-decoder';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -115,6 +117,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'color-palette-generator': ColorPaletteGenerator,
     'number-converter': NumberConverter,
     'hash-generator-md5-sha': HashGenerator,
+    'rot13-encoder-decoder': Rot13EncoderDecoder,
 };
 
 
@@ -170,4 +173,5 @@ function ComingSoon() {
     
 
     
+
 
