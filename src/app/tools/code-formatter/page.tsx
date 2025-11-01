@@ -66,7 +66,8 @@ export default function CodeFormatterPage() {
                   <li><strong>Select the Language:</strong> Choose the tab corresponding to the code you want to format (HTML, CSS, or JS).</li>
                   <li><strong>Paste Your Code:</strong> Paste your code into the "Input Code" box. It can be minified, poorly indented, or just inconsistent.</li>
                   <li><strong>Format:</strong> Click the "Format Code" button.</li>
-                  <li><strong>Get Clean Code:</strong> The properly indented and spaced code will appear in the "Formatted Output" box. Use the copy button to grab it for your project.</li>
+                  <li><strong>Get Clean Code:</strong> The properly indented and spaced code will appear in the "Formatted Output" box. If you've formatted HTML, you can also click the "Preview" tab to see how it renders.</li>
+                  <li><strong>Copy the Result:</strong> Use the copy button to grab it for your project.</li>
               </ol>
           </Card>
         </section>
@@ -147,6 +148,28 @@ export default function CodeFormatterPage() {
                 </CardContent>
             </Card>
         </div>
+
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Un-minifying Production Code</h3>
+                    <p className="text-sm text-muted-foreground">A developer is debugging a live website and needs to inspect a third-party JavaScript file that has been minified. They copy the compressed code, paste it into the JS formatter, and instantly get a readable version with indentation, allowing them to understand the script's logic and find the problem.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Cleaning Up Copied Code</h3>
+                    <p className="text-sm text-muted-foreground">A student copies an HTML snippet from a blog post for a project, but the indentation is completely broken after pasting. They paste the messy snippet into the HTML formatter to automatically fix the structure, making it easy to integrate into their own project and understand the element hierarchy.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Standardizing Code for Review</h3>
+                    <p className="text-sm text-muted-foreground">Before submitting a pull request, a developer wants to ensure their CSS code adheres to the team's style guide. They paste their new CSS rules into the formatter to standardize spacing, brackets, and line breaks, ensuring the code review can focus on the logic of the styles, not on trivial formatting debates.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Learning from Formatted Code</h3>
+                    <p className="text-sm text-muted-foreground">A beginner is trying to understand a complex, single-line JavaScript function they found online. By pasting it into the formatter, the code is broken down into multiple lines with clear indentation for each logical block. This helps them visually trace the flow of control and understand how the function works.</p>
+                </div>
+            </div>
+        </section>
 
        <section>
           <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>

@@ -21,7 +21,7 @@ const formatHtml = (code: string): string => {
     if (element.match(/^\/\w/)) {
       indentLevel--;
     }
-    formatted += `${tab.repeat(indentLevel)}<${element}>\n`;
+    formatted += `${tab.repeat(Math.max(0, indentLevel))}<${element}>\n`;
     if (element.match(/^<?\w[^>]*[^\/]$/) && !element.startsWith("input") && !element.startsWith("br") && !element.startsWith("hr")) {
       indentLevel++;
     }
@@ -166,19 +166,31 @@ export function CodeFormatter() {
             </div>
 
             {outputCode && (
-              <div className="space-y-2">
+              <Tabs defaultValue="output" className="w-full">
                 <div className="flex justify-between items-center">
-                    <Label htmlFor="output-code">Formatted Output</Label>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleCopy} disabled={!outputCode} aria-label="Copy output code">
-                        {hasCopied ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
-                    </Button>
+                  <TabsList>
+                    <TabsTrigger value="output">Formatted Output</TabsTrigger>
+                    {codeType === 'html' && <TabsTrigger value="preview">Preview</TabsTrigger>}
+                  </TabsList>
+                   <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleCopy} disabled={!outputCode} aria-label="Copy output code">
+                      {hasCopied ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
+                  </Button>
                 </div>
-                <CodeBlock
-                    code={outputCode}
-                    language={codeType}
-                    className="max-h-[500px] overflow-y-auto"
-                />
-              </div>
+                <TabsContent value="output">
+                   <CodeBlock
+                      code={outputCode}
+                      language={codeType}
+                      className="mt-2 max-h-[500px] overflow-y-auto"
+                  />
+                </TabsContent>
+                {codeType === 'html' && (
+                  <TabsContent value="preview">
+                    <div className="mt-2 p-4 border rounded-md min-h-[200px] bg-white text-black">
+                        <div dangerouslySetInnerHTML={{ __html: outputCode }} />
+                    </div>
+                  </TabsContent>
+                )}
+              </Tabs>
             )}
           </div>
         </Tabs>
