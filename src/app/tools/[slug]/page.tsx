@@ -50,6 +50,7 @@ import { CodeFormatter } from '@/app/tools/code-formatter/code-formatter';
 import { HttpRequestSizeCalculator } from '@/app/tools/http-request-size-calculator/http-request-size-calculator';
 import { RegexTester } from '@/app/tools/regex-tester/regex-tester';
 import { Base64EncoderDecoder } from '@/app/tools/base64-encoder-decoder/base64-encoder-decoder';
+import { ColorConverter } from '@/app/tools/color-converter/color-converter';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -107,6 +108,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'http-request-size-calculator': HttpRequestSizeCalculator,
     'regex-tester': RegexTester,
     'base64-encoder-decoder': Base64EncoderDecoder,
+    'color-converter': ColorConverter,
 };
 
 
