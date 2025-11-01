@@ -1,7 +1,9 @@
+
 import { PageHeader } from '@/components/page-header';
 import { CodeForm } from './code-form';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BookOpen } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { BookOpen, AlertTriangle, Wand } from 'lucide-react';
+import Link from 'next/link';
 
 const keyTerminologies = [
     { term: 'Generative AI', definition: 'A type of artificial intelligence that can create new content, including code, text, and images, based on the data it was trained on.' },
@@ -78,6 +80,34 @@ export default function CodeGeneratorPage() {
                 </section>
             </CardContent>
         </Card>
+        <div className="grid md:grid-cols-2 gap-8">
+            <Card>
+                <CardHeader>
+                    <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Iterate and Refine:</strong> Your first prompt might not yield the perfect result. Refine your request with more detail or ask the AI to modify its previous response. For example: "That's a good start, but can you add error handling for the API call?"</li>
+                        <li><strong>Ask for Alternatives:</strong> If you're not sure about the AI's approach, ask for other ways to solve the problem. "What are some alternative ways to write this function? What are the pros and cons of each?"</li>
+                        <li><strong>Define Constraints:</strong> Tell the AI about any constraints. For example, "Generate a solution for sorting this array without using the built-in `.sort()` method" or "I need a solution that works in older browsers and does not use ES6 features."</li>
+                        <li><strong>Request Explanations:</strong> Always ask the AI to explain its code. A prompt like "Explain this code line by line" or "Why did you choose to use a `Map` instead of an `Object` here?" turns a simple code generation into a powerful learning session.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader>
+                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Blindly Trusting the Output:</strong> AI-generated code can contain subtle bugs, inefficiencies, or even security vulnerabilities. Always review, test, and understand the code before using it in a production environment.</li>
+                        <li><strong>Using Vague Prompts:</strong> A prompt like "fix my code" is not helpful. Provide specific details about the error, what you've tried, and what you expect to happen. The more context you give, the better the AI's response will be.</li>
+                        <li><strong>Ignoring Security Implications:</strong> When generating code that handles user input, database queries, or authentication, be extra critical. Ensure the AI is implementing best practices like input sanitization to prevent vulnerabilities like SQL injection or Cross-Site Scripting (XSS).</li>
+                        <li><strong>Neglecting Performance:</strong> AI might generate code that works but is not performant. For code that will run in a loop or handle large amounts of data, consider asking the AI to "optimize this code for performance" and analyze its suggestions.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+        </div>
       </div>
     </>
   );
