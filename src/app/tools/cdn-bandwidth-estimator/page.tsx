@@ -36,6 +36,20 @@ const keyTerminologies = [
     { term: 'Edge Server', definition: 'An individual server within a CDN network, located at the "edge" of the internet, close to end-users.' },
 ];
 
+const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Estimate CDN Bandwidth',
+    description: 'A step-by-step guide to forecasting your website\'s bandwidth usage.',
+    step: [
+        { '@type': 'HowToStep', name: 'Enter Traffic Metrics', text: 'Input your average monthly visitors and the typical number of pages each visitor views per session.' },
+        { '@type': 'HowToStep', name: 'Define Page Size', text: 'Enter the average size of a single page load on your site in kilobytes (KB). You can find this in your browser\'s developer tools on the "Network" tab.' },
+        { '@type': 'HowToStep', name: 'Set Cache Hit Ratio', text: 'Adjust the slider to your expected cache hit ratio. This is the percentage of requests the CDN can handle without asking your main server. A well-optimized site often has a ratio of 90% or higher.' },
+        { '@type': 'HowToStep', name: 'Estimate Bandwidth', text: 'Click the "Estimate Bandwidth" button to see the breakdown between CDN and origin usage.' },
+    ],
+    totalTime: 'PT1M'
+};
+
 export default function CdnBandwidthEstimatorPage() {
   return (
     <>
@@ -44,6 +58,7 @@ export default function CdnBandwidthEstimatorPage() {
         '@type': 'FAQPage',
         mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
       }} />
+      <StructuredData data={howToSchema} />
       <PageHeader
         title="CDN Bandwidth Estimator"
         description="Estimate the monthly data transfer for your website to better forecast CDN and hosting costs. Understand the financial impact of your cache hit ratio."
@@ -80,7 +95,7 @@ export default function CdnBandwidthEstimatorPage() {
                   </dl>
               </CardContent>
            </Card>
-      </section>
+        </section>
 
         <Card className='bg-secondary/30 border-primary/20'>
             <CardHeader>
@@ -138,6 +153,47 @@ export default function CdnBandwidthEstimatorPage() {
                 </CardContent>
             </Card>
         </div>
+        
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Budgeting for a New Website Launch</h3>
+                    <p className="text-sm text-muted-foreground">A startup expects 50,000 visitors in their first month, with each visiting about 3 pages. Their average page size is 2MB (2048 KB). By plugging these numbers in, they estimate their total data transfer will be about 300 GB. With an 85% cache hit ratio, they can forecast ~255 GB of cheap CDN bandwidth and ~45 GB of more expensive origin bandwidth, allowing them to choose the right hosting and CDN plans without overspending.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Justifying a Performance Audit</h3>
+                    <p className="text-sm text-muted-foreground">A developer notices their hosting bill is unexpectedly high. They use the estimator with their site's traffic data and see that with their current 60% cache hit ratio, they are serving 400 GB from their origin server. They then adjust the slider to a target of 95%, showing that proper caching could reduce origin bandwidth to just 50 GB. This provides a clear, data-driven case to management to approve time for a performance and caching audit.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Planning for a Traffic Spike</h3>
+                    <p className="text-sm text-muted-foreground">A news blog is about to publish a major story and expects traffic to increase 10x, from 100,000 visitors to 1,000,000. By using the estimator, they can see that even with a high 98% cache hit ratio, their origin bandwidth will increase from 2 GB to 20 GB. This allows them to proactively contact their host to ensure their plan can handle the temporary spike without the site going down.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Choosing a CDN Provider</h3>
+                    <p className="text-sm text-muted-foreground">A developer is comparing two CDN providers. Provider A is slightly cheaper per GB but has fewer global locations. Provider B is more expensive but has more locations. The developer uses the estimator to calculate their total monthly CDN bandwidth (e.g., 500 GB). They can then model a lower cache hit ratio for Provider A (due to fewer locations) and a higher one for Provider B, helping them calculate the total cost for both scenarios and make an informed financial decision.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+          <Card>
+              <CardContent className="p-6">
+                  <Accordion type="single" collapsible className="w-full">
+                      {faqData.map((item, index) => (
+                          <AccordionItem value={`item-${index}`} key={index}>
+                              <AccordionTrigger>{item.question}</AccordionTrigger>
+                              <AccordionContent>
+                                <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<[^>]*>?/gm, '') }} />
+                              </AccordionContent>
+                          </AccordionItem>
+                      ))}
+                  </Accordion>
+              </CardContent>
+          </Card>
+      </section>
+
       </div>
     </>
   );
