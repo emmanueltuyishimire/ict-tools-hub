@@ -11,6 +11,11 @@ import Link from 'next/link';
 export const metadata = {
     title: 'Base64 Encoder / Decoder | ICT Toolbench',
     description: 'Easily encode text to Base64 or decode Base64 strings back to text. Our online tool is fast, secure, and supports UTF-8 characters.',
+    openGraph: {
+        title: 'Base64 Encoder / Decoder | ICT Toolbench',
+        description: 'Instantly encode and decode Base64 strings. A secure, client-side tool for developers handling data for APIs, data URIs, and more.',
+        url: '/tools/base64-encoder-decoder',
+    }
 };
 
 const faqData = [
