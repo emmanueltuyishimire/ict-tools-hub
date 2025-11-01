@@ -52,13 +52,15 @@ const keyTerminologies = [
 ];
 
 export default function JsonFormatterPage() {
+  const faqSchemaData = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData,
+  };
+
   return (
     <>
-      <StructuredData data={{
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqData,
-      }} />
+      <StructuredData data={faqSchemaData} />
       <StructuredData data={howToSchema} />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
