@@ -6,6 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const metadata = {
     title: 'HTTP Request Size Calculator | ICT Toolbench',
@@ -51,7 +52,7 @@ export default function HttpRequestSizeCalculatorPage() {
       <StructuredData data={{
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } }))
+        mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
       }} />
       <StructuredData data={howToSchema} />
       <PageHeader
@@ -66,7 +67,7 @@ export default function HttpRequestSizeCalculatorPage() {
           <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
           <Card className="prose prose-sm max-w-none text-foreground p-6">
               <p>
-                This tool helps you understand the size of your HTTP requests, which is crucial for optimizing API calls and improving performance on slow networks.
+                This estimator helps you understand the size of your HTTP requests, which is crucial for optimizing API calls and improving performance on slow networks.
               </p>
               <ol>
                   <li>
@@ -99,7 +100,7 @@ export default function HttpRequestSizeCalculatorPage() {
                   </dl>
               </CardContent>
            </Card>
-      </section>
+        </section>
 
       <Card className='bg-secondary/30 border-primary/20'>
           <CardHeader>
@@ -113,7 +114,7 @@ export default function HttpRequestSizeCalculatorPage() {
               <section>
                   <h3 className="font-bold text-xl">The Cost of a Request</h3>
                   <p>
-                    Every time an application needs to communicate with a server, it sends an HTTP request. While we often focus on the size of the *response* (e.g., a large image or JSON payload), the size of the initial request also matters, especially in certain contexts. For devices on slow or metered mobile networks (like IoT devices or users in developing countries), every byte counts. Large requests consume more bandwidth, use more battery power, and take longer to transmit, making the application feel sluggish.
+                    Every time an application needs to communicate with a server, it sends an HTTP request. While we often focus on the size of the <strong>response</strong> (e.g., a large image or JSON payload), the size of the initial request also matters, especially in certain contexts. For devices on slow or metered mobile networks (like IoT devices or users in developing countries), every byte counts. Large requests consume more bandwidth, use more battery power, and take longer to transmit, making the application feel sluggish.
                   </p>
               </section>
               <section>
