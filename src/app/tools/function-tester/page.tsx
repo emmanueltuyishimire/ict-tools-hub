@@ -20,6 +20,19 @@ export const metadata = {
 };
 
 const FunctionTesterPage = () => {
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer.replace(/<[^>]*>?/gm, ''),
+        },
+    })),
+  };
+
   const softwareAppSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -33,12 +46,6 @@ const FunctionTesterPage = () => {
     },
     "description": "A client-side JavaScript sandbox for testing functions and code snippets safely and instantly.",
     "url": "https://www.icttoolbench.com/tools/function-tester"
-  };
-
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))
   };
 
   return (
