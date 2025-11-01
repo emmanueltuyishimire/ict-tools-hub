@@ -53,6 +53,7 @@ import { Base64EncoderDecoder } from '@/app/tools/base64-encoder-decoder/base64-
 import { ColorConverter } from '@/app/tools/color-converter/color-converter';
 import { ColorPaletteGenerator } from '@/app/tools/color-palette-generator/color-palette-generator';
 import { NumberConverter } from '@/app/tools/number-converter/number-converter';
+import { HashGenerator } from '@/app/tools/hash-generator-md5-sha/hash-generator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -113,6 +114,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'color-converter': ColorConverter,
     'color-palette-generator': ColorPaletteGenerator,
     'number-converter': NumberConverter,
+    'hash-generator-md5-sha': HashGenerator,
 };
 
 
@@ -168,3 +170,4 @@ function ComingSoon() {
     
 
     
+
