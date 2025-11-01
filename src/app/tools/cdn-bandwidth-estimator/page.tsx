@@ -114,11 +114,12 @@ export default function CdnBandwidthEstimatorPage() {
                 </section>
                 <section>
                     <h3 className="font-bold text-xl">The All-Important Cache Hit Ratio</h3>
-                    <p>The "cache hit ratio" is the single most important metric for a CDN's effectiveness.
+                    <p>The "cache hit ratio" is the single most important metric for a CDN's effectiveness.</p>
                         <ul className="list-disc pl-5">
                             <li>A **Cache HIT** means the CDN had the file in its local cache and served it directly to the user. This is fast and cheap.</li>
                             <li>A **Cache MISS** means the CDN did not have the file, so it had to forward the request to your origin server, wait for the file, and then send it to the user. This is slow and incurs costs on your primary web host.</li>
                         </ul>
+                    <p>
                     The goal is to maximize the hit ratio. A 95% hit ratio means that for every 100 requests, 95 are handled by the fast, inexpensive CDN, and only 5 have to make the slow, expensive trip to your origin server. This tool helps you visualize the financial impact of improving that ratio.
                     </p>
                 </section>
