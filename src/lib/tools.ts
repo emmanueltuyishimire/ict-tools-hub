@@ -226,7 +226,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Matrix Operation Calculator', slug: 'matrix-calculator', description: 'Perform matrix operations.' },
       { name: 'Factorial / Combinatorics Calculator', slug: 'combinatorics-calculator', description: 'Calculate factorials and combinations.' },
       { name: 'Fibonacci Sequence Generator (Learning)', slug: 'fibonacci-learner', description: 'Learn about Fibonacci sequence.' },
-      { name: 'Prime Number Generator', slug: 'prime-generator', description: 'Generate prime numbers.' },
+      { name: 'Prime Number Generator', slug: 'prime-number-generator', description: 'Generate prime numbers.' },
       { name: 'Binary Tree Simulator', slug: 'binary-tree-simulator', description: 'Simulate a binary tree.' },
       { name: 'Linked List Visualization Tool', slug: 'linked-list-visualizer', description: 'Visualize a linked list.' },
       { name: 'Stack / Queue Simulator', slug: 'stack-queue-simulator', description: 'Simulate stacks and queues.' },
@@ -307,13 +307,5 @@ export const mainNavLinks = [
         description: 'Generate and debug code with AI.'
     }
 ]
-
-    
-
-    
-
-    
-
-    
 
     
