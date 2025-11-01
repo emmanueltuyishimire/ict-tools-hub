@@ -77,7 +77,6 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Cache Expiration Calculator', slug: 'cache-expiry-calculator', description: 'Calculate cache expiration dates.' },
       { name: 'Compression Savings Estimator', slug: 'compression-estimator', description: 'Estimate savings from compression.' },
       { name: 'CDN Bandwidth Estimator', slug: 'cdn-bandwidth-estimator', description: 'Estimate CDN bandwidth usage.' },
-      { name: 'HTTP Request Size Calculator', slug: 'http-request-size-calculator', description: 'Calculate HTTP request size.' },
     ],
   },
   {
