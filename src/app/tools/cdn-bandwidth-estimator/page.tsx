@@ -50,14 +50,17 @@ const howToSchema = {
     totalTime: 'PT1M'
 };
 
+const faqSchemaData = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
+};
+
+
 export default function CdnBandwidthEstimatorPage() {
   return (
     <>
-      <StructuredData data={{
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
-      }} />
+      <StructuredData data={faqSchemaData} />
       <StructuredData data={howToSchema} />
       <PageHeader
         title="CDN Bandwidth Estimator"
@@ -72,11 +75,11 @@ export default function CdnBandwidthEstimatorPage() {
           <Card className="prose prose-sm max-w-none text-foreground p-6">
               <p>This estimator helps you forecast your monthly bandwidth consumption, a key factor in web hosting and CDN costs.</p>
               <ol>
-                  <li>&lt;strong&gt;Enter Traffic Metrics:&lt;/strong&gt; Input your average monthly visitors and the typical number of pages each visitor views per session.</li>
-                  <li>&lt;strong&gt;Define Page Size:&lt;/strong&gt; Enter the average size of a single page load on your site in kilobytes (KB). You can find this in your browser's developer tools on the "Network" tab.</li>
-                  <li>&lt;strong&gt;Set Cache Hit Ratio:&lt;/strong&gt; Adjust the slider to your expected cache hit ratio. This is the percentage of requests the CDN can handle without asking your main server. A well-optimized site often has a ratio of 90% or higher.</li>
-                  <li>&lt;strong&gt;Estimate Bandwidth:&lt;/strong&gt; Click the "Estimate Bandwidth" button.</li>
-                  <li>&lt;strong&gt;Analyze the Results:&lt;/strong&gt; The tool will show your total monthly data transfer, broken down into the portion served by the CDN and the more expensive portion served by your origin server.</li>
+                  <li><strong>Enter Traffic Metrics:</strong> Input your average monthly visitors and the typical number of pages each visitor views per session.</li>
+                  <li><strong>Define Page Size:</strong> Enter the average size of a single page load on your site in kilobytes (KB). You can find this in your browser's developer tools on the "Network" tab.</li>
+                  <li><strong>Set Cache Hit Ratio:</strong> Adjust the slider to your expected cache hit ratio. This is the percentage of requests the CDN can handle without asking your main server. A well-optimized site often has a ratio of 90% or higher.</li>
+                  <li><strong>Estimate Bandwidth:</strong> Click the "Estimate Bandwidth" button.</li>
+                  <li><strong>Analyze the Results:</strong> The tool will show your total monthly data transfer, broken down into the portion served by the CDN and the more expensive portion served by your origin server.</li>
               </ol>
           </Card>
         </section>
@@ -116,8 +119,8 @@ export default function CdnBandwidthEstimatorPage() {
                     <h3 className="font-bold text-xl">The All-Important Cache Hit Ratio</h3>
                     <p>The "cache hit ratio" is the single most important metric for a CDN's effectiveness.</p>
                         <ul className="list-disc pl-5">
-                            <li>A &lt;strong&gt;Cache HIT&lt;/strong&gt; means the CDN had the file in its local cache and served it directly to the user. This is fast and cheap.</li>
-                            <li>A &lt;strong&gt;Cache MISS&lt;/strong&gt; means the CDN did not have the file, so it had to forward the request to your origin server, wait for the file, and then send it to the user. This is slow and incurs costs on your primary web host.</li>
+                            <li>A <strong>Cache HIT</strong> means the CDN had the file in its local cache and served it directly to the user. This is fast and cheap.</li>
+                            <li>A <strong>Cache MISS</strong> means the CDN did not have the file, so it had to forward the request to your origin server, wait for the file, and then send it to the user. This is slow and incurs costs on your primary web host.</li>
                         </ul>
                     <p>
                     The goal is to maximize the hit ratio. A 95% hit ratio means that for every 100 requests, 95 are handled by the fast, inexpensive CDN, and only 5 have to make the slow, expensive trip to your origin server. This tool helps you visualize the financial impact of improving that ratio.
@@ -129,27 +132,27 @@ export default function CdnBandwidthEstimatorPage() {
         <div className="grid md:grid-cols-2 gap-8">
             <Card>
                 <CardHeader>
-                    <div className='flex items-center gap-2'>&lt;Wand className="h-6 w-6 text-accent" /&gt; &lt;CardTitle&gt;Pro Tips for High Hit Ratios&lt;/CardTitle&gt;&lt;/div&gt;
+                    <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips for High Hit Ratios</CardTitle></div>
                 </CardHeader>
                 <CardContent>
                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                        <li>&lt;strong&gt;Use Long Cache-Control Headers:&lt;/strong&gt; For static assets that rarely change (like logos, fonts), set a `Cache-Control: max-age` header of several months or even a year. This tells the CDN it's safe to cache the file for a long time.</li>
-                        <li>&lt;strong&gt;Avoid Query Strings for Static Assets:&lt;/strong&gt; Many CDNs treat URLs with different query strings as unique files (e.g., `style.css?v=1` and `style.css?v=2` are cached separately). Use filename-based cache busting (`style.1.css`, `style.2.css`) instead.</li>
-                        <li>&lt;strong&gt;Serve the Right Headers:&lt;/strong&gt; Ensure your server sends a `Vary: Accept-Encoding` header so the CDN caches Gzip and Brotli compressed assets separately.</li>
-                        <li>&lt;strong&gt;Pre-warm Your Cache:&lt;/strong&gt; Some CDNs allow you to "pre-warm" the cache by providing a list of popular assets to load before any user requests them, ensuring a higher hit rate from the start.</li>
+                        <li><strong>Use Long Cache-Control Headers:</strong> For static assets that rarely change (like logos, fonts), set a `Cache-Control: max-age` header of several months or even a year. This tells the CDN it's safe to cache the file for a long time.</li>
+                        <li><strong>Avoid Query Strings for Static Assets:</strong> Many CDNs treat URLs with different query strings as unique files (e.g., `style.css?v=1` and `style.css?v=2` are cached separately). Use filename-based cache busting (`style.1.css`, `style.2.css`) instead.</li>
+                        <li><strong>Serve the Right Headers:</strong> Ensure your server sends a `Vary: Accept-Encoding` header so the CDN caches Gzip and Brotli compressed assets separately.</li>
+                        <li><strong>Pre-warm Your Cache:</strong> Some CDNs allow you to "pre-warm" the cache by providing a list of popular assets to load before any user requests them, ensuring a higher hit rate from the start.</li>
                     </ul>
                 </CardContent>
             </Card>
             <Card>
                 <CardHeader>
-                     &lt;div className='flex items-center gap-2'&gt;&lt;AlertTriangle className="h-6 w-6 text-destructive" /&gt; &lt;CardTitle&gt;Common Mistakes&lt;/CardTitle&gt;&lt;/div&gt;
+                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes</CardTitle></div>
                 </CardHeader>
                 <CardContent>
                      <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                        <li>&lt;strong&gt;Forgetting to Set Cache-Control:&lt;/strong&gt; If you don't send caching headers, a CDN may refuse to cache your content at all, resulting in a 0% hit ratio and no performance benefit.</li>
-                        <li>&lt;strong&gt;Using a `*` Origin Policy:&lt;/strong&gt; Setting a cross-origin `Access-Control-Allow-Origin: *` header can prevent some CDNs from caching your content for security reasons. Be specific where possible.</li>
-                        <li>&lt;strong&gt;Caching Dynamic Content:&lt;/strong&gt; Accidentally caching personalized or dynamic HTML pages can lead to users seeing other users' information. Dynamic content should almost always be a cache MISS.</li>
-                        <li>&lt;strong&gt;Ignoring Analytics:&lt;/strong&gt; Not monitoring your CDN's analytics panel. Your CDN provider gives you detailed reports on your cache hit ratio and bandwidth usage. Use this data to find and fix issues.</li>
+                        <li><strong>Forgetting to Set Cache-Control:</strong> If you don't send caching headers, a CDN may refuse to cache your content at all, resulting in a 0% hit ratio and no performance benefit.</li>
+                        <li><strong>Using a `*` Origin Policy:</strong> Setting a cross-origin `Access-Control-Allow-Origin: *` header can prevent some CDNs from caching your content for security reasons. Be specific where possible.</li>
+                        <li><strong>Caching Dynamic Content:</strong> Accidentally caching personalized or dynamic HTML pages can lead to users seeing other users' information. Dynamic content should almost always be a cache MISS.</li>
+                        <li><strong>Ignoring Analytics:</strong> Not monitoring your CDN's analytics panel. Your CDN provider gives you detailed reports on your cache hit ratio and bandwidth usage. Use this data to find and fix issues.</li>
                     </ul>
                 </CardContent>
             </Card>
