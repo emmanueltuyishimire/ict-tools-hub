@@ -64,12 +64,12 @@ export default function BigOCalculatorPage() {
         <>
             <StructuredData data={faqSchema} />
             <StructuredData data={howToSchema} />
-            <PageHeader
-                title="Time Complexity Estimator"
-                description="An interactive, educational tool to help you understand and visualize Big O notation and the performance of common algorithms as data scales."
-            />
-            
             <div className="max-w-4xl mx-auto space-y-12">
+                <PageHeader
+                    title="Time Complexity Estimator"
+                    description="An interactive, educational tool to help you understand and visualize Big O notation and the performance of common algorithms as data scales."
+                />
+                
                 <BigOCalculator />
 
                 <section>
@@ -231,3 +231,5 @@ export default function BigOCalculatorPage() {
         </>
     );
 }
+
+    
