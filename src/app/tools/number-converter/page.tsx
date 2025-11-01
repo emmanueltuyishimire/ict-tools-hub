@@ -97,8 +97,12 @@ export default function NumberConverterPage() {
           <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
               <section>
                   <h3 className="font-bold text-xl">Why We Don't All Use Base-10</h3>
-                  <p>Humans naturally think in <strong>Decimal (Base-10)</strong> because we have ten fingers. It's the system we learn from childhood, with digits 0 through 9. But computers are built on transistors that have only two states: on or off. This makes <strong>Binary (Base-2)</strong>, with its two digits 0 and 1, the native language of all digital hardware.</p>
-                  <p>While binary is perfect for computers, long strings of 1s and 0s are very difficult for humans to read. This is where <strong>Hexadecimal (Base-16)</strong> comes in. Hexadecimal uses digits 0-9 and A-F. It serves as a compact, human-friendly shorthand for binary because one hex digit can represent exactly four binary digits (a nibble). This makes it ideal for representing memory addresses, file headers, and color codes without the unwieldy length of a pure binary string.</p>
+                  <p>
+                    Humans naturally think in <strong>Decimal (Base-10)</strong> because we have ten fingers. It's the system we learn from childhood, with digits 0 through 9. But computers are built on transistors that have only two states: on or off. This makes <strong>Binary (Base-2)</strong>, with its two digits 0 and 1, the native language of all digital hardware.
+                  </p>
+                  <p>
+                    While binary is perfect for computers, long strings of 1s and 0s are very difficult for humans to read. This is where <strong>Hexadecimal (Base-16)</strong> comes in. Hexadecimal uses digits 0-9 and A-F. It serves as a compact, human-friendly shorthand for binary because one hex digit can represent exactly four binary digits (a nibble). This makes it ideal for representing memory addresses, file headers, and color codes without the unwieldy length of a pure binary string.
+                  </p>
               </section>
               <section>
                   <h3 className="font-bold text-xl">Real-World Examples</h3>
