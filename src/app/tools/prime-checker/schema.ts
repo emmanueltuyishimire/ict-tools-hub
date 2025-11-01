@@ -33,5 +33,3 @@ export const keyTerminologies = [
     { term: 'Cryptography', definition: 'The practice and study of techniques for secure communication. Prime numbers are a cornerstone of modern public-key cryptography.' },
     { term: 'Fundamental Theorem of Arithmetic', definition: 'A theorem stating that every integer greater than 1 is either a prime number itself or can be represented as a unique product of prime numbers.' },
 ];
-
-    
