@@ -74,14 +74,14 @@ export default function ResponseTimeCalculatorPage() {
           <Card className="prose prose-sm max-w-none text-foreground p-6">
               <p>This tool helps you diagnose your server's performance by measuring how quickly it responds to a web request.</p>
               <ol>
-                  <li>&lt;strong&gt;Enter the URL:&lt;/strong&gt; Type the full URL of the webpage or API endpoint you wish to test.</li>
-                  <li>&lt;strong&gt;Measure Response Time:&lt;/strong&gt; Click the "Measure Response Time" button. Our server will initiate a connection and time each phase of the process.</li>
-                  <li>&lt;strong&gt;Analyze the Metrics:&lt;/strong&gt; The results card will show you a breakdown of the total time:
+                  <li><strong>Enter the URL:</strong> Type the full URL of the webpage or API endpoint you wish to test.</li>
+                  <li><strong>Measure Response Time:</strong> Click the "Measure Response Time" button. Our server will initiate a connection and time each phase of the process.</li>
+                  <li><strong>Analyze the Metrics:</strong> The results card will show you a breakdown of the total time:
                     <ul>
-                        <li>&lt;strong&gt;DNS Lookup:&lt;/strong&gt; How long it took to find the server's IP address.</li>
-                        <li>&lt;strong&gt;TCP Connection:&lt;/strong&gt; The time to establish a connection with the server.</li>
-                        <li>&lt;strong&gt;Time to First Byte (TTFB):&lt;/strong&gt; The critical metric showing how long the server took to process the request and start sending data back.</li>
-                        <li>&lt;strong&gt;Total Time:&lt;/strong&gt; The overall time from the start of the request to receiving the first byte.</li>
+                        <li><strong>DNS Lookup:</strong> How long it took to find the server's IP address.</li>
+                        <li><strong>TCP Connection:</strong> The time to establish a connection with the server.</li>
+                        <li><strong>Time to First Byte (TTFB):</strong> The critical metric showing how long the server took to process the request and start sending data back.</li>
+                        <li><strong>Total Time:</strong> The overall time from the start of the request to receiving the first byte.</li>
                     </ul>
                   </li>
               </ol>
@@ -118,9 +118,9 @@ export default function ResponseTimeCalculatorPage() {
                   <p>Time to First Byte is one of the most fundamental metrics in web performance. It measures the duration from the user's browser making an HTTP request to the first byte of the page being received by the browser. It's a direct measure of your server's responsiveness. A slow TTFB means users are staring at a blank screen for longer, which leads to a poor user experience and higher bounce rates.</p>
                   <p>TTFB is composed of three main components:</p>
                   <ol>
-                    <li>&lt;strong&gt;HTTP Request Time:&lt;/strong&gt; The time it takes for the user's request to travel from their browser to your server across the network.</li>
-                    <li>&lt;strong&gt;Server Processing Time:&lt;/strong&gt; The time your server takes to process the request, run any necessary scripts (like PHP or Python), query databases, and generate the HTML document. This is often the biggest contributor to a slow TTFB.</li>
-                    <li>&lt;strong&gt;HTTP Response Time:&lt;/strong&gt; The time it takes for the first byte of the server's response to travel back across the network to the user's browser.</li>
+                    <li><strong>HTTP Request Time:</strong> The time it takes for the user's request to travel from their browser to your server across the network.</li>
+                    <li><strong>Server Processing Time:</strong> The time your server takes to process the request, run any necessary scripts (like PHP or Python), query databases, and generate the HTML document. This is often the biggest contributor to a slow TTFB.</li>
+                    <li><strong>HTTP Response Time:</strong> The time it takes for the first byte of the server's response to travel back across the network to the user's browser.</li>
                   </ol>
                   <p>This tool combines these to give you a clear picture of your server's performance.</p>
               </section>
@@ -128,22 +128,22 @@ export default function ResponseTimeCalculatorPage() {
                   <h3 className="font-bold text-xl">Common Causes of a Slow TTFB</h3>
                     <p>If your TTFB is high (over 600ms), it's a sign that something on your backend is slow. Here are the most common culprits:</p>
                   <ul className="list-disc pl-5">
-                     <li>&lt;strong&gt;Slow Database Queries:&lt;/strong&gt; Complex or unoptimized database queries can take a long time to execute, forcing your application to wait before it can generate the page.</li>
-                     <li>&lt;strong&gt;Inefficient Application Code:&lt;/strong&gt; Poorly written code, heavy computational tasks, or a bloated CMS (like a WordPress site with too many slow plugins) can significantly increase processing time.</li>
-                     <li>&lt;strong&gt;Server Overload:&lt;/strong&gt; If your server doesn't have enough CPU or RAM to handle the traffic volume, requests will be queued and processed slowly.</li>
-                     <li>&lt;strong&gt;Lack of Caching:&lt;/strong&gt; Without caching, your server has to dynamically generate every page for every visitor from scratch. Caching stores a pre-built version of the page, allowing the server to respond almost instantly.</li>
-                     <li>&lt;strong&gt;Network Latency:&lt;/strong&gt; High physical distance between the user and the server increases the travel time for requests and responses. Our &lt;a href="/tools/latency-estimator" className="text-primary hover:underline"&gt;Latency Estimator&lt;/a&gt; can help quantify this.</li>
+                     <li><strong>Slow Database Queries:</strong> Complex or unoptimized database queries can take a long time to execute, forcing your application to wait before it can generate the page.</li>
+                     <li><strong>Inefficient Application Code:</strong> Poorly written code, heavy computational tasks, or a bloated CMS (like a WordPress site with too many slow plugins) can significantly increase processing time.</li>
+                     <li><strong>Server Overload:</strong> If your server doesn't have enough CPU or RAM to handle the traffic volume, requests will be queued and processed slowly.</li>
+                     <li><strong>Lack of Caching:</strong> Without caching, your server has to dynamically generate every page for every visitor from scratch. Caching stores a pre-built version of the page, allowing the server to respond almost instantly.</li>
+                     <li><strong>Network Latency:</strong> High physical distance between the user and the server increases the travel time for requests and responses. Our <a href="/tools/latency-estimator" className="text-primary hover:underline">Latency Estimator</a> can help quantify this.</li>
                   </ul>
               </section>
                <section>
                   <h3 className="font-bold text-xl">How to Improve Your Server Response Time</h3>
                     <p>Improving TTFB is about optimizing your entire backend stack. Here are actionable strategies:</p>
                     <ul className="list-disc pl-5">
-                       <li>&lt;strong&gt;Implement Caching:&lt;/strong&gt; This is the most effective strategy. Use page caching, browser caching, and object caching to store frequently accessed data and pre-built HTML, reducing the need for server processing.</li>
-                        <li>&lt;strong&gt;Optimize Your Database:&lt;/strong&gt; Ensure your database tables are properly indexed. Use a query monitoring tool to find and rewrite slow queries. Consider using a database caching layer like Redis or Memcached.</li>
-                        <li>&lt;strong&gt;Upgrade Your Hosting:&lt;/strong&gt; If you're on a cheap, shared hosting plan, you're sharing server resources with hundreds of other sites. Upgrading to a VPS or dedicated server can provide the CPU and RAM your site needs.</li>
-                        <li>&lt;strong&gt;Use a Content Delivery Network (CDN):&lt;/strong&gt; A CDN distributes your assets across the globe. While often associated with faster image loading, a good CDN can also cache your HTML pages at the edge, dramatically reducing TTFB for users far from your origin server.</li>
-                        <li>&lt;strong&gt;Keep Software Updated:&lt;/strong&gt; Ensure your server OS, web server software (Apache/Nginx), and application language (PHP, Node.js) are all on recent, optimized versions.</li>
+                       <li><strong>Implement Caching:</strong> This is the most effective strategy. Use page caching, browser caching, and object caching to store frequently accessed data and pre-built HTML, reducing the need for server processing.</li>
+                        <li><strong>Optimize Your Database:</strong> Ensure your database tables are properly indexed. Use a query monitoring tool to find and rewrite slow queries. Consider using a database caching layer like Redis or Memcached.</li>
+                        <li><strong>Upgrade Your Hosting:</strong> If you're on a cheap, shared hosting plan, you're sharing server resources with hundreds of other sites. Upgrading to a VPS or dedicated server can provide the CPU and RAM your site needs.</li>
+                        <li><strong>Use a Content Delivery Network (CDN):</strong> A CDN distributes your assets across the globe. While often associated with faster image loading, a good CDN can also cache your HTML pages at the edge, dramatically reducing TTFB for users far from your origin server.</li>
+                        <li><strong>Keep Software Updated:</strong> Ensure your server OS, web server software (Apache/Nginx), and application language (PHP, Node.js) are all on recent, optimized versions.</li>
                   </ul>
               </section>
           </CardContent>
@@ -155,9 +155,9 @@ export default function ResponseTimeCalculatorPage() {
                 </CardHeader>
                 <CardContent>
                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                        <li>&lt;strong&gt;Test Dynamic vs. Static Content:&lt;/strong&gt; Test both a dynamic page (like a blog post) and a static asset (like a CSS file or image). If the static asset has a low TTFB but the dynamic page is high, the bottleneck is almost certainly in your application code or database, not the server itself.</li>
-                        <li>&lt;strong&gt;Check Different Geographic Locations:&lt;/strong&gt; Use a VPN or online testing services to check your response time from different parts of the world. This will show you how much network latency is impacting your TTFB and whether you would benefit from a CDN.</li>
-                        <li>&lt;strong&gt;Look at Response Headers:&lt;/strong&gt; After running a test, use our &lt;a href="/tools/http-header-checker" className="text-primary hover:underline"&gt;HTTP Header Checker&lt;/a&gt;. Look for headers like `Cache-Control` or `X-Cache`. A header like `X-Cache: HIT` indicates the page was served from a cache, which should result in a very low TTFB.</li>
+                        <li><strong>Test Dynamic vs. Static Content:</strong> Test both a dynamic page (like a blog post) and a static asset (like a CSS file or image). If the static asset has a low TTFB but the dynamic page is high, the bottleneck is almost certainly in your application code or database, not the server itself.</li>
+                        <li><strong>Check Different Geographic Locations:</strong> Use a VPN or online testing services to check your response time from different parts of the world. This will show you how much network latency is impacting your TTFB and whether you would benefit from a CDN.</li>
+                        <li><strong>Look at Response Headers:</strong> After running a test, use our <a href="/tools/http-header-checker" className="text-primary hover:underline">HTTP Header Checker</a>. Look for headers like `Cache-Control` or `X-Cache`. A header like `X-Cache: HIT` indicates the page was served from a cache, which should result in a very low TTFB.</li>
                     </ul>
                 </CardContent>
             </Card>
@@ -167,10 +167,10 @@ export default function ResponseTimeCalculatorPage() {
                 </CardHeader>
                 <CardContent>
                      <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                        <li>&lt;strong&gt;Focusing Only on Frontend:&lt;/strong&gt; Many developers focus on optimizing JavaScript and images (which is important) but ignore a slow backend. A high TTFB creates a bottleneck that no amount of frontend optimization can fully overcome.</li>
-                        <li>&lt;strong&gt;Ignoring Database Performance:&lt;/strong&gt; A single slow, un-indexed database query can add seconds to your response time. Always analyze your query performance.</li>
-                        <li>&lt;strong&gt;Using Underpowered Hosting:&lt;/strong&gt; Expecting fast response times on a $3/month shared hosting plan with a heavy e-commerce site is unrealistic. Your hosting must match your site's resource needs.</li>
-                        <li>&lt;strong&gt;Neglecting Caching:&lt;/strong&gt; Failing to implement a caching strategy is the most common reason for high TTFB on content-management systems like WordPress, Joomla, or Drupal.</li>
+                        <li><strong>Focusing Only on Frontend:</strong> Many developers focus on optimizing JavaScript and images (which is important) but ignore a slow backend. A high TTFB creates a bottleneck that no amount of frontend optimization can fully overcome.</li>
+                        <li><strong>Ignoring Database Performance:</strong> A single slow, un-indexed database query can add seconds to your response time. Always analyze your query performance.</li>
+                        <li><strong>Using Underpowered Hosting:</strong> Expecting fast response times on a $3/month shared hosting plan with a heavy e-commerce site is unrealistic. Your hosting must match your site's resource needs.</li>
+                        <li><strong>Neglecting Caching:</strong> Failing to implement a caching strategy is the most common reason for high TTFB on content-management systems like WordPress, Joomla, or Drupal.</li>
                     </ul>
                 </CardContent>
             </Card>
