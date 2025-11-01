@@ -115,6 +115,28 @@ const Page = () => {
                     </CardContent>
                 </Card>
 
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Web Development (CSS)</h3>
+                            <p className="text-sm text-muted-foreground">A front-end developer receives a design mockup from a designer. The mockup specifies the brand's primary color as `rgb(59, 130, 246)`. To use this in their CSS, the developer prefers the shorter hex format. They use the converter to instantly get `#3B82F6` and apply it in their stylesheet: `.btn-primary &#123; background-color: #3B82F6; &#125;`.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Graphic Design to Code</h3>
+                            <p className="text-sm text-muted-foreground">A graphic designer using a tool like Photoshop or Figma uses the color picker to find the perfect shade for a client's logo, which gives them a hex code: `#10B981`. They need to provide the RGB values for a different medium. They use the converter to find the equivalent `rgb(16, 185, 129)` for their documentation.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Data Visualization</h3>
+                            <p className="text-sm text-muted-foreground">A data scientist is creating charts in a Python library like Matplotlib or a JavaScript library like D3.js. The library requires colors to be specified as RGB tuples or an array of values from 0 to 1 (e.g., `(0.06, 0.72, 0.5)`). They start with a list of brand-approved hex codes, convert them to RGB (16, 185, 129), and then divide by 255 to get the required format for their charting library.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Setting up a Tailwind CSS Theme</h3>
+                            <p className="text-sm text-muted-foreground">A developer is configuring their `tailwind.config.js` file. They have the primary brand color in hex, `#8B5CF6`, but need to define it as HSL values for ShadCN UI. They first convert the hex to RGB (`139, 92, 246`) and then use an RGB-to-HSL converter to get the final values required for their theme configuration file, ensuring brand consistency.</p>
+                        </div>
+                    </div>
+                </section>
+
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
                         <CardHeader>
