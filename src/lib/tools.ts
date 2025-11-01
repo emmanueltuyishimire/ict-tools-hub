@@ -85,7 +85,6 @@ export const toolCategories: ToolCategory[] = [
     icon: Code2,
     tools: [
       { name: 'Code Formatter / Beautifier', slug: 'code-formatter', description: 'Format and beautify your code.' },
-      { name: 'JSON Formatter / Validator', slug: 'json-formatter', description: 'Format and validate JSON.' },
       { name: 'Regex Tester / Generator', slug: 'regex-tester', description: 'Test and generate regular expressions.' },
       { name: 'Base64 Encoder / Decoder', slug: 'base64-encoder-decoder', description: 'Encode or decode Base64 strings.' },
       { name: 'Hex ↔ RGB Color Converter', slug: 'color-converter', description: 'Convert between Hex and RGB colors.' },
