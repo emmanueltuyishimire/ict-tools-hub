@@ -33,6 +33,7 @@ import { SslExpiryChecker } from '@/app/tools/ssl-expiry-checker/ssl-expiry-chec
 import { UrlEncoderDecoder } from '@/app/tools/url-encoder-decoder/url-encoder-decoder';
 import { HtmlEntityEncoderDecoder } from '@/app/tools/html-entity-encoder-decoder/html-entity-encoder-decoder';
 import { SslChecker } from '@/app/tools/ssl-checker/ssl-checker';
+import { CodeMinifier } from '@/app/tools/code-minifier/code-minifier';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -73,6 +74,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'url-encoder-decoder': UrlEncoderDecoder,
     'html-entity-encoder-decoder': HtmlEntityEncoderDecoder,
     'ssl-checker': SslChecker,
+    'code-minifier': CodeMinifier,
 };
 
 
