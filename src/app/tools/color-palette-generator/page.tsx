@@ -117,7 +117,7 @@ const ColorPaletteGeneratorPage = () => {
                   <p>This tool works with color models to generate palettes. Here's a quick breakdown:</p>
                   <ul className="list-disc pl-5">
                      <li><strong>RGB (Red, Green, Blue):</strong> An additive model where colors are created by mixing red, green, and blue light. It's the standard for digital screens.</li>
-                     <li><strong>Hex (Hexadecimal):</strong> A compact, six-digit representation of an RGB color, commonly used in web development (e.g., `#3B82F6`).</li>
+                     <li><strong>Hex (Hexadecimal):</strong> A compact, six-digit representation of an RGB color, commonly used in web development (e.g., `#3B82F6`). You can convert between these formats with our <Link href="/tools/color-converter" className="text-primary hover:underline">Hex ↔ RGB Converter</Link>.</li>
                      <li><strong>HSL (Hue, Saturation, Lightness):</strong> A more intuitive model for humans. <strong>Hue</strong> is the pure color (e.g., red, green, blue), <strong>Saturation</strong> is the intensity or vividness of the color, and <strong>Lightness</strong> is how light or dark it is. This tool uses HSL internally to easily calculate shades and tints.</li>
                   </ul>
               </section>
