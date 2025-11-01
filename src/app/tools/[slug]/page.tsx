@@ -49,6 +49,7 @@ import { CdnBandwidthEstimator } from '@/app/tools/cdn-bandwidth-estimator/cdn-b
 import { CodeFormatter } from '@/app/tools/code-formatter/code-formatter';
 import { HttpRequestSizeCalculator } from '@/app/tools/http-request-size-calculator/http-request-size-calculator';
 import { RegexTester } from '@/app/tools/regex-tester/regex-tester';
+import { Base64EncoderDecoder } from '@/app/tools/base64-encoder-decoder/base64-encoder-decoder';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -105,6 +106,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'code-formatter': CodeFormatter,
     'http-request-size-calculator': HttpRequestSizeCalculator,
     'regex-tester': RegexTester,
+    'base64-encoder-decoder': Base64EncoderDecoder,
 };
 
 
@@ -160,4 +162,3 @@ function ComingSoon() {
     
 
     
-
