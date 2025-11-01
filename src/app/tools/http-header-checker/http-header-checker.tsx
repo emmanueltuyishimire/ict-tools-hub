@@ -51,15 +51,17 @@ const howToSchema = {
     totalTime: 'PT1M',
 };
 
-const headerExamples = [
-    { header: 'Content-Type', description: 'Indicates the media type of the resource (e.g., `text/html`, `application/json`).', icon: FileIcon },
-    { header: 'Cache-Control', description: 'Directives for caching in both requests and responses (e.g., `max-age=3600`, `no-cache`).', icon: RefreshCw },
-    { header: 'Location', description: 'Used in 3xx redirects to specify the new URL the client should go to.', icon: Globe },
-    { header: 'Server', description: 'Information about the software used by the origin server.', icon: Code },
-    { header: 'Set-Cookie', description: 'Sends a cookie from the server to the user agent.', icon: Cookie },
-    { header: 'Strict-Transport-Security', description: '(HSTS) A security header that tells browsers to only interact with it using HTTPS.', icon: Key },
-    { header: 'Expires', description: 'The date/time after which the response is considered stale (an older way of caching).', icon: Calendar },
+const keyTerminologies = [
+    { term: 'HTTP', definition: 'Hypertext Transfer Protocol. The underlying protocol used by the World Wide Web for transferring data between clients and servers.' },
+    { term: 'Header Field', definition: 'A key-value pair of metadata sent in an HTTP request or response, such as `Content-Type: text/html`.' },
+    { term: 'Status Code', definition: 'A three-digit code in an HTTP response indicating the outcome of a request (e.g., `200` for success, `404` for not found).' },
+    { term: 'Request/Response', definition: 'The two halves of an HTTP transaction. A client sends a request to a server, and the server returns a response.' },
+    { term: 'User-Agent', definition: 'A request header that contains a string identifying the client software (e.g., browser, version, OS) making the request.' },
+    { term: 'Cache-Control', definition: 'A response header that provides directives for caching, such as how long a resource can be stored by the browser.' },
+    { term: 'CORS', definition: 'Cross-Origin Resource Sharing. A security mechanism controlled by headers (like `Access-Control-Allow-Origin`) that dictates whether a browser permits a web page to access resources from a different domain.' },
+    { term: 'Redirect', definition: 'A server response (with a 3xx status code) that instructs the client to go to a different URL. The new URL is specified in the `Location` header.' },
 ];
+
 
 export function HttpHeaderChecker() {
     const [state, formAction] = useActionState(checkHeaders, initialState);
@@ -163,6 +165,22 @@ export function HttpHeaderChecker() {
                 </Card>
             </section>
             
+            <section>
+                 <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                 <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                 </Card>
+            </section>
+            
             <Card className='bg-secondary/30 border-primary/20'>
                 <CardHeader>
                     <div className='flex items-center gap-2 text-primary'>
@@ -180,15 +198,55 @@ export function HttpHeaderChecker() {
                     <section>
                         <h3 className="font-bold text-xl">Key Headers and Their Meanings</h3>
                         <div className="space-y-4">
-                           {headerExamples.map(header => (
-                            <div key={header.header} className="flex items-start gap-4">
-                                <header.icon className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
+                           <div className="flex items-start gap-4">
+                                <FileIcon className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
                                 <div>
-                                    <strong className="font-code">{header.header}</strong>
-                                    <p className="mt-0 text-sm text-muted-foreground">{header.description}</p>
+                                    <strong className="font-code">Content-Type</strong>
+                                    <p className="mt-0 text-sm text-muted-foreground">Indicates the media type of the resource (e.g., `text/html`, `application/json`).</p>
                                 </div>
                             </div>
-                           ))}
+                            <div className="flex items-start gap-4">
+                                <RefreshCw className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
+                                <div>
+                                    <strong className="font-code">Cache-Control</strong>
+                                    <p className="mt-0 text-sm text-muted-foreground">Directives for caching in both requests and responses (e.g., `max-age=3600`, `no-cache`).</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-4">
+                                <Globe className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
+                                <div>
+                                    <strong className="font-code">Location</strong>
+                                    <p className="mt-0 text-sm text-muted-foreground">Used in 3xx redirects to specify the new URL the client should go to.</p>
+                                </div>
+                            </div>
+                             <div className="flex items-start gap-4">
+                                <Code className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
+                                <div>
+                                    <strong className="font-code">Server</strong>
+                                    <p className="mt-0 text-sm text-muted-foreground">Information about the software used by the origin server.</p>
+                                </div>
+                            </div>
+                             <div className="flex items-start gap-4">
+                                <Cookie className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
+                                <div>
+                                    <strong className="font-code">Set-Cookie</strong>
+                                    <p className="mt-0 text-sm text-muted-foreground">Sends a cookie from the server to the user agent.</p>
+                                </div>
+                            </div>
+                             <div className="flex items-start gap-4">
+                                <Key className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
+                                <div>
+                                    <strong className="font-code">Strict-Transport-Security</strong>
+                                    <p className="mt-0 text-sm text-muted-foreground">(HSTS) A security header that tells browsers to only interact with it using HTTPS.</p>
+                                </div>
+                            </div>
+                             <div className="flex items-start gap-4">
+                                <Calendar className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
+                                <div>
+                                    <strong className="font-code">Expires</strong>
+                                    <p className="mt-0 text-sm text-muted-foreground">The date/time after which the response is considered stale (an older way of caching).</p>
+                                </div>
+                            </div>
                         </div>
                     </section>
                      <section>
@@ -231,7 +289,7 @@ export function HttpHeaderChecker() {
                     </CardContent>
                 </Card>
             </div>
-
+            
             <section>
                 <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
                 <div className="grid md:grid-cols-2 gap-6">
