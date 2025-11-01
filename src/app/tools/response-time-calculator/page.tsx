@@ -6,6 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const metadata = {
     title: 'Website Response Time Calculator | TTFB Checker | ICT Toolbench',
@@ -19,7 +20,7 @@ export const metadata = {
 
 const faqData = [
     { question: "What is server response time?", answer: "Server response time, often measured as Time to First Byte (TTFB), is the time it takes for a web server to receive a request from a browser and send back the very first byte of the response. It's a key indicator of your server's health and performance." },
-    { question: "Why is a fast response time important?", answer: "A fast response time is crucial for both user experience and SEO. A slow server response leads to a slow page load, which frustrates users and increases bounce rates. Google and other search engines use site speed as a ranking factor, so a lower response time can lead to better search rankings." },
+    { question: "Why is a fast response time important?", answer: "A fast response time is crucial for both user experience and SEO. A slow server response leads to a slow page load, which frustrates users and increases bounce rates. Google and other search engines use page speed as a ranking factor, so a lower response time can lead to better search rankings." },
     { question: "What is a good TTFB?", answer: "According to Google, a good TTFB is under 200 milliseconds (ms). A TTFB between 200ms and 600ms needs improvement, and anything over 600ms is considered slow. This tool helps you measure where you stand." },
     { question: "What's the difference between TTFB and page load time?", answer: "TTFB is only the first part of the page load process. It measures the server's responsiveness. Total page load time includes TTFB plus the time it takes to download all the page's resources (HTML, CSS, JavaScript, images) and for the browser to render the page. A low TTFB is a necessary foundation for a fast page load." },
     { question: "What factors can cause a slow server response time?", answer: "Many factors can contribute to a slow TTFB, including slow database queries, inefficient server-side code (e.g., in PHP, Python, or Node.js), insufficient server resources (CPU, RAM), network congestion, and a lack of server-side caching." },
@@ -54,7 +55,11 @@ const keyTerminologies = [
 export default function ResponseTimeCalculatorPage() {
   return (
     <>
-      <StructuredData data={faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type':- 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))} />
+      <StructuredData data={{
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
+      }} />
       <StructuredData data={howToSchema} />
       <PageHeader
         title="Website Response Time Calculator"
@@ -114,7 +119,7 @@ export default function ResponseTimeCalculatorPage() {
                   <p>TTFB is composed of three main components:</p>
                   <ol>
                     <li><strong>HTTP Request Time:</strong> The time it takes for the user's request to travel from their browser to your server across the network.</li>
-                    <li><strong>Server Processing Time:</strong> The time your server takes to process the request, run any necessary scripts (like PHP or Python), query databases, and generate the HTML document.</li>
+                    <li><strong>Server Processing Time:</strong> The time your server takes to process the request, run any necessary scripts (like PHP or Python), query databases, and generate the HTML document. This is often the biggest contributor to a slow TTFB.</li>
                     <li><strong>HTTP Response Time:</strong> The time it takes for the first byte of the server's response to travel back across the network to the user's browser.</li>
                   </ol>
                   <p>This tool combines these to give you a clear picture of your server's performance.</p>
@@ -127,7 +132,7 @@ export default function ResponseTimeCalculatorPage() {
                      <li><strong>Inefficient Application Code:</strong> Poorly written code, heavy computational tasks, or a bloated CMS (like a WordPress site with too many slow plugins) can significantly increase processing time.</li>
                      <li><strong>Server Overload:</strong> If your server doesn't have enough CPU or RAM to handle the traffic volume, requests will be queued and processed slowly.</li>
                      <li><strong>Lack of Caching:</strong> Without caching, your server has to dynamically generate every page for every visitor from scratch. Caching stores a pre-built version of the page, allowing the server to respond almost instantly.</li>
-                     <li><strong>Network Latency:</strong> High physical distance between the user and the server increases the travel time for requests and responses. Our <Link href="/tools/latency-estimator" className="text-primary hover:underline">Latency Estimator</Link> can help quantify this.</li>
+                     <li><strong>Network Latency:</strong> High physical distance between the user and the server increases the travel time for requests and responses. Our <a href="/tools/latency-estimator" className="text-primary hover:underline">Latency Estimator</a> can help quantify this.</li>
                   </ul>
               </section>
                <section>
@@ -152,7 +157,7 @@ export default function ResponseTimeCalculatorPage() {
                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                         <li><strong>Test Dynamic vs. Static Content:</strong> Test both a dynamic page (like a blog post) and a static asset (like a CSS file or image). If the static asset has a low TTFB but the dynamic page is high, the bottleneck is almost certainly in your application code or database, not the server itself.</li>
                         <li><strong>Check Different Geographic Locations:</strong> Use a VPN or online testing services to check your response time from different parts of the world. This will show you how much network latency is impacting your TTFB and whether you would benefit from a CDN.</li>
-                        <li><strong>Look at Response Headers:</strong> After running a test, use our <Link href="/tools/http-header-checker" className="text-primary hover:underline">HTTP Header Checker</Link>. Look for headers like `Cache-Control` or `X-Cache`. A header like `X-Cache: HIT` indicates the page was served from a cache, which should result in a very low TTFB.</li>
+                        <li><strong>Look at Response Headers:</strong> After running a test, use our <a href="/tools/http-header-checker" className="text-primary hover:underline">HTTP Header Checker</a>. Look for headers like `Cache-Control` or `X-Cache`. A header like `X-Cache: HIT` indicates the page was served from a cache, which should result in a very low TTFB.</li>
                     </ul>
                 </CardContent>
             </Card>
@@ -180,7 +185,7 @@ export default function ResponseTimeCalculatorPage() {
                           <AccordionItem value={`item-${index}`} key={index}>
                               <AccordionTrigger>{item.question}</AccordionTrigger>
                               <AccordionContent>
-                                <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} />
                               </AccordionContent>
                           </AccordionItem>
                       ))}
