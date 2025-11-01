@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Label } from '@/components/ui/label';
 import { Copy, Check, Fingerprint, AlertTriangle } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Input } from '@/components/ui/input';
 
 // Hasher function using Web Crypto API
 async function digestMessage(message: string, algorithm: 'MD5' | 'SHA-1' | 'SHA-256' | 'SHA-512') {
