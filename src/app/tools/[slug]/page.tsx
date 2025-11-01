@@ -39,7 +39,7 @@ import { SitemapGenerator } from '@/app/tools/sitemap-generator/sitemap-generato
 import { ResponseTimeCalculator } from '@/app/tools/response-time-calculator/response-time-calculator';
 import { DomainExpiryCountdown } from '@/app/tools/domain-expiry-countdown/domain-expiry-countdown';
 import { UptimeCalculator } from '@/app/tools/uptime-calculator/uptime-calculator';
-import DnsLookupPage from './dns-lookup/page';
+import { DnsLookupTool } from '@/app/tools/dns-lookup/dns-lookup-tool';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -86,7 +86,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'response-time-calculator': ResponseTimeCalculator,
     'domain-expiry-countdown': DomainExpiryCountdown,
     'uptime-calculator': UptimeCalculator,
-    'dns-lookup': DnsLookupPage,
+    'dns-lookup': DnsLookupTool,
 };
 
 
