@@ -130,6 +130,57 @@ export default function DomainExpiryCountdownPage() {
           </CardContent>
       </Card>
       
+        <div className="grid md:grid-cols-2 gap-8">
+            <Card>
+                <CardHeader>
+                    <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Enable Auto-Renew:</strong> The single best way to prevent accidental expiration. Log in to your domain registrar and ensure auto-renew is enabled for all your critical domains.</li>
+                        <li><strong>Set Multiple Calendar Reminders:</strong> For domains you manage manually, set calendar alerts for 90, 60, and 30 days before expiration. This gives you plenty of time to handle any billing or administrative issues.</li>
+                        <li><strong>Lock Your Domain:</strong> In your registrar's control panel, ensure your domain is "locked." This prevents unauthorized transfers or changes to your domain's settings.</li>
+                        <li><strong>Check Competitor Domains:</strong> This tool can be used for competitive intelligence. Check the expiration dates of competitor domains to see who their registrar is and how long they've held the domain.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader>
+                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Using an Old Email Address:</strong> Ensure the contact email on your WHOIS record is one you check regularly. All expiration notices will go to this address.</li>
+                        <li><strong>Expired Credit Card:</strong> A common reason auto-renewals fail is an expired credit card on file with the registrar. Update your payment methods regularly.</li>
+                        <li><strong>Ignoring Non-`.com` Domains:</strong> Businesses often have multiple TLDs (.net, .org, .co). Don't forget to monitor all of them, not just the primary `.com` domain.</li>
+                        <li><strong>Assuming Your Web Host is Your Registrar:</strong> Your website hosting company and your domain registrar can be two different companies. Know who you pay for your domain name versus who you pay for your hosting server.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+        </div>
+
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Preventing a Business Outage</h3>
+                    <p className="text-sm text-muted-foreground">A small business owner uses the tool to check their company's domain and discovers it expires in 25 days. They realize their credit card on file with the registrar had expired, causing auto-renewal to fail. They update their payment info immediately, preventing a costly outage of their website and email services.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Domain Investing (Domaining)</h3>
+                    <p className="text-sm text-muted-foreground">A domain investor is interested in acquiring a high-value domain name. They use the countdown tool to monitor its expiration date. By knowing exactly when it expires, they can prepare to 'backorder' the domain, placing a reservation to try and register it the moment it becomes available to the public if the current owner fails to renew it.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Client Management for a Web Agency</h3>
+                    <p className="text-sm text-muted-foreground">A web design agency uses this tool as part of their client onboarding process. They check all of a new client's domains to identify expiration dates and registrars. This allows them to provide proactive advice, help the client consolidate their domains, and ensure no critical assets expire during a website redesign project.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Cybersecurity Investigation</h3>
+                    <p className="text-sm text-muted-foreground">A cybersecurity analyst receives a phishing email from a suspicious domain. They use this tool to perform a WHOIS lookup. They find the domain was just registered two days ago from a registrar known for lax policies. This information, combined with other factors, strongly indicates the domain is malicious and can be added to a blocklist.</p>
+                </div>
+            </div>
+        </section>
+      
         <section>
             <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
             <Card>
@@ -150,4 +201,3 @@ export default function DomainExpiryCountdownPage() {
   );
 }
 
-    
