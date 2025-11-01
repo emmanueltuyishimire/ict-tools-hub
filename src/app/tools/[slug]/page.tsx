@@ -46,6 +46,7 @@ import { WebpageLoadTimeEstimator } from '@/app/tools/load-time-estimator/load-t
 import { CacheExpirationCalculator } from '@/app/tools/cache-expiry-calculator/cache-expiry-calculator';
 import { CompressionEstimator } from '@/app/tools/compression-estimator/compression-estimator';
 import { CdnBandwidthEstimator } from '@/app/tools/cdn-bandwidth-estimator/cdn-bandwidth-estimator';
+import { HttpRequestSizeCalculator } from '@/app/tools/http-request-size-calculator/http-request-size-calculator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -99,6 +100,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'cache-expiry-calculator': CacheExpirationCalculator,
     'compression-estimator': CompressionEstimator,
     'cdn-bandwidth-estimator': CdnBandwidthEstimator,
+    'http-request-size-calculator': HttpRequestSizeCalculator,
 };
 
 
