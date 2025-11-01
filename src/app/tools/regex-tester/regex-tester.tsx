@@ -10,12 +10,12 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { AlertCircle, Code } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 interface HighlightedTextProps {
     text: string;
-    pattern: RegExp;
+    pattern: RegExp | null;
 }
 
 const HighlightedText: React.FC<HighlightedTextProps> = ({ text, pattern }) => {
@@ -24,25 +24,24 @@ const HighlightedText: React.FC<HighlightedTextProps> = ({ text, pattern }) => {
     }
 
     try {
-        // Ensure the pattern has the global flag to find all matches
         const globalPattern = new RegExp(pattern.source, pattern.flags.includes('g') ? pattern.flags : pattern.flags + 'g');
         const parts = text.split(globalPattern);
         const matches = text.match(globalPattern);
 
         return (
-            <>
+            <p className="whitespace-pre-wrap font-code text-sm">
                 {parts.map((part, index) => (
-                    <span key={index}>
+                    <React.Fragment key={index}>
                         {part}
                         {matches && index < matches.length && (
-                            <span className="bg-primary/20 text-primary-foreground rounded-sm">{matches[index]}</span>
+                            <span className="bg-primary/20 rounded-sm">{matches[index]}</span>
                         )}
-                    </span>
+                    </React.Fragment>
                 ))}
-            </>
+            </p>
         );
     } catch (error) {
-        return <>{text}</>;
+        return <p className="whitespace-pre-wrap font-code text-sm">{text}</p>;
     }
 };
 
@@ -69,22 +68,24 @@ export function RegexTester() {
     const matches = useMemo(() => {
         if (!regex || !testString) return [];
         
-        // Reset regex from previous exec calls if global flag is set
-        const localRegex = new RegExp(regex.source, regex.flags);
-
-        const allMatches: (RegExpExecArray | null)[] = [];
-        if (localRegex.global) {
-            let match;
-            while ((match = localRegex.exec(testString)) !== null) {
-                allMatches.push(match);
+        try {
+            const localRegex = new RegExp(regex.source, regex.flags);
+            const allMatches: (RegExpExecArray)[] = [];
+            if (localRegex.global) {
+                let match;
+                while ((match = localRegex.exec(testString)) !== null) {
+                    allMatches.push(match);
+                }
+            } else {
+                const match = localRegex.exec(testString);
+                if (match) {
+                    allMatches.push(match);
+                }
             }
-        } else {
-            const match = localRegex.exec(testString);
-            if (match) {
-                allMatches.push(match);
-            }
+            return allMatches;
+        } catch (e) {
+            return [];
         }
-        return allMatches;
     }, [regex, testString]);
 
     const handleFlagChange = (flag: 'g' | 'i' | 'm') => {
@@ -141,8 +142,8 @@ export function RegexTester() {
                         placeholder="Text to test your regex against..."
                         className="font-code h-40"
                     />
-                    <div className="p-4 border rounded-md min-h-[8rem] bg-muted/50 text-sm whitespace-pre-wrap font-code">
-                        <HighlightedText text={testString} pattern={regex!} />
+                    <div className="p-4 border rounded-md min-h-[8rem] bg-muted/50">
+                        <HighlightedText text={testString} pattern={regex} />
                     </div>
                 </div>
 
@@ -154,29 +155,27 @@ export function RegexTester() {
                         <CardContent>
                              <div className="space-y-4">
                                 {matches.map((match, index) => (
-                                    match && (
-                                        <div key={index} className="border p-4 rounded-lg bg-background">
-                                            <h4 className="font-semibold flex items-center justify-between">
-                                                <span>Match {index + 1}</span>
-                                                <span className="text-xs font-normal text-muted-foreground">index: {match.index}</span>
-                                            </h4>
-                                            <div className="mt-2">
-                                                 <Badge variant="secondary" className="font-code">{match[0]}</Badge>
-                                            </div>
-                                            {match.length > 1 && (
-                                                <div className="mt-4">
-                                                    <p className="text-sm font-medium mb-2">Capture Groups:</p>
-                                                    <ul className="space-y-1 list-disc pl-5">
-                                                        {match.slice(1).map((group, groupIndex) => (
-                                                            <li key={groupIndex} className="text-sm">
-                                                                <span className="font-code bg-secondary px-2 py-1 rounded">{group}</span>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
-                                            )}
+                                    <div key={index} className="border p-4 rounded-lg bg-background">
+                                        <h4 className="font-semibold flex items-center justify-between">
+                                            <span>Match {index + 1}</span>
+                                            <span className="text-xs font-normal text-muted-foreground">index: {match.index}</span>
+                                        </h4>
+                                        <div className="mt-2">
+                                            <Badge variant="secondary" className="font-code text-base p-2">{match[0]}</Badge>
                                         </div>
-                                    )
+                                        {match.length > 1 && (
+                                            <div className="mt-4">
+                                                <p className="text-sm font-medium mb-2">Capture Groups:</p>
+                                                <ul className="space-y-2 list-decimal list-inside">
+                                                    {match.slice(1).map((group, groupIndex) => (
+                                                        <li key={groupIndex} className="text-sm">
+                                                            <span className="font-code bg-muted px-2 py-1 rounded">{group}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </div>
                                 ))}
                             </div>
                         </CardContent>
