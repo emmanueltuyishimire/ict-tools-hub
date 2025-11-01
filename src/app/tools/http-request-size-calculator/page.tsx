@@ -54,15 +54,22 @@ const keyTerminologies = [
 ];
 
 export default function HttpRequestSizeCalculatorPage() {
-  const faqSchemaData = {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
-  };
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer.replace(/<[^>]*>?/gm, '')
+            }
+        }))
+    };
 
-  return (
+    return (
     <>
-      <StructuredData data={faqSchemaData} />
+      <StructuredData data={faqSchema} />
       <StructuredData data={howToSchema} />
       <PageHeader
         title="HTTP Request Size Calculator"
