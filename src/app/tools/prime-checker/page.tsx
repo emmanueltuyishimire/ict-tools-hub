@@ -101,15 +101,15 @@ const PrimeCheckerPage = () => {
               <section>
                   <h3 className="font-bold text-xl">What is a Prime Number?</h3>
                   <p>
-                    A prime number is a whole number greater than 1 that cannot be formed by multiplying two smaller whole numbers. In other words, its only divisors are 1 and itself. The first few prime numbers are 2, 3, 5, 7, 11, 13, 17, and 19. The number 2 is the only even prime number. Any whole number greater than 1 that is not prime is called a **composite number**. For example, 10 is a composite number because it can be factored as 2 × 5.
+                    A prime number is a whole number greater than 1 that cannot be formed by multiplying two smaller whole numbers. In other words, its only divisors are 1 and itself. The first few prime numbers are 2, 3, 5, 7, 11, 13, 17, and 19. The number 2 is the only even prime number. Any whole number greater than 1 that is not prime is called a <strong>composite number</strong>. For example, 10 is a composite number because it can be factored as 2 × 5.
                   </p>
                   <p>
-                    Prime numbers are the "atoms" of the number system. The **Fundamental Theorem of Arithmetic** states that every integer greater than 1 is either a prime number itself or can be represented as a unique product of prime numbers (its prime factorization). This uniqueness is what makes primes so foundational.
+                    Prime numbers are the "atoms" of the number system. The <strong>Fundamental Theorem of Arithmetic</strong> states that every integer greater than 1 is either a prime number itself or can be represented as a unique product of prime numbers (its prime factorization). This uniqueness is what makes primes so foundational.
                   </p>
               </section>
               <section>
                   <h3 className="font-bold text-xl">How Primality Testing Works</h3>
-                  <p>How does a computer determine if a number is prime? The simplest method is **trial division**.</p>
+                  <p>How does a computer determine if a number is prime? The simplest method is <strong>trial division</strong>.</p>
                   <ol className="list-decimal pl-5">
                      <li>Take the input number, `n`.</li>
                      <li>Check if `n` is less than or equal to 1. If so, it's not prime.</li>
@@ -125,7 +125,7 @@ const PrimeCheckerPage = () => {
               <section>
                   <h3 className="font-bold text-xl">The Unbreakable Code: Primes in Cryptography</h3>
                   <p>
-                    The most important real-world application of prime numbers is in public-key cryptography, the system that secures almost all digital communication. The security of algorithms like **RSA** relies on the fact that it is easy to multiply two very large prime numbers together, but it is computationally infeasible to do the reverse—that is, to take the resulting product and find its original prime factors.
+                    The most important real-world application of prime numbers is in public-key cryptography, the system that secures almost all digital communication. The security of algorithms like <strong>RSA</strong> relies on the fact that it is easy to multiply two very large prime numbers together, but it is computationally infeasible to do the reverse—that is, to take the resulting product and find its original prime factors.
                   </p>
                   <p>
                     When you connect to a secure website via HTTPS, your browser and the server use this principle to exchange encryption keys. The website's public key is derived from the product of two massive, secret prime numbers. You can use this public key to encrypt data, but only the server, which knows the original prime factors, can decrypt it. The difficulty of factoring this large number is what keeps your data safe.
@@ -207,7 +207,7 @@ const PrimeCheckerPage = () => {
               <Link href="/tools/number-converter" className="block">
                   <Card className="hover:border-primary transition-colors h-full">
                       <CardHeader>
-                          <CardTitle className="text-base flex items-center justify-between">Binary, Decimal, & Hex Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardTitle className="text-base flex items-center justify-between">Binary, Decimal, &amp; Hex Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
                           <CardDescription className="text-xs">Understand the number systems that computers use to perform calculations.</CardDescription>
                       </CardHeader>
                   </Card>
@@ -220,5 +220,3 @@ const PrimeCheckerPage = () => {
 };
 
 export default PrimeCheckerPage;
-
-    
