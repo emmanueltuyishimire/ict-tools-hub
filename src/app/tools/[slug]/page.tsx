@@ -59,6 +59,7 @@ import { CaesarCipher } from '@/app/tools/caesar-cipher/caesar-cipher';
 import { PrimeChecker } from '@/app/tools/prime-checker/prime-checker';
 import { PrimeNumberGeneratorTool } from '@/app/tools/prime-number-generator/prime-number-generator';
 import { FibonacciGeneratorTool } from '@/app/tools/fibonacci-generator/fibonacci-generator';
+import { FactorialCalculator } from '@/app/tools/factorial-calculator/factorial-calculator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -125,6 +126,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'prime-checker': PrimeChecker,
     'prime-number-generator': PrimeNumberGeneratorTool,
     'fibonacci-generator': FibonacciGeneratorTool,
+    'factorial-calculator': FactorialCalculator,
 };
 
 
@@ -176,3 +178,5 @@ function ComingSoon() {
       </Card>
     )
 }
+
+    

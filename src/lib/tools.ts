@@ -97,7 +97,8 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Caesar Cipher Encoder / Decoder', slug: 'caesar-cipher', description: 'Encode or decode using Caesar cipher.' },
       { name: 'Time Complexity Estimator', slug: 'big-o-calculator', description: 'Understand and visualize Big O notation.' },
       { name: 'Prime Number Checker', slug: 'prime-checker', description: 'Check if a number is prime.' },
-      { name: 'Prime Number Generator', slug: 'prime-number-generator', description: 'Generate prime numbers.' },
+      { name: 'Prime Number Generator', slug: 'prime-number-generator', description: 'Generate a list of prime numbers.' },
+      { name: 'Fibonacci Sequence Generator', slug: 'fibonacci-generator', description: 'Generate the Fibonacci sequence.' },
       { name: 'Factorial Calculator', slug: 'factorial-calculator', description: 'Calculate the factorial of a number.' },
       { name: 'Algorithm Step Simulator', slug: 'algorithm-simulator', description: 'Simulate steps of simple algorithms.' },
       { name: 'Random String Generator', slug: 'random-string-generator', description: 'Generate a random string.' },
@@ -106,7 +107,6 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Variable Name Validator', slug: 'variable-name-validator', description: 'Validate variable names.' },
       { name: 'Function / Formula Tester', slug: 'function-tester', description: 'Test a function or formula.' },
       { name: 'Unicode / ASCII Converter', slug: 'unicode-ascii-converter', description: 'Convert between Unicode and ASCII.' },
-      { name: 'Fibonacci Sequence Generator', slug: 'fibonacci-generator', description: 'Generate Fibonacci sequence.' },
     ],
   },
   {
@@ -281,3 +281,5 @@ export const mainNavLinks = [
         description: 'Generate and debug code with AI.'
     }
 ]
+
+    
