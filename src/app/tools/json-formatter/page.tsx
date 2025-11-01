@@ -122,8 +122,8 @@ export default function JsonFormatterPage() {
                     JSON is built on two universal data structures:
                   </p>
                   <ul className="list-disc pl-5">
-                     <li><strong>A collection of key/value pairs:</strong> In most programming languages, this is realized as an object, record, struct, dictionary, hash table, or associative array. In JSON, it's called an **Object** and is enclosed in curly braces `{}`.</li>
-                     <li><strong>An ordered list of values:</strong> In most languages, this is realized as an array, vector, list, or sequence. In JSON, it's called an **Array** and is enclosed in square brackets `[]`.</li>
+                     <li><strong>A collection of key/value pairs:</strong> In most programming languages, this is realized as an object, record, struct, dictionary, hash table, or associative array. In JSON, it's called an <strong>Object</strong> and is enclosed in curly braces `{}`.</li>
+                     <li><strong>An ordered list of values:</strong> In most languages, this is realized as an array, vector, list, or sequence. In JSON, it's called an <strong>Array</strong> and is enclosed in square brackets `[]`.</li>
                   </ul>
               </section>
               <section>
@@ -216,5 +216,3 @@ export default function JsonFormatterPage() {
     </>
   );
 }
-
-    
