@@ -58,7 +58,7 @@ const keyTerminologies = [
 
 export default function SitemapGeneratorPage() {
   return (
-    <div className="max-w-4xl mx-auto space-y-12">
+    <>
       <StructuredData data={faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))} />
       <StructuredData data={howToSchema} />
       <PageHeader
@@ -66,9 +66,10 @@ export default function SitemapGeneratorPage() {
         description="Create a simple, static XML sitemap for your website. This tool helps you build a clean sitemap file to guide search engines in crawling and indexing your content."
       />
       
-      <SitemapGenerator />
+      <div className="max-w-4xl mx-auto space-y-12">
+        <SitemapGenerator />
 
-      <section>
+        <section>
           <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
           <Card className="prose prose-sm max-w-none text-foreground p-6">
               <p>This generator simplifies the creation of a static `sitemap.xml` file, an essential component for good technical SEO.</p>
@@ -87,9 +88,9 @@ export default function SitemapGeneratorPage() {
                   <li><strong>Upload and Submit:</strong> Upload this file to the root directory of your website. Finally, submit the path to your sitemap (e.g., `https://yourdomain.com/sitemap.xml`) in Google Search Console and Bing Webmaster Tools.</li>
               </ol>
           </Card>
-      </section>
+        </section>
 
-      <section>
+        <section>
            <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
            <Card>
               <CardContent className="p-6">
@@ -136,7 +137,7 @@ export default function SitemapGeneratorPage() {
                <section>
                   <h3 className="font-bold text-xl">Sitemaps and `robots.txt`: A Powerful Duo</h3>
                     <p>
-                        A sitemap and a `robots.txt` file are two sides of the same coin. The `robots.txt` file tells crawlers where they are **not allowed** to go. The sitemap tells them where they **should** go.
+                        A sitemap and a `robots.txt` file are two sides of the same coin. The `robots.txt` file tells crawlers where they are <strong>not allowed</strong> to go. The sitemap tells them where they <strong>should</strong> go.
                     </p>
                     <p>
                         It is a universal best practice to include a reference to your sitemap in your `robots.txt` file. This is done with a simple directive:
@@ -161,7 +162,7 @@ export default function SitemapGeneratorPage() {
                       <li><strong>Be Consistent:</strong> Ensure all URLs listed in your sitemap use the same protocol (http vs. https) and domain version (www vs. non-www) as your canonical URLs.</li>
                       <li><strong>Keep it Clean:</strong> Regularly audit your sitemap to remove any URLs that result in a 404 error or redirect. A clean sitemap reflects a well-maintained website.</li>
                       <li><strong>Sitemap Index for Large Sites:</strong> If you have more than 50,000 URLs, create a sitemap index file. This is a sitemap that points to other sitemaps, allowing you to manage your URLs in logical groups (e.g., a separate sitemap for products, blog posts, etc.).</li>
-                      <li><strong>Use `lastmod` for Freshness:</strong> The `<lastmod>` tag is the most useful piece of optional data. For frequently updated pages, keeping this date accurate can encourage search engines to crawl them more often.</li>
+                      <li><strong>Use `lastmod` for Freshness:</strong> The `&lt;lastmod&gt;` tag is the most useful piece of optional data. For frequently updated pages, keeping this date accurate can encourage search engines to crawl them more often.</li>
                   </ul>
               </CardContent>
           </Card>
@@ -227,6 +228,7 @@ export default function SitemapGeneratorPage() {
               </Link>
           </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }
