@@ -49,9 +49,22 @@ const keyTerminologies = [
 ];
 
 export default function CaesarCipherPage() {
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer.replace(/<[^>]*>?/gm, ''),
+      },
+    })),
+  };
+
   return (
     <>
-      <StructuredData data={{'@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))}} />
+      <StructuredData data={faqSchema} />
       <StructuredData data={howToSchema} />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
@@ -175,7 +188,7 @@ export default function CaesarCipherPage() {
               <CardContent className="p-6">
                   <Accordion type="single" collapsible className="w-full">
                       {faqData.map((item, index) => (
-                          <AccordionItem value={\`item-\${index}\`} key={index}>
+                          <AccordionItem value={`item-${index}`} key={index}>
                               <AccordionTrigger>{item.question}</AccordionTrigger>
                               <AccordionContent><div dangerouslySetInnerHTML={{ __html: item.answer }} /></AccordionContent>
                           </AccordionItem>
