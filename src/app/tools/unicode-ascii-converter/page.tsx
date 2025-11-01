@@ -142,6 +142,28 @@ const UnicodeAsciiConverterPage = () => {
           </CardContent>
         </Card>
 
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Debugging Garbled Text</h3>
+                    <p className="text-sm text-muted-foreground">A developer retrieves data from a legacy database and finds that a user's name, "José", is displayed as "JosÃ©". By pasting the garbled text into the converter, they can see the code points for "Ã" and "©", helping them diagnose that UTF-8 multi-byte characters are being incorrectly interpreted as single-byte characters in a different encoding.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Stripping Emojis from Text</h3>
+                    <p className="text-sm text-muted-foreground">An application needs to process user input but cannot handle emojis. A developer can convert the input string to code points, filter out any code points in the emoji range (e.g., U+1F600 to U+1F64F), and then convert the remaining code points back to a clean string, effectively stripping all emojis.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Working with Escaped Sequences</h3>
+                    <p className="text-sm text-muted-foreground">When working with JSON or some programming languages, Unicode characters are often "escaped", like `\u20AC` for the Euro symbol (€). A developer can use this tool to quickly convert `U+20AC` to the actual character to verify they are using the correct code.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Understanding URL Encoding</h3>
+                    <p className="text-sm text-muted-foreground">A user sees a URL like `.../search?q=caf%C3%A9`. To understand it, they can use our <Link href="/tools/url-encoder-decoder" className="text-primary hover:underline">URL Decoder</Link> to get `café`. Then, pasting `é` into this converter shows its code point is U+00E9, which is represented in UTF-8 by the bytes `C3` and `A9`, explaining the `%C3%A9` sequence.</p>
+                </div>
+            </div>
+        </section>
+
         <div className="grid md:grid-cols-2 gap-8">
             <Card>
                 <CardHeader>
@@ -151,7 +173,7 @@ const UnicodeAsciiConverterPage = () => {
                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                         <li><strong>Find Hidden Characters:</strong> Sometimes text copied from a PDF or website contains invisible characters (like zero-width spaces) that can break code. Pasting the text into this tool will reveal the code points for all characters, visible or not.</li>
                         <li><strong>Debugging Encoding Issues:</strong> If text from a database or API is showing up as garbled symbols (like "â€" instead of a dash), it's often an encoding mismatch. Use this tool to inspect the code points of the garbled text to help diagnose the issue.</li>
-                        <li><strong>HTML Entities:</strong> The Unicode code point can be used to create an HTML entity. For example, the Euro symbol (€) is U+20AC. You can represent it in HTML as `&amp;#x20AC;` (hexadecimal) or `&amp;#8364;` (decimal). Explore this with our <a href='/tools/html-entity-encoder-decoder' className='text-primary hover:underline'>HTML Entity Encoder</a>.</li>
+                        <li><strong>HTML Entities:</strong> The Unicode code point can be used to create an HTML entity. For example, the Euro symbol (€) is U+20AC. You can represent it in HTML as `&amp;#x20AC;` (hexadecimal) or `&amp;#8364;` (decimal). Explore this with our <Link href='/tools/html-entity-encoder-decoder' className='text-primary hover:underline'>HTML Entity Encoder</Link>.</li>
                     </ul>
                 </CardContent>
             </Card>
