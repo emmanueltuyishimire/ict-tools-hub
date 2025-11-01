@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useActionState, useRef, useEffect } from 'react';
+import { useActionState, useRef, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -30,6 +30,8 @@ function SubmitButton() {
 export function DnsLookupTool() {
     const [state, formAction] = useActionState(lookupDns, initialState);
     const resultRef = useRef<HTMLDivElement>(null);
+    const [domain, setDomain] = useState('example.com');
+    const [recordType, setRecordType] = useState('A');
 
     useEffect(() => {
         if(state && resultRef.current) {
@@ -100,12 +102,13 @@ export function DnsLookupTool() {
                                     placeholder="example.com"
                                     className="font-code"
                                     aria-label="Domain to lookup"
-                                    defaultValue="google.com"
+                                    value={domain}
+                                    onChange={(e) => setDomain(e.target.value)}
                                 />
                             </div>
                             <div className="sm:col-span-2 space-y-2">
                                  <Label htmlFor="record-type" className="sr-only">Record Type</Label>
-                                 <Select name="recordType" defaultValue="A">
+                                 <Select name="recordType" value={recordType} onValueChange={setRecordType}>
                                     <SelectTrigger id="record-type"><SelectValue/></SelectTrigger>
                                     <SelectContent>
                                         {recordTypes.map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}
