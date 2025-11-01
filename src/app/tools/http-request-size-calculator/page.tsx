@@ -74,7 +74,7 @@ export default function HttpRequestSizeCalculatorPage() {
           <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
           <Card className="prose prose-sm max-w-none text-foreground p-6">
               <p>
-                This tool provides a close approximation of the size of an HTTP request message before it's sent over the network.
+                This estimator helps you forecast your monthly bandwidth consumption, a key factor in web hosting and CDN costs.
               </p>
               <ol>
                   <li>
