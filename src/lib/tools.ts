@@ -89,6 +89,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Regex Tester / Generator', slug: 'regex-tester', description: 'Test and generate regular expressions.' },
       { name: 'Base64 Encoder / Decoder', slug: 'base64-encoder-decoder', description: 'Encode or decode Base64 strings.' },
       { name: 'Hex ↔ RGB Color Converter', slug: 'color-converter', description: 'Convert between Hex and RGB colors.' },
+      { name: 'Color Palette Generator', slug: 'color-palette-generator', description: 'Generate harmonious color palettes.' },
       { name: 'Binary ↔ Decimal ↔ Hex Converter', slug: 'number-converter', description: 'Convert between number bases.' },
       { name: 'MD5 / SHA Hash Generator', slug: 'hash-generator-md5-sha', description: 'Generate MD5 and SHA hashes.' },
       { name: 'ROT13 Encoder / Decoder', slug: 'rot13-encoder-decoder', description: 'Encode or decode using ROT13 cipher.' },
@@ -240,7 +241,6 @@ export const toolCategories: ToolCategory[] = [
     name: 'ICT Daily Utilities',
     icon: Wrench,
     tools: [
-      { name: 'Color Palette Generator', slug: 'color-palette-generator', description: 'Generate harmonious color palettes.' },
       { name: 'QR Code Generator', slug: 'qr-code-generator', description: 'Generate QR codes for text or URLs.' },
       { name: 'ASCII ↔ Unicode Converter', slug: 'ascii-unicode-converter', description: 'Convert between ASCII and Unicode.' },
       { name: 'Markdown Previewer / Converter', slug: 'markdown-previewer', description: 'Preview and convert Markdown.' },
@@ -314,3 +314,4 @@ export const mainNavLinks = [
     
 
     
+
