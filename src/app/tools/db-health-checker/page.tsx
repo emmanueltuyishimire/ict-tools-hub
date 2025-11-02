@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -150,6 +151,52 @@ const DatabaseHealthCheckerPage = () => {
                         </div>
                     </div>
                 </section>
+                
+                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
+                     <Card>
+                        <CardContent className="p-6">
+                            <ul className="space-y-4">
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Automate Monitoring and Alerting</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            Don't perform health checks manually. Set up a monitoring dashboard using tools like Prometheus, Grafana, or your cloud provider's service (AWS CloudWatch, Google Cloud Monitoring). Configure automated alerts for key thresholds (e.g., CPU > 80%, Disk > 85%, high query latency) to be notified of problems before your users are impacted.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Use the `EXPLAIN` Command</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            The `EXPLAIN` (or `EXPLAIN ANALYZE`) command is your best friend for query optimization. Prepend it to any slow SQL query to get the database's execution plan. This will tell you definitively if it's using an efficient index scan or a slow full table scan. You can experiment with this concept using our <Link href="/tools/query-time-estimator" className="text-primary hover:underline">Query Execution Time Estimator</Link>.
+                                        </p>
+                                    </div>
+                                </li>
+                                 <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Regularly Test Your Backups</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                           A backup you haven't tested is not a real backup. It's an assumption. On a regular schedule (e.g., quarterly), you must practice restoring a backup to a separate staging environment to ensure your backup files are valid and your entire recovery procedure works as expected.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Separate Your Workloads</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            If you have long-running, intensive analytical queries (e.g., for business intelligence dashboards), they can lock tables and consume resources, slowing down your main application. The best practice is to set up a dedicated read replica for these analytical workloads, completely isolating them from your production traffic. This is a core part of building a scalable architecture with <Link href="/tools/replication-estimator" className="text-primary hover:underline">Replication</Link>.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </CardContent>
+                     </Card>
+                </section>
 
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
@@ -160,7 +207,7 @@ const DatabaseHealthCheckerPage = () => {
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                                 <li><strong>Automate Monitoring:</strong> Don't perform health checks manually. Set up a monitoring dashboard (using tools like Prometheus, Grafana, or your cloud provider's service) with automated alerts for key thresholds (e.g., CPU > 80%, Disk > 85%).</li>
                                 <li><strong>Use `EXPLAIN`:</strong> The `EXPLAIN` (or `EXPLAIN ANALYZE`) command is your best friend. Prepend it to any slow SQL query to get the database's execution plan, which will tell you exactly if and how it's using indexes.</li>
-                                <li><strong>Regularly Test Backups:</strong> A backup you haven't tested is not a backup. Regularly practice restoring a backup to a staging environment to ensure your recovery process works as expected.</li>
+                                <li><strong>Regularly Test Backups:</strong> A backup you haven't tested is not a backup. Regularly practice restoring a backup to a staging environment to ensure your backup files are valid and your recovery process works as expected.</li>
                                 <li><strong>Separate Your Workloads:</strong> If possible, use a dedicated read replica for long-running, intensive analytical queries to prevent them from impacting the performance of your primary application database.</li>
                             </ul>
                         </CardContent>
