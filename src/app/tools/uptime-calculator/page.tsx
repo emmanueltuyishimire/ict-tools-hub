@@ -40,7 +40,7 @@ const howToSchema = {
         { '@type': 'HowToStep', name: 'Enter Your Data', text: 'In the first mode, enter the amount of time the service was down. In the second mode, enter the uptime percentage from your SLA.' },
         { '@type': 'HowToStep', name: 'Review the Results', text: 'The tool will instantly show you the calculated uptime percentage or the equivalent downtime over a day, week, month, and year.' },
     ],
-    totalTime: 'PT1M'
+    totalTime: 'PT1M',
 };
 
 const keyTerminologies = [

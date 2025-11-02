@@ -166,9 +166,9 @@ export const toolCategories: ToolCategory[] = [
     tools: [
       { name: 'SQL Query Tester', slug: 'sql-query-tester', description: 'Test basic SQL queries.' },
       { name: 'Database Row / Storage Estimator', slug: 'db-storage-estimator', description: 'Estimate database storage.' },
-      { name: 'Uptime / Availability Calculator', slug: 'db-uptime-calculator', description: 'Calculate database uptime.' },
-      { name: 'Backup Schedule Calculator', slug: 'db-backup-scheduler', description: 'Calculate backup schedules.' },
-      { name: 'Data Retention Period Calculator', slug: 'data-retention-calculator-db', description: 'Calculate data retention periods.' },
+      { name: 'Uptime / Availability Calculator', slug: 'uptime-calculator', description: 'Calculate system uptime and availability.' },
+      { name: 'Backup Schedule Calculator', slug: 'backup-scheduler', description: 'Calculate backup schedules.' },
+      { name: 'Data Retention Period Calculator', slug: 'data-retention-calculator', description: 'Calculate data retention periods.' },
       { name: 'Replication / Sharding Estimator', slug: 'replication-estimator', description: 'Estimate replication needs.' },
       { name: 'User Quota Calculator', slug: 'user-quota-calculator', description: 'Calculate user quotas.' },
       { name: 'Transaction / TPS Calculator', slug: 'tps-calculator', description: 'Calculate transactions per second.' },
