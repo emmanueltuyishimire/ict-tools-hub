@@ -14,6 +14,14 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { CodeBlock } from '@/components/code-block';
 import { Progress } from '@/components/ui/progress';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 const quizQuestions = [
     {
@@ -209,6 +217,47 @@ const BigOComplexityQuizPage = () => {
                 </section>
                 
                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 1: Finding a User in a List (Linear Time - O(n))</CardTitle>
+                                <CardDescription>A common task is searching for an item in a collection. If the collection is unsorted, the approach is straightforward but has clear performance implications.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                               <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> You have an array of 1,000 user objects, and you need to find the user with a specific email address.</p>
+                               <div className="prose prose-sm max-w-none">
+                                   <ol>
+                                       <li>The algorithm starts at the first user in the array.</li>
+                                       <li>It checks if that user's email matches the one you're looking for.</li>
+                                       <li>If it doesn't match, it moves to the next user and repeats the process.</li>
+                                   </ol>
+                               </div>
+                               <p className="text-sm text-muted-foreground"><strong>Worst Case:</strong> The user you are looking for is the very last one in the array, or not in the array at all. The algorithm must check all 1,000 users. If the list grows to 1,000,000 users, the worst-case scenario requires 1,000,000 checks. The number of operations grows in a straight, linear line with the number of users, `n`. This is <strong>O(n)</strong> complexity.</p>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 2: Finding Duplicates (Quadratic Time - O(n²))</CardTitle>
+                                <CardDescription>A naive approach to finding if any duplicates exist in a list involves comparing every item to every other item.</CardDescription>
+                            </CardHeader>
+                             <CardContent className="space-y-4">
+                               <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> You have a list of 100 product IDs and you need to verify if there are any duplicates.</p>
+                               <div className="prose prose-sm max-w-none">
+                                   <ol>
+                                       <li>The algorithm takes the first product ID.</li>
+                                       <li>It then loops through the entire list again, comparing the first ID to every other ID.</li>
+                                       <li>Once finished, it takes the second product ID and repeats the process, comparing it to every other ID.</li>
+                                       <li>This continues until every item has been compared to every other item.</li>
+                                   </ol>
+                               </div>
+                               <p className="text-sm text-muted-foreground"><strong>Worst Case:</strong> For a list of 100 items, this results in 100 × 100 = 10,000 comparisons. If the list grows to 1,000 items, it becomes 1,000,000 comparisons. The number of operations grows with the square of the input size, `n`. This is <strong>O(n²)</strong> complexity and becomes very slow, very quickly. A more efficient approach would use a hash set, which has an average time complexity of O(n).</p>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
+                
+                <section>
                    <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
                    <Card>
                       <CardContent className="p-6">
@@ -242,6 +291,31 @@ const BigOComplexityQuizPage = () => {
                                 When analyzing an algorithm, Big O simplifies the complexity by ignoring constant factors and lower-order terms. For example, an algorithm that takes <strong>3n² + 10n + 5</strong> operations is simply described as <strong>O(n²)</strong>. This is because as the input size `n` becomes very large, the `n²` term will overwhelmingly dominate the runtime, making the other terms insignificant. Understanding this helps in making informed decisions.
                             </p>
                         </section>
+                         <section>
+                            <h3>The Hierarchy of Common Complexities</h3>
+                            <p>Understanding the common Big O complexities is essential for any developer. They form a hierarchy from best to worst performance at scale:</p>
+                             <div className="overflow-x-auto my-4">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead>Notation</TableHead>
+                                            <TableHead>Name</TableHead>
+                                            <TableHead>Typical Example</TableHead>
+                                            <TableHead>Performance</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        <TableRow><TableCell className='font-code'>O(1)</TableCell><TableCell>Constant</TableCell><TableCell>Accessing an array index</TableCell><TableCell className='text-green-600 font-semibold'>Excellent</TableCell></TableRow>
+                                        <TableRow><TableCell className='font-code'>O(log n)</TableCell><TableCell>Logarithmic</TableCell><TableCell>Binary search</TableCell><TableCell className='text-green-600 font-semibold'>Excellent</TableCell></TableRow>
+                                        <TableRow><TableCell className='font-code'>O(n)</TableCell><TableCell>Linear</TableCell><TableCell>Looping through a list</TableCell><TableCell className='text-lime-600 font-semibold'>Good</TableCell></TableRow>
+                                        <TableRow><TableCell className='font-code'>O(n log n)</TableCell><TableCell>Linearithmic</TableCell><TableCell>Efficient sorting (Merge Sort)</TableCell><TableCell className='text-yellow-600 font-semibold'>Fair</TableCell></TableRow>
+                                        <TableRow><TableCell className='font-code'>O(n²)</TableCell><TableCell>Quadratic</TableCell><TableCell>Nested loops (Bubble Sort)</TableCell><TableCell className='text-orange-600 font-semibold'>Poor</TableCell></TableRow>
+                                        <TableRow><TableCell className='font-code'>O(2ⁿ)</TableCell><TableCell>Exponential</TableCell><TableCell>Recursive Fibonacci</TableCell><TableCell className='text-red-600 font-semibold'>Terrible</TableCell></TableRow>
+                                        <TableRow><TableCell className='font-code'>O(n!)</TableCell><TableCell>Factorial</TableCell><TableCell>Traveling Salesman (brute force)</TableCell><TableCell className='text-red-800 font-semibold'>Unusable</TableCell></TableRow>
+                                    </TableBody>
+                                </Table>
+                             </div>
+                        </section>
                         <section>
                             <h3>Why This Quiz Matters</h3>
                              <p>
@@ -250,6 +324,43 @@ const BigOComplexityQuizPage = () => {
                         </section>
                     </CardContent>
                 </Card>
+
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
+                     <Card>
+                        <CardContent className="p-6">
+                            <ul className="space-y-4">
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Identify the Core Loop</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            When analyzing your own code, the first step is to find the main loops. A single loop that goes through the input once is likely O(n). A pair of nested loops is often O(n²).
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Divide and Conquer is Logarithmic</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            If your algorithm works by repeatedly dividing the problem set in half (like binary search), it's likely to have an O(log n) component. You can see this in action with our <Link href="/tools/algorithm-simulator" className="text-primary hover:underline">Algorithm Step Simulator</Link>.
+                                        </p>
+                                    </div>
+                                </li>
+                                 <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Use the Right Data Structure</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                           A hash map (or `Object`/`Map` in JavaScript) provides, on average, O(1) constant time for insertions, deletions, and lookups. Using a hash map to check for duplicates is an O(n) operation, which is vastly better than the O(n²) nested loop approach.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </CardContent>
+                     </Card>
+                </section>
                 
                <section>
                   <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
@@ -296,3 +407,4 @@ const BigOComplexityQuizPage = () => {
 };
 
 export default BigOComplexityQuizPage;
+
