@@ -94,6 +94,57 @@ const CloudMigrationPlanningGuidePage = () => {
                     </Card>
                 </section>
 
+                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 1: Lift-and-Shift a Legacy Web App</CardTitle>
+                                <CardDescription>A company needs to quickly move a legacy internal application out of a closing data center.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> A monolithic PHP application runs on a single on-premises server with 4 vCPUs, 16 GB RAM, and a 500 GB disk. It serves 100 internal users and has low data transfer.</p>
+                                <div className="prose prose-sm max-w-none">
+                                    <ol>
+                                        <li><strong>Discovery:</strong> The resources are known: 4 CPU, 16 GB RAM, 500 GB storage. The application is self-contained.</li>
+                                        <li><strong>Strategy:</strong> The team chooses **Rehost (Lift-and-Shift)** for maximum speed and minimum code changes.</li>
+                                        <li><strong>Cloud Resource Estimation:</strong>
+                                            <ul>
+                                                <li>They use the <Link href="/tools/cloud-instance-cost-calculator" className="text-primary hover:underline">Cloud Instance Cost Calculator</Link> to compare the monthly cost of a 4-CPU, 16-GB RAM general-purpose VM on AWS, Azure, and Google Cloud.</li>
+                                                <li>They use the <Link href="/tools/cloud-storage-cost-estimator" className="text-primary hover:underline">Cloud Storage Cost Estimator</Link> to calculate the cost of a 500 GB SSD block storage volume.</li>
+                                                <li>Egress is negligible, so they skip the <Link href="/tools/bandwidth-cost-calculator" className="text-primary hover:underline">Bandwidth Cost Calculator</Link>.</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Result:</strong> They have a clear monthly cost estimate for running the application in the cloud, which they can compare to their current data center costs.</li>
+                                    </ol>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 2: Replatforming a Database</CardTitle>
+                                <CardDescription>A growing company wants to reduce the administrative burden of managing its own database server.</CardDescription>
+                            </CardHeader>
+                             <CardContent className="space-y-4">
+                               <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> A company runs a busy e-commerce site with a self-managed MySQL database on a dedicated server. The IT team spends hours each week on patching, backups, and maintenance.</p>
+                               <div className="prose prose-sm max-w-none">
+                                   <ol>
+                                       <li><strong>Discovery:</strong> The current database server is consistently using 80% of its 8 vCPUs and 32 GB of RAM. The database size is 250 GB.</li>
+                                       <li><strong>Strategy:</strong> They choose **Replatform ("Lift-and-Tinker")**. They will keep their web application servers as-is but migrate the database from their VM to a managed service like Amazon RDS or Azure Database for MySQL.</li>
+                                       <li><strong>Cloud Resource Estimation:</strong>
+                                            <ul>
+                                                <li>Instead of a full VM, they look up the pricing for a managed database instance with similar CPU and RAM specs.</li>
+                                                <li>They use the <Link href="/tools/backup-storage-calculator" className="text-primary hover:underline">Backup Storage Calculator</Link> to estimate the cost of the automated backups included with the managed service.</li>
+                                            </ul>
+                                       </li>
+                                       <li><strong>Result:</strong> While the direct monthly cost of the managed database might be slightly higher than a raw VM, they can present a TCO argument to management showing significant savings in labor costs for patching, backups, and maintenance, justifying the move.</li>
+                                   </ol>
+                               </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
+
                 <section>
                    <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
                    <Card>
