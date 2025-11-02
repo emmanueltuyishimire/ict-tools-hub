@@ -17,7 +17,7 @@ export const howToSchema = {
     description: 'A step-by-step guide to comparing the monthly costs of RAM and SSD storage.',
     step: [
         { '@type': 'HowToStep', name: 'Enter Dataset Size', text: 'Input the size of the data you need to store in Gigabytes (GB).' },
-        { '@type': 'HowToStep', name: 'Adjust Pricing (Optional)', text: 'The tool is pre-filled with average cloud provider costs. You can change the '$ per GB/month' values to match your specific provider.' },
+        { '@type': 'HowToStep', name: 'Adjust Pricing (Optional)', text: "The tool is pre-filled with average cloud provider costs. You can change the '$ per GB/month' values to match your specific provider." },
         { '@type': 'HowToStep', name: 'Analyze Comparison', text: 'The tool instantly calculates and displays the total monthly cost for storing the data in RAM versus on an SSD, highlighting the cost multiplier and the difference in access speed.' },
     ],
     totalTime: 'PT1M'
