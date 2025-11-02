@@ -81,6 +81,9 @@ import { VmRequirementEstimator } from '@/app/tools/vm-requirement-estimator/vm-
 import { DiskUsageEstimator } from '@/app/tools/disk-usage-estimator/disk-usage-estimator';
 import { CloudInstanceCostCalculator } from '@/app/tools/cloud-instance-cost-calculator/cloud-instance-cost-calculator';
 import { StorageMemoryCostAnalyzer } from '@/app/tools/storage-memory-cost-analyzer/storage-memory-cost-analyzer';
+import { DataRetentionCalculator } from '@/app/tools/data-retention-calculator/data-retention-calculator';
+import { BackupScheduler } from '@/app/tools/backup-scheduler/backup-scheduler';
+import { StorageGrowthEstimator } from '@/app/tools/storage-growth-estimator/storage-growth-estimator';
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const tool = allTools.find((t) => t.slug === params.slug);
@@ -179,6 +182,9 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'disk-usage-estimator': DiskUsageEstimator,
   'cloud-instance-cost-calculator': CloudInstanceCostCalculator,
   'storage-memory-cost-analyzer': StorageMemoryCostAnalyzer,
+  'data-retention-calculator': DataRetentionCalculator,
+  'backup-scheduler': BackupScheduler,
+  'storage-growth-estimator': StorageGrowthEstimator,
 };
 
 export default function ToolPage({ params }: { params: { slug: string } }) {
