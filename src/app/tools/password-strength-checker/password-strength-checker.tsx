@@ -31,7 +31,7 @@ const checkPasswordStrength = (password: string) => {
     if (checks.specialChar) score++;
 
     // Bonus for mixing character types
-    const typesCount = Object.values(checks).filter(v => v === true).length - (checks.length && checks.length ? 1 : 0);
+    const typesCount = Object.values(checks).filter(v => v === true).length - (checks.length && password.length > 0 ? 1 : 0);
     if (typesCount >= 3) score++;
     if (typesCount >= 4) score++;
     
@@ -56,19 +56,19 @@ const calculateEntropy = (password: string) => {
 };
 
 const getStrengthLabel = (score: number, length: number) => {
-    if (length === 0) return { label: 'Start Typing...', color: 'bg-muted' };
-    if (score < 3) return { label: 'Very Weak', color: 'bg-red-500' };
-    if (score < 4) return { label: 'Weak', color: 'bg-orange-500' };
-    if (score < 6) return { label: 'Medium', color: 'bg-yellow-500' };
-    if (score < 8) return { label: 'Strong', color: 'bg-green-500' };
-    return { label: 'Very Strong', color: 'bg-emerald-600' };
+    if (length === 0) return { label: 'Start Typing...', color: 'bg-muted', textColor: 'text-muted-foreground' };
+    if (score < 3) return { label: 'Very Weak', color: 'bg-red-500', textColor: 'text-red-500' };
+    if (score < 4) return { label: 'Weak', color: 'bg-orange-500', textColor: 'text-orange-500' };
+    if (score < 6) return { label: 'Medium', color: 'bg-yellow-500', textColor: 'text-yellow-500' };
+    if (score < 8) return { label: 'Strong', color: 'bg-green-500', textColor: 'text-green-500' };
+    return { label: 'Very Strong', color: 'bg-emerald-600', textColor: 'text-emerald-600' };
 };
 
 // --- Component ---
 export function PasswordStrengthChecker() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [analysis, setAnalysis] = useState({ score: 0, checks: {}, entropy: 0 });
+    const [analysis, setAnalysis] = useState({ score: 0, checks: { length: false, uppercase: false, lowercase: false, number: false, specialChar: false }, entropy: 0 });
 
     useEffect(() => {
         const scoreChecks = checkPasswordStrength(password);
@@ -76,7 +76,7 @@ export function PasswordStrengthChecker() {
         setAnalysis({ ...scoreChecks, entropy: entropyValue });
     }, [password]);
 
-    const { label, color } = getStrengthLabel(analysis.score, password.length);
+    const { label, color, textColor } = getStrengthLabel(analysis.score, password.length);
     const strengthPercentage = password.length > 0 ? (analysis.score / 8) * 100 : 0;
     
     const checklistItems = [
@@ -122,7 +122,7 @@ export function PasswordStrengthChecker() {
                 
                 <div className='space-y-3'>
                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium">Strength: <strong className={cn(color.replace('bg-', 'text-'))}>{label}</strong></span>
+                        <span className="text-sm font-medium">Strength: <strong className={cn(textColor)}>{label}</strong></span>
                          <span className="text-sm font-medium">Entropy: <Link href="/tools/password-entropy-calculator" className="text-primary hover:underline font-bold font-code">{analysis.entropy} bits</Link></span>
                      </div>
                     <Progress value={strengthPercentage} className={cn('h-3 transition-all', color)} />
