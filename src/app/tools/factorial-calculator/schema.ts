@@ -1,4 +1,5 @@
 
+
 export const faqData = [
     { question: "What is a factorial?", answer: "The factorial of a non-negative integer 'n', denoted by n!, is the product of all positive integers less than or equal to n. For example, 5! = 5 × 4 × 3 × 2 × 1 = 120. By definition, 0! = 1." },
     { question: "Why is 0! equal to 1?", answer: "This is a mathematical convention. Defining 0! as 1 allows many mathematical formulas, especially in combinatorics and series expansions (like e^x), to work correctly. It represents an empty product, the number of ways to arrange zero objects, which is one way (doing nothing)." },
@@ -30,9 +31,7 @@ export const keyTerminologies = [
     { term: 'Factorial (n!)', definition: 'The product of all positive integers up to a given integer n. For example, 4! = 4 × 3 × 2 × 1 = 24.' },
     { term: 'Permutation', definition: 'An arrangement of objects in a specific order. The number of permutations of n distinct objects is n!.' },
     { term: 'Combinatorics', definition: 'An area of mathematics primarily concerned with counting, both as a means and an end in obtaining results, and certain properties of finite structures.' },
-    { term: 'Recursion', definition: 'A programming technique where a function calls itself to solve a problem. A factorial can be defined recursively as n! = n * (n-1)!.' },
+    { term: 'Recursion', definition: 'A programming technique where a function calls itself to solve a problem. A factorial can be defined recursively as n! = n × (n-1)!.' },
     { term: 'Iteration', definition: 'A programming technique that uses a loop to repeat a set of instructions. This is generally a more efficient way to calculate factorials than recursion.' },
     { term: 'BigInt', definition: 'A JavaScript data type that can represent whole numbers of arbitrary precision, necessary for handling the rapid growth of factorials.' },
 ];
-
-    
