@@ -221,4 +221,6 @@ const FileIntegrityCheckerPage = () => {
       </section>
       </div>
     </>
-  
+  );
+};
+export default FileIntegrityCheckerPage;
