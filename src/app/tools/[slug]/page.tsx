@@ -11,10 +11,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 
   return {
-    title: `${tool.name} | ICT Toolbench`,
+    title: `${tool.name} | ICT Tools Hub`,
     description: tool.description,
     openGraph: {
-      title: `${tool.name} | ICT Toolbench`,
+      title: `${tool.name} | ICT Tools Hub`,
       description: tool.description,
       url: `/tools/${tool.slug}`,
     },

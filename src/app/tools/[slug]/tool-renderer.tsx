@@ -93,6 +93,7 @@ import { SqlInjectionTester } from '@/app/tools/sql-injection-tester/sql-injecti
 import { DatabaseHealthChecker } from '@/app/tools/db-health-checker/db-health-checker';
 import BigOComplexityQuizPage from '@/app/tools/big-o-quiz/page';
 import { RecursionSimulator } from '@/app/tools/recursion-simulator/recursion-simulator';
+import { CodeForm } from '@/app/tools/code-generator/code-form';
 
 const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
   'ip-to-binary': IpToBinaryConverter,
@@ -183,6 +184,7 @@ const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
   'db-health-checker': DatabaseHealthChecker,
   'big-o-quiz': BigOComplexityQuizPage,
   'recursion-simulator': RecursionSimulator,
+  'code-generator': CodeForm,
 };
 
 export default function ToolRenderer({ slug }: { slug: string }) {

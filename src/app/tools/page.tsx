@@ -92,7 +92,6 @@ import { DatabaseHealthChecker } from '@/app/tools/db-health-checker/db-health-c
 import BigOComplexityQuizPage from '@/app/tools/big-o-quiz/page';
 import { RecursionSimulator } from '@/app/tools/recursion-simulator/recursion-simulator';
 
-
 export async function generateMetadata({ params: rawParams }: { params: { slug: string } }) {
   const params = await rawParams;
   const tool = allTools.find((t) => t.slug === params.slug);
@@ -104,10 +103,10 @@ export async function generateMetadata({ params: rawParams }: { params: { slug: 
   }
 
   return {
-    title: `${tool.name} | ICT Toolbench`,
+    title: `${tool.name} | ICT Tools Hub`,
     description: tool.description,
     openGraph: {
-        title: `${tool.name} | ICT Toolbench`,
+        title: `${tool.name} | ICT Tools Hub`,
         description: tool.description,
         url: `/tools/${tool.slug}`,
     }
@@ -206,8 +205,7 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'recursion-simulator': RecursionSimulator,
 };
 
-export default async function ToolPage({ params: rawParams }: { params: { slug: string } }) {
-  const params = await rawParams;
+export default function ToolPage({ params }: { params: { slug: string } }) {
   const tool = allTools.find((t) => t.slug === params.slug);
   const ToolComponent = toolComponentMap[params.slug];
 
