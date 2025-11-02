@@ -89,6 +89,33 @@ const SqlInjectionTesterPage = () => {
                     </Card>
                 </section>
                 
+                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Example</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Authentication Bypass with `' OR 1=1--`</CardTitle>
+                                <CardDescription>A classic and powerful SQLi payload that works on many vulnerable systems.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                               <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> You are testing a login form and want to see if you can log in without knowing any users' credentials.</p>
+                               <div className="prose prose-sm max-w-none">
+                                   <ol>
+                                       <li><strong>Examine the Vulnerable Code:</strong>
+                                            <p className="font-code bg-muted p-2 rounded-sm text-xs">SELECT * FROM users WHERE username = '<span className="text-primary">[username]</span>' AND password = '<span className="text-primary">[password]</span>'</p>
+                                       </li>
+                                       <li><strong>Craft the Payload:</strong> You inject the following string into the username field: <code className="font-code bg-muted p-1 rounded-sm">' OR 1=1--</code>. You leave the password field blank.</li>
+                                       <li><strong>Analyze the Executed Query:</strong> The server concatenates your input, resulting in the following query:
+                                            <p className="font-code bg-muted p-2 rounded-sm text-xs">SELECT * FROM users WHERE username = '' OR 1=1<span className="text-muted-foreground">--' AND password = ''</span></p>
+                                       </li>
+                                       <li><strong>Understand the Result:</strong> The database evaluates the `WHERE` clause. Since `1=1` is always true, the condition becomes true for every single row. The `--` comments out the rest of the line, so the password check is completely ignored. The query returns the first user in the database (usually the admin), and the application logs you in as that user.</li>
+                                   </ol>
+                               </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
+                
                 <section>
                    <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
                    <Card>
@@ -167,7 +194,7 @@ const query = \`SELECT * FROM users WHERE username = '\${username}' AND password
                     </CardContent>
                 </Card>
                 
-                <section>
+                 <section>
                     <h2 className="text-2xl font-bold mb-4">Practical Tips for Prevention</h2>
                      <Card>
                         <CardContent className="p-6">
@@ -203,6 +230,33 @@ const query = \`SELECT * FROM users WHERE username = '\${username}' AND password
                         </CardContent>
                      </Card>
                 </section>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                    <Card>
+                        <CardHeader>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips for Developers</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                            <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Validate Input on the Server:</strong> While not a replacement for parameterized queries, you should still validate user input on the server side to ensure it conforms to the expected format (e.g., an email looks like an email, a number is a number).</li>
+                                <li><strong>Use Linters and Static Analysis:</strong> Use security-focused static analysis tools (SAST) in your development pipeline. They can often automatically detect code patterns that are vulnerable to SQL injection.</li>
+                                <li><strong>Keep Frameworks Updated:</strong> Always keep your web frameworks, libraries, and ORMs up to date. They often include security patches for newly discovered vulnerabilities.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                             <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Trusting Any User Input:</strong> The #1 rule of security: never trust user input. Assume all data coming from a user (including form fields, URL parameters, and HTTP headers) is potentially malicious.</li>
+                                <li><strong>"Sanitizing" Instead of Parameterizing:</strong> Trying to write your own function to "sanitize" input by stripping out characters like single quotes. This is a fragile approach that is easily bypassed by experienced attackers using advanced encoding techniques.</li>
+                                <li><strong>Concatenating in "Safe" Queries:</strong> Believing that SQL injection only applies to login forms. Any query that includes user input—including `UPDATE` statements or even parts of a `LIMIT` clause—can be vulnerable if not parameterized.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                </div>
                 
                <section>
                   <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
@@ -212,14 +266,42 @@ const query = \`SELECT * FROM users WHERE username = '\${username}' AND password
                               {faqData.map((item, index) => (
                                   <AccordionItem value={`item-${index}`} key={index}>
                                       <AccordionTrigger>{item.question}</AccordionTrigger>
-                                      <AccordionContent>
-                                        <div dangerouslySetInnerHTML={{ __html: item.answer }} />
-                                      </AccordionContent>
+                                      <AccordionContent>{item.answer}</AccordionContent>
                                   </AccordionItem>
                               ))}
                           </Accordion>
                       </CardContent>
                   </Card>
+              </section>
+
+              <section>
+                  <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <Link href="/tools/sql-query-tester" className="block">
+                          <Card className="hover:border-primary transition-colors h-full">
+                              <CardHeader>
+                                  <CardTitle className="text-base flex items-center justify-between">SQL Query Tester<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">Practice writing the legitimate SQL queries that your application will use.</CardDescription>
+                              </CardHeader>
+                          </Card>
+                      </Link>
+                      <Link href="/tools/key-validator" className="block">
+                          <Card className="hover:border-primary transition-colors h-full">
+                              <CardHeader>
+                                  <CardTitle className="text-base flex items-center justify-between">Primary / Foreign Key Validator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">Understand the database structures that SQL injection attacks target.</CardDescription>
+                              </CardHeader>
+                          </Card>
+                      </Link>
+                      <Link href="/tools/url-encoder-decoder" className="block">
+                          <Card className="hover:border-primary transition-colors h-full">
+                              <CardHeader>
+                                  <CardTitle className="text-base flex items-center justify-between">URL Encoder / Decoder<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">Attackers often URL-encode their payloads to bypass simple security filters.</CardDescription>
+                              </CardHeader>
+                          </Card>
+                      </Link>
+                  </div>
               </section>
             </div>
         </>

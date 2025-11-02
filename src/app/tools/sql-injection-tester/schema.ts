@@ -7,6 +7,9 @@ export const faqData = [
     { question: "Is sanitizing user input enough to prevent SQLi?", answer: "No. While input sanitization (like stripping out single quotes) can help, it's a fragile, blacklist-based approach. Attackers are constantly finding new ways to bypass sanitization filters. Parameterized queries are the only truly reliable defense." },
     { question: "Does this tool connect to a real database?", answer: "No. It uses a simple JavaScript array of objects to simulate a 'users' table. All query 'execution' happens locally in your browser, making it completely safe to experiment with." },
     { question: "What are other types of SQL Injection attacks?", answer: "Beyond authentication bypass, attackers can use `UNION`-based attacks to extract data from other tables, `error-based` attacks to reveal database structure through error messages, and `blind` SQL injection to infer data bit by bit when the application doesn't return direct results." },
+    { question: "What is the root cause of SQL Injection?", answer: "The vulnerability occurs when an application builds its SQL queries by directly concatenating user-supplied input into the query string. This mixes data and code, allowing an attacker to provide input that the database interprets as part of the command itself." },
+    { question: "Can modern frameworks prevent SQLi automatically?", answer: "Most modern web frameworks and ORMs (Object-Relational Mappers) strongly encourage or enforce the use of parameterized queries, which makes them highly resistant to SQLi by default. However, it's still possible for a developer to bypass these protections and write vulnerable, raw SQL queries if they are not careful." },
+    { question: "How can I test my own application for SQLi vulnerabilities?", answer: "You can use automated Dynamic Application Security Testing (DAST) tools like OWASP ZAP or Burp Suite. These tools can scan your running application and automatically attempt to inject payloads into input fields to find vulnerabilities. Manual code review is also a critical step." }
 ];
 
 export const howToSchema = {
@@ -18,7 +21,7 @@ export const howToSchema = {
         { '@type': 'HowToStep', name: 'Step 1: Examine the Vulnerable Code', text: 'Observe the example code that shows how user input is being insecurely concatenated into a SQL query.' },
         { '@type': 'HowToStep', name: 'Step 2: Try a Normal Login', text: 'Enter a valid username and password from the sample data table to see how a legitimate login query is constructed.' },
         { '@type': 'HowToStep', name: 'Step 3: Attempt an Injection', text: "In the username field, enter an injection string like `admin'--`. Leave the password field blank." },
-        { '@type': 'HowToStep', name: 'Step 4: Analyze the Executed Query', text: 'Observe how your input has altered the SQL query, causing the password check to be ignored. The simulator will show a \'successful\' login, demonstrating the bypass.' },
+        { '@type': 'HowToStep', name: 'Step 4: Analyze the Executed Query', text: "Observe how your input has altered the SQL query, causing the password check to be ignored. The simulator will show a 'successful' login, demonstrating the bypass." },
     ],
     totalTime: 'PT2M'
 };
