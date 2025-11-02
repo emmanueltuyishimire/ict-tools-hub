@@ -50,9 +50,15 @@ const keyTerminologies = [
 ];
 
 export default function CompressionEstimatorPage() {
+  const faqSchemaData = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
+  };
+
   return (
     <>
-      <StructuredData data={faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))} />
+      <StructuredData data={faqSchemaData} />
       <StructuredData data={howToSchema} />
       <PageHeader
         title="Compression Savings Estimator"
@@ -96,7 +102,7 @@ export default function CompressionEstimatorPage() {
                   </dl>
               </CardContent>
            </Card>
-      </section>
+        </section>
 
       <Card className='bg-secondary/30 border-primary/20'>
           <CardHeader>
@@ -128,6 +134,20 @@ export default function CompressionEstimatorPage() {
               </section>
           </CardContent>
       </Card>
+
+      <section>
+          <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Web Performance Optimization</h3>
+                  <p className="text-sm text-muted-foreground">A developer runs a performance audit on their website and finds their main JavaScript bundle is 800 KB. By using this tool, they see that enabling Brotli compression could reduce it to around 160 KB. This 80% reduction in file size would dramatically speed up the site's load time, especially for mobile users.</p>
+              </div>
+              <div className="bg-card p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">Reducing Cloud Egress Costs</h3>
+                  <p className="text-sm text-muted-foreground">A company hosts a web app that serves large JSON API responses, leading to high data transfer (egress) costs. An engineer uses the estimator to show that by enabling Gzip compression on their API server, they could reduce their monthly bandwidth usage from 2 TB to approximately 500 GB, resulting in significant cost savings on their cloud bill.</p>
+              </div>
+          </div>
+      </section>
       
       <div className="grid md:grid-cols-2 gap-8">
           <Card>

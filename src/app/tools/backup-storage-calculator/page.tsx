@@ -149,6 +149,20 @@ const BackupStorageCalculatorPage = () => {
                         </section>
                     </CardContent>
                 </Card>
+
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Small Business Server Backup</h3>
+                            <p className="text-sm text-muted-foreground">A small business has a 500 GB file server with a daily change rate of about 5%. They want to keep 14 days of backups. Using the calculator, they compare a 'full' strategy (14 x 500GB = 7 TB) versus an 'incremental' strategy (500GB + 13 x 25GB ≈ 825 GB). The massive storage savings make the incremental strategy the clear choice.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Database Backup Planning</h3>
+                            <p className="text-sm text-muted-foreground">A database administrator manages a 2 TB database. Their policy is a full backup every Sunday and differential backups on weekdays. They use the calculator to model the differential needs for one week (1 full + 6 differentials), helping them provision enough storage on their backup server for the week's cycle.</p>
+                        </div>
+                    </div>
+                </section>
                 
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
