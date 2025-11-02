@@ -90,6 +90,7 @@ import { PrimaryForeignKeyValidator } from '@/app/tools/key-validator/key-valida
 import { NormalizationChecker } from '@/app/tools/normalization-checker/normalization-checker';
 import { DuplicateRowFinder } from '@/app/tools/duplicate-row-finder/duplicate-row-finder';
 import { ColumnTypeConverter } from '@/app/tools/column-type-converter/column-type-converter';
+import { SqlInjectionTester } from '@/app/tools/sql-injection-tester/sql-injection-tester';
 
 
 export async function generateMetadata({ params: rawParams }: { params: { slug: string } }) {
@@ -200,6 +201,7 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'duplicate-row-finder': DuplicateRowFinder,
   'table-size-estimator': DbStorageEstimator,
   'column-type-converter': ColumnTypeConverter,
+  'sql-injection-tester': SqlInjectionTester,
 };
 
 export default async function ToolPage({ params: rawParams }: { params: { slug: string } }) {
