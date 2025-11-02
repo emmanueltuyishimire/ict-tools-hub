@@ -63,9 +63,9 @@ const StorageRedundancyCalculatorPage = () => {
                 
                 <Alert>
                     <BookOpen className="h-4 w-4" />
-                    <AlertTitle>This is a Guide & Calculator</AlertTitle>
+                    <AlertTitle>Guide & Calculator</AlertTitle>
                     <AlertDescription>
-                       This page explains the concept of storage redundancy. The primary method for achieving this is with a <strong>RAID array</strong>. Use the calculator below to explore different RAID levels. For a more detailed guide on RAID itself, see our dedicated <Link href="/tools/raid-calculator" className="text-primary hover:underline">RAID Calculator</Link> page.
+                       This page explains the concept of storage redundancy. The primary method for achieving this is with a <strong>RAID array</strong>. Use the calculator below to explore different RAID levels and their trade-offs.
                     </AlertDescription>
                 </Alert>
 
@@ -124,7 +124,7 @@ const StorageRedundancyCalculatorPage = () => {
                                 As the RAID calculator above demonstrates, there is a direct trade-off between capacity, performance, and redundancy.
                             </p>
                             <ul className="list-disc pl-5">
-                               <li><strong>Maximum Performance (No Redundancy):</strong> RAID 0 (striping) offers the best performance but has zero fault tolerance. It is not redundant. The failure of one disk destroys all data.</li>
+                               <li><strong>Maximum Performance (No Redundancy):</strong> RAID 0 (striping) offers the best performance but has zero fault tolerance. It is not redundant. The failure of a single disk destroys all data.</li>
                                <li><strong>Maximum Redundancy (Low Efficiency):</strong> RAID 1 (mirroring) offers excellent redundancy, often able to survive all but the last disk failing. However, its storage efficiency is only 50%, making it expensive.</li>
                                <li><strong>Balanced Approach (Parity):</strong> RAID 5 and RAID 6 offer a compromise. They provide good storage efficiency while still protecting against one (RAID 5) or two (RAID 6) disk failures. They achieve this using a clever mathematical calculation called 'parity'.</li>
                             </ul>
@@ -140,11 +140,11 @@ const StorageRedundancyCalculatorPage = () => {
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Small Business File Server</h3>
-                            <p className="text-sm text-muted-foreground">A small business uses a 4-disk NAS (Network Attached Storage) device. To protect their critical company files, they use the calculator to evaluate a RAID 5 setup. It shows them they will have the capacity of 3 disks with the ability to survive one disk failure, providing a good balance of storage and protection for their budget.</p>
+                            <p className="text-sm text-muted-foreground">A small business is setting up a 4-disk NAS (Network Attached Storage) device to store its critical company files. They use the calculator to evaluate a RAID 5 setup. This shows them they will have the capacity of 3 disks with the ability to survive one disk failure, providing a good balance of storage and protection for their budget.</p>
                         </div>
                          <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Cloud VM Storage</h3>
-                            <p className="text-sm text-muted-foreground">A cloud engineer is provisioning storage for a critical application VM. Cloud providers often offer storage options with built-in redundancy (e.g., "Locally-Redundant Storage" or "Geo-Redundant Storage"). The engineer uses their understanding of redundancy to choose a geo-redundant option, which creates copies of the data in a separate data center, protecting against a region-wide outage.</p>
+                            <p className="text-sm text-muted-foreground">A cloud engineer is provisioning storage for a critical application VM. Cloud providers often offer storage options with built-in redundancy (e.g., "Locally-Redundant Storage" or "Geo-Redundant Storage"). The engineer uses their understanding of redundancy to choose a geo-redundant option, which creates copies of the data in a separate data center, protecting the application against a region-wide outage.</p>
                         </div>
                     </div>
                 </section>
