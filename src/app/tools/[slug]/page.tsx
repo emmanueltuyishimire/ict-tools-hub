@@ -79,6 +79,8 @@ import { BandwidthCostCalculator } from '@/app/tools/bandwidth-cost-calculator/b
 import { BackupStorageCalculator } from '@/app/tools/backup-storage-calculator/backup-storage-calculator';
 import { VmRequirementEstimator } from '@/app/tools/vm-requirement-estimator/vm-requirement-estimator';
 import { DiskUsageEstimator } from '@/app/tools/disk-usage-estimator/disk-usage-estimator';
+import { CloudInstanceCostCalculator } from '@/app/tools/cloud-instance-cost-calculator/cloud-instance-cost-calculator';
+import { StorageMemoryCostAnalyzer } from '@/app/tools/storage-memory-cost-analyzer/storage-memory-cost-analyzer';
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const tool = allTools.find((t) => t.slug === params.slug);
@@ -175,6 +177,8 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'data-compression-calculator': CompressionEstimator,
   'vm-requirement-estimator': VmRequirementEstimator,
   'disk-usage-estimator': DiskUsageEstimator,
+  'cloud-instance-cost-calculator': CloudInstanceCostCalculator,
+  'storage-memory-cost-analyzer': StorageMemoryCostAnalyzer,
 };
 
 export default function ToolPage({ params }: { params: { slug: string } }) {
