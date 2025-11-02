@@ -91,6 +91,7 @@ import { NormalizationChecker } from '@/app/tools/normalization-checker/normaliz
 import { DuplicateRowFinder } from '@/app/tools/duplicate-row-finder/duplicate-row-finder';
 import { ColumnTypeConverter } from '@/app/tools/column-type-converter/column-type-converter';
 import { SqlInjectionTester } from '@/app/tools/sql-injection-tester/sql-injection-tester';
+import { DatabaseHealthChecker } from '@/app/tools/db-health-checker/db-health-checker';
 
 
 export async function generateMetadata({ params: rawParams }: { params: { slug: string } }) {
@@ -202,6 +203,7 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'table-size-estimator': DbStorageEstimator,
   'column-type-converter': ColumnTypeConverter,
   'sql-injection-tester': SqlInjectionTester,
+  'db-health-checker': DatabaseHealthChecker,
 };
 
 export default async function ToolPage({ params: rawParams }: { params: { slug: string } }) {
