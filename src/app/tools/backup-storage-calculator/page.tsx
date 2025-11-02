@@ -5,7 +5,7 @@ import { BackupStorageCalculator } from './backup-storage-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
+import { BookOpen, AlertTriangle, Wand, ChevronRight, Lightbulb } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
