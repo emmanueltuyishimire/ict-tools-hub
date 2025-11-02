@@ -6,7 +6,7 @@ import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle, Lightbulb, Timer } from 'lucide-react';
+import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle, Lightbulb, Timer, Play, Pause, RefreshCw, RotateCcw } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Button } from '@/components/ui/button';
@@ -77,6 +77,20 @@ const allQuizQuestions = [
         explanation: 'This represents the Merge Sort algorithm. The list is recursively divided in half (which gives the log n part), and then each element is merged back together (which gives the n part). The resulting complexity is O(n log n), a hallmark of efficient sorting algorithms.',
         level: 'Intermediate' as QuestionLevel
     },
+    {
+        code: `function findFirstTwo(items) {\n  console.log(items[0]);\n  console.log(items[1]);\n}`,
+        options: ['O(1)', 'O(n)', 'O(2)'],
+        correctAnswer: 'O(1)',
+        explanation: 'This function performs a fixed number of operations (two lookups) regardless of the input array\'s size. Since the work does not grow with `n`, the complexity is constant, or O(1).',
+        level: 'Beginner' as QuestionLevel
+    },
+    {
+        code: `// Optimized duplicate check\nfunction hasDuplicatesOptimized(items) {\n  const seen = new Set();\n  for (const item of items) {\n    if (seen.has(item)) {\n      return true;\n    }\n    seen.add(item);\n  }\n  return false;\n}`,
+        options: ['O(n)', 'O(log n)', 'O(n²)'],
+        correctAnswer: 'O(n)',
+        explanation: 'This version iterates through the list once. Set lookups (`.has()`) and insertions (`.add()`) are, on average, O(1) operations. Therefore, the overall complexity is dominated by the single loop, making it O(n).',
+        level: 'Intermediate' as QuestionLevel
+    },
      {
         code: `// Naive recursive Fibonacci\nfunction fibonacci(n) {\n  if (n <= 1) return n;\n  return fibonacci(n-1) + fibonacci(n-2);\n}`,
         options: ['O(n log n)', 'O(2ⁿ)', 'O(n²)'],
@@ -105,8 +119,9 @@ function BigOQuiz() {
     const [userAnswers, setUserAnswers] = useState<(string | null)[]>([]);
     const [quizState, setQuizState] = useState<'not-started' | 'in-progress' | 'finished'>('not-started');
     const [quizQuestions, setQuizQuestions] = useState<(typeof allQuizQuestions[0])[]>([]);
-    const [settings, setSettings] = useState({ numQuestions: 5, timeLimit: 2, level: 'Beginner' as QuestionLevel });
+    const [settings, setSettings] = useState({ numQuestions: 5, timeLimit: '2', level: 'Beginner' as QuestionLevel });
     const [timeLeft, setTimeLeft] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     const score = useMemo(() => {
@@ -119,20 +134,21 @@ function BigOQuiz() {
     const finishQuiz = useCallback(() => {
         if (timerRef.current) clearInterval(timerRef.current);
         setQuizState('finished');
+        setIsPaused(false);
     }, []);
 
     useEffect(() => {
-        if (quizState === 'in-progress' && timeLeft > 0) {
+        if (quizState === 'in-progress' && !isPaused && timeLeft > 0) {
             timerRef.current = setInterval(() => {
                 setTimeLeft(prev => prev - 1);
             }, 1000);
-        } else if (timeLeft <= 0 && quizState === 'in-progress') {
+        } else if (timeLeft === 0 && quizState === 'in-progress' && settings.timeLimit !== 'None') {
             finishQuiz();
         }
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
         };
-    }, [quizState, timeLeft, finishQuiz]);
+    }, [quizState, timeLeft, finishQuiz, isPaused, settings.timeLimit]);
 
     const handleAnswer = (answer: string) => {
         const newAnswers = [...userAnswers];
@@ -149,20 +165,40 @@ function BigOQuiz() {
     };
     
     const handleStart = () => {
-        // Filter questions by level
         const filteredQuestions = allQuizQuestions.filter(q => q.level === settings.level);
-
-        // Shuffle and slice questions
         const shuffled = [...filteredQuestions].sort(() => 0.5 - Math.random());
         const selectedQuestions = shuffled.slice(0, settings.numQuestions);
         
         setQuizQuestions(selectedQuestions);
         setCurrentQuestionIndex(0);
         setUserAnswers(new Array(selectedQuestions.length).fill(null));
-        setTimeLeft(settings.timeLimit * 60);
+        if (settings.timeLimit !== 'None') {
+            setTimeLeft(parseInt(settings.timeLimit) * 60);
+        } else {
+            setTimeLeft(-1); // Use -1 to indicate no time limit
+        }
+        setIsPaused(false);
         setQuizState('in-progress');
     };
+
+    const handleReset = () => {
+        setCurrentQuestionIndex(0);
+        setUserAnswers(new Array(quizQuestions.length).fill(null));
+        if (settings.timeLimit !== 'None') {
+            setTimeLeft(parseInt(settings.timeLimit) * 60);
+        }
+        setIsPaused(false);
+    };
     
+    const getFeedback = () => {
+        const percentage = (score / quizQuestions.length) * 100;
+        if (percentage === 100) return { title: 'Perfect Score!', message: 'Flawless execution! You have a masterful understanding of time complexity.' };
+        if (percentage >= 80) return { title: 'Great Job!', message: 'Excellent performance! You clearly have a strong grasp of these concepts.' };
+        if (percentage >= 60) return { title: 'Good Effort!', message: 'Solid work! Keep practicing to solidify your understanding of the trickier concepts.' };
+        if (percentage >= 40) return { title: 'Keep Trying!', message: 'You\'re on the right track! Review the explanations for the questions you missed.' };
+        return { title: 'Practice Makes Perfect!', message: 'Don\'t be discouraged! Every expert was once a beginner. Review the concepts and try again.' };
+    };
+
     if (quizState === 'not-started') {
         const questionsInLevel = allQuizQuestions.filter(q => q.level === settings.level).length;
         const numQuestionsValue = Math.min(settings.numQuestions, questionsInLevel);
@@ -198,14 +234,16 @@ function BigOQuiz() {
                             />
                         </div>
                         <div className="space-y-2">
-                             <Label htmlFor="time-limit">Time Limit (minutes)</Label>
-                            <Input
-                                id="time-limit"
-                                type="number"
-                                min="1"
-                                value={settings.timeLimit}
-                                onChange={(e) => setSettings(s => ({...s, timeLimit: Math.max(1, parseInt(e.target.value) || 1)}))}
-                            />
+                             <Label htmlFor="time-limit">Time Limit</Label>
+                            <Select value={settings.timeLimit} onValueChange={v => setSettings(s => ({...s, timeLimit: v}))}>
+                                <SelectTrigger id="time-limit"><SelectValue /></SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="1">1 Minute</SelectItem>
+                                    <SelectItem value="2">2 Minutes</SelectItem>
+                                    <SelectItem value="5">5 Minutes</SelectItem>
+                                    <SelectItem value="None">None</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
                     </div>
                     <div className="flex justify-center">
@@ -217,12 +255,13 @@ function BigOQuiz() {
     }
 
     if (quizState === 'finished') {
+        const feedback = getFeedback();
         return (
             <Card>
                 <CardHeader className="text-center">
-                    <CardTitle>Quiz Complete!</CardTitle>
-                    <CardDescription>You scored</CardDescription>
-                    <p className="text-4xl font-bold text-primary">{score} / {quizQuestions.length}</p>
+                    <CardTitle className="text-3xl">{feedback.title}</CardTitle>
+                    <CardDescription className="pt-2">{feedback.message}</CardDescription>
+                    <p className="text-5xl font-bold text-primary pt-4">{score} / {quizQuestions.length}</p>
                 </CardHeader>
                 <CardContent className="space-y-6">
                     <h3 className="font-semibold text-lg">Review Your Answers:</h3>
@@ -237,8 +276,9 @@ function BigOQuiz() {
                             )}
                         </div>
                     ))}
-                     <div className="flex justify-center">
-                        <Button onClick={() => setQuizState('not-started')}>New Quiz</Button>
+                     <div className="flex justify-center gap-4">
+                        <Button onClick={handleReset} variant="outline"><RotateCcw className="mr-2 h-4 w-4"/> Try Again</Button>
+                        <Button onClick={() => setQuizState('not-started')}><RefreshCw className="mr-2 h-4 w-4"/> New Quiz</Button>
                     </div>
                 </CardContent>
             </Card>
@@ -249,25 +289,27 @@ function BigOQuiz() {
     if (!currentQuestion) return null; // Should not happen
     
     const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
+    const minutes = timeLeft > 0 ? Math.floor(timeLeft / 60) : 0;
+    const seconds = timeLeft > 0 ? timeLeft % 60 : 0;
 
     return (
         <Card>
             <CardHeader>
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center flex-wrap gap-2">
                     <CardTitle>Question {currentQuestionIndex + 1} of {quizQuestions.length}</CardTitle>
-                    <div className="flex items-center gap-2 text-lg font-medium text-muted-foreground">
-                        <Timer className="h-5 w-5" />
-                        <span className='font-mono'>{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}</span>
-                    </div>
+                    {settings.timeLimit !== 'None' && (
+                        <div className="flex items-center gap-2 text-lg font-medium text-muted-foreground">
+                            <Timer className="h-5 w-5" />
+                            <span className='font-mono'>{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}</span>
+                        </div>
+                    )}
                 </div>
                  <Progress value={progress} className="w-full h-2 mt-2" />
             </CardHeader>
             <CardContent className="space-y-6">
                 <p>What is the time complexity (Big O) of the following function?</p>
                 <CodeBlock code={currentQuestion.code} language="javascript" />
-                <RadioGroup onValueChange={handleAnswer} value={userAnswers[currentQuestionIndex] || ''}>
+                <RadioGroup onValueChange={handleAnswer} value={userAnswers[currentQuestionIndex] || ''} disabled={isPaused}>
                     {currentQuestion.options.map(option => (
                         <div key={option} className="flex items-center space-x-2">
                             <RadioGroupItem value={option} id={`option-${option}`} />
@@ -275,9 +317,19 @@ function BigOQuiz() {
                         </div>
                     ))}
                 </RadioGroup>
-                <div className="flex justify-end">
-                    <Button onClick={handleNext} disabled={!userAnswers[currentQuestionIndex]}>
+                <div className="flex justify-between items-center">
+                    <div className="flex gap-2">
+                        {settings.timeLimit !== 'None' && (
+                             <Button variant="outline" onClick={() => setIsPaused(!isPaused)}>
+                                {isPaused ? <Play className="mr-2 h-4 w-4" /> : <Pause className="mr-2 h-4 w-4" />}
+                                {isPaused ? 'Resume' : 'Pause'}
+                            </Button>
+                        )}
+                         <Button variant="destructive" onClick={() => setQuizState('not-started')}>End Quiz</Button>
+                    </div>
+                    <Button onClick={handleNext} disabled={!userAnswers[currentQuestionIndex] || isPaused}>
                         {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish Quiz' : 'Next Question'}
+                        <ChevronRight className="ml-2 h-4 w-4" />
                     </Button>
                 </div>
             </CardContent>
