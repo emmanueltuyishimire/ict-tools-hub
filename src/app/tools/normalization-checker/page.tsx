@@ -8,7 +8,7 @@ import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle, Database } fr
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableCaption } from '@/components/ui/table';
 
 export const metadata = {
     title: 'Database Normalization Checker & Guide | 1NF, 2NF, 3NF | ICT Toolbench',
@@ -135,12 +135,12 @@ const NormalizationCheckerPage = () => {
                             </Table>
                             <p>This violates 1NF because the `products` column contains a list, not an atomic value. To fix this, we create a separate `order_items` table, moving the repeating group there:</p>
                             <Table className="bg-background">
-                                <Caption>orders (now in 1NF)</Caption>
+                                <TableCaption>orders (now in 1NF)</TableCaption>
                                 <TableHeader><TableRow><TableHead>order_id (PK)</TableHead><TableHead>customer_name</TableHead></TableRow></TableHeader>
                                 <TableBody><TableRow><TableCell>101</TableCell><TableCell>Alice</TableCell></TableRow></TableBody>
                             </Table>
                             <Table className="bg-background mt-4">
-                                <Caption>order_items (new table)</Caption>
+                                <TableCaption>order_items (new table)</TableCaption>
                                 <TableHeader><TableRow><TableHead>order_item_id (PK)</TableHead><TableHead>order_id (FK)</TableHead><TableHead>product_name</TableHead></TableRow></TableHeader>
                                 <TableBody>
                                     <TableRow><TableCell>1</TableCell><TableCell>101</TableCell><TableCell>Laptop</TableCell></TableRow>
@@ -158,12 +158,12 @@ const NormalizationCheckerPage = () => {
                             </Table>
                             <p>Here, `quantity` depends on both the order and the product. But `product_name` depends *only* on the `product_id`. This is a partial dependency. To fix this, we move the product information to its own `products` table:</p>
                             <Table className="bg-background mt-4">
-                                <Caption>products (new table)</Caption>
+                                <TableCaption>products (new table)</TableCaption>
                                 <TableHeader><TableRow><TableHead>product_id (PK)</TableHead><TableHead>product_name</TableHead></TableRow></TableHeader>
                                 <TableBody><TableRow><TableCell>P5</TableCell><TableCell>Laptop</TableCell></TableRow></TableBody>
                             </Table>
                             <Table className="bg-background mt-4">
-                                <Caption>order_items (now in 2NF)</Caption>
+                                <TableCaption>order_items (now in 2NF)</TableCaption>
                                 <TableHeader><TableRow><TableHead>order_id (PK, FK)</TableHead><TableHead>product_id (PK, FK)</TableHead><TableHead>quantity</TableHead></TableRow></TableHeader>
                                 <TableBody><TableRow><TableCell>101</TableCell><TableCell>P5</TableCell><TableCell>1</TableCell></TableRow></TableBody>
                             </Table>
@@ -275,4 +275,3 @@ const NormalizationCheckerPage = () => {
 };
 
 export default NormalizationCheckerPage;
-
