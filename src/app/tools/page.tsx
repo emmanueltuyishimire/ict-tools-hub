@@ -70,7 +70,7 @@ import { EncryptionDecryptionTool } from '@/app/tools/encryption-decryption-tool
 import { TotpDemo } from '@/app/tools/totp-demo/totp-demo';
 import { Base32_58EncoderDecoder } from '@/app/tools/base32-58-encoder-decoder/base32-58-encoder-decoder';
 import { FileIntegrityChecker } from '@/app/tools/file-integrity-checker/file-integrity-checker';
-import { AlgorithmStepSimulator } from '../algorithm-simulator/algorithm-simulator';
+import { AlgorithmStepSimulator } from '@/app/tools/algorithm-simulator/algorithm-simulator';
 import { CloudStorageCostEstimator } from '@/app/tools/cloud-storage-cost-estimator/cloud-storage-cost-estimator';
 import { BandwidthCostCalculator } from '@/app/tools/bandwidth-cost-calculator/bandwidth-cost-calculator';
 import { BackupStorageCalculator } from '@/app/tools/backup-storage-calculator/backup-storage-calculator';
