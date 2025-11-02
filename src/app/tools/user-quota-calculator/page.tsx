@@ -76,6 +76,56 @@ const UserQuotaCalculatorPage = () => {
                 </section>
                 
                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 1: Planning a Shared Web Hosting Server</CardTitle>
+                                <CardDescription>A hosting provider is setting up a new server and wants to determine how many customers can fit.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> You have a server with <strong>2 TB</strong> of usable disk space. You plan to sell hosting plans that each come with a <strong>20 GB</strong> storage quota.</p>
+                                <div className="prose prose-sm max-w-none">
+                                    <ol>
+                                        <li><strong>Inputs:</strong>
+                                            <ul>
+                                                <li>Total Available Resource: <strong>2</strong> TB (or 2048 GB)</li>
+                                                <li>Number of Users: `1` (to find the max, we'll work backwards, but start by seeing one user's impact)</li>
+                                                <li>Quota per User: <strong>20</strong> GB</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Analysis:</strong> By dividing the total resource by the quota per user (`2048 GB / 20 GB`), you can determine the maximum number of users you can host.</li>
+                                        <li><strong>Result:</strong> `102`. You can host approximately 102 customers on this server. If you enter `102` as the number of users in the calculator, you will see that the allocated space is 2040 GB, leaving a small buffer. This helps in business planning and resource allocation.</li>
+                                    </ol>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 2: Setting University Student Email Quotas</CardTitle>
+                                <CardDescription>An IT department needs to set fair mailbox quotas for a student body.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> A university has <strong>5000</strong> students and has allocated a dedicated <strong>25 TB</strong> mail server for student email accounts.</p>
+                                <div className="prose prose-sm max-w-none">
+                                    <ol>
+                                        <li><strong>Inputs:</strong>
+                                            <ul>
+                                                <li>Total Available Resource: <strong>25</strong> TB</li>
+                                                <li>Number of Users: <strong>5000</strong></li>
+                                                <li>Quota per User: (This is what we want to find)</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Analysis:</strong> You can work backwards. `25 TB` is `25600 GB`. Divide this by the number of users: `25600 GB / 5000 users = 5.12 GB/user`. To be safe, the admin decides to set the quota at <strong>5 GB</strong>.</li>
+                                        <li><strong>Result:</strong> Enter `5` GB as the "Quota per User" in the calculator. The tool shows a total allocation of 24.41 TB, leaving 0.59 TB (or ~600 GB) free as a healthy buffer for system overhead and future growth.</li>
+                                    </ol>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
+                
+                <section>
                    <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
                    <Card>
                       <CardContent className="p-6">
@@ -229,7 +279,3 @@ const UserQuotaCalculatorPage = () => {
 };
 
 export default UserQuotaCalculatorPage;
-
-
-
-    
