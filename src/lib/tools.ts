@@ -116,7 +116,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Password Strength Checker', slug: 'password-strength-checker', description: 'Check the strength of a password.' },
       { name: 'Password Entropy Calculator', slug: 'password-entropy-calculator', description: 'Calculate the entropy of a password in bits.' },
       { name: 'Hash Generator (MD5/SHA)', slug: 'hash-generator-md5-sha', description: 'Generate various hashes (MD5, SHA1, SHA256).' },
-      { name: 'Encryption / Decryption Tool', slug: 'encryption-decryption-tool', description: 'Encrypt or decrypt text.' },
+      { name: 'Encryption / Decryption Tool', slug: 'encryption-decryption-tool', description: 'Encrypt or decrypt text using AES.' },
       { name: 'Two-Factor Auth TOTP Demo', slug: 'totp-demo', description: 'Educational TOTP demo.' },
       { name: 'Base32 / Base58 Encoder / Decoder', slug: 'base32-58-encoder-decoder', description: 'Encode/decode Base32/58.' },
       { name: 'File Integrity Checker', slug: 'file-integrity-checker', description: 'Generate checksums for files.' },

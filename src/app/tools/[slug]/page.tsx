@@ -1,3 +1,4 @@
+
 import { allTools } from '@/lib/tools';
 import { notFound } from 'next/navigation';
 import { PageHeader } from '@/components/page-header';
@@ -65,6 +66,7 @@ import { VariableNameValidator } from '@/app/tools/variable-name-validator/varia
 import { UnicodeAsciiConverter } from '@/app/tools/unicode-ascii-converter/unicode-ascii-converter';
 import { PasswordEntropyCalculator } from '@/app/tools/password-entropy-calculator/password-entropy-calculator';
 import { PasswordGenerator } from '@/app/tools/password-generator/password-generator';
+import { EncryptionDecryptionTool } from '@/app/tools/encryption-decryption-tool/encryption-decryption-tool';
 import { Metadata } from 'next';
 
 export async function generateStaticParams() {
@@ -161,6 +163,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'variable-name-validator': VariableNameValidator,
     'unicode-ascii-converter': UnicodeAsciiConverter,
     'password-generator': PasswordGenerator,
+    'encryption-decryption-tool': EncryptionDecryptionTool,
 };
 
 
@@ -184,7 +187,6 @@ export default function ToolPage({ params }: ToolPageProps) {
 
 function ComingSoon() {
     const bgImage = PlaceHolderImages.find(img => img.id === 'tech-background');
-    const tool = allTools.find((t) => t.slug === 'binary-to-ip');
     
     return (
         <Card className="mt-8 overflow-hidden">
