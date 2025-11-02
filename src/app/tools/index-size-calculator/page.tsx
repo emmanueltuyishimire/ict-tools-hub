@@ -80,6 +80,39 @@ const DatabaseIndexSizeCalculatorPage = () => {
                         </Alert>
                     </Card>
                 </section>
+                
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Example</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Estimating a Composite Index on a `transactions` Table</CardTitle>
+                                <CardDescription>A developer needs to add a new index to speed up a query and wants to understand the storage cost.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                               <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> An `orders` table has 10 million rows. To speed up a reporting query, a developer needs to add a composite index on the `customer_id` and `order_date` columns.</p>
+                               <div className="prose prose-sm max-w-none">
+                                   <ol>
+                                       <li><strong>Inputs:</strong>
+                                            <ul>
+                                                <li><strong>Columns:</strong> Column 1: `BIGINT` (for `customer_id`), Column 2: `TIMESTAMP` (for `order_date`).</li>
+                                                <li><strong>Total Rows:</strong> `10,000,000`</li>
+                                            </ul>
+                                       </li>
+                                       <li><strong>Row Size Calculation:</strong> The tool calculates the size of one index entry:
+                                            <ul>
+                                                <li>Size of key data: 8 bytes (BIGINT) + 4 bytes (TIMESTAMP) = 12 bytes.</li>
+                                                <li>Total size per entry: 12 bytes (key) + 24 bytes (overhead) = 36 bytes.</li>
+                                            </ul>
+                                       </li>
+                                       <li><strong>Total Size Calculation:</strong> 36 bytes/row × 10,000,000 rows = 360,000,000 bytes.</li>
+                                        <li><strong>Result:</strong> The tool shows a total estimated index size of <strong>360 MB</strong>. This gives the developer a clear, data-driven estimate to include in their change request, showing that the performance benefit of the new index comes with a predictable storage cost.</li>
+                                   </ol>
+                               </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
 
                 <section>
                    <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
@@ -121,7 +154,7 @@ const DatabaseIndexSizeCalculatorPage = () => {
                                 Indexes are essential for read performance, but they are not free. They have two main costs:
                             </p>
                             <ul className="list-disc pl-5">
-                                <li><strong>Storage Cost:</strong> An index is a copy of your data, so it consumes additional disk space. A table with many indexes can easily take up more space for its indexes than for the data itself. This calculator helps you estimate this cost.</li>
+                                <li><strong>Storage Cost:</strong> An index is a copy of your data, so it consumes additional disk space. A table with many indexes can easily take up more space for its indexes than for the data itself. This calculator helps you estimate this cost. You can then use our <Link href="/tools/db-storage-estimator" className="text-primary hover:underline">Database Storage Estimator</Link> to model the total table size.</li>
                                 <li><strong>Write Performance Cost:</strong> While indexes speed up reads, they slow down writes (`INSERT`, `UPDATE`, `DELETE`). When you write to a table, the database must also update every index that contains the affected columns. A table with ten indexes will require ten additional write operations, which can become a bottleneck in write-heavy applications.</li>
                             </ul>
                             <p>The art of database design is in finding the right balance: creating enough indexes to make your important queries fast, without adding so many that they consume too much disk space or cripple your write performance.</p>
@@ -238,4 +271,3 @@ const DatabaseIndexSizeCalculatorPage = () => {
 };
 
 export default DatabaseIndexSizeCalculatorPage;
-
