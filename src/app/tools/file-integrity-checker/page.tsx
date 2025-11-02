@@ -10,10 +10,10 @@ import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 
 export const metadata = {
-    title: 'File Integrity Checker (MD5, SHA) | ICT Toolbench',
-    description: 'Verify file integrity by generating MD5, SHA-1, SHA-256, and SHA-512 hashes. Our secure, client-side tool helps you confirm that your files are not corrupted or tampered with.',
+    title: 'File Integrity Checker (SHA Checksum) | ICT Toolbench',
+    description: 'Verify file integrity by generating SHA-1, SHA-256, and SHA-512 hashes. Our secure, client-side tool helps you confirm that your files are not corrupted or tampered with.',
     openGraph: {
-        title: 'File Integrity Checker (MD5, SHA) | ICT Toolbench',
+        title: 'File Integrity Checker (SHA Checksum) | ICT Toolbench',
         description: 'Generate cryptographic checksums for any file directly in your browser to verify integrity. Secure, private, and fast.',
         url: '/tools/file-integrity-checker',
     }
@@ -44,7 +44,7 @@ const FileIntegrityCheckerPage = () => {
       "price": "0",
       "priceCurrency": "USD"
     },
-    "description": "A free, client-side tool to generate MD5, SHA-1, SHA-256, and SHA-512 checksums for any file to verify its integrity.",
+    "description": "A free, client-side tool to generate SHA-1, SHA-256, and SHA-512 checksums for any file to verify its integrity.",
     "url": "https://www.icttoolbench.com/tools/file-integrity-checker"
   };
 
@@ -131,7 +131,7 @@ const FileIntegrityCheckerPage = () => {
                 </CardHeader>
                 <CardContent>
                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                        <li><strong>Trust SHA-256:</strong> When given a choice of hashes, always use the most secure one available, which is typically SHA-256 or SHA-512. MD5 and SHA-1 are considered insecure for collision resistance and should only be used if they are the only option provided.</li>
+                        <li><strong>Trust SHA-256:</strong> When given a choice of hashes, always use the most secure one available, which is typically SHA-256 or SHA-512. SHA-1 is considered insecure for collision resistance and should only be used if it's the only option provided.</li>
                         <li><strong>Command-Line Alternatives:</strong> On macOS, you can use `shasum -a 256 /path/to/file`. On Windows, you can use PowerShell with `Get-FileHash /path/to/file -Algorithm SHA256`. On Linux, use `sha256sum /path/to/file`.</li>
                         <li><strong>Automate Verification:</strong> For critical workflows, verification can be scripted. Download a file and its corresponding checksum file, then have a script automatically compute the hash and perform the comparison.</li>
                     </ul>
@@ -188,6 +188,14 @@ const FileIntegrityCheckerPage = () => {
                       </CardHeader>
                   </Card>
               </Link>
+                <Link href="/tools/encryption-decryption-tool" className="block">
+                    <Card className="hover:border-primary transition-colors h-full">
+                        <CardHeader>
+                            <CardTitle className="text-base flex items-center justify-between">Encryption/Decryption Tool<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                            <CardDescription className="text-xs">Learn about encryption, a different cryptographic use case from hashing.</CardDescription>
+                        </CardHeader>
+                    </Card>
+                </Link>
           </div>
       </section>
       </div>

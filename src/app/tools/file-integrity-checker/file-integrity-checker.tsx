@@ -7,11 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Copy, Check, File as FileIcon, Loader2 } from 'lucide-react';
+import { Copy, Check, File as FileIcon, Loader2, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertTriangle } from 'lucide-react';
-
 
 // Helper function to format bytes
 const formatBytes = (bytes: number, decimals = 2) => {
