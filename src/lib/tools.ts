@@ -190,8 +190,8 @@ export const toolCategories: ToolCategory[] = [
     name: 'Programming Learning',
     icon: BrainCircuit,
     tools: [
+      { name: 'Time Complexity Estimator', slug: 'big-o-calculator', description: 'Understand and visualize Big O notation.' },
       { name: 'Big-O Complexity Quiz', slug: 'big-o-quiz', description: 'Quiz on Big-O complexity.' },
-      { name: 'Algorithm Visualizer', slug: 'algorithm-visualizer', description: 'Visualize sorting/searching algorithms.' },
       { name: 'Algorithm Step Simulator', slug: 'algorithm-simulator', description: 'Simulate steps of simple algorithms.' },
       { name: 'Recursion Calculator / Simulator', slug: 'recursion-simulator', description: 'Simulate recursive functions.' },
       { name: 'Logic Gate Simulator', slug: 'logic-gate-simulator', description: 'Simulate logic gates.' },
