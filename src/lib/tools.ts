@@ -153,7 +153,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Snapshot / Backup Scheduler', slug: 'backup-scheduler', description: 'Schedule snapshots and backups.' },
       { name: 'Storage Growth Estimator', slug: 'storage-growth-estimator', description: 'Estimate storage growth.' },
       { name: 'RAID Storage Calculator', slug: 'raid-calculator', description: 'Calculate RAID storage.' },
-      { name: 'Cloud Migration Estimator', slug: 'cloud-migration-estimator', description: 'Estimate cloud migration efforts.' },
+      { name: 'Cloud Migration Planning Guide', slug: 'cloud-migration-estimator', description: 'A guide to planning your cloud migration.' },
       { name: 'Cloud Sync Time Calculator', slug: 'cloud-sync-time-calculator', description: 'Calculate cloud sync time.' },
       { name: 'VM Scaling Calculator', slug: 'vm-scaling-calculator', description: 'Calculate VM scaling needs.' },
       { name: 'Storage Redundancy Calculator', slug: 'storage-redundancy-calculator', description: 'Calculate storage redundancy.' },
