@@ -56,7 +56,7 @@ const BandwidthCostCalculatorPage = () => {
             <StructuredData data={softwareAppSchema} />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
-                    title="Cloud Bandwidth Cost Calculator"
+                    title="Cloud Bandwidth Cost Calculator (Egress)"
                     description="Estimate your monthly data transfer (egress) costs from major cloud providers like AWS, Google Cloud, and Azure. Avoid bill shock by understanding one of the most significant and often overlooked cloud expenses."
                 />
 
