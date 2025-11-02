@@ -89,6 +89,7 @@ import { DatabaseGrowthCalculator } from '@/app/tools/db-growth-calculator/db-gr
 import { PrimaryForeignKeyValidator } from '@/app/tools/key-validator/key-validator';
 import { NormalizationChecker } from '@/app/tools/normalization-checker/normalization-checker';
 import { DuplicateRowFinder } from '@/app/tools/duplicate-row-finder/duplicate-row-finder';
+import { ColumnTypeConverter } from '@/app/tools/column-type-converter/column-type-converter';
 
 
 export async function generateMetadata({ params: rawParams }: { params: { slug: string } }) {
@@ -198,6 +199,7 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'normalization-checker': NormalizationChecker,
   'duplicate-row-finder': DuplicateRowFinder,
   'table-size-estimator': DbStorageEstimator,
+  'column-type-converter': ColumnTypeConverter,
 };
 
 export default async function ToolPage({ params: rawParams }: { params: { slug: string } }) {
