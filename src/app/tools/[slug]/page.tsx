@@ -67,6 +67,7 @@ import { UnicodeAsciiConverter } from '@/app/tools/unicode-ascii-converter/unico
 import { PasswordEntropyCalculator } from '@/app/tools/password-entropy-calculator/password-entropy-calculator';
 import { PasswordGenerator } from '@/app/tools/password-generator/password-generator';
 import { EncryptionDecryptionTool } from '@/app/tools/encryption-decryption-tool/encryption-decryption-tool';
+import { TotpDemo } from '@/app/tools/totp-demo/totp-demo';
 import { Metadata } from 'next';
 
 export async function generateStaticParams() {
@@ -164,6 +165,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'unicode-ascii-converter': UnicodeAsciiConverter,
     'password-generator': PasswordGenerator,
     'encryption-decryption-tool': EncryptionDecryptionTool,
+    'totp-demo': TotpDemo,
 };
 
 
