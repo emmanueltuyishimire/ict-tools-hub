@@ -5,7 +5,7 @@ import { SqlQueryTester } from './sql-query-tester';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
+import { BookOpen, AlertTriangle, Wand } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -144,7 +144,7 @@ const SqlQueryTesterPage = () => {
                                 <li>The `FROM` clause specifies which table you are querying.</li>
                                 <li>The `WHERE` clause is an optional filter to specify which rows you want to retrieve based on a condition (e.g., `WHERE price > 100`).</li>
                              </ul>
-                             <p>As you get more advanced, you can add clauses like `JOIN` (to combine data from multiple tables), `GROUP BY` (to aggregate data), and `ORDER BY` (to sort the results).</p>
+                             <p>As you get more advanced, you can add clauses like `JOIN` (to combine data from multiple tables), `GROUP BY` (to aggregate data), and `ORDER BY` (to sort the results). You can validate table relationships for JOINs with our <Link href="/tools/key-validator" className="text-primary hover:underline">Primary / Foreign Key Validator</Link>.</p>
                         </section>
                     </CardContent>
                 </Card>
@@ -152,7 +152,7 @@ const SqlQueryTesterPage = () => {
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
                         <CardHeader>
-                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
                         </CardHeader>
                         <CardContent>
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
@@ -169,7 +169,7 @@ const SqlQueryTesterPage = () => {
                         </CardHeader>
                         <CardContent>
                              <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                                <li><strong>SQL Injection:</strong> A critical security vulnerability where user input is directly concatenated into a query string. This can allow an attacker to run malicious SQL commands. Always use parameterized queries or prepared statements in your application code to prevent this. This educational tool does not have this vulnerability as it doesn't connect to a real database.</li>
+                                <li><strong>SQL Injection:</strong> A critical security vulnerability where user input is directly concatenated into a query string. This can allow an attacker to run malicious SQL commands. Always use parameterized queries or prepared statements in your application code to prevent this.</li>
                                 <li><strong>Forgetting `WHERE` in an `UPDATE` or `DELETE`:</strong> The most terrifying mistake for a DBA. Forgetting the `WHERE` clause in an `UPDATE` or `DELETE` statement will cause it to apply to <strong>every single row</strong> in the table, potentially leading to catastrophic data loss.</li>
                                 <li><strong>Ambiguous `JOIN`s:</strong> When joining tables that have columns with the same name, failing to specify which table you mean (e.g., `users.id` vs. `orders.id`) will result in an error.</li>
                             </ul>
