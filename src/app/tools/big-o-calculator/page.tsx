@@ -53,7 +53,7 @@ const BigOCalculatorPage = () => {
         "priceCurrency": "USD"
       },
       "description": "An interactive, educational tool to help users understand and visualize Big O notation and the performance of common algorithms as data scales.",
-      "url": "https://www.your-app-url.com/tools/big-o-calculator" // Replace with actual URL
+      "url": "https://www.icttoolbench.com/tools/big-o-calculator"
     };
 
     return (
@@ -300,6 +300,14 @@ const BigOCalculatorPage = () => {
               <section>
                   <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <Link href="/tools/algorithm-simulator" className="block">
+                          <Card className="hover:border-primary transition-colors h-full">
+                              <CardHeader>
+                                  <CardTitle className="text-base flex items-center justify-between">Algorithm Step Simulator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">Visually step through algorithms like Bubble Sort (O(n²)) to see their complexity in action.</CardDescription>
+                              </CardHeader>
+                          </Card>
+                      </Link>
                       <Link href="/tools/random-number-generator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
@@ -308,15 +316,7 @@ const BigOCalculatorPage = () => {
                               </CardHeader>
                           </Card>
                       </Link>
-                      <Link href="/tools/code-formatter" className="block">
-                          <Card className="hover:border-primary transition-colors h-full">
-                              <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Code Formatter / Beautifier<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                  <CardDescription className="text-xs">Clean up your algorithm's code for better readability and analysis.</CardDescription>
-                              </CardHeader>
-                          </Card>
-                      </Link>
-                        <Link href="/tools/data-transfer-calculator" className="block">
+                      <Link href="/tools/data-transfer-calculator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
                                   <CardTitle className="text-base flex items-center justify-between">Data Transfer Time Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
@@ -332,3 +332,5 @@ const BigOCalculatorPage = () => {
 };
 
 export default BigOCalculatorPage;
+
+    

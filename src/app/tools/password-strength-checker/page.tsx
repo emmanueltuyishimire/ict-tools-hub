@@ -24,7 +24,7 @@ const faqData = [
     { question: "Are passphrases better than complex passwords?", answer: "Often, yes. A long passphrase like 'Correct-Horse-Battery-Staple' is easier for a human to remember but has high entropy due to its length, making it very difficult for a computer to crack. This is often a better strategy than a short, complex password like 'Tr0ub4d&r' that is hard to remember. Our <a href='/tools/password-generator' class='text-primary hover:underline'>Password Generator</a> can help create both types." },
     { question: "Why should I avoid using personal information?", answer: "Attackers often use information they know about you (your name, birthday, pet's name, etc.) in 'dictionary attacks.' They will try common words and personal details first. A password should be completely random and unrelated to your personal life." },
     { question: "What is a 'brute-force' attack?", answer: "A brute-force attack is a method where an attacker systematically tries every possible combination of characters until they find the correct password. The stronger and longer your password, the more time and computing power this attack requires, making it impractical." },
-    { question: "Why is using the same password on multiple sites dangerous?", answer: "This is called password reuse. If one site you use suffers a data breach and your password is leaked, attackers will try that same email and password combination on hundreds of other popular sites (like banking, email, and social media). This is known as 'credential stuffing.' Using a unique password for every site is critical." },
+    { question: "Why is using the same password on multiple sites dangerous?", answer: "This is called password reuse. If one site you use suffers a data breach and your password is leaked, attackers will use that same email and password combination on hundreds of other popular sites (like banking, email, and social media). This is known as 'credential stuffing.' Using a unique password for every site is critical." },
     { question: "What is a password manager and should I use one?", answer: "A password manager is a secure application designed to store and manage all your passwords in an encrypted vault. It allows you to generate and use long, complex, unique passwords for every site without having to memorize them. You only need to remember one strong master password. Using a password manager is one of the most effective security practices you can adopt." },
     { question: "What is hashing and how does it relate to passwords?", answer: "Hashing is a one-way process that turns a password into a fixed-length, unique string of characters. Websites should store the 'hash' of your password, not the password itself. When you log in, they hash what you type and compare it to the stored hash. This means even if their database is stolen, your actual password is not revealed. You can see this in action with our <a href='/tools/hash-generator-md5-sha' class='text-primary hover:underline'>Hash Generator</a>." },
     { question: "What is 2FA (Two-Factor Authentication)?", answer: "2FA adds a second layer of security beyond your password, usually a temporary code from an app on your phone. Even if an attacker steals your password, they can't log in without this second factor. You should enable it on every service that offers it. Explore how it works with our <a href='/tools/totp-demo' class='text-primary hover:underline'>Two-Factor Auth TOTP Demo</a>." }
@@ -270,7 +270,7 @@ const PasswordStrengthCheckerPage = () => {
                             <AccordionItem value={`item-${index}`} key={index}>
                                 <AccordionTrigger>{item.question}</AccordionTrigger>
                                 <AccordionContent>
-                                    <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                    <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} />
                                 </AccordionContent>
                             </AccordionItem>
                         ))}
@@ -314,3 +314,5 @@ const PasswordStrengthCheckerPage = () => {
 }
 
 export default PasswordStrengthCheckerPage;
+
+    
