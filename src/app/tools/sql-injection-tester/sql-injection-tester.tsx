@@ -138,3 +138,7 @@ const query = \`SELECT * FROM users WHERE username = '\${username}' AND password
                         </div>
                     )}
                 </CardContent>
+            </Card>
+        </div>
+    );
+}
