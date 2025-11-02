@@ -562,6 +562,35 @@ const BigOComplexityQuizPage = () => {
                         </div>
                     </div>
                 </section>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                    <Card>
+                        <CardHeader>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                            <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Identify the Core Loop:</strong> When analyzing your own code, the first step is to find the main loops. A single loop that goes through the input once is likely O(n). A pair of nested loops is often O(n²).</li>
+                                <li><strong>Divide and Conquer is Logarithmic:</strong> If your algorithm works by repeatedly dividing the problem set in half (like binary search), it's likely to have an O(log n) component.</li>
+                                <li><strong>Worry About Scale:</strong> Don't prematurely optimize for a small dataset. For an input of 100 items, the difference between O(n) and O(n²) is negligible. Big O matters when your data scales to thousands or millions of items.</li>
+                                <li><strong>Hash Maps are O(1) on Average:</strong> A hash map (or Dictionary/Object in JavaScript) provides, on average, O(1) constant time for insertions, deletions, and lookups, making it an incredibly powerful data structure for performance.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                             <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Ignoring Best/Average Case:</strong> Big O describes the worst case. While this is the most important for guaranteeing performance, be aware that an algorithm's average or best-case performance might be much better.</li>
+                                <li><strong>Dropping the Wrong Terms:</strong> When simplifying an expression like `O(n² + n)`, the `n` is dropped. However, in `O(n + log n)`, the `log n` is dropped. Always drop the lower-order (faster-growing) term.</li>
+                                <li><strong>Confusing `O(n log n)` with `O(n)`:</strong> While efficient, `O(n log n)` is definitively slower than `O(n)`. For very large datasets, this difference can be significant.</li>
+                                <li><strong>Thinking Constants Don't Matter:</strong> While Big O ignores constants, in the real world they matter for smaller datasets. An algorithm that is `O(n)` but has a very large constant factor might be slower than an `O(n²)` algorithm for a small `n`. Big O is a tool for analyzing scalability, not for micro-benchmarking.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                </div>
                 
                <section>
                   <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
