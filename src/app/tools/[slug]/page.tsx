@@ -1,5 +1,4 @@
 
-
 import { allTools } from '@/lib/tools';
 import { notFound } from 'next/navigation';
 import { PageHeader } from '@/components/page-header';
@@ -85,6 +84,8 @@ import { DataRetentionCalculator } from '@/app/tools/data-retention-calculator/d
 import { BackupScheduler } from '@/app/tools/backup-scheduler/backup-scheduler';
 import { StorageGrowthEstimator } from '@/app/tools/storage-growth-estimator/storage-growth-estimator';
 import { DatabaseGrowthCalculator } from '@/app/tools/db-growth-calculator/db-growth-calculator';
+import { PrimaryForeignKeyValidator } from '@/app/tools/key-validator/key-validator';
+
 
 export async function generateMetadata({ params: rawParams }: { params: { slug: string } }) {
   const params = await rawParams;
@@ -188,6 +189,7 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'backup-scheduler': BackupScheduler,
   'storage-growth-estimator': StorageGrowthEstimator,
   'db-growth-calculator': DatabaseGrowthCalculator,
+  'key-validator': PrimaryForeignKeyValidator,
 };
 
 export default async function ToolPage({ params: rawParams }: { params: { slug: string } }) {
@@ -198,9 +200,6 @@ export default async function ToolPage({ params: rawParams }: { params: { slug: 
   if (!tool) {
     notFound();
   }
-
-  // Redirect to the full page if it exists
-  const fullPagePath = `/tools/${params.slug}/page`;
 
   const placeholderImage = PlaceHolderImages.find(img => img.id === 'tech-background') || PlaceHolderImages[0];
 
