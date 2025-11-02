@@ -1,4 +1,6 @@
 
+'use client';
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { RaidCalculator } from '../raid-calculator/raid-calculator';
@@ -180,7 +182,7 @@ const StorageRedundancyCalculatorPage = () => {
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
                                   <CardTitle className="text-base flex items-center justify-between">Disk Usage / Partition Estimator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                  <CardDescription className="text-xs">Once you have your usable capacity, plan how to partition the logical drive for your operating system.</CardDescription>
+                                  <CardDescription className="text-xs">Once you have your usable capacity, plan how you will partition the logical drive for your operating system.</CardDescription>
                               </CardHeader>
                           </Card>
                       </Link>

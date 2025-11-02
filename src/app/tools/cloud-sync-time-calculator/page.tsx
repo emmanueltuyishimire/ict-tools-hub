@@ -1,4 +1,6 @@
 
+'use client';
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { DataTransferTimeCalculator } from '../data-transfer-calculator/data-transfer-calculator';
@@ -88,7 +90,7 @@ export default function CloudSyncTimeCalculatorPage() {
                             <AlertTriangle className="h-4 w-4" />
                             <AlertTitle>Important: Use Your Upload Speed!</AlertTitle>
                             <AlertDescription>
-                                Most internet plans are advertised with their download speed. For cloud syncs, your much slower <strong>upload bandwidth</strong> is the bottleneck. Always use your upload speed for an accurate estimate.
+                                Most internet plans are advertised with their download speed. For cloud syncs, your much slower <strong>upload speed</strong> is the bottleneck. Always use your upload speed for an accurate estimate.
                             </AlertDescription>
                         </Alert>
                     </Card>
