@@ -87,6 +87,7 @@ import { StorageGrowthEstimator } from '@/app/tools/storage-growth-estimator/sto
 import { DatabaseGrowthCalculator } from '@/app/tools/db-growth-calculator/db-growth-calculator';
 import { PrimaryForeignKeyValidator } from '@/app/tools/key-validator/key-validator';
 import { NormalizationChecker } from '@/app/tools/normalization-checker/normalization-checker';
+import { DuplicateRowFinder } from '@/app/tools/duplicate-row-finder/duplicate-row-finder';
 
 
 export async function generateMetadata({ params: rawParams }: { params: { slug: string } }) {
@@ -193,6 +194,7 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'db-growth-calculator': DatabaseGrowthCalculator,
   'key-validator': PrimaryForeignKeyValidator,
   'normalization-checker': NormalizationChecker,
+  'duplicate-row-finder': DuplicateRowFinder,
 };
 
 export default async function ToolPage({ params: rawParams }: { params: { slug: string } }) {
