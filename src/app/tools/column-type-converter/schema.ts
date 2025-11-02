@@ -1,7 +1,8 @@
+
 export const faqData = [
     { question: "What is a database data type?", answer: "A data type is an attribute that specifies the type of data that an object (like a column in a table) can hold. Common types include integers, strings (VARCHAR), text, floating-point numbers, and dates. The data type determines how much storage space the value will consume and what kind of operations can be performed on it." },
     { question: "Why is choosing the right data type important?", answer: "Choosing the smallest, most appropriate data type for your data is a critical database optimization. It reduces storage costs, improves query performance by allowing more data to be cached in RAM, and enforces data integrity by preventing incorrect data from being inserted (e.g., text into an integer column)." },
-    { question: "What's the difference between INT, BIGINT, SMALLINT, and TINYINT?", answer: "These are all integer types, but they have different storage sizes and ranges. A `TINYINT` uses 1 byte and can store numbers up to 255. An `INT` uses 4 bytes and can store numbers up to about 2 billion. A `BIGINT` uses 8 bytes for extremely large numbers. Using the smallest one that fits your data is a key optimization." },
+    { question: "What's the difference between INT, BIGINT, SMALLINT, and TINYINT?", answer: "These are all integer types, but they have different storage sizes and ranges. A `TINYINT` uses 1 byte and can store numbers up to 255 (if unsigned). An `INT` uses 4 bytes and can store numbers up to about 2 billion. A `BIGINT` uses 8 bytes for extremely large numbers. Using the smallest one that fits your data is a key optimization." },
     { question: "When should I use VARCHAR vs. TEXT?", answer: "`VARCHAR` is for variable-length strings up to a specified maximum length (e.g., `VARCHAR(255)`). It's ideal for things like names, email addresses, or titles. `TEXT` is for long-form text of variable length with a very high maximum size, suitable for blog post content or user comments. `VARCHAR` is often more performant for indexed columns." },
     { question: "What does this tool's recommendation mean?", answer: "This tool analyzes the sample data you provide and suggests the most space-efficient data type that can accommodate it. For example, if you provide a list of numbers where the highest is 150, it will recommend `TINYINT` because it's the smallest integer type that can hold values up to 255." },
     { question: "Is it safe to change a column's data type?", answer: "Changing a data type on a large production table is a high-risk operation. It can lock the table for a long time and potentially lead to data loss if the new type cannot accommodate the old data (e.g., converting a `VARCHAR` to an `INT` when some rows contain text). Always perform such changes in a development environment first and take a full backup." },
@@ -46,5 +47,7 @@ export const dataTypeSizes: Record<string, { base: number, perChar?: boolean }> 
     'UUID': { base: 16 },
     'CHAR': { base: 0, perChar: true },
     'VARCHAR': { base: 2, perChar: true }, // 2 bytes for length + bytes for data
+    'VARCHAR(50)': { base: 2, perChar: true },
+    'VARCHAR(255)': { base: 2, perChar: true },
     'TEXT': { base: 4 }, // Pointer size, actual data stored elsewhere
 };

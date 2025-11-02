@@ -11,10 +11,10 @@ import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const metadata = {
-    title: 'Column Type Converter & Optimizer | ICT Toolbench',
+    title: 'Column Type Optimizer & Recommender | ICT Toolbench',
     description: 'Get recommendations for optimal database column types. Our tool analyzes your sample data to suggest more efficient types like INT, VARCHAR, or TEXT, helping you save storage and improve performance.',
     openGraph: {
-        title: 'Column Type Converter & Optimizer | ICT Toolbench',
+        title: 'Column Type Optimizer & Recommender | ICT Toolbench',
         description: 'An educational tool for developers and DBAs to choose the most efficient data types for their database schema.',
         url: '/tools/column-type-converter',
     }
@@ -37,7 +37,7 @@ const ColumnTypeConverterPage = () => {
     const softwareAppSchema = {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": "Column Type Converter",
+      "name": "Column Type Optimizer",
       "operatingSystem": "All",
       "applicationCategory": "DeveloperApplication",
       "offers": {
@@ -136,6 +136,134 @@ const ColumnTypeConverterPage = () => {
                         </section>
                     </CardContent>
                 </Card>
+
+                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
+                     <Card>
+                        <CardContent className="p-6">
+                            <ul className="space-y-4">
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Analyze Existing Data</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            If you have an existing table, run a query to find the maximum value or maximum string length in a column. This provides real-world data to make an informed decision, rather than guessing.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Think About Future Growth</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            Don't just size for today. If your user ID column is currently at 50,000 but you expect millions of users, don't use a `SMALLINT` (max ~32,000). Choose an `INT` or `BIGINT` to leave room for future growth.
+                                        </p>
+                                    </div>
+                                </li>
+                                 <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Test `ALTER TABLE` Statements</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            Changing a data type on a large production table with an `ALTER TABLE` command can be a slow, blocking operation that causes downtime. Always test such changes on a staging server first to understand the performance impact.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </CardContent>
+                     </Card>
+                </section>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                    <Card>
+                        <CardHeader>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                            <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Use `BOOLEAN` or `TINYINT(1)` for Flags:</strong> For true/false flags, a `BOOLEAN` or `TINYINT(1)` type is the most space-efficient option, using only one byte per row.</li>
+                                <li><strong>Prefer `INT` for Primary Keys:</strong> Unless you anticipate more than 2 billion rows, a standard `INT` is a perfectly good and efficient choice for a primary key. Use `BIGINT` only when you project massive scale.</li>
+                                <li><strong>`DECIMAL` for Financial Data:</strong> Never use `FLOAT` or `DOUBLE` for storing currency. These are floating-point types and can introduce small rounding errors. The `DECIMAL` or `NUMERIC` type is designed for exact precision and should always be used for financial data.</li>
+                                <li><strong>`TIMESTAMP` vs. `DATETIME`:</strong> Use `TIMESTAMP` when you need to store a point in time that is timezone-aware. It's stored as a UTC value and converted to the client's timezone on retrieval. `DATETIME` stores a literal date and time with no timezone information.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                             <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Using `VARCHAR` for Everything:</strong> The "one size fits all" approach of using `VARCHAR(255)` for numbers, dates, and flags is inefficient and prevents the database from performing type-specific optimizations and validations.</li>
+                                <li><strong>Using `INT` for Phone Numbers or ZIP Codes:</strong> While they look like numbers, ZIP codes and phone numbers should be stored as strings (`VARCHAR`). They can have leading zeros that would be lost if stored as an integer, and you will never perform mathematical operations on them.</li>
+                                <li><strong>Ignoring Enum Types:</strong> For a column that can only have a small, fixed set of values (e.g., status: 'pending', 'active', 'suspended'), using the database's `ENUM` type is far more space-efficient than storing the full string.</li>
+                                <li><strong>Not Planning for IPv6:</strong> Storing an IP address in a `VARCHAR(15)` is fine for IPv4, but an IPv6 address is much longer. A `VARCHAR(45)` is a safer choice for future-proofing.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                </div>
+                
+                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Optimizing a `users` Table</h3>
+                            <p className="text-sm text-muted-foreground">A developer inherits a database where the `is_active` column is a `VARCHAR(5)` storing "true" or "false". By analyzing the data, they realize a `BOOLEAN` or `TINYINT(1)` would be much more efficient. For a table with 10 million users, this simple change can save nearly 40 MB of disk space and make queries filtering on that column faster.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Designing a Product Catalog</h3>
+                            <p className="text-sm text-muted-foreground">When designing a `products` table, a DBA uses this tool to plan their data types. For the `price` column, they choose `DECIMAL(10, 2)` to ensure financial accuracy. For the `SKU` (Stock Keeping Unit), which might look like `ABC-00123`, they correctly choose `VARCHAR` instead of an integer type. For the `quantity_on_hand`, they analyze sales data and realize the stock never exceeds 50,000, so they choose a `SMALLINT` instead of a larger `INT`.</p>
+                        </div>
+                    </div>
+                </section>
+
+               <section>
+                  <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+                  <Card>
+                      <CardContent className="p-6">
+                          <Accordion type="single" collapsible className="w-full">
+                              {faqData.map((item, index) => (
+                                  <AccordionItem value={`item-${index}`} key={index}>
+                                      <AccordionTrigger>{item.question}</AccordionTrigger>
+                                      <AccordionContent>
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/href="\/tools\/([^"]*)"/g, 'href="/tools/$1" class="text-primary hover:underline"') }} />
+                                      </AccordionContent>
+                                  </AccordionItem>
+                              ))}
+                          </Accordion>
+                      </CardContent>
+                  </Card>
+              </section>
+
+              <section>
+                  <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <Link href="/tools/db-storage-estimator" className="block">
+                          <Card className="hover:border-primary transition-colors h-full">
+                              <CardHeader>
+                                  <CardTitle className="text-base flex items-center justify-between">Database Storage Estimator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">After choosing your data types, use this tool to estimate the total size of your table.</CardDescription>
+                              </CardHeader>
+                          </Card>
+                      </Link>
+                      <Link href="/tools/normalization-checker" className="block">
+                          <Card className="hover:border-primary transition-colors h-full">
+                              <CardHeader>
+                                  <CardTitle className="text-base flex items-center justify-between">Normalization Checker<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">Ensure your table structure is sound before you even begin to choose data types.</CardDescription>
+                              </CardHeader>
+                          </Card>
+                      </Link>
+                       <Link href="/tools/sql-query-tester" className="block">
+                          <Card className="hover:border-primary transition-colors h-full">
+                              <CardHeader>
+                                  <CardTitle className="text-base flex items-center justify-between">SQL Query Tester<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">Practice querying against different data types in our educational SQL environment.</CardDescription>
+                              </CardHeader>
+                          </Card>
+                      </Link>
+                  </div>
+              </section>
             </div>
         </>
     );

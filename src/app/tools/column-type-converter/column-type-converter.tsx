@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Lightbulb, CheckCircle } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import { dataTypeSizes } from './schema';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -42,19 +42,22 @@ const analyzeData = (currentType: DataType, length: number | '', sample: string)
     }
 
     // String analysis
-    if (maxLength <= 50) return { recommendation: `VARCHAR(${maxLength})`, reason: `A VARCHAR with a length of ${maxLength} is sufficient for the sample data, saving space compared to larger allocations.` };
+    if (maxLength <= 50) return { recommendation: `VARCHAR(50)`, reason: `A VARCHAR with a length of ${maxLength > 0 ? maxLength : 50} is sufficient for the sample data, saving space compared to larger allocations.` };
     if (maxLength <= 255) return { recommendation: `VARCHAR(255)`, reason: `A VARCHAR(255) can hold the data. This is a common and efficient length.` };
-    if (maxLength > 255 && currentType.startsWith('VARCHAR')) return { recommendation: 'TEXT', reason: `The data length (${maxLength}) exceeds 255 characters, making TEXT a more suitable type for long-form strings.` };
+    if (maxLength > 255) return { recommendation: 'TEXT', reason: `The data length (${maxLength}) exceeds 255 characters, making TEXT a more suitable type for long-form strings.` };
 
     return { recommendation: currentType, reason: 'The current data type is appropriate for the given sample data.' };
 };
 
 export function ColumnTypeConverter() {
-    const [currentType, setCurrentType] = useState<DataType>('VARCHAR');
+    const [currentType, setCurrentType] = useState<DataType>('VARCHAR(255)');
     const [length, setLength] = useState<number | ''>(255);
     const [sampleData, setSampleData] = useState('Apple\nBanana\nCherry');
     
-    const recommendation = useMemo(() => analyzeData(currentType, length, sampleData), [currentType, length, sampleData]);
+    const recommendation = useMemo(() => {
+        const typeWithoutLength = currentType.split('(')[0] as DataType;
+        return analyzeData(typeWithoutLength, length, sampleData);
+    }, [currentType, length, sampleData]);
 
     return (
         <Card>
