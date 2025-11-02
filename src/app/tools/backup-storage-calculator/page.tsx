@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { BackupStorageCalculator } from './backup-storage-calculator';
@@ -106,7 +107,7 @@ const BackupStorageCalculatorPage = () => {
                                             </ul>
                                         </li>
                                         <li><strong>Calculation:</strong> `7 backups * 500 GB/backup = 3500 GB`</li>
-                                        <li><strong>Result:</strong> They will need **3.5 TB** of storage space. This shows how quickly full backups can consume storage.</li>
+                                        <li><strong>Result:</strong> They will need <strong>3.5 TB</strong> of storage space. This shows how quickly full backups can consume storage.</li>
                                     </ol>
                                 </div>
                             </CardContent>
@@ -135,7 +136,7 @@ const BackupStorageCalculatorPage = () => {
                                                 <li>Total: `500 GB + 150 GB = 650 GB`</li>
                                              </ul>
                                         </li>
-                                        <li><strong>Result:</strong> They now only need **650 GB** of storage for a week's worth of backups, a massive saving compared to the full backup strategy.</li>
+                                        <li><strong>Result:</strong> They now only need <strong>650 GB</strong> of storage for a week's worth of backups, a massive saving compared to the full backup strategy.</li>
                                     </ol>
                                 </div>
                             </CardContent>
@@ -180,15 +181,15 @@ const BackupStorageCalculatorPage = () => {
                             <ul className="list-disc pl-5">
                                 <li>
                                     <strong>Full Backup:</strong>
-                                    <p>This is the simplest type. A full backup copies *all* of your data, every single time. <br/><strong>Pros:</strong> Very simple to manage. Restoring data is fast and easy because you only need one backup set (the latest one).<br/><strong>Cons:</strong> Consumes the most storage space and takes the longest to complete. Not practical for daily backups of large datasets.</p>
+                                    <p>This is the simplest type. A full backup copies <strong>all</strong> of your data, every single time. <br/><strong>Pros:</strong> Very simple to manage. Restoring data is fast and easy because you only need one backup set (the latest one).<br/><strong>Cons:</strong> Consumes the most storage space and takes the longest to complete. Not practical for daily backups of large datasets.</p>
                                 </li>
                                 <li>
                                     <strong>Incremental Backup:</strong>
-                                    <p>An incremental backup only copies the data that has changed *since the last backup was made* (whether it was a full or another incremental). <br/><strong>Pros:</strong> Extremely fast to create and uses the least amount of storage space for daily backups.<br/><strong>Cons:</strong> Restoration is the most complex. To fully restore your data, you need the last full backup *and every single incremental backup* made since then. If any one of the incremental backups is missing or corrupt, the restore will be incomplete.</p>
+                                    <p>An incremental backup only copies the data that has changed <strong>since the last backup was made</strong> (whether it was a full or another incremental). <br/><strong>Pros:</strong> Extremely fast to create and uses the least amount of storage space for daily backups.<br/><strong>Cons:</strong> Restoration is the most complex. To fully restore your data, you need the last full backup <strong>and every single incremental backup</strong> made since then. If any one of the incremental backups is missing or corrupt, the restore will be incomplete.</p>
                                 </li>
                                 <li>
                                     <strong>Differential Backup:</strong>
-                                    <p>A differential backup copies all the data that has changed *since the last full backup*. <br/><strong>Pros:</strong> A good balance between full and incremental. Backups are faster than a full backup. Restoration is simpler than incremental, as you only need the last full backup and the latest differential backup.<br/><strong>Cons:</strong> The size of the differential backup grows each day until the next full backup is made, consuming more space over time than an incremental strategy.</p>
+                                    <p>A differential backup copies all the data that has changed <strong>since the last full backup</strong>. <br/><strong>Pros:</strong> A good balance between full and incremental. Backups are faster than a full backup. Restoration is simpler than incremental, as you only need the last full backup and the latest differential backup.<br/><strong>Cons:</strong> The size of the differential backup grows each day until the next full backup is made, consuming more space over time than an incremental strategy.</p>
                                 </li>
                             </ul>
                         </section>
@@ -226,7 +227,7 @@ const BackupStorageCalculatorPage = () => {
                         </CardHeader>
                         <CardContent>
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                                <li><strong>The 3-2-1 Rule:</strong> A golden rule of data protection. Keep at least **3** copies of your data, on **2** different types of media, with **1** copy stored off-site (e.g., in the cloud).</li>
+                                <li><strong>The 3-2-1 Rule:</strong> A golden rule of data protection. Keep at least <strong>3</strong> copies of your data, on <strong>2</strong> different types of media, with <strong>1</strong> copy stored off-site (e.g., in the cloud).</li>
                                 <li><strong>Test Your Backups:</strong> A backup you haven't tested is not a real backup. Regularly perform test restores to a non-production environment to ensure your backups are valid and your restoration process works.</li>
                                 <li><strong>Factor in Compression and Deduplication:</strong> Modern backup software often includes compression and deduplication, which can significantly reduce storage needs. Our <Link href="/tools/compression-estimator" className="text-primary hover:underline">Compression Savings Estimator</Link> can give you a rough idea of the impact.</li>
                                 <li><strong>Consider RPO and RTO:</strong> Define your Recovery Point Objective (RPO - how much data you can afford to lose) and Recovery Time Objective (RTO - how quickly you need to be back online). These will dictate your backup frequency and strategy.</li>
