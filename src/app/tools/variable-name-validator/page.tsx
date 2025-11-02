@@ -162,19 +162,21 @@ const VariableNameValidatorPage = () => {
                         <li><strong>Don't Include the Data Type:</strong> Avoid names like `stringName` or `ageInt`. Modern languages and editors make it easy to see the type, so this is just redundant noise.</li>
                     </ul>
                 </CardContent>
-            Card>
-            <CardHeader>
-                 <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
-            CardHeader>
-            <CardContent>
-                 <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                    <li><strong>Using Reserved Keywords:</strong> Trying to name a variable `class` in Java or `for` in Python will always result in a syntax error.</li>
-                    <li><strong>Starting with a Number:</strong> `1stPlace` is an invalid variable name in all major languages.</li>
-                    <li><strong>Using Hyphens:</strong> `first-name` is invalid for variables. The hyphen is interpreted as a minus sign. Use `firstName` or `first_name` instead.</li>
-                    <li><strong>Inconsistent Casing:</strong> Mixing `camelCase` and `snake_case` in the same project makes the code jarring and hard to read. Stick to one convention.</li>
-                </ul>
-            </CardContent>
-        
+            </Card>
+            <Card>
+                <CardHeader>
+                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Using Reserved Keywords:</strong> Trying to name a variable `class` in Java or `for` in Python will always result in a syntax error.</li>
+                        <li><strong>Starting with a Number:</strong> `1stPlace` is an invalid variable name in all major languages.</li>
+                        <li><strong>Using Hyphens:</strong> `first-name` is invalid for variables. The hyphen is interpreted as a minus sign. Use `firstName` or `first_name` instead.</li>
+                        <li><strong>Inconsistent Casing:</strong> Mixing `camelCase` and `snake_case` in the same project makes the code jarring and hard to read. Stick to one convention.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+        </div>
 
        <section>
           <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>

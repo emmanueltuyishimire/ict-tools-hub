@@ -199,7 +199,7 @@ const SqlQueryTesterPage = () => {
                       <Link href="/tools/db-storage-estimator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Database Storage Estimator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardTitle className="text-base flex items-center justify-between">Database Storage Estimator</CardTitle>
                                   <CardDescription className="text-xs">Estimate how much disk space your tables might consume.</CardDescription>
                               </CardHeader>
                           </Card>
@@ -207,7 +207,7 @@ const SqlQueryTesterPage = () => {
                       <Link href="/tools/json-formatter" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">JSON Formatter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardTitle className="text-base flex items-center justify-between">JSON Formatter</CardTitle>
                                   <CardDescription className="text-xs">Format and validate JSON, a common data format returned by database APIs.</CardDescription>
                               </CardHeader>
                           </Card>
@@ -215,7 +215,7 @@ const SqlQueryTesterPage = () => {
                        <Link href="/tools/code-formatter" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Code Formatter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardTitle className="text-base flex items-center justify-between">Code Formatter</CardTitle>
                                   <CardDescription className="text-xs">Clean up and format your complex SQL queries for better readability.</CardDescription>
                               </CardHeader>
                           </Card>
