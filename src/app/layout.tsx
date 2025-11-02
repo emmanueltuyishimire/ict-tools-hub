@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Source_Code_Pro } from 'next/font/google';
+import Script from 'next/script';
 import { cn } from '@/lib/utils';
 import './globals.css';
 import { AppLayout } from '@/components/app-layout';
@@ -75,6 +76,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceCodePro.variable}`}>
       <head>
         <StructuredData data={webAppSchema} />
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=pub-3042243846300811"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
       </head>
       <body
         suppressHydrationWarning={true}
