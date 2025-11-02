@@ -65,6 +65,7 @@ import { RandomNumberGenerator } from '@/app/tools/random-number-generator/rando
 import { CodeSnippetFormatter } from '@/app/tools/code-snippet-formatter/code-snippet-formatter';
 import { VariableNameValidator } from '@/app/tools/variable-name-validator/variable-name-validator';
 import { UnicodeAsciiConverter } from '@/app/tools/unicode-ascii-converter/unicode-ascii-converter';
+import { PasswordEntropyCalculator } from '@/app/tools/password-entropy-calculator/password-entropy-calculator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -87,6 +88,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'bandwidth-estimator': BandwidthEstimator,
     'latency-estimator': LatencyEstimator,
     'password-strength-checker': PasswordStrengthChecker,
+    'password-entropy-calculator': PasswordEntropyCalculator,
     'data-transfer-calculator': DataTransferTimeCalculator,
     'mac-validator': MacValidator,
     'port-lookup': PortLookupTool,

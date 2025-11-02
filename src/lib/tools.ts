@@ -114,6 +114,7 @@ export const toolCategories: ToolCategory[] = [
     tools: [
       { name: 'Password Strength Checker', slug: 'password-strength-checker', description: 'Check the strength of a password.' },
       { name: 'Password Generator', slug: 'password-generator', description: 'Generate secure passwords.' },
+      { name: 'Password Entropy Calculator', slug: 'password-entropy-calculator', description: 'Calculate the entropy of a password in bits.' },
       { name: 'Hash Generator', slug: 'hash-generator', description: 'Generate various hashes (MD5, SHA1, SHA256).' },
       { name: 'Encryption / Decryption Tool', slug: 'encryption-decryption-tool', description: 'Encrypt or decrypt text.' },
       { name: 'Two-Factor Auth TOTP Demo', slug: 'totp-demo', description: 'Educational TOTP demo.' },
@@ -124,7 +125,6 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Secure Token Generator', slug: 'secure-token-generator', description: 'Generate a secure token.' },
       { name: 'OTP Generator', slug: 'otp-generator', description: 'Generate a one-time password.' },
       { name: 'Password Expiry Reminder', slug: 'password-expiry-reminder', description: 'Calculate password expiry.' },
-      { name: 'Password Entropy Calculator', slug: 'password-entropy-calculator', description: 'Calculate password entropy.' },
       { name: 'Salting / Hashing Demo Tool', slug: 'salting-hashing-demo', description: 'Demonstrate salting and hashing.' },
       { name: 'Simple Cipher Cracker', slug: 'simple-cipher-cracker', description: 'Educational cipher cracker.' },
       { name: 'Hex to Binary Password Converter', slug: 'hex-to-binary-password', description: 'Convert hex passwords to binary.' },
