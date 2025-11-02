@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { CloudStorageCostEstimator } from './cloud-storage-cost-estimator';
@@ -67,7 +68,7 @@ const CloudStorageCostEstimatorPage = () => {
                         <p>This estimator simplifies the complex pricing models of major cloud providers to give you a directional cost forecast. Follow these steps:</p>
                         <ol>
                             <li><strong>Enter Storage Amount:</strong> Input the total amount of data you plan to store in the "Total Storage" field. Be sure to select the correct unit (GB or TB).</li>
-                            <li><strong>Enter Data Transfer:</strong> Input the amount of data you expect to transfer *out* of the storage service each month. This is often called "egress" and is a major cost factor. Inbound data transfer is typically free.</li>
+                            <li><strong>Enter Data Transfer:</strong> Input the amount of data you expect to transfer <em>out</em> of the storage service each month. This is often called "egress" and is a major cost factor. Inbound data transfer is typically free.</li>
                             <li><strong>Select Your Provider &amp; Region:</strong> Choose the cloud provider (AWS, Google, Azure) and the region where your data will be stored. Prices vary significantly between regions. You can also select "Custom" to enter your own pricing.</li>
                             <li><strong>Review the Estimated Costs:</strong> The tool will instantly calculate and display the estimated monthly cost, broken down into storage costs and data transfer costs.</li>
                         </ol>
@@ -95,16 +96,16 @@ const CloudStorageCostEstimatorPage = () => {
                                     <ol>
                                         <li><strong>Inputs:</strong>
                                             <ul>
-                                                <li>Total Storage: `200` GB</li>
-                                                <li>Monthly Egress: `10` GB</li>
-                                                <li>Provider: `AWS (S3 Standard)`</li>
-                                                <li>Region: `us-east-1`</li>
+                                                <li>Total Storage: <strong>200</strong> GB</li>
+                                                <li>Monthly Egress: <strong>10</strong> GB</li>
+                                                <li>Provider: <strong>AWS (S3 Standard)</strong></li>
+                                                <li>Region: <strong>us-east-1</strong></li>
                                             </ul>
                                         </li>
                                         <li><strong>Calculation:</strong>
                                             <ul>
-                                                <li>Storage Cost: 200 GB * $0.023/GB = $4.60</li>
-                                                <li>Egress Cost: 10 GB * $0.09/GB = $0.90 (Note: This would likely be covered by AWS's free tier, but we calculate it for demonstration).</li>
+                                                <li>Storage Cost: 200 GB × $0.023/GB = $4.60</li>
+                                                <li>Egress Cost: 10 GB × $0.09/GB = $0.90 (Note: This would likely be covered by AWS's free tier, but we calculate it for demonstration).</li>
                                             </ul>
                                         </li>
                                         <li><strong>Result:</strong> The estimated monthly cost would be around <strong>$5.50</strong>, showing that cloud storage for personal backups is highly affordable.</li>
@@ -123,15 +124,15 @@ const CloudStorageCostEstimatorPage = () => {
                                     <ol>
                                         <li><strong>Inputs:</strong>
                                             <ul>
-                                                <li>Total Storage: `50` GB</li>
-                                                <li>Monthly Egress: `2` TB</li>
-                                                <li>Provider: `Google Cloud (Standard)`</li>
+                                                <li>Total Storage: <strong>50</strong> GB</li>
+                                                <li>Monthly Egress: <strong>2</strong> TB</li>
+                                                <li>Provider: <strong>Google Cloud (Standard)</strong></li>
                                             </ul>
                                         </li>
                                         <li><strong>Calculation:</strong>
                                             <ul>
-                                                <li>Storage Cost: 50 GB * $0.020/GB = $1.00</li>
-                                                <li>Egress Cost: 2048 GB * $0.12/GB = $245.76</li>
+                                                <li>Storage Cost: 50 GB × $0.020/GB = $1.00</li>
+                                                <li>Egress Cost: 2048 GB × $0.12/GB = $245.76</li>
                                             </ul>
                                         </li>
                                         <li><strong>Result:</strong> The estimated cost is <strong>$246.76</strong>. This example clearly shows that for asset-heavy websites, the data transfer (egress) cost is far more significant than the storage cost itself. This insight would lead the startup to use a CDN to reduce egress costs.</li>
@@ -185,7 +186,7 @@ const CloudStorageCostEstimatorPage = () => {
                             <h3>Other Cost Factors to Consider</h3>
                             <p>Beyond storage and egress, your final bill will be influenced by other, smaller charges:</p>
                              <ul className="list-disc pl-5">
-                               <li><strong>Request and Operation Costs:</strong> Providers charge a small fee per thousand requests made to your storage bucket. This includes `PUT` (upload), `COPY`, `POST`, `LIST`, and `GET` (download) operations. For a site with millions of small files being accessed frequently, these costs can add up.</li>
+                               <li><strong>Request and Operation Costs:</strong> Providers charge a small fee per thousand requests made to your storage bucket. This includes <code>PUT</code> (upload), <code>COPY</code>, <code>POST</code>, <code>LIST</code>, and <code>GET</code> (download) operations. For a site with millions of small files being accessed frequently, these costs can add up.</li>
                                <li><strong>Storage Tiers:</strong> Storing data in "Infrequent Access" or "Archive" (like AWS Glacier) tiers is dramatically cheaper for storage but comes with minimum storage durations and significantly higher costs for retrieval and access. This is a trade-off best suited for long-term backups and archival.</li>
                                <li><strong>Free Tiers:</strong> Most providers offer a perpetual free tier that includes a small amount of standard storage (e.g., 5 GB), a certain number of requests, and some data egress per month. For very small projects, your costs might be zero. This estimator does not factor in free tiers.</li>
                                <li><strong>Data Replication and Redundancy:</strong> Storing your data in multiple regions for disaster recovery will multiply your storage costs by the number of regions. Our <Link href="/tools/storage-redundancy-calculator" className="text-primary hover:underline">Storage Redundancy Calculator</Link> can help model these scenarios.</li>
@@ -228,7 +229,7 @@ const CloudStorageCostEstimatorPage = () => {
                         </CardHeader>
                         <CardContent>
                              <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                                <li><strong>Ignoring Egress Costs:</strong> The most common mistake. Focusing only on the cheap per-GB storage price and forgetting that getting the data *out* is where the real costs can hide.</li>
+                                <li><strong>Ignoring Egress Costs:</strong> The most common mistake. Focusing only on the cheap per-GB storage price and forgetting that getting the data <em>out</em> is where the real costs can hide.</li>
                                 <li><strong>Using the Wrong Storage Tier:</strong> Storing frequently accessed data in an archive tier. While storage is cheap, the high retrieval fees will result in a surprisingly large bill.</li>
                                 <li><strong>Forgetting About Operation Costs:</strong> For applications with millions of very small files, the cost of GET/PUT requests can become a significant part of the bill, even if the total storage size is small.</li>
                                 <li><strong>Leaking Access Keys:</strong> Accidentally committing cloud storage access keys to a public code repository. Attackers constantly scan for these keys and will use them to run up massive bills ("crypto-jacking") or steal your data.</li>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { CompressionEstimator } from '../compression-estimator/compression-estimator';
@@ -87,7 +88,7 @@ const DataCompressionCalculatorPage = () => {
                                     <ol>
                                         <li><strong>Input:</strong> `1.2` MB</li>
                                         <li><strong>Calculation (Brotli):</strong> The tool estimates an ~80% reduction. `1.2 MB * 0.20 = 0.24 MB`.</li>
-                                        <li><strong>Result:</strong> The estimated size is **245.76 KB**. This means the user's browser only needs to download about 246 KB instead of 1200 KB, dramatically improving the site's load time.</li>
+                                        <li><strong>Result:</strong> The estimated size is <strong>245.76 KB</strong>. This means the user's browser only needs to download about 246 KB instead of 1200 KB, dramatically improving the site's load time.</li>
                                     </ol>
                                 </div>
                             </CardContent>
@@ -103,7 +104,7 @@ const DataCompressionCalculatorPage = () => {
                                     <ol>
                                         <li><strong>Input:</strong> `500` MB</li>
                                         <li><strong>Calculation (Gzip):</strong> The tool estimates a ~75% reduction. `500 MB * 0.25 = 125 MB`.</li>
-                                        <li><strong>Result:</strong> The estimated compressed size is **125 MB**. This reduces their daily storage cost by 75% and also makes uploading the backup four times faster.</li>
+                                        <li><strong>Result:</strong> The estimated compressed size is <strong>125 MB</strong>. This reduces their daily storage cost by 75% and also makes uploading the backup four times faster.</li>
                                     </ol>
                                 </div>
                             </CardContent>
@@ -142,7 +143,7 @@ const DataCompressionCalculatorPage = () => {
                                 Data compression is the process of reducing the number of bits needed to represent data. It's a fundamental concept in computer science that allows us to store and transmit data more efficiently. Compression works by finding and eliminating statistical redundancy. In simpler terms, it finds repeating patterns in your data and replaces them with shorter representations.
                             </p>
                             <p>
-                                There are two main types of compression: lossless and lossy. This tool focuses on **lossless compression**, where the original data can be perfectly reconstructed from the compressed version. This is essential for text, source code, and executable files where every single bit matters. **Lossy compression**, used for media like images and audio, achieves much higher compression ratios by permanently discarding data that the human eye or ear is unlikely to notice.
+                                There are two main types of compression: lossless and lossy. This tool focuses on <strong>lossless compression</strong>, where the original data can be perfectly reconstructed from the compressed version. This is essential for text, source code, and executable files where every single bit matters. <strong>Lossy compression</strong>, used for media like images and audio, achieves much higher compression ratios by permanently discarding data that the human eye or ear is unlikely to notice.
                             </p>
                         </section>
                         <section>
@@ -152,12 +153,14 @@ const DataCompressionCalculatorPage = () => {
                                 <li><strong>Gzip:</strong> Based on the DEFLATE algorithm, Gzip has been the standard for web compression for decades. It's fast, efficient, and supported by virtually every server and browser. It's an excellent baseline for any web performance strategy.</li>
                                 <li><strong>Brotli:</strong> A newer algorithm developed by Google, Brotli uses a more modern compression technique and includes a pre-defined dictionary of common words and code snippets found on the web. This allows it to achieve significantly better compression ratios than Gzip (often 15-25% smaller) for the same files, at the cost of slightly slower compression times.</li>
                             </ul>
-                            <p>The modern best practice is to configure your server to serve Brotli-compressed files to browsers that support it (which is most of them) and fall back to Gzip for older clients. You can check which compression your server is using with our <Link href="/tools/http-header-checker" className="text-primary hover:underline">HTTP Header Checker</Link>.</p>
+                            <p>
+                                The modern best practice is to configure your server to serve Brotli-compressed files to browsers that support it (which is most of them) and fall back to Gzip for older clients. You can check which compression your server is using with our <Link href="/tools/http-header-checker" className="text-primary hover:underline">HTTP Header Checker</Link>.
+                            </p>
                         </section>
                          <section>
                             <h3>Compression and Minification: A Powerful Combination</h3>
                             <p>
-                                For web assets like CSS and JavaScript, compression should be used in combination with **minification**. Minification is the process of removing all unnecessary characters from code (like whitespace, comments, and newlines) without changing its functionality.
+                                For web assets like CSS and JavaScript, compression should be used in combination with <strong>minification</strong>. Minification is the process of removing all unnecessary characters from code (like whitespace, comments, and newlines) without changing its functionality.
                             </p>
                             <p>
                                 The process should always be: <strong>1. Minify your code, then 2. Compress the minified code.</strong> Minifying the code first creates a denser file with less "noise", making it easier for the compression algorithm to find meaningful, repeating patterns and achieve a higher compression ratio. You can use our <Link href="/tools/code-minifier" className="text-primary hover:underline">Code Minifier</Link> to perform the first step of this process.

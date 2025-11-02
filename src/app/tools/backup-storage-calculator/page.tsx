@@ -106,7 +106,7 @@ const BackupStorageCalculatorPage = () => {
                                                 <li>Retention: <strong>7</strong></li>
                                             </ul>
                                         </li>
-                                        <li><strong>Calculation:</strong> <strong>7 backups × 500 GB/backup = 3500 GB</strong></li>
+                                        <li><strong>Calculation:</strong> 7 backups × 500 GB/backup = 3500 GB</li>
                                         <li><strong>Result:</strong> They will need <strong>3.5 TB</strong> of storage space. This shows how quickly full backups can consume storage.</li>
                                     </ol>
                                 </div>
@@ -132,7 +132,7 @@ const BackupStorageCalculatorPage = () => {
                                         <li><strong>Calculation:</strong>
                                              <ul>
                                                 <li>Day 1 (Full): <strong>500 GB</strong></li>
-                                                <li>Day 2-7 (Incremental): <strong>6 backups × (500 GB × 5%) = 6 × 25 GB = 150 GB</strong></li>
+                                                <li>Day 2-7 (Incremental): 6 backups × (500 GB × 5%) = 6 × 25 GB = 150 GB</li>
                                                 <li>Total: <strong>500 GB + 150 GB = 650 GB</strong></li>
                                              </ul>
                                         </li>
