@@ -23,55 +23,80 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+type QuestionLevel = 'Beginner' | 'Intermediate' | 'Pro';
 
 const allQuizQuestions = [
     {
         code: `function findFirst(items) {\n  return items[0];\n}`,
         options: ['O(1)', 'O(n)', 'O(log n)'],
         correctAnswer: 'O(1)',
-        explanation: 'This function performs a single operation (accessing the first element) regardless of the size of the input array. Its runtime is constant, making it O(1).'
+        explanation: 'This function performs a single operation (accessing the first element) regardless of the size of the input array. Its runtime is constant, making it O(1).',
+        level: 'Beginner' as QuestionLevel
     },
     {
         code: `function containsValue(items, value) {\n  for (let item of items) {\n    if (item === value) {\n      return true;\n    }\n  }\n  return false;\n}`,
         options: ['O(n²)', 'O(log n)', 'O(n)'],
         correctAnswer: 'O(n)',
-        explanation: 'In the worst-case scenario, this function has to loop through every single item in the array to find the value. The runtime grows linearly with the number of items (n), making it O(n).'
+        explanation: 'In the worst-case scenario, this function has to loop through every single item in the array to find the value. The runtime grows linearly with the number of items (n), making it O(n).',
+        level: 'Beginner' as QuestionLevel
     },
     {
         code: `function hasDuplicates(items) {\n  for (let i = 0; i < items.length; i++) {\n    for (let j = 0; j < items.length; j++) {\n      if (i !== j && items[i] === items[j]) {\n        return true;\n      }\n    }\n  }\n  return false;\n}`,
         options: ['O(n log n)', 'O(n²)', 'O(n)'],
         correctAnswer: 'O(n²)',
-        explanation: 'This function contains a nested loop where it compares every item to every other item. This results in n * n operations, leading to quadratic time complexity, O(n²), which is very inefficient for large inputs.'
-    },
-    {
-        code: `// Assuming 'sortedItems' is a sorted array\nfunction findInSorted(sortedItems, value) {\n  let low = 0;\n  let high = sortedItems.length - 1;\n  while (low <= high) {\n    let mid = Math.floor((low + high) / 2);\n    if (sortedItems[mid] === value) return true;\n    if (sortedItems[mid] < value) low = mid + 1;\n    else high = mid - 1;\n  }\n  return false;\n}`,
-        options: ['O(1)', 'O(log n)', 'O(n)'],
-        correctAnswer: 'O(log n)',
-        explanation: 'This is a binary search algorithm. With each step, it cuts the search space in half. This logarithmic growth is extremely efficient, as doubling the input size only adds one extra operation. This is O(log n).'
-    },
-    {
-        code: `function printPairs(items) {\n  for (let item of items) {\n    console.log('---');\n    for (let otherItem of items) {\n      // O(1) operation\n    }\n  }\n}`,
-        options: ['O(n)', 'O(log n)', 'O(n²)'],
-        correctAnswer: 'O(n²)',
-        explanation: 'The nested loops are the key here. The outer loop runs n times, and for each of those iterations, the inner loop also runs n times. The total number of operations is approximately n * n, resulting in O(n²) complexity.'
-    },
-    {
-        code: `// Recursive factorial calculation\nfunction factorial(n) {\n  if (n === 0) return 1;\n  return n * factorial(n - 1);\n}`,
-        options: ['O(n)', 'O(1)', 'O(n²)'],
-        correctAnswer: 'O(n)',
-        explanation: 'The function calls itself `n` times before reaching the base case (n=0). This creates a call stack of depth `n`, leading to linear time complexity, O(n).'
+        explanation: 'This function contains a nested loop where it compares every item to every other item. This results in n * n operations, leading to quadratic time complexity, O(n²), which is very inefficient for large inputs.',
+        level: 'Beginner' as QuestionLevel
     },
     {
         code: `function sumAndProduct(items) {\n  let sum = 0; // O(1)\n  let product = 1; // O(1)\n\n  for (let item of items) { // O(n)\n    sum += item;\n  }\n\n  for (let item of items) { // O(n)\n    product *= item;\n  }\n\n  return [sum, product];\n}`,
         options: ['O(n²)', 'O(n)', 'O(1)'],
         correctAnswer: 'O(n)',
-        explanation: 'The function has two separate loops that each run `n` times. The total complexity is O(n + n), which simplifies to O(2n). In Big O notation, we drop constant factors, so the final complexity is O(n).'
+        explanation: 'The function has two separate loops that each run `n` times. The total complexity is O(n + n), which simplifies to O(2n). In Big O notation, we drop constant factors, so the final complexity is O(n).',
+        level: 'Beginner' as QuestionLevel
+    },
+    {
+        code: `// Assuming 'sortedItems' is a sorted array\nfunction findInSorted(sortedItems, value) {\n  let low = 0;\n  let high = sortedItems.length - 1;\n  while (low <= high) {\n    let mid = Math.floor((low + high) / 2);\n    if (sortedItems[mid] === value) return true;\n    if (sortedItems[mid] < value) low = mid + 1;\n    else high = mid - 1;\n  }\n  return false;\n}`,
+        options: ['O(1)', 'O(log n)', 'O(n)'],
+        correctAnswer: 'O(log n)',
+        explanation: 'This is a binary search algorithm. With each step, it cuts the search space in half. This logarithmic growth is extremely efficient, as doubling the input size only adds one extra operation. This is O(log n).',
+        level: 'Intermediate' as QuestionLevel
+    },
+    {
+        code: `// Recursive factorial calculation\nfunction factorial(n) {\n  if (n === 0) return 1;\n  return n * factorial(n - 1);\n}`,
+        options: ['O(n)', 'O(1)', 'O(n²)'],
+        correctAnswer: 'O(n)',
+        explanation: 'The function calls itself `n` times before reaching the base case (n=0). This creates a call stack of depth `n`, leading to linear time complexity, O(n).',
+        level: 'Intermediate' as QuestionLevel
     },
     {
         code: `// Merge Sort\nfunction mergeSort(items) {\n  if (items.length <= 1) return items;\n  const middle = Math.floor(items.length / 2);\n  const left = items.slice(0, middle);\n  const right = items.slice(middle);\n  return merge(mergeSort(left), mergeSort(right));\n}`,
         options: ['O(n²)', 'O(n log n)', 'O(n)'],
         correctAnswer: 'O(n log n)',
-        explanation: 'This represents the Merge Sort algorithm. The list is recursively divided in half (which gives the log n part), and then each element is merged back together (which gives the n part). The resulting complexity is O(n log n), a hallmark of efficient sorting algorithms.'
+        explanation: 'This represents the Merge Sort algorithm. The list is recursively divided in half (which gives the log n part), and then each element is merged back together (which gives the n part). The resulting complexity is O(n log n), a hallmark of efficient sorting algorithms.',
+        level: 'Intermediate' as QuestionLevel
+    },
+     {
+        code: `// Naive recursive Fibonacci\nfunction fibonacci(n) {\n  if (n <= 1) return n;\n  return fibonacci(n-1) + fibonacci(n-2);\n}`,
+        options: ['O(n log n)', 'O(2ⁿ)', 'O(n²)'],
+        correctAnswer: 'O(2ⁿ)',
+        explanation: 'This naive recursive implementation of Fibonacci has exponential complexity. Each call to fib(n) generates two more calls, leading to a tree of calls that grows exponentially. The number of operations is roughly proportional to 2 to the power of n.',
+        level: 'Pro' as QuestionLevel
+    },
+    {
+        code: `function allSubsets(items) {\n  const subsets = [[]];\n  for (const item of items) {\n    const currentSubsets = [];\n    for (const subset of subsets) {\n      currentSubsets.push([...subset, item]);\n    }\n    subsets.push(...currentSubsets);\n  }\n  return subsets;\n}`,
+        options: ['O(n * 2ⁿ)', 'O(n²)', 'O(2ⁿ)'],
+        correctAnswer: 'O(n * 2ⁿ)',
+        explanation: 'Generating all subsets (the power set) of a set of size n results in 2ⁿ subsets. The loops in this algorithm iterate through all existing subsets to create new ones for each item, leading to a complexity of roughly n times 2ⁿ.',
+        level: 'Pro' as QuestionLevel
+    },
+    {
+        code: `function printAllPermutations(items, prefix = '') {\n  if (items.length === 0) {\n    console.log(prefix);\n  } else {\n    for (let i = 0; i < items.length; i++) {\n      const rem = items.slice(0, i).concat(items.slice(i + 1));\n      printAllPermutations(rem, prefix + items[i]);\n    }\n  }\n}`,
+        options: ['O(n!)', 'O(n log n)', 'O(n * 2ⁿ)'],
+        correctAnswer: 'O(n!)',
+        explanation: 'This recursive function generates all possible orderings (permutations) of the input items. The number of permutations for n items is n factorial (n!). The complexity grows extremely fast, making it only feasible for very small inputs.',
+        level: 'Pro' as QuestionLevel
     }
 ];
 
@@ -79,8 +104,8 @@ function BigOQuiz() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [userAnswers, setUserAnswers] = useState<(string | null)[]>([]);
     const [quizState, setQuizState] = useState<'not-started' | 'in-progress' | 'finished'>('not-started');
-    const [quizQuestions, setQuizQuestions] = useState<typeof allQuizQuestions>([]);
-    const [settings, setSettings] = useState({ numQuestions: 5, timeLimit: 2 }); // Default 5 questions, 2 minutes
+    const [quizQuestions, setQuizQuestions] = useState<(typeof allQuizQuestions[0])[]>([]);
+    const [settings, setSettings] = useState({ numQuestions: 5, timeLimit: 2, level: 'Beginner' as QuestionLevel });
     const [timeLeft, setTimeLeft] = useState(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -101,7 +126,7 @@ function BigOQuiz() {
             timerRef.current = setInterval(() => {
                 setTimeLeft(prev => prev - 1);
             }, 1000);
-        } else if (timeLeft === 0 && quizState === 'in-progress') {
+        } else if (timeLeft <= 0 && quizState === 'in-progress') {
             finishQuiz();
         }
         return () => {
@@ -124,8 +149,11 @@ function BigOQuiz() {
     };
     
     const handleStart = () => {
+        // Filter questions by level
+        const filteredQuestions = allQuizQuestions.filter(q => q.level === settings.level);
+
         // Shuffle and slice questions
-        const shuffled = [...allQuizQuestions].sort(() => 0.5 - Math.random());
+        const shuffled = [...filteredQuestions].sort(() => 0.5 - Math.random());
         const selectedQuestions = shuffled.slice(0, settings.numQuestions);
         
         setQuizQuestions(selectedQuestions);
@@ -136,6 +164,9 @@ function BigOQuiz() {
     };
     
     if (quizState === 'not-started') {
+        const questionsInLevel = allQuizQuestions.filter(q => q.level === settings.level).length;
+        const numQuestionsValue = Math.min(settings.numQuestions, questionsInLevel);
+
         return (
              <Card>
                 <CardHeader>
@@ -143,16 +174,27 @@ function BigOQuiz() {
                     <CardDescription>Configure your quiz then click Start.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="level-select">Difficulty</Label>
+                            <Select value={settings.level} onValueChange={(v) => setSettings(s => ({...s, level: v as QuestionLevel}))}>
+                                <SelectTrigger id="level-select"><SelectValue /></SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="Beginner">Beginner</SelectItem>
+                                    <SelectItem value="Intermediate">Intermediate</SelectItem>
+                                    <SelectItem value="Pro">Pro</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
                         <div className="space-y-2">
                             <Label htmlFor="num-questions">Number of Questions</Label>
                             <Input
                                 id="num-questions"
                                 type="number"
                                 min="1"
-                                max={allQuizQuestions.length}
-                                value={settings.numQuestions}
-                                onChange={(e) => setSettings(s => ({...s, numQuestions: Math.max(1, Math.min(allQuizQuestions.length, parseInt(e.target.value) || 1))}))}
+                                max={questionsInLevel}
+                                value={numQuestionsValue}
+                                onChange={(e) => setSettings(s => ({...s, numQuestions: Math.max(1, Math.min(questionsInLevel, parseInt(e.target.value) || 1))}))}
                             />
                         </div>
                         <div className="space-y-2">
@@ -290,7 +332,7 @@ const BigOComplexityQuizPage = () => {
                     <Card className="prose prose-sm max-w-none text-foreground p-6">
                         <p>This quiz is designed to be a quick and interactive learning tool.</p>
                         <ol>
-                            <li><strong>Configure Your Quiz:</strong> Choose the number of questions you want and set a time limit in minutes.</li>
+                            <li><strong>Configure Your Quiz:</strong> Choose the difficulty, number of questions you want and set a time limit in minutes.</li>
                             <li><strong>Start the Quiz:</strong> Click the "Start Quiz" button to begin. A random set of questions will be selected.</li>
                             <li><strong>Analyze the Code:</strong> For each question, carefully read the provided JavaScript code snippet. Pay attention to loops, nested loops, and how the function's operations relate to the size of the input.</li>
                             <li><strong>Select an Answer:</strong> Choose the Big O notation that best represents the worst-case time complexity of the function.</li>
