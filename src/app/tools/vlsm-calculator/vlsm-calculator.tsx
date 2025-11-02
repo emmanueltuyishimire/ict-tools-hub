@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
@@ -18,7 +17,7 @@ import Link from 'next/link';
 const ipToLong = (ip: string): number | null => {
     const parts = ip.split('.').map(part => parseInt(part, 10));
     if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) return null;
-    return (parts[0] << 24) | (parts[1] << 16) | (parts[2] << 8) | parts[3];
+    return (parts[0] * 16777216) + (parts[1] * 65536) + (parts[2] * 256) + parts[3];
 };
 
 const longToIp = (long: number): string => {
@@ -59,7 +58,7 @@ const howToSchema = {
     step: [
         { '@type': 'HowToStep', name: 'Enter Major Network', text: 'Input the main network IP address and CIDR prefix you want to divide (e.g., 172.16.0.0/22).' },
         { '@type': 'HowToStep', name: 'Define Subnets', text: 'For each required subnet, enter a descriptive name (e.g., "Engineering LAN") and the number of hosts it needs to support. Use the "Add Subnet" button to create more entries.' },
-        { '@type': 'HowToStep', name: 'Calculate', text: 'Click the "Design Network" button. The calculator will automatically sort your requests from largest to smallest and allocate the most efficient subnets.' },
+        { '@type': 'HowToStep', name: 'Calculate', text: 'Click the "Design Network" button. The calculator will automatically sort your requests from largest to smallest and allocate the most appropriately sized subnets.' },
         { '@type': 'HowToStep', name: 'Review the Allocation Table', text: 'The results table will show the allocated details for each subnet, including its assigned network ID, usable host range, broadcast address, and subnet mask. Any unallocated space will also be shown.' },
         { '@type': 'HowToStep', name: 'Copy Information', text: 'Use the copy buttons within the results table to easily copy any piece of information you need for your documentation or device configuration.' }
     ],
@@ -355,172 +354,6 @@ export function VlsmCalculator() {
                         </AlertDescription>
                     </Alert>
                 </Card>
-            </section>
-
-             <Card className='bg-secondary/30 border-primary/20'>
-                <CardHeader>
-                    <div className='flex items-center gap-2 text-primary'>
-                        <BookOpen className="h-6 w-6" aria-hidden="true" />
-                        <CardTitle className="text-primary">Educational Deep Dive: Mastering VLSM</CardTitle>
-                    </div>
-                    <CardDescription>Go beyond fixed-size networks and learn how to allocate IP addresses with precision and foresight.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
-                    <section>
-                        <h3 className="font-bold text-xl">The Problem with "One Size Fits All" Networking</h3>
-                        <p>Imagine you have a large block of IP addresses, say a /24 network with 256 addresses. You need to create four separate networks for four departments. With traditional, fixed-length subnetting, you would divide the /24 into four /26 subnets. Each of these four subnets would contain 64 addresses (62 usable). This works perfectly if each department needs around 50-60 devices. But what if the reality is different? What if your Engineering department needs 50 hosts, Sales needs 20, Marketing needs 10, and you have two WAN links that only need 2 hosts each? </p>
-                        <p>With fixed-length subnetting, you'd be forced to give each of these segments a /26 subnet. The WAN links would each get a block of 64 addresses, but only use 2—wasting 62 addresses per link. Marketing would get 64 addresses and waste 54. This is the core problem that Variable Length Subnet Masking (VLSM) was designed to solve. It breaks the rigid rule that all subnets must be the same size, allowing you to create a network plan that is precisely tailored to your needs, thereby minimizing waste and maximizing efficiency. It’s the difference between buying a one-size-fits-all t-shirt for your entire family versus buying everyone a shirt that actually fits them.</p>
-                    </section>
-                    <section>
-                        <h3 className="font-bold text-xl">The VLSM Algorithm: A Step-by-Step Guide</h3>
-                        <p>VLSM follows a simple but strict algorithm to ensure that address space is not fragmented, which would prevent larger subnets from being allocated. The cardinal rule is: <strong>Always allocate the largest subnets first.</strong></p>
-                        <p>Let's walk through a manual calculation for a major network of <strong>192.168.10.0/24</strong> with these requirements:</p>
-                         <ul className="list-disc pl-5">
-                            <li><strong>LAN A:</strong> 100 hosts</li>
-                            <li><strong>LAN B:</strong> 50 hosts</li>
-                            <li><strong>LAN C:</strong> 10 hosts</li>
-                            <li><strong>WAN 1:</strong> 2 hosts</li>
-                        </ul>
-                        <ol className="list-decimal pl-5 space-y-2 mt-4">
-                           <li><strong>Sort Requirements:</strong> First, order the requests from largest to smallest number of hosts: LAN A (100), LAN B (50), LAN C (10), WAN 1 (2).</li>
-                           <li>
-                                <strong>Allocate for LAN A (100 hosts):</strong>
-                                <ul>
-                                    <li>We need to find the smallest power of 2 that is >= 100 + 2. That's 128 (2<sup>7</sup>).</li>
-                                    <li>This means we need 7 bits for the host portion.</li>
-                                    <li>The subnet mask will have 32 - 7 = 25 network bits. This is a <strong>/25</strong> mask.</li>
-                                    <li><strong>Allocation:</strong> The first available address is 192.168.10.0. This subnet will occupy addresses from 192.168.10.0 to 192.168.10.127.</li>
-                                </ul>
-                           </li>
-                           <li>
-                                <strong>Allocate for LAN B (50 hosts):</strong>
-                                <ul>
-                                    <li>We need 50 + 2 = 52 addresses. The smallest power of 2 >= 52 is 64 (2<sup>6</sup>).</li>
-                                    <li>This requires 6 host bits, meaning a 32 - 6 = <strong>/26</strong> mask.</li>
-                                    <li>The next available address after our first block is 192.168.10.128.</li>
-                                    <li><strong>Allocation:</strong> This subnet will occupy addresses from 192.168.10.128 to 192.168.10.191.</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <strong>Allocate for LAN C (10 hosts):</strong>
-                                <ul>
-                                    <li>We need 10 + 2 = 12 addresses. The smallest power of 2 >= 12 is 16 (2<sup>4</sup>).</li>
-                                    <li>This requires 4 host bits, meaning a 32 - 4 = <strong>/28</strong> mask.</li>
-                                    <li>The next available address is 192.168.10.192.</li>
-                                    <li><strong>Allocation:</strong> This subnet will occupy addresses from 192.168.10.192 to 192.168.10.207.</li>
-                                </ul>
-                            </li>
-                             <li>
-                                <strong>Allocate for WAN 1 (2 hosts):</strong>
-                                <ul>
-                                    <li>We need 2 + 2 = 4 addresses. The smallest power of 2 >= 4 is 4 (2<sup>2</sup>).</li>
-                                    <li>This requires 2 host bits, meaning a 32 - 2 = <strong>/30</strong> mask.</li>
-                                    <li>The next available address is 192.168.10.208.</li>
-                                    <li><strong>Allocation:</strong> This subnet will occupy addresses from 192.168.10.208 to 192.168.10.211.</li>
-                                </ul>
-                            </li>
-                            <li><strong>Unallocated Space:</strong> Our original /24 network ends at 192.168.10.255. Our last allocation ended at 192.168.10.211. This means the range from 192.168.10.212 to 192.168.10.255 is still free for future use.</li>
-                        </ol>
-                        <p>This process, while logical, can be tedious and prone to error. That's why our VLSM calculator is an indispensable tool for network designers.</p>
-                    </section>
-                </CardContent>
-            </Card>
-
-            <div className="grid md:grid-cols-2 gap-8">
-                <Card>
-                    <CardHeader>
-                        <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
-                    </CardHeader>
-                    <CardContent>
-                        <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                            <li><strong>Plan for Growth:</strong> When entering host requirements, don't use the exact number of current devices. Add a buffer (e.g., 20-30% growth) to avoid having to re-address your network in six months.</li>
-                            <li><strong>Document Everything:</strong> Use the "Name" field to be descriptive (e.g., "Building A - 3rd Floor WiFi", "Core Router Link"). A good VLSM plan is a critical piece of network documentation.</li>
-                            <li><strong>Use /31 for WAN Links:</strong> For point-to-point links between two routers, modern best practice is to use a /31 subnet (2 hosts required). This saves IP addresses compared to the traditional /30. Our calculator handles this correctly.</li>
-                            <li><strong>Summarize for Efficiency:</strong> After designing your VLSM scheme, think about route summarization. A well-planned VLSM design allows you to aggregate many specific routes into one general route at higher levels of your network, which dramatically improves router performance.</li>
-                        </ul>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader>
-                         <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
-                    </CardHeader>
-                    <CardContent>
-                         <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                            <li><strong>Not Sorting by Size:</strong> The most critical mistake. If you allocate a small subnet from the beginning of your address block, you can fragment the space and make it impossible to fit a larger subnet later, even if you technically have enough free addresses.</li>
-                            <li><strong>Incorrect Host Calculation:</strong> Forgetting to add 2 (for the network and broadcast addresses) when determining the required block size. If you need 30 hosts, you must find a block size >= 32, not 30.</li>
-                            <li><strong>Starting with an Invalid Network Address:</strong> Inputting a major network IP that isn't a valid network address for its CIDR (e.g., 192.168.0.100/24). The calculator will flag this error, but it's a common manual mistake. Use our <Link href="/tools/subnet-calculator" className='text-primary hover:underline'>Subnet Calculator</Link> to find the correct starting address if you're unsure.</li>
-                             <li><strong>Overlapping Subnets:</strong> A manual calculation error where the start of a new subnet is placed within the range of a previously allocated one. This leads to IP conflicts and network failure. Our tool prevents this by design.</li>
-                        </ul>
-                    </CardContent>
-                </Card>
-            </div>
-            
-            <section>
-                <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
-                <div className="grid md:grid-cols-2 gap-6">
-                    <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Campus Network Design</h3>
-                        <p className="text-sm text-muted-foreground">A university IT department is given the `10.50.0.0/16` block. They need to create networks for different faculties, labs, and administrative buildings, each with vastly different numbers of users. Using the VLSM calculator, they can create a `/19` for the large student WiFi network, a `/22` for the main library, smaller `/25` subnets for each academic department, and tiny `/30` links for router connections, all from the same initial block, ensuring every IP address is used efficiently.</p>
-                    </div>
-                     <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Cloud VPC Networking</h3>
-                        <p className="text-sm text-muted-foreground">A cloud engineer is designing a Virtual Private Cloud (VPC) in AWS or Azure. They plan to have a public subnet for web servers (10 hosts), an application subnet for backend servers (50 hosts), and a database subnet for managed databases (5 hosts). By plugging these requirements into the VLSM calculator with their main VPC CIDR block, they can generate a precise, non-overlapping IP plan to configure in their cloud environment, enhancing security and organization.</p>
-                    </div>
-                     <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">ISP Customer Allocation</h3>
-                        <p className="text-sm text-muted-foreground">An Internet Service Provider (ISP) needs to allocate public IP address blocks to its business customers. Customer A needs 8 static IPs, Customer B needs 13, and Customer C needs 2. The ISP uses a VLSM plan to carve out a `/28` block (14 usable IPs) for Customer B, a `/29` block (6 usable IPs) for Customer A, and a `/30` block (2 usable IPs) for Customer C, ensuring that public IPv4 addresses, a scarce resource, are not wasted.</p>
-                    </div>
-                     <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Preparing for a Certification Exam</h3>
-                        <p className="text-sm text-muted-foreground">A student studying for the CCNA or Network+ certification encounters a complex VLSM problem. They use the calculator to quickly generate the correct answer, then work backward through the manual step-by-step process to understand the logic. This allows them to check their work and solidify their understanding of the VLSM algorithm under exam-like pressure.</p>
-                    </div>
-                </div>
-            </section>
-
-             <section>
-                <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
-                <Card>
-                    <CardContent className="p-6">
-                        <Accordion type="single" collapsible className="w-full">
-                            {faqData.map((item, index) => (
-                                <AccordionItem value={`item-${index}`} key={index}>
-                                    <AccordionTrigger>{item.question}</AccordionTrigger>
-                                    <AccordionContent>{item.answer}</AccordionContent>
-                                </AccordionItem>
-                            ))}
-                        </Accordion>
-                    </CardContent>
-                </Card>
-            </section>
-
-             <section>
-                <h2 className="text-2xl font-bold mb-4">Related Tools & Articles</h2>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Link href="/tools/subnet-calculator" className="block">
-                        <Card className="hover:border-primary transition-colors h-full">
-                            <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">Subnet Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Analyze a single subnet in detail. A great first step before designing a VLSM scheme.</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </Link>
-                     <Link href="/tools/subnet-mask-converter" className="block">
-                        <Card className="hover:border-primary transition-colors h-full">
-                            <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">Subnet Mask Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Quickly convert between CIDR, subnet masks, and wildcard masks to understand the numbers behind VLSM.</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </Link>
-                    <Link href="/tools/ip-to-binary" className="block">
-                        <Card className="hover:border-primary transition-colors h-full">
-                            <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">IP to Binary Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Visualize IP addresses in binary to fully grasp how subnetting and VLSM manipulate bits.</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </Link>
-                </div>
             </section>
         </div>
     );
