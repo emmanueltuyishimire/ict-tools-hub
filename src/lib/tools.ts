@@ -1,5 +1,4 @@
 
-
 import {
   type LucideIcon,
   Network,
@@ -155,7 +154,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'RAID Storage Calculator', slug: 'raid-calculator', description: 'Calculate RAID storage.' },
       { name: 'Cloud Migration Planning Guide', slug: 'cloud-migration-estimator', description: 'A guide to planning your cloud migration.' },
       { name: 'Cloud Sync Time Calculator', slug: 'cloud-sync-time-calculator', description: 'Calculate cloud sync time.' },
-      { name: 'VM Scaling Calculator', slug: 'vm-scaling-calculator', description: 'Calculate VM scaling needs.' },
+      { name: 'VM Scaling Planning Guide', slug: 'vm-scaling-calculator', description: 'Plan your vertical and horizontal VM scaling strategy.' },
       { name: 'Storage Redundancy Calculator', slug: 'storage-redundancy-calculator', description: 'Calculate storage redundancy.' },
       { name: 'Virtual Disk Size Estimator', slug: 'vdisk-size-estimator', description: 'Estimate virtual disk sizes.' },
       { name: 'IOPS Calculator', slug: 'iops-calculator', description: 'Calculate I/O operations per second.' },
