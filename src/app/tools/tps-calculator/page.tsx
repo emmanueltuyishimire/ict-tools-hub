@@ -148,19 +148,19 @@ const TpsCalculatorPage = () => {
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Benchmarking a Database</h3>
-                            <p className="text-sm text-muted-foreground">A DBA runs a performance test on a new PostgreSQL server. The test executes 1.8 million transactions over a 10-minute period. They plug `1,800,000` transactions and `10` minutes into the calculator to find that the server achieved an average of <strong>3,000 TPS</strong>. This provides a baseline performance metric for the new hardware.</p>
+                            <p className="text-sm text-muted-foreground">A DBA runs a performance test on a new PostgreSQL server. The test executes 1.8 million transactions over a 10-minute period. They plug <strong>1,800,000</strong> transactions and <strong>10</strong> minutes into the calculator to find that the server achieved an average of <strong>3,000 TPS</strong>. This provides a baseline performance metric for the new hardware.</p>
                         </div>
                          <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Capacity Planning for an API</h3>
-                            <p className="text-sm text-muted-foreground">A developer is load-testing their new API. Their goal is to support 500 requests per second. The test shows the system successfully handled 27,000 requests in one minute. Using the calculator (`27,000` transactions in `60` seconds), they find the current performance is <strong>450 TPS</strong>. This tells them they are close to their goal but need to do a bit more optimization to reach 500 TPS.</p>
+                            <p className="text-sm text-muted-foreground">A developer is load-testing their new API. Their goal is to support 500 requests per second. The test shows the system successfully handled 27,000 requests in one minute. Using the calculator (<strong>27,000</strong> transactions in <strong>60</strong> seconds), they find the current performance is <strong>450 TPS</strong>. This tells them they are close to their goal but need to do a bit more optimization to reach 500 TPS.</p>
                         </div>
                          <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Sizing a Web Server</h3>
-                            <p className="text-sm text-muted-foreground">A company is planning for a Black Friday sale and anticipates 7.2 million page views over the busiest 4-hour period. To understand the load on their web servers, they use the calculator to find the required TPS. `7,200,000` transactions in `4` hours equals an average of <strong>500 TPS</strong>. They can then ensure their server cluster is configured to handle this level of traffic.</p>
+                            <p className="text-sm text-muted-foreground">A company is planning for a Black Friday sale and anticipates 7.2 million page views over the busiest 4-hour period. To understand the load on their web servers, they use the calculator to find the required TPS. <strong>7,200,000</strong> transactions in <strong>4</strong> hours equals an average of <strong>500 TPS</strong>. They can then ensure their server cluster is configured to handle this level of traffic.</p>
                         </div>
                          <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Evaluating a Third-Party Service</h3>
-                            <p className="text-sm text-muted-foreground">A business is choosing a payment gateway provider. Provider A's documentation says they can handle "up to 60,000 transactions per minute." Provider B says they can handle "2,000 TPS." By using the calculator, the business can convert Provider A's claim (`60,000` transactions in `1` minute) to <strong>1,000 TPS</strong>, allowing for a direct, apples-to-apples comparison with Provider B.</p>
+                            <p className="text-sm text-muted-foreground">A business is choosing a payment gateway provider. Provider A's documentation says they can handle "up to 60,000 transactions per minute." Provider B says they can handle "2,000 TPS." By using the calculator, the business can convert Provider A's claim (<strong>60,000</strong> transactions in <strong>1</strong> minute) to <strong>1,000 TPS</strong>, allowing for a direct, apples-to-apples comparison with Provider B.</p>
                         </div>
                     </div>
                 </section>
@@ -213,5 +213,3 @@ const TpsCalculatorPage = () => {
 };
 
 export default TpsCalculatorPage;
-
-    
