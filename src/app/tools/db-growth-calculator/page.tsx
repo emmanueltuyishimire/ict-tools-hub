@@ -5,7 +5,7 @@ import { DatabaseGrowthCalculator } from './db-growth-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
+import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -84,11 +84,11 @@ const DatabaseGrowthCalculatorPage = () => {
                 </section>
                 
                 <section>
-                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+                    <h2 className="text-2xl font-bold mb-4">Worked Example</h2>
                     <div className="space-y-6">
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-xl">Example 1: A Growing E-commerce Database</CardTitle>
+                                <CardTitle className="text-xl">Forecasting an E-commerce Database</CardTitle>
                                 <CardDescription>A database administrator needs to forecast storage for a new, rapidly growing e-commerce site.</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
@@ -159,7 +159,7 @@ const DatabaseGrowthCalculatorPage = () => {
                     <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">Budgeting for Cloud Database Costs</h3>
+                            <h3 className="font-semibold text-lg mb-2">Budgeting for Cloud Costs</h3>
                             <p className="text-sm text-muted-foreground">A finance department needs a 3-year budget for their application's database on AWS RDS. A DevOps engineer uses this tool to project the database's growth from 500 GB at a rate of 8% per month. The forecast shows the database will be over 5 TB in 3 years, allowing them to accurately budget for the increasing storage costs.</p>
                         </div>
                          <div className="bg-card p-6 rounded-lg">
@@ -168,11 +168,57 @@ const DatabaseGrowthCalculatorPage = () => {
                         </div>
                     </div>
                 </section>
+                
+                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
+                     <Card>
+                        <CardContent className="p-6">
+                            <ul className="space-y-4">
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Use Historical Data</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            The best predictor of future growth is past growth. Analyze your database monitoring tools over the last 6-12 months to find a realistic growth rate.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Factor in Business Events</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            Is the company planning a major marketing campaign or launching in a new country? These events can cause a step-change in data growth that should be factored into your forecast.
+                                        </p>
+                                    </div>
+                                </li>
+                                 <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Estimate by Table</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            For more accuracy, use our <Link href="/tools/db-storage-estimator" className="text-primary hover:underline">Database Storage Estimator</Link> to estimate the size of individual tables and project their growth separately, as a `users` table and a `transactions` table will grow at very different rates.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Regularly Review and Adjust</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            Capacity planning is not a one-time event. Review your growth forecasts quarterly or semi-annually and adjust them based on actual usage trends.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </CardContent>
+                     </Card>
+                </section>
 
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
                         <CardHeader>
-                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips for Accurate Forecasting</CardTitle></div>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips for Forecasting</CardTitle></div>
                         </CardHeader>
                         <CardContent>
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
@@ -185,7 +231,7 @@ const DatabaseGrowthCalculatorPage = () => {
                     </Card>
                     <Card>
                         <CardHeader>
-                             <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes</CardTitle></div>
+                             <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
                         </CardHeader>
                         <CardContent>
                              <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
@@ -206,7 +252,9 @@ const DatabaseGrowthCalculatorPage = () => {
                               {faqData.map((item, index) => (
                                   <AccordionItem value={`item-${index}`} key={index}>
                                       <AccordionTrigger>{item.question}</AccordionTrigger>
-                                      <AccordionContent>{item.answer}</AccordionContent>
+                                      <AccordionContent>
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                      </AccordionContent>
                                   </AccordionItem>
                               ))}
                           </Accordion>
