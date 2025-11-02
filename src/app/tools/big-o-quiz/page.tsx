@@ -57,6 +57,13 @@ const allQuizQuestions = [
         level: 'Beginner' as QuestionLevel
     },
     {
+        code: `function findFirstTwo(items) {\n  console.log(items[0]);\n  console.log(items[1]);\n}`,
+        options: ['O(1)', 'O(n)', 'O(2)'],
+        correctAnswer: 'O(1)',
+        explanation: 'This function performs a fixed number of operations (two lookups) regardless of the input array\'s size. Since the work does not grow with `n`, the complexity is constant, or O(1).',
+        level: 'Beginner' as QuestionLevel
+    },
+    {
         code: `// Assuming 'sortedItems' is a sorted array\nfunction findInSorted(sortedItems, value) {\n  let low = 0;\n  let high = sortedItems.length - 1;\n  while (low <= high) {\n    let mid = Math.floor((low + high) / 2);\n    if (sortedItems[mid] === value) return true;\n    if (sortedItems[mid] < value) low = mid + 1;\n    else high = mid - 1;\n  }\n  return false;\n}`,
         options: ['O(1)', 'O(log n)', 'O(n)'],
         correctAnswer: 'O(log n)',
@@ -76,13 +83,6 @@ const allQuizQuestions = [
         correctAnswer: 'O(n log n)',
         explanation: 'This represents the Merge Sort algorithm. The list is recursively divided in half (which gives the log n part), and then each element is merged back together (which gives the n part). The resulting complexity is O(n log n), a hallmark of efficient sorting algorithms.',
         level: 'Intermediate' as QuestionLevel
-    },
-    {
-        code: `function findFirstTwo(items) {\n  console.log(items[0]);\n  console.log(items[1]);\n}`,
-        options: ['O(1)', 'O(n)', 'O(2)'],
-        correctAnswer: 'O(1)',
-        explanation: 'This function performs a fixed number of operations (two lookups) regardless of the input array\'s size. Since the work does not grow with `n`, the complexity is constant, or O(1).',
-        level: 'Beginner' as QuestionLevel
     },
     {
         code: `// Optimized duplicate check\nfunction hasDuplicatesOptimized(items) {\n  const seen = new Set();\n  for (const item of items) {\n    if (seen.has(item)) {\n      return true;\n    }\n    seen.add(item);\n  }\n  return false;\n}`,
@@ -166,8 +166,9 @@ function BigOQuiz() {
     
     const handleStart = () => {
         const filteredQuestions = allQuizQuestions.filter(q => q.level === settings.level);
+        const questionsToSelect = Math.min(settings.numQuestions, filteredQuestions.length);
         const shuffled = [...filteredQuestions].sort(() => 0.5 - Math.random());
-        const selectedQuestions = shuffled.slice(0, settings.numQuestions);
+        const selectedQuestions = shuffled.slice(0, questionsToSelect);
         
         setQuizQuestions(selectedQuestions);
         setCurrentQuestionIndex(0);
@@ -538,6 +539,28 @@ const BigOComplexityQuizPage = () => {
                             </ul>
                         </CardContent>
                      </Card>
+                </section>
+                
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Social Media Feed</h3>
+                            <p className="text-sm text-muted-foreground">To display a user's feed, a social media app needs to fetch the 50 most recent posts from people they follow. This operation is typically O(1) or O(log n), as it fetches a fixed number of items from an indexed database, regardless of how many total posts exist. It's fast and scalable.</p>
+                        </div>
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Finding "Friends of Friends"</h3>
+                            <p className="text-sm text-muted-foreground">To suggest new connections, a social network might check for "friends of friends". This involves iterating through all of your friends, and then for each friend, iterating through all of their friends. This nested loop approach leads to O(n²) complexity, which can be slow if you have many friends with many connections.</p>
+                        </div>
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Autocomplete Search</h3>
+                            <p className="text-sm text-muted-foreground">When you type into a search bar and it suggests completions, this is often powered by a specialized data structure called a Trie. Searching a Trie is O(k) where k is the length of the string you've typed, not the total number of possible words. This makes it incredibly fast and feel instantaneous.</p>
+                        </div>
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Sorting an E-commerce Product List</h3>
+                            <p className="text-sm text-muted-foreground">An e-commerce site needs to sort thousands of products by price. If it used an inefficient O(n²) sorting algorithm (like bubble sort), the page could take many seconds to load. By using an efficient O(n log n) algorithm (like merge sort or quicksort), the sorting is completed in milliseconds, providing a smooth user experience.</p>
+                        </div>
+                    </div>
                 </section>
                 
                <section>
