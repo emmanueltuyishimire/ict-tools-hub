@@ -118,9 +118,9 @@ export function RecursionSimulator() {
         } else if (currentFrame.status === 'base-case') {
             explanation = `Base case reached: factorial(0) returns 1. The stack will now unwind.`;
         } else if (currentFrame.status === 'returning') {
-            explanation = `factorial(${currentFrame.n+1}) returned ${currentFrame.returnValue! / BigInt(currentFrame.n)}. Now calculating ${currentFrame.n} * ${currentFrame.returnValue! / BigInt(currentFrame.n)} = ${currentFrame.returnValue}. Returning this value.`;
+            explanation = `factorial(${currentFrame.n + 1}) returned ${currentFrame.returnValue! / BigInt(currentFrame.n)}. Now calculating ${currentFrame.n} \u00d7 ${currentFrame.returnValue! / BigInt(currentFrame.n)} = ${currentFrame.returnValue}. Returning this value.`;
              if (currentFrame.n === Number(numberInput)) {
-                explanation = `Final calculation: ${currentFrame.n} * ${currentFrame.returnValue! / BigInt(currentFrame.n)} = ${currentFrame.returnValue}. The final result is returned.`;
+                explanation = `Final calculation: ${currentFrame.n} \u00d7 ${currentFrame.returnValue! / BigInt(currentFrame.n)} = ${currentFrame.returnValue}. The final result is returned.`;
             }
         }
     }
