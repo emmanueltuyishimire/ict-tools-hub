@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { BandwidthCostCalculator } from './bandwidth-cost-calculator';
@@ -68,7 +67,7 @@ const BandwidthCostCalculatorPage = () => {
                         <p>This tool provides a high-level estimate for your monthly data transfer costs, helping you budget for your cloud services.</p>
                         <ol>
                             <li><strong>Enter Data Transfer Amount:</strong> Input the total amount of data you expect to transfer *out* to the internet from your cloud provider each month. Select the appropriate unit (GB or TB).</li>
-                            <li><strong>Select Provider and Region:</strong> Choose your cloud provider and the region from which the data will originate. Egress pricing varies significantly between providers and regions.</li>
+                            <li><strong>Select Provider and Region:</strong> Choose your cloud provider and the region from which the data will originate. Egress pricing varies significantly between providers and regions. You can also select "Custom" to enter your own pricing tiers.</li>
                             <li><strong>Calculate Cost:</strong> Click the "Calculate Cost" button.</li>
                             <li><strong>Review the Estimate:</strong> The tool will display the estimated monthly cost for data transfer. It will also show the tiered pricing structure that the provider uses.</li>
                         </ol>
@@ -80,6 +79,50 @@ const BandwidthCostCalculatorPage = () => {
                             </AlertDescription>
                         </Alert>
                     </Card>
+                </section>
+
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 1: A Popular Blog</CardTitle>
+                                <CardDescription>Estimating egress costs for a content-heavy blog with significant traffic.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> A successful blog serves 5 TB of data per month (images, CSS, JS) from an AWS S3 bucket in `us-east-1`.</p>
+                                <div className="prose prose-sm max-w-none">
+                                    <ol>
+                                        <li><strong>Inputs:</strong>
+                                            <ul>
+                                                <li>Monthly Egress: `5` TB</li>
+                                                <li>Provider: `AWS`</li>
+                                                <li>Region: `us-east-1`</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Calculation:</strong> The tool applies AWS's tiered pricing. The first 100 GB might be free, the next ~9.9 TB at $0.09/GB, and so on.</li>
+                                        <li><strong>Result:</strong> The calculator shows a significant monthly cost (e.g., ~$450). This result immediately tells the blog owner that they are paying too much for egress and should implement a CDN, which has much cheaper bandwidth rates.</li>
+                                    </ol>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 2: Comparing Providers for a New App</CardTitle>
+                                <CardDescription>Using the tool to make a budget-conscious decision for a new API service.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> A developer is launching a new API service and expects to serve 500 GB of data per month. They want to compare costs between DigitalOcean and Vultr.</p>
+                                 <div className="prose prose-sm max-w-none">
+                                    <ol>
+                                        <li><strong>DigitalOcean Calculation:</strong> They select `DigitalOcean`, enter `500` GB. The tool knows DigitalOcean often includes a free bandwidth pool (e.g., 1 TB) with its Droplets. The cost is calculated as **$0.00**.</li>
+                                        <li><strong>Vultr Calculation:</strong> They select `Vultr`, enter `500` GB. The tool uses Vultr's pricing, which might also have a free pool. The cost is also **$0.00**.</li>
+                                        <li><strong>Result:</strong> For their expected usage, both providers are cost-effective. They then use the tool to model 1500 GB of usage. At this level, DigitalOcean (with a 1TB free pool) would charge for 500GB (~$5.00), while Vultr (with a 2TB free pool) would still be free. This helps them make a more informed decision based on future growth.</li>
+                                    </ol>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </section>
                 
                 <section>

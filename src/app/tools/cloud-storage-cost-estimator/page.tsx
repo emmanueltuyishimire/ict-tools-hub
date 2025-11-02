@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { CloudStorageCostEstimator } from './cloud-storage-cost-estimator';
@@ -69,7 +68,7 @@ const CloudStorageCostEstimatorPage = () => {
                         <ol>
                             <li><strong>Enter Storage Amount:</strong> Input the total amount of data you plan to store in the "Total Storage" field. Be sure to select the correct unit (GB or TB).</li>
                             <li><strong>Enter Data Transfer:</strong> Input the amount of data you expect to transfer *out* of the storage service each month. This is often called "egress" and is a major cost factor. Inbound data transfer is typically free.</li>
-                            <li><strong>Select Your Provider & Region:</strong> Choose the cloud provider (AWS, Google, Azure) and the region where your data will be stored. Prices vary significantly between regions.</li>
+                            <li><strong>Select Your Provider &amp; Region:</strong> Choose the cloud provider (AWS, Google, Azure) and the region where your data will be stored. Prices vary significantly between regions. You can also select "Custom" to enter your own pricing.</li>
                             <li><strong>Review the Estimated Costs:</strong> The tool will instantly calculate and display the estimated monthly cost, broken down into storage costs and data transfer costs.</li>
                         </ol>
                         <Alert>
@@ -80,6 +79,67 @@ const CloudStorageCostEstimatorPage = () => {
                             </AlertDescription>
                         </Alert>
                     </Card>
+                </section>
+                
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 1: A Personal Photo Backup</CardTitle>
+                                <CardDescription>Estimating the cost to back up a personal photo library to the cloud.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> You have 200 GB of family photos and videos to back up. You anticipate downloading about 10 GB per month to share with family.</p>
+                                <div className="prose prose-sm max-w-none">
+                                    <ol>
+                                        <li><strong>Inputs:</strong>
+                                            <ul>
+                                                <li>Total Storage: `200` GB</li>
+                                                <li>Monthly Egress: `10` GB</li>
+                                                <li>Provider: `AWS (S3 Standard)`</li>
+                                                <li>Region: `us-east-1`</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Calculation:</strong>
+                                            <ul>
+                                                <li>Storage Cost: 200 GB * $0.023/GB = $4.60</li>
+                                                <li>Egress Cost: 10 GB * $0.09/GB = $0.90 (Note: This would likely be covered by AWS's free tier, but we calculate it for demonstration).</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Result:</strong> The estimated monthly cost would be around <strong>$5.50</strong>, showing that cloud storage for personal backups is highly affordable.</li>
+                                    </ol>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 2: A Startup's Website Assets</CardTitle>
+                                <CardDescription>A web startup needs to estimate costs for hosting images and JS/CSS files for their application.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> A new web application stores 50 GB of assets (images, CSS, JS). They predict their users will download a total of 2 TB (2048 GB) of these assets per month.</p>
+                                 <div className="prose prose-sm max-w-none">
+                                    <ol>
+                                        <li><strong>Inputs:</strong>
+                                            <ul>
+                                                <li>Total Storage: `50` GB</li>
+                                                <li>Monthly Egress: `2` TB</li>
+                                                <li>Provider: `Google Cloud (Standard)`</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Calculation:</strong>
+                                            <ul>
+                                                <li>Storage Cost: 50 GB * $0.020/GB = $1.00</li>
+                                                <li>Egress Cost: 2048 GB * $0.12/GB = $245.76</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Result:</strong> The estimated cost is <strong>$246.76</strong>. This example clearly shows that for asset-heavy websites, the data transfer (egress) cost is far more significant than the storage cost itself. This insight would lead the startup to use a CDN to reduce egress costs.</li>
+                                    </ol>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </section>
                 
                 <section>

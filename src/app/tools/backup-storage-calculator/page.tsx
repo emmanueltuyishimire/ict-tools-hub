@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { BackupStorageCalculator } from './backup-storage-calculator';
@@ -71,11 +70,10 @@ const BackupStorageCalculatorPage = () => {
                             <li><strong>Define Your Strategy:</strong>
                                 <ul>
                                     <li><strong>Backup Type:</strong> Choose between "Full", "Incremental", or "Differential" backups.</li>
-                                    <li><strong>Backup Frequency:</strong> Specify how often you perform these backups (e.g., daily).</li>
-                                    <li><strong>Change Rate:</strong> Estimate the percentage of data that changes between each backup. This is crucial for incremental and differential strategies.</li>
+                                    <li><strong>Change Rate (%):</strong> For incremental or differential backups, estimate the percentage of data that changes between each backup.</li>
+                                    <li><strong>Retention (# of backups):</strong> Enter the number of backup versions you plan to keep.</li>
                                 </ul>
                             </li>
-                            <li><strong>Set Retention Policy:</strong> Enter the number of backups you plan to keep.</li>
                             <li><strong>Calculate:</strong> Click "Calculate Total Storage". The tool will simulate the storage usage over the full retention period.</li>
                         </ol>
                          <Alert>
@@ -86,6 +84,63 @@ const BackupStorageCalculatorPage = () => {
                             </AlertDescription>
                         </Alert>
                     </Card>
+                </section>
+
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 1: Full Backup Strategy</CardTitle>
+                                <CardDescription>The simplest but most storage-intensive strategy.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> A small business has a 500 GB file server. They want to perform a full backup every night and keep the backups for 7 days.</p>
+                                <div className="prose prose-sm max-w-none">
+                                    <ol>
+                                        <li><strong>Inputs:</strong>
+                                            <ul>
+                                                <li>Initial Data Size: `500` GB</li>
+                                                <li>Backup Type: `Full`</li>
+                                                <li>Retention: `7`</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Calculation:</strong> `7 backups * 500 GB/backup = 3500 GB`</li>
+                                        <li><strong>Result:</strong> They will need **3.5 TB** of storage space. This shows how quickly full backups can consume storage.</li>
+                                    </ol>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 2: Incremental Backup Strategy</CardTitle>
+                                <CardDescription>A space-efficient strategy suitable for daily backups.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> The same 500 GB server, but now using an incremental strategy. They perform one full backup, followed by 6 daily incremental backups. The daily change rate is 5%.</p>
+                                 <div className="prose prose-sm max-w-none">
+                                    <ol>
+                                        <li><strong>Inputs:</strong>
+                                            <ul>
+                                                <li>Initial Data Size: `500` GB</li>
+                                                <li>Backup Type: `Incremental`</li>
+                                                <li>Change Rate: `5` %</li>
+                                                <li>Retention: `7` (1 full + 6 incremental)</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Calculation:</strong>
+                                             <ul>
+                                                <li>Day 1 (Full): `500 GB`</li>
+                                                <li>Day 2-7 (Incremental): `6 backups * (500 GB * 5%) = 6 * 25 GB = 150 GB`</li>
+                                                <li>Total: `500 GB + 150 GB = 650 GB`</li>
+                                             </ul>
+                                        </li>
+                                        <li><strong>Result:</strong> They now only need **650 GB** of storage for a week's worth of backups, a massive saving compared to the full backup strategy.</li>
+                                    </ol>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </section>
                 
                 <section>

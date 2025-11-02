@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -7,27 +6,27 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { TrendingUp, DollarSign } from 'lucide-react';
+import { TrendingUp, DollarSign, Plus, Trash2 } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AlertTriangle } from 'lucide-react';
 
-// Simplified pricing data (example values, should be updated periodically)
 const pricing = {
     aws: {
-        'us-east-1': { storage: 0.023, transfer: 0.09 }, // N. Virginia
-        'eu-west-1': { storage: 0.023, transfer: 0.09 }, // Ireland
+        'us-east-1': { storage: 0.023, transfer: 0.09 },
+        'eu-west-1': { storage: 0.023, transfer: 0.09 },
     },
     google: {
-        'us-east1': { storage: 0.020, transfer: 0.12 }, // South Carolina
-        'europe-west1': { storage: 0.020, transfer: 0.12 }, // Belgium
+        'us-east1': { storage: 0.020, transfer: 0.12 },
+        'europe-west1': { storage: 0.020, transfer: 0.12 },
     },
     azure: {
-        'eastus': { storage: 0.0184, transfer: 0.087 }, // Virginia
-        'westeurope': { storage: 0.0184, transfer: 0.087 }, // Netherlands
+        'eastus': { storage: 0.0184, transfer: 0.087 },
+        'westeurope': { storage: 0.0184, transfer: 0.087 },
     },
 };
 
-type Provider = keyof typeof pricing;
-type Region<P extends Provider> = keyof typeof pricing[P];
+type Provider = keyof typeof pricing | 'custom';
+type Region<P extends Provider> = P extends keyof typeof pricing[P] : string;
 
 export function CloudStorageCostEstimator() {
     const [storage, setStorage] = useState(1024);
@@ -37,29 +36,47 @@ export function CloudStorageCostEstimator() {
     const [provider, setProvider] = useState<Provider>('aws');
     const [region, setRegion] = useState<string>('us-east-1');
     const [results, setResults] = useState<{ storageCost: number; transferCost: number; totalCost: number } | null>(null);
+    
+    // State for custom pricing
+    const [customStorageRate, setCustomStorageRate] = useState(0.02);
+    const [customTransferRate, setCustomTransferRate] = useState(0.10);
 
-    const regionsForProvider = useMemo(() => Object.keys(pricing[provider]), [provider]);
+    const regionsForProvider = useMemo(() => {
+        if (provider === 'custom') return [];
+        return Object.keys(pricing[provider as keyof typeof pricing]);
+    }, [provider]);
 
     const handleProviderChange = (value: Provider) => {
         setProvider(value);
-        setRegion(Object.keys(pricing[value])[0]); // Default to first region of new provider
+        if (value !== 'custom') {
+            setRegion(Object.keys(pricing[value as keyof typeof pricing])[0]);
+        }
+        setResults(null);
     };
 
     const handleCalculate = () => {
         const storageInGb = storageUnit === 'TB' ? storage * 1024 : storage;
         const transferInGb = transferUnit === 'TB' ? transfer * 1024 : transfer;
 
-        const providerPricing = pricing[provider] as any;
-        const regionPricing = providerPricing[region];
+        let storageRate, transferRate;
+        
+        if (provider === 'custom') {
+            storageRate = customStorageRate;
+            transferRate = customTransferRate;
+        } else {
+            const providerPricing = pricing[provider as keyof typeof pricing] as any;
+            const regionPricing = providerPricing[region];
 
-        if (!regionPricing) {
-            // Handle error, though this shouldn't happen with the select logic
-            return;
+            if (!regionPricing) {
+                return;
+            }
+            storageRate = regionPricing.storage;
+            transferRate = regionPricing.transfer;
         }
 
-        const storageCost = storageInGb * regionPricing.storage;
-        // Simplified tiered pricing: assume first 10TB is at this rate
-        const transferCost = transferInGb * regionPricing.transfer;
+
+        const storageCost = storageInGb * storageRate;
+        const transferCost = transferInGb * transferRate;
 
         setResults({
             storageCost,
@@ -73,7 +90,7 @@ export function CloudStorageCostEstimator() {
             <CardHeader>
                 <CardTitle>Cloud Storage Cost Estimator</CardTitle>
                 <CardDescription>
-                    Estimate your monthly object storage costs for popular cloud providers.
+                    Estimate your monthly object storage costs for popular cloud providers or your own custom pricing.
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -115,19 +132,40 @@ export function CloudStorageCostEstimator() {
                                 <SelectItem value="aws">AWS (S3 Standard)</SelectItem>
                                 <SelectItem value="google">Google Cloud (Standard)</SelectItem>
                                 <SelectItem value="azure">Azure (Hot LRS)</SelectItem>
+                                <SelectItem value="custom">Custom/Manual</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="region">Region</Label>
-                        <Select value={region} onValueChange={setRegion}>
-                            <SelectTrigger id="region"><SelectValue /></SelectTrigger>
-                            <SelectContent>
-                                {regionsForProvider.map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}
-                            </SelectContent>
-                        </Select>
-                    </div>
+                    {provider !== 'custom' && (
+                        <div className="space-y-2">
+                            <Label htmlFor="region">Region</Label>
+                            <Select value={region} onValueChange={setRegion}>
+                                <SelectTrigger id="region"><SelectValue /></SelectTrigger>
+                                <SelectContent>
+                                    {regionsForProvider.map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    )}
                 </div>
+
+                {provider === 'custom' && (
+                     <Card className="p-4 bg-muted/50">
+                        <CardHeader className="p-2">
+                            <CardTitle className="text-lg">Custom Pricing</CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="custom-storage-rate">Storage Rate ($ per GB/month)</Label>
+                                <Input id="custom-storage-rate" type="number" step="0.001" value={customStorageRate} onChange={e => setCustomStorageRate(parseFloat(e.target.value) || 0)} />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="custom-transfer-rate">Egress Rate ($ per GB)</Label>
+                                <Input id="custom-transfer-rate" type="number" step="0.001" value={customTransferRate} onChange={e => setCustomTransferRate(parseFloat(e.target.value) || 0)} />
+                            </div>
+                        </CardContent>
+                    </Card>
+                )}
 
                 <Button onClick={handleCalculate} className="w-full sm:w-auto"><DollarSign className="mr-2 h-4 w-4" /> Calculate Cost</Button>
 

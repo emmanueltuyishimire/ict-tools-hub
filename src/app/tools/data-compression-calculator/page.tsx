@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { CompressionEstimator } from '../compression-estimator/compression-estimator';
@@ -36,7 +35,7 @@ const howToSchema = {
     description: 'A step-by-step guide to estimating file size reduction from Gzip and Brotli compression.',
     step: [
         { '@type': 'HowToStep', name: 'Enter Original File Size', text: 'Input the size of your uncompressed data, such as a large text file, a database dump, or your website\'s combined CSS/JS assets.' },
-        { '@type':- 'HowToStep', name: 'Review Estimated Savings', text: 'The tool will instantly display the estimated compressed file size for both Gzip and Brotli, along with the percentage of storage or bandwidth savings for each. Note that these are averages for text-based content.' },
+        { '@type': 'HowToStep', name: 'Review Estimated Savings', text: 'The tool will instantly display the estimated compressed file size for both Gzip and Brotli, along with the percentage of storage or bandwidth savings for each. Note that these are averages for text-based content.' },
     ],
     totalTime: 'PT1M'
 };
@@ -52,7 +51,7 @@ const keyTerminologies = [
 const DataCompressionCalculatorPage = () => {
     return (
         <>
-            <StructuredData data={faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))} />
+            <StructuredData data={{'@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))}} />
             <StructuredData data={howToSchema} />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
@@ -72,6 +71,44 @@ const DataCompressionCalculatorPage = () => {
                             <li><strong>Analyze the Results:</strong> The tool instantly calculates the estimated size after applying Gzip and Brotli compression, showing the final size and the percentage saved.</li>
                         </ol>
                     </Card>
+                </section>
+
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 1: Website JavaScript Bundle</CardTitle>
+                                <CardDescription>Optimizing a large JS file for faster page loads.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> A web developer has a JavaScript bundle that is 1.2 MB. They want to see the impact of enabling server-side compression.</p>
+                                <div className="prose prose-sm max-w-none">
+                                    <ol>
+                                        <li><strong>Input:</strong> `1.2` MB</li>
+                                        <li><strong>Calculation (Brotli):</strong> The tool estimates an ~80% reduction. `1.2 MB * 0.20 = 0.24 MB`.</li>
+                                        <li><strong>Result:</strong> The estimated size is **245.76 KB**. This means the user's browser only needs to download about 246 KB instead of 1200 KB, dramatically improving the site's load time.</li>
+                                    </ol>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 2: Daily Database Backup</CardTitle>
+                                <CardDescription>Estimating storage savings for a daily database dump before uploading to the cloud.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> A database administrator's daily SQL dump is 500 MB. They want to compress it with Gzip before storing it in cloud storage to save costs.</p>
+                                 <div className="prose prose-sm max-w-none">
+                                    <ol>
+                                        <li><strong>Input:</strong> `500` MB</li>
+                                        <li><strong>Calculation (Gzip):</strong> The tool estimates a ~75% reduction. `500 MB * 0.25 = 125 MB`.</li>
+                                        <li><strong>Result:</strong> The estimated compressed size is **125 MB**. This reduces their daily storage cost by 75% and also makes uploading the backup four times faster.</li>
+                                    </ol>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </section>
 
                 <section>
