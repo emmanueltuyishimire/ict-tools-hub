@@ -168,6 +168,28 @@ const DbStorageEstimatorPage = () => {
                     </CardContent>
                 </Card>
 
+                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Planning a New Application's Database</h3>
+                            <p className="text-sm text-muted-foreground">A developer is designing a `users` table and a `posts` table. They use the estimator to model both. They estimate the `users` table will be small, but the `posts` table, with a large `TEXT` column, will grow significantly. This helps them decide to put the two tables in different storage volumes, allowing the `posts` table's storage to scale independently.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Forecasting Cloud Database Costs</h3>
+                            <p className="text-sm text-muted-foreground">A startup needs to choose a managed database plan on a cloud provider. By using this tool to estimate a total size of 500 GB after one year, they can use our <Link href="/tools/cloud-storage-cost-estimator" className="text-primary hover:underline">Cloud Storage Cost Estimator</Link> to accurately forecast the monthly bill and budget accordingly, avoiding "bill shock".</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Justifying an Archiving Strategy</h3>
+                            <p className="text-sm text-muted-foreground">A DBA sees their `audit_logs` table is growing by millions of rows a month. They use the estimator to project that the table will consume 2 TB of expensive primary storage within a year. This data provides a clear justification to management for implementing a data archiving strategy where logs older than 90 days are moved to cheaper, long-term storage.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Deciding on an Index</h3>
+                            <p className="text-sm text-muted-foreground">A developer wants to add a new index to a very large table to speed up a query. They use the estimator to calculate the approximate size of the new index by adding its columns and setting the row count. This helps them understand the storage cost of the performance improvement, allowing them to make an informed trade-off.</p>
+                        </div>
+                    </div>
+                </section>
+
                 <section>
                     <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
                      <Card>
@@ -256,4 +278,5 @@ const DbStorageEstimatorPage = () => {
 };
 
 export default DbStorageEstimatorPage;
+
 
