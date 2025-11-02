@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { ShieldAlert, ShieldCheck, LogIn, Server, User, KeyRound } from 'lucide-react';
+import { ShieldAlert, ShieldCheck, LogIn, Server, User, KeyRound, AlertCircle } from 'lucide-react';
 import { CodeBlock } from '@/components/code-block';
 
 // Sample in-memory "database"
