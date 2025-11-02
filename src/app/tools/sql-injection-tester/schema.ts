@@ -2,7 +2,6 @@
 export const faqData = [
     { question: "What is SQL Injection?", answer: "SQL Injection is a code injection technique where an attacker inserts malicious SQL code into an application's queries. This can allow them to bypass authentication, read sensitive data, modify data, and potentially take control of the database server. It is one of the most common and dangerous web application vulnerabilities." },
     { question: "Why is this tool for educational purposes only?", answer: "This tool simulates a vulnerable system in a safe, client-side environment. Attempting SQL injection techniques on a real website or application that you do not own is illegal and can cause serious damage. This tool is designed to teach you how to recognize and prevent the vulnerability, not to perform real attacks." },
-    { question: "What is the root cause of SQL Injection?", answer: "The vulnerability occurs when an application builds its SQL queries by directly concatenating user-supplied input into the query string. This mixes data and code, allowing an attacker to provide input that the database interprets as part of the command itself." },
     { question: "What is the `' OR 1=1 --` attack?", answer: "This is a classic authentication bypass attack. By injecting this string into a username field, the attacker changes the query's logic. The `OR 1=1` clause is always true, and the `--` comments out the rest of the query (including the password check), causing the database to return a valid user and grant access." },
     { question: "How do I prevent SQL Injection?", answer: "The most effective method is to use **parameterized queries** (also known as prepared statements). This technique strictly separates the SQL command from the user data, ensuring that user input is always treated as data and never as executable code. Using a modern ORM (Object-Relational Mapper) also provides a high level of protection by default." },
     { question: "Is sanitizing user input enough to prevent SQLi?", answer: "No. While input sanitization (like stripping out single quotes) can help, it's a fragile, blacklist-based approach. Attackers are constantly finding new ways to bypass sanitization filters. Parameterized queries are the only truly reliable defense." },
@@ -18,8 +17,8 @@ export const howToSchema = {
     step: [
         { '@type': 'HowToStep', name: 'Step 1: Examine the Vulnerable Code', text: 'Observe the example code that shows how user input is being insecurely concatenated into a SQL query.' },
         { '@type': 'HowToStep', name: 'Step 2: Try a Normal Login', text: 'Enter a valid username and password from the sample data table to see how a legitimate login query is constructed.' },
-        { '@type': 'HowToStep', name: 'Step 3: Attempt an Injection', text: 'In the username field, enter an injection string like `admin\'--`. Leave the password field blank.' },
-        { '@type': 'HowToStep', name: 'Step 4: Analyze the Executed Query', text: 'Observe how your input has altered the SQL query, causing the password check to be ignored. The simulator will show a 'successful' login, demonstrating the bypass.' },
+        { '@type': 'HowToStep', name: 'Step 3: Attempt an Injection', text: 'In the username field, enter an injection string like `admin\\\'--`. Leave the password field blank.' },
+        { '@type': 'HowToStep', name: 'Step 4: Analyze the Executed Query', text: 'Observe how your input has altered the SQL query, causing the password check to be ignored. The simulator will show a \\'successful\\' login, demonstrating the bypass.' },
     ],
     totalTime: 'PT2M'
 };
@@ -32,7 +31,3 @@ export const keyTerminologies = [
     { term: 'Database Schema', definition: 'The structure of a database, including its tables, columns, and relationships. An attacker can often extract schema information using SQLi.' },
     { term: 'ORM (Object-Relational Mapper)', definition: 'A library that provides a high-level abstraction over a database. Modern ORMs use parameterized queries by default, helping to prevent SQLi.' },
 ];
-```
-  </change>
-  <change>
-    <file>/src/app/tools/sql-injection-tester/sql-injection-
