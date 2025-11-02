@@ -157,7 +157,7 @@ const BandwidthCostCalculatorPage = () => {
                                 In the world of cloud computing, "egress" refers to any network traffic that leaves the cloud provider's network and goes out to the public internet. While providers make it free and easy to get your data <em>into</em> their cloud (ingress), they charge a fee for every gigabyte that leaves.
                             </p>
                             <p>
-                                This is often the most surprising and significant cost for new cloud users. Why? Because providers have to pay for the massive, high-speed, and redundant internet connectivity required to deliver content globally. These costs are passed on to the customer. A simple web application serving images and videos can easily generate terabytes of egress traffic, potentially resulting in a bill that is far higher than the cost of the servers themselves.
+                                This is often the most surprising and significant cost for new cloud users. Why? Because providers have to pay for the massive, high-speed, and redundant internet connectivity required to deliver content globally. These costs are passed on to the customer. A simple web application serving images and videos can easily generate terabytes of egress traffic, potentially resulting in a bill that is far higher than the cost of the servers themselves. You can estimate how long this will take with our <Link href="/tools/data-transfer-calculator" className="text-primary hover:underline">Data Transfer Time Calculator</Link>.
                             </p>
                         </section>
                         <section>
@@ -168,14 +168,14 @@ const BandwidthCostCalculatorPage = () => {
                                 <li>$0.07 per GB for the next 40 TB</li>
                                 <li>$0.05 per GB for anything over 50 TB</li>
                             </ul>
-                            <p>This model benefits high-volume customers. Our calculator simplifies this by showing you the pricing tiers for your selected provider, giving you insight into how your costs scale. Many providers, like AWS and Google Cloud, also offer a generous free tier (e.g., the first 100 GB/month of egress is free), which is great for small applications but quickly exhausted by larger ones. You can model your total costs with our <Link href="/tools/cloud-storage-cost-estimator" className='text-primary hover:underline'>Cloud Storage Cost Estimator</Link>.</p>
+                            <p>This model benefits high-volume customers. Our calculator simplifies this by showing you the pricing tiers for your selected provider, giving you insight into how your costs scale. Many providers, like AWS and Google Cloud, also offer a generous free tier (e.g., the first 100 GB/month of egress is free), which is great for small applications but quickly exhausted by larger ones. You can model your total costs with our <Link href="/tools/cloud-instance-cost-calculator" className='text-primary hover:underline'>Cloud Instance Cost Calculator</Link>.</p>
                         </section>
                          <section>
                             <h3>Intra-Region vs. Inter-Region vs. Internet Egress</h3>
                             <p>Not all data transfer is created equal. It's crucial to understand the different types:</p>
                              <ul className="list-disc pl-5">
                                <li><strong>Egress to Internet (This Tool's Focus):</strong> Data leaving the cloud to a user on the public internet. This is the most expensive type.</li>
-                               <li><strong>Inter-Region Transfer:</strong> Data moving between two different cloud regions (e.g., from a server in <code>us-east-1</code> to a database in <code>eu-west-1</code>). This is cheaper than internet egress but is still a significant cost.</li>
+                               <li><strong>Inter-Region Transfer:</strong> Data moving between two different cloud regions (e.g., from a server in <code>us-east-1</code> to a database in <code>eu-west-1</code>). This is cheaper than internet egress but is still a significant cost. You may need to do this for <Link href="/tools/storage-redundancy-calculator" className="text-primary hover:underline">Storage Redundancy</Link>.</li>
                                <li><strong>Intra-Region Transfer:</strong> Data moving between services within the same cloud region (e.g., from an EC2 instance to an S3 bucket in the same region). This is often free or very cheap, making it a key architectural consideration for cost optimization.</li>
                             </ul>
                         </section>
@@ -203,7 +203,7 @@ const BandwidthCostCalculatorPage = () => {
                         </CardHeader>
                         <CardContent>
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                                <li><strong>Use a CDN (Content Delivery Network):</strong> This is the #1 strategy. CDNs cache your content globally and often have much cheaper egress rates than cloud providers, or even include it for free.</li>
+                                <li><strong>Use a CDN (Content Delivery Network):</strong> This is the #1 strategy. CDNs cache your content globally and often have much cheaper egress rates than cloud providers, or even include it for free. Use our <Link href="/tools/cdn-bandwidth-estimator" className="text-primary hover:underline">CDN Bandwidth Estimator</Link> to see the impact.</li>
                                 <li><strong>Compress Everything:</strong> Use Gzip or Brotli to compress text-based assets (HTML, CSS, JS) and use optimized image formats like WebP. Smaller files mean less data to transfer. Use our <Link href="/tools/compression-estimator" className="text-primary hover:underline">Compression Savings Estimator</Link>.</li>
                                 <li><strong>Keep Traffic Within the Same Region:</strong> Architect your application so that services communicate with each other within the same cloud region to take advantage of free or low-cost intra-region data transfer.</li>
                                 <li><strong>Use Provider-Specific Solutions:</strong> Some providers offer direct connections or private endpoints (like AWS PrivateLink) that can reduce costs for specific use cases.</li>
@@ -219,7 +219,7 @@ const BandwidthCostCalculatorPage = () => {
                                 <li><strong>Ignoring Egress During Development:</strong> Assuming cloud costs are just about servers and storage, and getting a massive "bill shock" when the first month's data transfer fees arrive.</li>
                                 <li><strong>Serving Large, Un-cached Assets:</strong> Serving large video files or high-resolution images directly from cloud storage without a CDN is a recipe for an enormous bill.</li>
                                 <li><strong>Cross-Region Communication:</strong> Unnecessarily transferring large amounts of data between different cloud regions (e.g., cross-region database replication) when it could be handled within a single region.</li>
-                                <li><strong>Not Monitoring Your Bill:</strong> Failing to set up billing alerts. All major cloud providers allow you to set alerts that notify you when your spending exceeds a certain threshold, helping you catch unexpected egress spikes early.</li>
+                                <li><strong>Not Monitoring Your Bill:</strong> Failing to set up billing alerts. All major cloud providers allow you to set alerts that notify you when your spending on data transfer exceeds a certain threshold, helping you catch unexpected egress spikes early.</li>
                             </ul>
                         </CardContent>
                     </Card>
