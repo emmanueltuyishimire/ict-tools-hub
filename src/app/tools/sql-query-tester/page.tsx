@@ -1,4 +1,4 @@
-
+'use client';
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { SqlQueryTester } from './sql-query-tester';
@@ -10,17 +10,7 @@ import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-export const metadata = {
-    title: 'SQL Query Tester | Online SQL Editor | ICT Toolbench',
-    description: 'A simple, client-side SQL query tester for practicing basic SELECT statements. Run queries against sample data sets and learn the fundamentals of SQL.',
-    openGraph: {
-        title: 'SQL Query Tester | Online SQL Editor | ICT Toolbench',
-        description: 'Practice your SQL skills with our interactive, in-browser query tester. No database required.',
-        url: '/tools/sql-query-tester',
-    }
-};
-
-const SqlQueryTesterPage = () => {
+export default function SqlQueryTesterPage() {
     const faqSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
