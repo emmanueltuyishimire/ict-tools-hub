@@ -11,13 +11,6 @@ import {
   BrainCircuit,
   Wrench,
   Boxes,
-  Sparkles,
-  FileCode2,
-  Calculator,
-  Palette,
-  Timer,
-  KeyRound,
-  FileCheck,
 } from 'lucide-react';
 
 export type Tool = {
@@ -267,17 +260,4 @@ export const toolCategories: ToolCategory[] = [
 
 export const allTools: Tool[] = toolCategories.flatMap(category => category.tools);
 
-export const mainNavLinks = [
-    {
-        name: 'AI Tool Recommender',
-        href: '/',
-        icon: Sparkles,
-        description: 'Find the right tool for your task.'
-    },
-    {
-        name: 'AI Code Generator',
-        href: '/tools/code-generator',
-        icon: FileCode2,
-        description: 'Generate and debug code with AI.'
-    }
-]
+export const mainNavLinks = []

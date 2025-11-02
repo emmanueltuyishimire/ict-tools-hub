@@ -1,211 +1,257 @@
-'use client';
-import { useFormState } from 'react-dom';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { codeGenerationAndDebugging, type CodeGenerationAndDebuggingOutput } from '@/ai/flows/code-generation-debugging';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CodeBlock } from '@/components/code-block';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Bot } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import React from 'react';
+import { allTools } from '@/lib/tools';
+import { notFound } from 'next/navigation';
+import { PageHeader } from '@/components/page-header';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Construction } from 'lucide-react';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { BinaryToIpConverter } from '@/app/tools/binary-to-ip/binary-to-ip-converter';
+import { IpToBinaryConverter } from '@/app/tools/ip-to-binary/ip-to-binary-converter';
+import { SubnetCalculator } from '@/app/tools/subnet-calculator/subnet-calculator';
+import { SubnetMaskConverter } from '@/app/tools/subnet-mask-converter/subnet-mask-converter';
+import { VlsmCalculator } from '@/app/tools/vlsm-calculator/vlsm-calculator';
+import { BandwidthEstimator } from '@/app/tools/bandwidth-estimator/bandwidth-estimator';
+import { LatencyEstimator } from '@/app/tools/latency-estimator/latency-estimator';
+import { PasswordStrengthChecker } from '@/app/tools/password-strength-checker/password-strength-checker';
+import { DataTransferTimeCalculator } from '@/app/tools/data-transfer-calculator/data-transfer-calculator';
+import { MacValidator } from '@/app/tools/mac-validator/mac-validator';
+import { PortLookupTool } from '@/app/tools/port-lookup/port-lookup-tool';
+import { NetworkMaskValidator } from '@/app/tools/network-mask-validator/network-mask-validator';
+import { IpPrivacyChecker } from '@/app/tools/ip-privacy-checker/ip-privacy-checker';
+import { IpClassFinder } from '@/app/tools/ip-class-finder/ip-class-finder';
+import { IpRangeGenerator } from '@/app/tools/ip-range-generator/ip-range-generator';
+import { BroadcastAddressCalculator } from '@/app/tools/broadcast-address-calculator/broadcast-address-calculator';
+import { HostCountCalculator } from '@/app/tools/host-count-calculator/host-count-calculator';
+import { NetworkAddressCalculator } from '@/app/tools/network-address-calculator/network-address-calculator';
+import { CidrToSubnetListGenerator } from '@/app/tools/cidr-to-subnet-list/cidr-to-subnet-list-generator';
+import { CidrToWildcardConverter } from '@/app/tools/cidr-to-wildcard/cidr-to-wildcard-converter';
+import { IpSummarizationTool } from '@/app/tools/ip-summarization/ip-summarization-tool';
+import { HttpHeaderChecker } from '@/app/tools/http-header-checker/http-header-checker';
+import { HttpRequestSizeCalculator } from '@/app/tools/http-request-size-calculator/http-request-size-calculator';
+import { SslExpiryChecker } from '@/app/tools/ssl-expiry-checker/ssl-expiry-checker';
+import { UrlEncoderDecoder } from '@/app/tools/url-encoder-decoder/url-encoder-decoder';
+import { HtmlEntityEncoderDecoder } from '@/app/tools/html-entity-encoder-decoder/html-entity-encoder-decoder';
+import { CodeMinifier } from '@/app/tools/code-minifier/code-minifier';
+import { RobotsTxtTool } from '@/app/tools/robots-txt-tool/robots-txt-tool';
+import { SitemapGenerator } from '@/app/tools/sitemap-generator/sitemap-generator';
+import { ResponseTimeCalculator } from '@/app/tools/response-time-calculator/response-time-calculator';
+import { DomainExpiryCountdown } from '@/app/tools/domain-expiry-countdown/domain-expiry-countdown';
+import { SslChecker } from '@/app/tools/ssl-checker/ssl-checker';
+import { UptimeCalculator } from '@/app/tools/uptime-calculator/uptime-calculator';
+import { DnsLookupTool } from '@/app/tools/dns-lookup/dns-lookup-tool';
+import { ReverseDnsLookupTool } from '@/app/tools/reverse-dns-lookup/reverse-dns-lookup-tool';
+import { WhoisLookupTool } from '@/app/tools/whois-lookup/whois-lookup-tool';
+import { WebpageLoadTimeEstimator } from '@/app/tools/load-time-estimator/load-time-estimator';
+import { CacheExpirationCalculator } from '@/app/tools/cache-expiry-calculator/cache-expiry-calculator';
+import { CompressionEstimator } from '@/app/tools/compression-estimator/compression-estimator';
+import { CdnBandwidthEstimator } from '@/app/tools/cdn-bandwidth-estimator/cdn-bandwidth-estimator';
+import { CodeFormatter } from '@/app/tools/code-formatter/code-formatter';
+import { RegexTester } from '@/app/tools/regex-tester/regex-tester';
+import { Base64EncoderDecoder } from '@/app/tools/base64-encoder-decoder/base64-encoder-decoder';
+import { ColorConverter } from '@/app/tools/color-converter/color-converter';
+import { ColorPaletteGenerator } from '@/app/tools/color-palette-generator/color-palette-generator';
+import { NumberConverter } from '@/app/tools/number-converter/number-converter';
+import { HashGenerator } from '@/app/tools/hash-generator-md5-sha/hash-generator';
+import { Rot13EncoderDecoder } from '@/app/tools/rot13-encoder-decoder/rot13-encoder-decoder';
+import { CaesarCipher } from '@/app/tools/caesar-cipher/caesar-cipher';
+import { BigOCalculator } from '@/app/tools/big-o-calculator/big-o-calculator';
+import { PrimeChecker } from '@/app/tools/prime-checker/prime-checker';
+import { PrimeNumberGeneratorTool } from '@/app/tools/prime-number-generator/prime-number-generator';
+import { FibonacciGeneratorTool } from '@/app/tools/fibonacci-generator/fibonacci-generator';
+import { FactorialCalculator } from '@/app/tools/factorial-calculator/factorial-calculator';
+import { RandomStringGenerator } from '@/app/tools/random-string-generator/random-string-generator';
+import { RandomNumberGenerator } from '@/app/tools/random-number-generator/random-number-generator';
+import { CodeSnippetFormatter } from '@/app/tools/code-snippet-formatter/code-snippet-formatter';
+import { VariableNameValidator } from '@/app/tools/variable-name-validator/variable-name-validator';
+import { UnicodeAsciiConverter } from '@/app/tools/unicode-ascii-converter/unicode-ascii-converter';
+import { PasswordGenerator } from '@/app/tools/password-generator/password-generator';
+import { PasswordEntropyCalculator } from '@/app/tools/password-entropy-calculator/password-entropy-calculator';
+import { EncryptionDecryptionTool } from '@/app/tools/encryption-decryption-tool/encryption-decryption-tool';
+import { TotpDemo } from '@/app/tools/totp-demo/totp-demo';
+import { Base32_58EncoderDecoder } from '@/app/tools/base32-58-encoder-decoder/base32-58-encoder-decoder';
+import { FileIntegrityChecker } from '@/app/tools/file-integrity-checker/file-integrity-checker';
+import { AlgorithmStepSimulator } from '../algorithm-simulator/algorithm-simulator';
+import { CloudStorageCostEstimator } from '@/app/tools/cloud-storage-cost-estimator/cloud-storage-cost-estimator';
+import { BandwidthCostCalculator } from '@/app/tools/bandwidth-cost-calculator/bandwidth-cost-calculator';
+import { BackupStorageCalculator } from '@/app/tools/backup-storage-calculator/backup-storage-calculator';
+import { VmRequirementEstimator } from '@/app/tools/vm-requirement-estimator/vm-requirement-estimator';
+import { DiskUsageEstimator } from '@/app/tools/disk-usage-estimator/disk-usage-estimator';
+import { CloudInstanceCostCalculator } from '@/app/tools/cloud-instance-cost-calculator/cloud-instance-cost-calculator';
+import { StorageMemoryCostAnalyzer } from '@/app/tools/storage-memory-cost-analyzer/storage-memory-cost-analyzer';
+import { DataRetentionCalculator } from '@/app/tools/data-retention-calculator/data-retention-calculator';
+import { BackupScheduler } from '@/app/tools/backup-scheduler/backup-scheduler';
+import { StorageGrowthEstimator } from '@/app/tools/storage-growth-estimator/storage-growth-estimator';
+import { DbStorageEstimator } from '@/app/tools/db-storage-estimator/db-storage-estimator';
+import { DatabaseGrowthCalculator } from '@/app/tools/db-growth-calculator/db-growth-calculator';
+import { PrimaryForeignKeyValidator } from '@/app/tools/key-validator/key-validator';
+import { NormalizationChecker } from '@/app/tools/normalization-checker/normalization-checker';
+import { DuplicateRowFinder } from '@/app/tools/duplicate-row-finder/duplicate-row-finder';
+import { ColumnTypeConverter } from '@/app/tools/column-type-converter/column-type-converter';
+import { SqlInjectionTester } from '@/app/tools/sql-injection-tester/sql-injection-tester';
+import { DatabaseHealthChecker } from '@/app/tools/db-health-checker/db-health-checker';
+import BigOComplexityQuizPage from '@/app/tools/big-o-quiz/page';
+import { RecursionSimulator } from '@/app/tools/recursion-simulator/recursion-simulator';
 
-const formSchema = z.object({
-  task: z.enum(['generate', 'debug']),
-  language: z.enum(['JS', 'Python', 'HTML', 'CSS']),
-  requirements: z.string().min(10, 'Please describe your requirements in at least 10 characters.'),
-  codeSnippet: z.string().optional(),
-});
 
-type FormValues = z.infer<typeof formSchema>;
+export async function generateMetadata({ params: rawParams }: { params: { slug: string } }) {
+  const params = await rawParams;
+  const tool = allTools.find((t) => t.slug === params.slug);
 
-const initialState: CodeGenerationAndDebuggingOutput | { error: string } | null = null;
-
-async function formActionHandler(_prevState: typeof initialState, formData: FormData) {
-  const data = Object.fromEntries(formData);
-  const parsed = formSchema.safeParse(data);
-
-  if (!parsed.success) {
-    return { error: 'Invalid form data.' };
+  if (!tool) {
+    return {
+      title: 'Tool Not Found',
+    };
   }
 
-  return codeGenerationAndDebugging(parsed.data);
+  return {
+    title: `${tool.name} | ICT Toolbench`,
+    description: tool.description,
+    openGraph: {
+        title: `${tool.name} | ICT Toolbench`,
+        description: tool.description,
+        url: `/tools/${tool.slug}`,
+    }
+  };
 }
 
-export function CodeForm() {
-  const [state, formAction] = useFormState(formActionHandler, initialState);
-  const resultRef = React.useRef<HTMLDivElement>(null);
+// This map is crucial for rendering the correct component based on the slug
+const toolComponentMap: { [key: string]: React.ComponentType } = {
+  'ip-to-binary': IpToBinaryConverter,
+  'binary-to-ip': BinaryToIpConverter,
+  'subnet-calculator': SubnetCalculator,
+  'subnet-mask-converter': SubnetMaskConverter,
+  'vlsm-calculator': VlsmCalculator,
+  'bandwidth-estimator': BandwidthEstimator,
+  'latency-estimator': LatencyEstimator,
+  'password-strength-checker': PasswordStrengthChecker,
+  'data-transfer-calculator': DataTransferTimeCalculator,
+  'mac-validator': MacValidator,
+  'port-lookup': PortLookupTool,
+  'network-mask-validator': NetworkMaskValidator,
+  'ip-privacy-checker': IpPrivacyChecker,
+  'ip-class-finder': IpClassFinder,
+  'ip-range-generator': IpRangeGenerator,
+  'broadcast-address-calculator': BroadcastAddressCalculator,
+  'host-count-calculator': HostCountCalculator,
+  'network-address-calculator': NetworkAddressCalculator,
+  'cidr-to-subnet-list': CidrToSubnetListGenerator,
+  'cidr-to-wildcard': CidrToWildcardConverter,
+  'ip-summarization': IpSummarizationTool,
+  'http-header-checker': HttpHeaderChecker,
+  'http-request-size-calculator': HttpRequestSizeCalculator,
+  'ssl-expiry-checker': SslExpiryChecker,
+  'url-encoder-decoder': UrlEncoderDecoder,
+  'html-entity-encoder-decoder': HtmlEntityEncoderDecoder,
+  'code-minifier': CodeMinifier,
+  'robots-txt-tool': RobotsTxtTool,
+  'sitemap-generator': SitemapGenerator,
+  'response-time-calculator': ResponseTimeCalculator,
+  'domain-expiry-countdown': DomainExpiryCountdown,
+  'ssl-checker': SslChecker,
+  'uptime-calculator': UptimeCalculator,
+  'dns-lookup': DnsLookupTool,
+  'reverse-dns-lookup': ReverseDnsLookupTool,
+  'whois-lookup': WhoisLookupTool,
+  'load-time-estimator': WebpageLoadTimeEstimator,
+  'cache-expiry-calculator': CacheExpirationCalculator,
+  'compression-estimator': CompressionEstimator,
+  'cdn-bandwidth-estimator': CdnBandwidthEstimator,
+  'code-formatter': CodeFormatter,
+  'regex-tester': RegexTester,
+  'base64-encoder-decoder': Base64EncoderDecoder,
+  'color-converter': ColorConverter,
+  'color-palette-generator': ColorPaletteGenerator,
+  'number-converter': NumberConverter,
+  'hash-generator-md5-sha': HashGenerator,
+  'rot13-encoder-decoder': Rot13EncoderDecoder,
+  'caesar-cipher': CaesarCipher,
+  'big-o-calculator': BigOCalculator,
+  'prime-checker': PrimeChecker,
+  'prime-number-generator': PrimeNumberGeneratorTool,
+  'fibonacci-generator': FibonacciGeneratorTool,
+  'factorial-calculator': FactorialCalculator,
+  'random-string-generator': RandomStringGenerator,
+  'random-number-generator': RandomNumberGenerator,
+  'code-snippet-formatter': CodeSnippetFormatter,
+  'variable-name-validator': VariableNameValidator,
+  'unicode-ascii-converter': UnicodeAsciiConverter,
+  'password-generator': PasswordGenerator,
+  'password-entropy-calculator': PasswordEntropyCalculator,
+  'encryption-decryption-tool': EncryptionDecryptionTool,
+  'totp-demo': TotpDemo,
+  'base32-58-encoder-decoder': Base32_58EncoderDecoder,
+  'file-integrity-checker': FileIntegrityChecker,
+  'algorithm-simulator': AlgorithmStepSimulator,
+  'cloud-storage-cost-estimator': CloudStorageCostEstimator,
+  'bandwidth-cost-calculator': BandwidthCostCalculator,
+  'backup-storage-calculator': BackupStorageCalculator,
+  'data-compression-calculator': CompressionEstimator,
+  'vm-requirement-estimator': VmRequirementEstimator,
+  'disk-usage-estimator': DiskUsageEstimator,
+  'cloud-instance-cost-calculator': CloudInstanceCostCalculator,
+  'storage-memory-cost-analyzer': StorageMemoryCostAnalyzer,
+  'data-retention-calculator': DataRetentionCalculator,
+  'backup-scheduler': BackupScheduler,
+  'storage-growth-estimator': StorageGrowthEstimator,
+  'db-storage-estimator': DbStorageEstimator,
+  'database-growth-calculator': DatabaseGrowthCalculator,
+  'key-validator': PrimaryForeignKeyValidator,
+  'normalization-checker': NormalizationChecker,
+  'duplicate-row-finder': DuplicateRowFinder,
+  'table-size-estimator': DbStorageEstimator,
+  'column-type-converter': ColumnTypeConverter,
+  'sql-injection-tester': SqlInjectionTester,
+  'db-health-checker': DatabaseHealthChecker,
+  'big-o-quiz': BigOComplexityQuizPage,
+  'recursion-simulator': RecursionSimulator,
+};
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      task: 'generate',
-      language: 'JS',
-      requirements: 'Create a JavaScript function that returns a random item from an array.',
-      codeSnippet: 'function sortArray(arr) {\n  return arr.sort();\n}\n\nconst numbers = [3, 1, 4, 1, 5, 9];\nconsole.log(sortArray(numbers)); \n// Why is it sorting [1, 1, 3, 4, 5, 9] instead of numerically?',
-    },
-  });
+export default async function ToolPage({ params: rawParams }: { params: { slug: string } }) {
+  const params = await rawParams;
+  const tool = allTools.find((t) => t.slug === params.slug);
+  const ToolComponent = toolComponentMap[params.slug];
 
-  const { formState, setValue } = form;
+  if (!tool) {
+    notFound();
+  }
 
-  const handleTabChange = (value: string) => {
-    setValue('task', value as 'generate' | 'debug');
-  };
-  
-  React.useEffect(() => {
-    if (state && resultRef.current) {
-      resultRef.current.focus();
-    }
-  }, [state]);
+  const placeholderImage = PlaceHolderImages.find(img => img.id === 'tech-background') || PlaceHolderImages[0];
 
   return (
-    <div>
-      <Form {...form}>
-        <form action={formAction} className="space-y-6">
-          <Tabs defaultValue="generate" className="w-full" onValueChange={handleTabChange}>
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="generate">Generate Code</TabsTrigger>
-              <TabsTrigger value="debug">Debug Code</TabsTrigger>
-            </TabsList>
-            <TabsContent value="generate" className="space-y-4 pt-4">
-              <FormField
-                control={form.control}
-                name="requirements"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel htmlFor="generate-requirements">Requirements</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        id="generate-requirements"
-                        placeholder="e.g., Create a JavaScript function that returns a random item from an array."
-                        rows={5}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </TabsContent>
-            <TabsContent value="debug" className="space-y-4 pt-4">
-               <FormField
-                control={form.control}
-                name="requirements"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel htmlFor="debug-requirements">Problem Description</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        id="debug-requirements"
-                        placeholder="e.g., This code should sort the array, but it's not working correctly."
-                        rows={3}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="codeSnippet"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel htmlFor="code-snippet">Code to Debug</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        id="code-snippet"
-                        placeholder="Paste your code snippet here..."
-                        rows={8}
-                        className="font-code"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </TabsContent>
-          </Tabs>
-
-          <input type="hidden" {...form.register('task')} />
-
-          <FormField
-            control={form.control}
-            name="language"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Language</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger aria-label="Select a language">
-                      <SelectValue placeholder="Select a language" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="JS">JavaScript</SelectItem>
-                    <SelectItem value="Python">Python</SelectItem>
-                    <SelectItem value="HTML">HTML</SelectItem>
-                    <SelectItem value="CSS">CSS</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button type="submit" disabled={formState.isSubmitting}>
-            {formState.isSubmitting ? 'Working on it...' : 'Submit'}
-          </Button>
-        </form>
-      </Form>
-
-      <div ref={resultRef} tabIndex={-1} aria-live="polite" role="region">
-        {formState.isSubmitting && (
-          <div className="mt-8 space-y-4" aria-label="Loading AI response">
-              <Skeleton className="h-8 w-32" />
-              <Skeleton className="h-48 w-full" />
-          </div>
-        )}
-
-        {state && (state.generatedCode || state.debuggingSuggestions) && (
-          <div className="mt-8 space-y-4">
-              <div className='flex items-center gap-2 text-primary font-semibold'>
-                  <Bot className="h-6 w-6" aria-hidden="true" />
-                  <h3 className="text-xl">AI Response</h3>
-              </div>
-              <Card className="bg-secondary/30 border-primary/20">
-                <CardContent className="p-4">
-                  {state.generatedCode && (
-                    <div>
-                      <h4 className="font-semibold mb-2">Generated Code:</h4>
-                      <CodeBlock code={state.generatedCode} language={form.getValues('language').toLowerCase()} />
+    <div className="max-w-4xl mx-auto">
+        <PageHeader
+            title={tool.name}
+            description={tool.description}
+        />
+        {ToolComponent ? (
+          <ToolComponent />
+        ) : (
+            <Card>
+                <CardHeader>
+                    <CardTitle>Tool Under Construction</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="flex flex-col items-center justify-center text-center p-8 space-y-4">
+                        <Construction className="w-16 h-16 text-muted-foreground" />
+                        <p className="text-muted-foreground">This tool is currently under construction. Please check back later!</p>
+                        <Image
+                            src={placeholderImage.imageUrl}
+                            alt="Under Construction"
+                            width={400}
+                            height={300}
+                            className="rounded-lg object-cover"
+                            data-ai-hint={placeholderImage.imageHint}
+                        />
                     </div>
-                  )}
-                  {state.debuggingSuggestions && (
-                    <div>
-                      <h4 className="font-semibold mb-2">Debugging Suggestions:</h4>
-                      <div className="prose prose-sm max-w-none text-muted-foreground bg-background/50 p-4 rounded-md">
-                          <p>{state.debuggingSuggestions}</p>
-                      </div>
-                    </div>
-                  )}
                 </CardContent>
-              </Card>
-          </div>
+            </Card>
         )}
-        
-        {state && 'error' in state && (
-          <div className="mt-8 text-destructive-foreground bg-destructive p-4 rounded-md" role="alert">
-              <p>{state.error}</p>
-          </div>
-        )}
-      </div>
     </div>
   );
+}
+
+export function generateStaticParams() {
+  return allTools.map((tool) => ({
+    slug: tool.slug,
+  }));
 }

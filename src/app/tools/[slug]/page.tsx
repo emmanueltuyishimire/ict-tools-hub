@@ -72,7 +72,6 @@ import { EncryptionDecryptionTool } from '@/app/tools/encryption-decryption-tool
 import { TotpDemo } from '@/app/tools/totp-demo/totp-demo';
 import { Base32_58EncoderDecoder } from '@/app/tools/base32-58-encoder-decoder/base32-58-encoder-decoder';
 import { FileIntegrityChecker } from '@/app/tools/file-integrity-checker/file-integrity-checker';
-import { CodeForm } from '../code-generator/code-form';
 import { AlgorithmStepSimulator } from '../algorithm-simulator/algorithm-simulator';
 import { CloudStorageCostEstimator } from '@/app/tools/cloud-storage-cost-estimator/cloud-storage-cost-estimator';
 import { BandwidthCostCalculator } from '@/app/tools/bandwidth-cost-calculator/bandwidth-cost-calculator';
@@ -184,7 +183,6 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'totp-demo': TotpDemo,
   'base32-58-encoder-decoder': Base32_58EncoderDecoder,
   'file-integrity-checker': FileIntegrityChecker,
-  'code-generator': CodeForm,
   'algorithm-simulator': AlgorithmStepSimulator,
   'cloud-storage-cost-estimator': CloudStorageCostEstimator,
   'bandwidth-cost-calculator': BandwidthCostCalculator,
