@@ -84,6 +84,7 @@ import { StorageMemoryCostAnalyzer } from '@/app/tools/storage-memory-cost-analy
 import { DataRetentionCalculator } from '@/app/tools/data-retention-calculator/data-retention-calculator';
 import { BackupScheduler } from '@/app/tools/backup-scheduler/backup-scheduler';
 import { StorageGrowthEstimator } from '@/app/tools/storage-growth-estimator/storage-growth-estimator';
+import { DatabaseGrowthCalculator } from '@/app/tools/db-growth-calculator/db-growth-calculator';
 
 export async function generateMetadata({ params: rawParams }: { params: { slug: string } }) {
   const params = await rawParams;
@@ -186,6 +187,7 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'data-retention-calculator': DataRetentionCalculator,
   'backup-scheduler': BackupScheduler,
   'storage-growth-estimator': StorageGrowthEstimator,
+  'db-growth-calculator': DatabaseGrowthCalculator,
 };
 
 export default async function ToolPage({ params: rawParams }: { params: { slug: string } }) {
