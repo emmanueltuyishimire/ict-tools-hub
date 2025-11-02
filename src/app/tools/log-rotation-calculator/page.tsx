@@ -164,7 +164,7 @@ const LogRotationCalculatorPage = () => {
     sharedscripts
     postrotate
         if [ -f /var/run/nginx.pid ]; then
-            kill -USR1 `cat /var/run/nginx.pid`
+            kill -USR1 \`cat /var/run/nginx.pid\`
         fi
     endscript
 }`}
