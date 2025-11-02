@@ -10,9 +10,10 @@ import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertCircle, Play } from 'lucide-react';
 import { CodeBlock } from '@/components/code-block';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-// Sample data
-const sampleData = {
+// Default Sample data
+const initialData = {
     users: [
         { id: 1, name: 'Alice', age: 30, country: 'USA' },
         { id: 2, name: 'Bob', age: 25, country: 'Canada' },
@@ -27,7 +28,7 @@ const sampleData = {
 };
 
 // Basic SQL Parser
-const executeQuery = (query: string, data: typeof sampleData) => {
+const executeQuery = (query: string, data: { [key: string]: any[] }) => {
     query = query.trim().replace(/;$/, '');
     const selectMatch = query.match(/^SELECT\s+(.+?)\s+FROM\s+([a-zA-Z0-9_]+)(?:\s+WHERE\s+(.+))?$/i);
     
@@ -41,25 +42,25 @@ const executeQuery = (query: string, data: typeof sampleData) => {
         throw new Error("Only 'SELECT *' is supported in this demo.");
     }
 
-    const table = (data as any)[tableName.toLowerCase()];
-    if (!table) {
+    const table = data[tableName.toLowerCase()];
+    if (!table || !Array.isArray(table)) {
         throw new Error(`Table not found: '${tableName}'. Available tables: 'users', 'products'.`);
     }
 
     let results = table;
 
     if (whereClause) {
-        const whereMatch = whereClause.match(/([a-zA-Z0-9_]+)\s*=\s*(?:'([^']*)'|(\d+))/);
+        const whereMatch = whereClause.match(/([a-zA-Z0-9_]+)\s*=\s*(?:'([^']*)'|"([^"]*)"|(\d+(?:\.\d+)?))/);
         if (!whereMatch) {
-            throw new Error("Unsupported WHERE clause. Use 'column = 'value'' or 'column = number'.");
+            throw new Error("Unsupported WHERE clause. Use 'column = 'value'', 'column = \"value\"', or 'column = number'.");
         }
-        const [, column, stringValue, numberValue] = whereMatch;
+        const [, column, stringValue1, stringValue2, numberValue] = whereMatch;
 
         if(!table[0] || !(column in table[0])) {
             throw new Error(`Column '${column}' not found in table '${tableName}'.`);
         }
-
-        const value = stringValue !== undefined ? stringValue : parseInt(numberValue, 10);
+        
+        const value = stringValue1 !== undefined ? stringValue1 : (stringValue2 !== undefined ? stringValue2 : parseFloat(numberValue));
         
         results = table.filter((row: any) => row[column] == value);
     }
@@ -71,21 +72,48 @@ const executeQuery = (query: string, data: typeof sampleData) => {
 export function SqlQueryTester() {
     const [query, setQuery] = useState('SELECT * FROM users WHERE country = \'USA\'');
     const [results, setResults] = useState<any[]>([]);
-    const [error, setError] = useState('');
+    const [queryError, setQueryError] = useState('');
     const [headers, setHeaders] = useState<string[]>([]);
     
-    const handleRunQuery = () => {
+    const [usersJson, setUsersJson] = useState(JSON.stringify(initialData.users, null, 2));
+    const [productsJson, setProductsJson] = useState(JSON.stringify(initialData.products, null, 2));
+    const [jsonError, setJsonError] = useState('');
+
+    const currentData = useMemo(() => {
         try {
-            setError('');
-            const queryResults = executeQuery(query, sampleData);
+            setJsonError('');
+            return {
+                users: JSON.parse(usersJson),
+                products: JSON.parse(productsJson),
+            };
+        } catch (e) {
+            setJsonError('Invalid JSON format in one of the tables. Please correct it before running a query.');
+            return null;
+        }
+    }, [usersJson, productsJson]);
+    
+    const handleRunQuery = () => {
+        if (!currentData || jsonError) {
+             setQueryError(jsonError || 'Cannot run query due to invalid table data.');
+             return;
+        }
+        try {
+            setQueryError('');
+            const queryResults = executeQuery(query, currentData);
             setResults(queryResults);
             if (queryResults.length > 0) {
                 setHeaders(Object.keys(queryResults[0]));
             } else {
-                setHeaders([]);
+                // If there are no results, we can try to infer headers from the table definition
+                const tableName = query.match(/FROM\s+([a-zA-Z0-9_]+)/i)?.[1].toLowerCase();
+                if(tableName && currentData[tableName] && currentData[tableName].length > 0) {
+                    setHeaders(Object.keys(currentData[tableName][0]));
+                } else {
+                    setHeaders([]);
+                }
             }
         } catch (e: any) {
-            setError(e.message);
+            setQueryError(e.message);
             setResults([]);
             setHeaders([]);
         }
@@ -114,17 +142,17 @@ export function SqlQueryTester() {
                         <Play className="mr-2 h-4 w-4" /> Run Query
                     </Button>
                     
-                    {error && (
+                    {queryError && (
                         <Alert variant="destructive">
                             <AlertCircle className="h-4 w-4" />
                             <AlertTitle>Query Error</AlertTitle>
-                            <AlertDescription>{error}</AlertDescription>
+                            <AlertDescription>{queryError}</AlertDescription>
                         </Alert>
                     )}
                 </CardContent>
             </Card>
 
-            {(results.length > 0 || headers.length > 0) && (
+            {(results.length > 0 || (headers.length > 0 && results.length === 0)) && (
                 <Card>
                     <CardHeader>
                         <CardTitle>Results ({results.length} rows)</CardTitle>
@@ -148,39 +176,77 @@ export function SqlQueryTester() {
                                 </TableBody>
                             </Table>
                         </div>
+                         {results.length === 0 && <p className="text-sm text-muted-foreground mt-4">Query executed successfully, but returned no results.</p>}
                     </CardContent>
                 </Card>
             )}
 
             <Card>
-                <CardHeader>
-                    <CardTitle>Sample Data</CardTitle>
-                    <CardDescription>You can query the following tables: `users` and `products`.</CardDescription>
-                </CardHeader>
-                <CardContent className="grid gap-6 md:grid-cols-2">
-                    <div>
-                         <h4 className="font-semibold mb-2">users</h4>
-                         <div className="overflow-x-auto rounded-md border">
-                            <Table>
-                                <TableHeader><TableRow>{Object.keys(sampleData.users[0]).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
-                                <TableBody>
-                                    {sampleData.users.map((row, i) => <TableRow key={i}>{Object.values(row).map((val, j) => <TableCell key={j}>{val}</TableCell>)}</TableRow>)}
-                                </TableBody>
-                            </Table>
+                 <Tabs defaultValue="view" className="w-full">
+                    <CardHeader>
+                        <div className="flex justify-between items-center">
+                            <CardTitle>Sample Data</CardTitle>
+                            <TabsList>
+                                <TabsTrigger value="view">View Data</TabsTrigger>
+                                <TabsTrigger value="edit">Edit Data (JSON)</TabsTrigger>
+                            </TabsList>
                         </div>
-                    </div>
-                    <div>
-                         <h4 className="font-semibold mb-2">products</h4>
-                          <div className="overflow-x-auto rounded-md border">
-                            <Table>
-                                <TableHeader><TableRow>{Object.keys(sampleData.products[0]).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
-                                <TableBody>
-                                    {sampleData.products.map((row, i) => <TableRow key={i}>{Object.values(row).map((val, j) => <TableCell key={j}>{val}</TableCell>)}</TableRow>)}
-                                </TableBody>
-                            </Table>
+                         <CardDescription>You can query the following tables: `users` and `products`.</CardDescription>
+                    </CardHeader>
+                    <TabsContent value="view" className="p-6 pt-0 grid gap-6 md:grid-cols-2">
+                         <div>
+                            <h4 className="font-semibold mb-2">users</h4>
+                            <div className="overflow-x-auto rounded-md border">
+                                <Table>
+                                    <TableHeader><TableRow>{Object.keys(initialData.users[0]).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
+                                    <TableBody>
+                                        {currentData?.users?.slice(0, 5).map((row: any, i: number) => <TableRow key={i}>{Object.values(row).map((val: any, j) => <TableCell key={j}>{val}</TableCell>)}</TableRow>)}
+                                         {currentData && currentData.users.length > 5 && <TableRow><TableCell colSpan={Object.keys(initialData.users[0]).length} className="text-center text-muted-foreground">...and more</TableCell></TableRow>}
+                                    </TableBody>
+                                </Table>
+                            </div>
                         </div>
-                    </div>
-                </CardContent>
+                        <div>
+                            <h4 className="font-semibold mb-2">products</h4>
+                            <div className="overflow-x-auto rounded-md border">
+                                <Table>
+                                    <TableHeader><TableRow>{Object.keys(initialData.products[0]).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
+                                    <TableBody>
+                                        {currentData?.products?.slice(0,5).map((row: any, i: number) => <TableRow key={i}>{Object.values(row).map((val: any, j) => <TableCell key={j}>{val}</TableCell>)}</TableRow>)}
+                                        {currentData && currentData.products.length > 5 && <TableRow><TableCell colSpan={Object.keys(initialData.products[0]).length} className="text-center text-muted-foreground">...and more</TableCell></TableRow>}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="edit" className="p-6 pt-0 space-y-6">
+                        {jsonError && (
+                            <Alert variant="destructive">
+                                <AlertCircle className="h-4 w-4" />
+                                <AlertTitle>JSON Error</AlertTitle>
+                                <AlertDescription>{jsonError}</AlertDescription>
+                            </Alert>
+                        )}
+                        <div className="space-y-2">
+                            <Label htmlFor="users-json">users table (JSON)</Label>
+                            <Textarea
+                                id="users-json"
+                                value={usersJson}
+                                onChange={(e) => setUsersJson(e.target.value)}
+                                className="font-mono h-48"
+                            />
+                        </div>
+                         <div className="space-y-2">
+                            <Label htmlFor="products-json">products table (JSON)</Label>
+                            <Textarea
+                                id="products-json"
+                                value={productsJson}
+                                onChange={(e) => setProductsJson(e.target.value)}
+                                className="font-mono h-48"
+                            />
+                        </div>
+                    </TabsContent>
+                </Tabs>
             </Card>
         </div>
     );
