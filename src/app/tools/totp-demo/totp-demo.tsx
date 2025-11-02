@@ -37,6 +37,7 @@ const generateSecret = (length = 20) => {
 };
 
 async function generateTOTP(secret: string): Promise<string> {
+    if (!secret) return '';
     const key = base32tohex(secret);
     const epoch = Math.round(new Date().getTime() / 1000.0);
     const time = Math.floor(epoch / 30).toString(16).padStart(16, '0');
@@ -66,17 +67,24 @@ async function generateTOTP(secret: string): Promise<string> {
 }
 
 export function TotpDemo() {
-    const [secret, setSecret] = useState(generateSecret());
+    const [secret, setSecret] = useState('');
     const [totp, setTotp] = useState('');
     const [timeLeft, setTimeLeft] = useState(30);
     const [verificationCode, setVerificationCode] = useState('');
     const [verificationStatus, setVerificationStatus] = useState<'idle' | 'success' | 'failure'>('idle');
     const { toast } = useToast();
 
+    // Generate secret on client-side mount
+    useEffect(() => {
+        setSecret(generateSecret());
+    }, []);
+
     const otpAuthUrl = useMemo(() => `otpauth://totp/ICT%20Toolbench%20Demo:user@example.com?secret=${secret}&issuer=ICT%20Toolbench%20Demo`, [secret]);
-    const qrCodeUrl = useMemo(() => `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(otpAuthUrl)}`, [otpAuthUrl]);
+    const qrCodeUrl = useMemo(() => secret ? `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(otpAuthUrl)}` : '', [otpAuthUrl, secret]);
 
     useEffect(() => {
+        if (!secret) return;
+
         const updateTotp = async () => {
             try {
                 const newTotp = await generateTOTP(secret);
@@ -143,7 +151,7 @@ export function TotpDemo() {
                     </div>
                     <div className="flex flex-col items-center justify-center p-4 border rounded-lg bg-white">
                          <QrCode className="h-8 w-8 text-primary mb-2" />
-                         <img src={qrCodeUrl} alt="TOTP QR Code" width={200} height={200} />
+                         {qrCodeUrl && <img src={qrCodeUrl} alt="TOTP QR Code" width={200} height={200} />}
                          <p className="text-xs text-muted-foreground mt-2 text-center">Scan with Google Authenticator, Authy, or other 2FA app.</p>
                     </div>
                 </div>
@@ -152,7 +160,7 @@ export function TotpDemo() {
                     <Label>Server Simulation</Label>
                     <Card className="p-6 bg-muted/50 text-center">
                         <CardTitle className="mb-2">Server's Current Code</CardTitle>
-                        <p className="text-5xl font-bold tracking-widest text-primary font-mono">{totp}</p>
+                        <p className="text-5xl font-bold tracking-widest text-primary font-mono">{totp || '------'}</p>
                         <Progress value={(timeLeft / 30) * 100} className="mt-4 h-2" />
                         <p className="text-xs text-muted-foreground mt-1">Refreshes in {timeLeft} seconds</p>
                     </Card>
