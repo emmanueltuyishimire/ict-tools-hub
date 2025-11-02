@@ -146,7 +146,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Data Compression Calculator', slug: 'data-compression-calculator', description: 'Calculate data compression.' },
       { name: 'VM RAM & CPU Requirement', slug: 'vm-requirement-estimator', description: 'Estimate VM resource needs.' },
       { name: 'Disk Usage / Partition Estimator', slug: 'disk-usage-estimator', description: 'Estimate disk usage.' },
-      { name: 'Cloud Instance Cost Calculator', slug: 'instance-cost-calculator', description: 'Calculate cloud instance costs.' },
+      { name: 'Cloud Instance Cost Calculator', slug: 'cloud-instance-cost-calculator', description: 'Calculate cloud instance costs.' },
       { name: 'Network Transfer Cost Estimator', slug: 'network-transfer-cost-estimator', description: 'Estimate data transfer costs.' },
       { name: 'Storage vs Memory Cost Analyzer', slug: 'storage-memory-cost-analyzer', description: 'Analyze storage vs. memory costs.' },
       { name: 'File Conversion Estimator', slug: 'file-conversion-estimator', description: 'Estimate file conversion sizes.' },
