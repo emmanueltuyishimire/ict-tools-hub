@@ -131,7 +131,7 @@ export default function UptimeCalculatorPage() {
                           </tbody>
                       </table>
                   </div>
-                  <p>As you can see, the difference between 99.9% and 99.99% is the difference between nearly 9 hours of downtime and less than an hour of downtime per year. For mission-critical applications, this distinction is enormous. Our calculator helps you instantly translate any uptime percentage into these concrete time-based figures.</p>
+                  <p>As you can see, the difference between 99.9% and 99.99% is the difference between nearly 9 hours of downtime and less than an hour of downtime per year. For a mission-critical e-commerce site, those 7+ hours could mean thousands of dollars in lost revenue.</p>
               </section>
                <section>
                     <h3 className="font-bold text-xl">The Path to High Availability</h3>
@@ -139,14 +139,36 @@ export default function UptimeCalculatorPage() {
                         Achieving "five nines" or higher is not a matter of simply buying a good server; it requires a comprehensive strategy of redundancy and fault tolerance. This includes:
                     </p>
                     <ul className="list-disc pl-5">
-                       <li><strong>Hardware Redundancy:</strong> Using redundant power supplies, RAID storage arrays, and network cards so that the failure of a single component doesn't take down the whole server.</li>
-                       <li><strong>Server Clustering:</strong> Running multiple servers in a cluster with a load balancer. If one server fails, the load balancer automatically redirects traffic to the healthy servers.</li>
+                       <li><strong>Hardware Redundancy:</strong> Using redundant power supplies, <Link href="/tools/raid-calculator" className="text-primary hover:underline">RAID storage arrays</Link>, and network cards so that the failure of a single component doesn't take down the whole server.</li>
+                       <li><strong>Server Clustering:</strong> Running multiple servers in a cluster with a load balancer. If one server fails, the load balancer automatically redirects traffic to the healthy servers. This is a form of <Link href="/tools/vm-scaling-calculator" className="text-primary hover:underline">horizontal scaling</Link>.</li>
                        <li><strong>Geographic Redundancy:</strong> Hosting your application in multiple data centers in different geographic regions. If a natural disaster or power outage takes out one data center, traffic can be failed over to another region.</li>
                        <li><strong>Automated Monitoring and Failover:</strong> Using software to constantly monitor the health of all components and automatically trigger failover procedures the instant a problem is detected.</li>
                     </ul>
               </section>
           </CardContent>
       </Card>
+      
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Choosing a Web Hosting Plan</h3>
+                    <p className="text-sm text-muted-foreground">A small business owner is comparing two web hosting plans. Plan A offers a 99.9% uptime SLA, while Plan B offers 99.99%. Using the calculator, they see that Plan A allows for over 8 hours of downtime per year, while Plan B allows for only 52 minutes. For their e-commerce store, minimizing downtime is critical, so they decide the higher cost of Plan B is a worthwhile investment.</p>
+                </div>
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Setting Internal Service Level Objectives (SLOs)</h3>
+                    <p className="text-sm text-muted-foreground">A DevOps team is setting an internal goal (an SLO) for a new microservice. They commit to "four nines" (99.99%) availability. Using this tool, they can clearly communicate to management that this translates to a maximum of 52.6 minutes of unplanned downtime per year, setting clear and measurable expectations for the service's reliability.</p>
+                </div>
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Claiming an SLA Credit</h3>
+                    <p className="text-sm text-muted-foreground">A company's critical application, hosted on a cloud provider with a 99.95% uptime SLA, was down for 4 hours last month. They use the calculator's "Uptime from Downtime" tab to find that 4 hours of downtime in a month equates to only 99.45% uptime. Since this is below the guaranteed 99.95%, they have clear evidence to file a claim for a service credit from their provider.</p>
+                </div>
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Justifying a High-Availability Architecture</h3>
+                    <p className="text-sm text-muted-foreground">An IT manager needs to get budget approval to migrate a single-server application to a redundant, high-availability cluster. The current server has about 2 hours of downtime per quarter (8 hours/year). By showing that this equals ~99.9% uptime and that a new architecture could achieve 99.99% (under 1 hour/year), they can quantify the improvement and justify the project's cost versus the cost of lost revenue from downtime.</p>
+                </div>
+            </div>
+        </section>
 
       <div className="grid md:grid-cols-2 gap-8">
           <Card>
@@ -170,7 +192,7 @@ export default function UptimeCalculatorPage() {
                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                       <li><strong>Ignoring the SLA:</strong> Choosing a hosting provider based on price alone without understanding their uptime guarantee and compensation policy.</li>
                       <li><strong>Forgetting About Dependencies:</strong> Your application's uptime is dependent on the uptime of all its critical services (e.g., your database provider, payment gateway, third-party APIs). A chain is only as strong as its weakest link.</li>
-                      <li><strong>No Disaster Recovery Plan:</strong> Assuming your server will never fail completely. You must have a regularly tested plan for restoring your service from backups in a worst-case scenario.</li>
+                      <li><strong>No Disaster Recovery Plan:</strong> Assuming your server will never fail completely. You must have a regularly tested plan for restoring your service from backups in a worst-case scenario. Our <Link href="/tools/backup-scheduler" className="text-primary hover:underline">Backup Scheduler</Link> can help with planning.</li>
                       <li><strong>Confusing Uptime with Data Durability:</strong> Uptime guarantees do not protect you from data loss. You are still responsible for your own backups, even with a high-availability hosting plan.</li>
                   </ul>
               </CardContent>
