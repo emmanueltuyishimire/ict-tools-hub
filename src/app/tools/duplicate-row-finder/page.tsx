@@ -81,7 +81,7 @@ const DuplicateRowFinderPage = () => {
                           <dl className="space-y-4">
                               {keyTerminologies.map((item) => (
                                   <div key={item.term}>
-                                      <dt><strong>{item.term}</strong></dt>
+                                      <dt className="font-semibold">{item.term}</dt>
                                       <dd className="text-muted-foreground text-sm">{item.definition}</dd>
                                   </div>
                               ))}
@@ -195,6 +195,36 @@ const DuplicateRowFinderPage = () => {
                           </Accordion>
                       </CardContent>
                   </Card>
+              </section>
+
+              <section>
+                  <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                       <Link href="/tools/key-validator" className="block">
+                          <Card className="hover:border-primary transition-colors h-full">
+                              <CardHeader>
+                                  <CardTitle className="text-base flex items-center justify-between">Primary / Foreign Key Validator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">Learn how unique constraints in databases help prevent duplicate records.</CardDescription>
+                              </CardHeader>
+                          </Card>
+                      </Link>
+                      <Link href="/tools/db-storage-estimator" className="block">
+                          <Card className="hover:border-primary transition-colors h-full">
+                              <CardHeader>
+                                  <CardTitle className="text-base flex items-center justify-between">Database Storage Estimator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">Estimate how much space your data, including duplicates, is consuming.</CardDescription>
+                              </CardHeader>
+                          </Card>
+                      </Link>
+                       <Link href="/tools/csv-json-converter" className="block">
+                          <Card className="hover:border-primary transition-colors h-full">
+                              <CardHeader>
+                                  <CardTitle className="text-base flex items-center justify-between">CSV &lt;-&gt; JSON Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">Convert your data between formats before or after cleaning.</CardDescription>
+                              </CardHeader>
+                          </Card>
+                      </Link>
+                  </div>
               </section>
             </div>
         </>
