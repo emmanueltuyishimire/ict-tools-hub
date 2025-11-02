@@ -90,6 +90,28 @@ const VdiskSizeEstimatorPage = () => {
                 </section>
                 
                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">New Web Server Setup</h3>
+                            <p className="text-sm text-muted-foreground">A sysadmin is provisioning a new Linux web server with a 100 GB disk. Using the estimator, they plan a layout: 30 GB for `/` (OS and Apache), 8 GB for swap, 20 GB for `/var` (to contain web logs), and the remaining ~42 GB for `/home` where the website content will live. This ensures that a sudden spike in log files won't crash the root filesystem.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Developer Workstation</h3>
+                            <p className="text-sm text-muted-foreground">A developer is setting up a new Linux desktop with a 500 GB SSD. They want a large home directory for their projects and personal files. They allocate 50 GB for `/` and a generous 430 GB for `/home`. This separation allows them to easily back up their entire `/home` directory or even reinstall the OS without losing their critical work.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Database Server Planning</h3>
+                            <p className="text-sm text-muted-foreground">For a dedicated PostgreSQL server, the database administrator knows that the data files (in `/var/lib/postgresql`) and transaction logs will grow significantly. They use the estimator on a 1 TB disk to allocate a massive 800 GB partition specifically for `/var`, ensuring the database has ample room to grow without impacting the core operating system on the `/` partition.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Cloud VM Provisioning</h3>
+                            <p className="text-sm text-muted-foreground">An engineer is creating a VM in the cloud. Instead of using one single virtual disk, they provision multiple: a small 30 GB disk for the OS (`/`), and a larger 200 GB high-speed disk which they mount at `/data` for their application's primary storage. This allows them to scale or snapshot the data disk independently of the OS disk.</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section>
                    <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
                    <Card>
                       <CardContent className="p-6">
@@ -150,28 +172,6 @@ const VdiskSizeEstimatorPage = () => {
                         </section>
                     </CardContent>
                 </Card>
-                
-                <section>
-                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
-                    <div className="grid md:grid-cols-2 gap-6">
-                        <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">New Web Server Setup</h3>
-                            <p className="text-sm text-muted-foreground">A sysadmin is provisioning a new Linux web server with a 100 GB disk. Using the estimator, they plan a layout: 30 GB for `/` (OS and Apache), 8 GB for swap, 20 GB for `/var` (to contain web logs), and the remaining ~42 GB for `/home` where the website content will live. This ensures that a sudden spike in log files won't crash the root filesystem.</p>
-                        </div>
-                         <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">Developer Workstation</h3>
-                            <p className="text-sm text-muted-foreground">A developer is setting up a new Linux desktop with a 500 GB SSD. They want a large home directory for their projects and personal files. They allocate 50 GB for `/` and a generous 430 GB for `/home`. This separation allows them to easily back up their entire `/home` directory or even reinstall the OS without losing their critical work.</p>
-                        </div>
-                         <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">Database Server Planning</h3>
-                            <p className="text-sm text-muted-foreground">For a dedicated PostgreSQL server, the database administrator knows that the data files (in `/var/lib/postgresql`) and transaction logs will grow significantly. They use the estimator on a 1 TB disk to allocate a massive 800 GB partition specifically for `/var`, ensuring the database has ample room to grow without impacting the core operating system on the `/` partition.</p>
-                        </div>
-                         <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">Cloud VM Provisioning</h3>
-                            <p className="text-sm text-muted-foreground">An engineer is creating a VM in the cloud. Instead of using one single virtual disk, they provision multiple: a small 30 GB disk for the OS (`/`), and a larger 200 GB high-speed disk which they mount at `/data` for their application's primary storage. This allows them to scale or snapshot the data disk independently of the OS disk.</p>
-                        </div>
-                    </div>
-                </section>
 
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
@@ -226,7 +226,7 @@ const VdiskSizeEstimatorPage = () => {
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
                                   <CardTitle className="text-base flex items-center justify-between">VM Requirement Estimator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                  <CardDescription className="text-xs">Estimate the CPU and RAM for your VM, which influences swap partition size.</CardDescription>
+                                  <CardDescription className="text-xs">Estimate the CPU and RAM needs for your server, which influences swap partition size.</CardDescription>
                               </CardHeader>
                           </Card>
                       </Link>

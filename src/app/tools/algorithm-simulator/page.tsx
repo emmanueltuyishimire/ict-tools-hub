@@ -75,7 +75,7 @@ const AlgorithmSimulatorPage = () => {
                         <p>This tool is designed to provide an intuitive, visual understanding of how algorithms process data. Follow these steps to get started:</p>
                         <ol>
                             <li><strong>Select an Algorithm:</strong> Choose which algorithm you'd like to see in action from the dropdown menu, such as <strong>Bubble Sort</strong> or <strong>Linear Search</strong>.</li>
-                            <li><strong>Prepare Your Data:</strong> Use the <strong>Randomize</strong> button to create a new array of numbers. If you've selected a search algorithm, an input will appear for you to enter the number you want to find. You can generate custom numbers with our <Link href="/tools/random-number-generator">Random Number Generator</Link>.</li>
+                            <li><strong>Prepare Your Data:</strong> Use the <strong>Randomize</strong> button to create a new array of numbers. If you've selected a search algorithm, an input will appear for you to enter the number you want to find. You can generate custom numbers with our <Link href="/tools/random-number-generator" className="text-primary hover:underline">Random Number Generator</Link>.</li>
                             <li><strong>Control the Simulation:</strong>
                                 <ul>
                                     <li>Click <strong>Play</strong> to watch the algorithm run automatically at a set speed.</li>
@@ -106,7 +106,7 @@ const AlgorithmSimulatorPage = () => {
                                        <li><strong>Pass 1, Step 2:</strong> Click "Step". The log reads: `Swapping 60 and 20.` Click "Step" again. The array becomes `[20, 60, 40]`.</li>
                                        <li><strong>Pass 1, Step 3:</strong> Click "Step". The simulator highlights `60` and `40`. Since 60 > 40, another swap occurs. The array becomes `[20, 40, 60]`.</li>
                                        <li><strong>End of Pass 1:</strong> The largest element, `60`, is now in its correct final position. The simulator will color it green.</li>
-                                       <li><strong>Pass 2:</strong> The simulator compares `20` and `40`. Since they are in the correct order, no swap occurs. The algorithm finishes, as the list is now sorted. This visual feedback makes the O(n²) nature of Bubble Sort, which you can analyze with our <Link href="/tools/big-o-calculator">Time Complexity Estimator</Link>, much clearer.</li>
+                                       <li><strong>Pass 2:</strong> The simulator compares `20` and `40`. Since they are in the correct order, no swap occurs. The algorithm finishes, as the list is now sorted. This visual feedback makes the O(n²) nature of Bubble Sort, which you can analyze with our <Link href="/tools/big-o-calculator" className="text-primary hover:underline">Time Complexity Estimator</Link>, much clearer.</li>
                                    </ol>
                                </div>
                             </CardContent>

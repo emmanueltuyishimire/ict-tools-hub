@@ -188,11 +188,11 @@ const VmScalingGuidePage = () => {
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Scaling a Monolithic Database</h3>
-                            <p className="text-sm text-muted-foreground">A company's PostgreSQL database server is struggling, with RAM usage consistently at 95%. Since a traditional relational database is stateful and hard to scale horizontally, the administrator chooses to **scale vertically**. They schedule a maintenance window, shut down the VM, change its instance type from one with 16GB RAM to one with 32GB RAM, and restart it. Performance immediately improves.</p>
+                            <p className="text-sm text-muted-foreground">A company's PostgreSQL database server is struggling, with RAM usage consistently at 95%. Since a traditional relational database is stateful and hard to scale horizontally, the administrator chooses to <strong>scale vertically</strong>. They schedule a maintenance window, shut down the VM, change its instance type from one with 16GB RAM to one with 32GB RAM, and restart it. Performance immediately improves.</p>
                         </div>
                          <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Scaling an E-commerce Web Tier</h3>
-                            <p className="text-sm text-muted-foreground">An e-commerce site gets a huge traffic spike during a Black Friday sale. Their web servers are stateless and behind a load balancer. The system is configured to **scale horizontally**. An autoscaling rule detects that average CPU usage has exceeded 70% and automatically provisions five new web server VMs, adding them to the pool. The load is distributed, performance remains stable, and once the sale is over, the extra VMs are automatically terminated to save costs.</p>
+                            <p className="text-sm text-muted-foreground">An e-commerce site gets a huge traffic spike during a Black Friday sale. Their web servers are stateless and behind a load balancer. The system is configured to <strong>scale horizontally</strong>. An autoscaling rule detects that average CPU usage has exceeded 70% and automatically provisions five new web server VMs, adding them to the pool. The load is distributed, performance remains stable, and once the sale is over, the extra VMs are automatically terminated to save costs.</p>
                         </div>
                     </div>
                 </section>

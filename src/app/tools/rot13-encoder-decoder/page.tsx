@@ -29,7 +29,7 @@ const howToSchema = {
     name: 'How to Use the ROT13 Encoder/Decoder',
     description: 'A guide to encoding and decoding text using the ROT13 cipher.',
     step: [
-        { '@type': 'HowToStep', name: 'Enter Text', text: 'Type or paste the text you want to encode into the top "Decoded" box. To decode, paste your ROT13-encoded text into the bottom "Encoded" box.' },
+        { '@type': 'HowToStep', name: 'Enter Text', text: 'To encode, type or paste the text you want to encode into the top "Decoded" box. To decode, paste your ROT13-encoded text into the bottom "Encoded" box.' },
         { '@type': 'HowToStep', name: 'View Instant Results', text: 'The tool works in real-time. As you type in one box, the correctly translated text will instantly appear in the other.' },
         { '@type': 'HowToStep', name: 'Copy or Swap', text: 'Use the copy button to grab the output. Use the swap button to switch the contents of the two text boxes.' },
     ],
@@ -159,17 +159,20 @@ export default function Rot13Page() {
                         <li><strong>Combining Ciphers:</strong> For slightly more advanced (but still insecure) fun, you can combine ROT13 with other simple ciphers, like a reversing cipher. First apply ROT13, then reverse the resulting string.</li>
                     </ul>
                 </CardContent>
-            Card>
-            <CardHeader>
-                 <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
-            </CardHeader>
-            <CardContent>
-                 <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                    <li><strong>Using it for Security:</strong> The most critical mistake. ROT13 provides zero cryptographic security. It can be broken instantly by anyone. Do not use it to protect passwords, private keys, or any sensitive data.</li>
-                    <li><strong>Expecting it to Work on All Characters:</strong> ROT13 only works on the 26 letters of the English alphabet. It does not translate numbers, symbols, or letters from other languages.</li>
-                </ul>
-            </CardContent>
-        
+            </Card>
+            <Card>
+                <CardHeader>
+                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Using it for Security:</strong> The most critical mistake. ROT13 provides zero cryptographic security. It can be broken instantly by anyone. Do not use it to protect passwords, private keys, or any sensitive data.</li>
+                        <li><strong>Expecting it to Work on All Characters:</strong> ROT13 only works on the 26 letters of the English alphabet. It does not translate numbers, symbols, or letters from other languages.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+        </div>
+
        <section>
           <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
           <Card>
@@ -178,7 +181,7 @@ export default function Rot13Page() {
                       {faqData.map((item, index) => (
                           <AccordionItem value={`item-${index}`} key={index}>
                               <AccordionTrigger>{item.question}</AccordionTrigger>
-                              <AccordionContent><div dangerouslySetInnerHTML={{ __html: item.answer }} /></AccordionContent>
+                              <AccordionContent><div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} /></AccordionContent>
                           </AccordionItem>
                       ))}
                   </Accordion>
@@ -202,6 +205,14 @@ export default function Rot13Page() {
                       <CardHeader>
                           <CardTitle className="text-base flex items-center justify-between">Base64 Encoder/Decoder<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
                           <CardDescription className="text-xs">Learn about a different kind of data transformation: encoding for transport, not obfuscation.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+              <Link href="/tools/encryption-decryption-tool" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">AES Encryption Tool<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">Compare this simple cipher with modern, secure symmetric encryption.</CardDescription>
                       </CardHeader>
                   </Card>
               </Link>

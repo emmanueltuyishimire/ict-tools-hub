@@ -22,7 +22,7 @@ const faqData = [
     { question: "What is 'brute-force attack' in this context?", answer: "A brute-force attack is a trial-and-error method used to decode encrypted data. For a Caesar cipher, an attacker would simply try decoding the message with a shift of 1, then a shift of 2, then 3, and so on, up to 25. One of these attempts will produce readable text, breaking the cipher instantly." },
     { question: "Is it possible to have a shift greater than 25?", answer: "While you could, it would be redundant. A shift of 26 would result in the original text. A shift of 27 would be identical to a shift of 1, as the alphabet wraps around. Therefore, only shifts from 1 to 25 produce unique ciphers." },
     { question: "What is a 'substitution cipher'?", answer: "A substitution cipher is a method of encryption where units of plaintext are replaced with ciphertext according to a regular system. In a simple substitution cipher like Caesar's, each letter is replaced by another letter. More complex ciphers can substitute letters for symbols or groups of letters." },
-    { question: "How could I make this cipher stronger?", answer: "A simple Caesar cipher is weak because every letter is shifted by the same amount. A stronger (but still breakable) version would be a 'polyalphabetic cipher' like the Vigenère cipher, where the shift value changes for each letter based on a keyword. Modern encryption, like AES, is vastly more complex and not based on simple letter substitution." },
+    { question: "How could I make this cipher stronger?", answer: "A simple Caesar cipher is weak because every letter is shifted by the same amount. A stronger (but still breakable) version would be a 'polyalphabetic cipher' like the Vigenère cipher, where the shift value changes for each letter based on a keyword. Modern encryption, like our <a href='/tools/encryption-decryption-tool' class='text-primary hover:underline'>AES Encryption Tool</a>, is vastly more complex and not based on simple letter substitution." },
 ];
 
 const howToSchema = {
@@ -214,6 +214,14 @@ export default function CaesarCipherPage() {
                       <CardHeader>
                           <CardTitle className="text-base flex items-center justify-between">Hash Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
                           <CardDescription className="text-xs">Compare this simple cipher to modern, one-way hash functions used for real security.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+               <Link href="/tools/encryption-decryption-tool" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">AES Encryption Tool<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">Explore modern, secure symmetric encryption using the AES standard.</CardDescription>
                       </CardHeader>
                   </Card>
               </Link>

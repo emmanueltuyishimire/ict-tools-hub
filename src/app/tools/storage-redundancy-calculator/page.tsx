@@ -32,7 +32,7 @@ const StorageRedundancyCalculatorPage = () => {
         "price": "0",
         "priceCurrency": "USD"
       },
-      "description": "A free online tool and guide to understanding storage redundancy and calculating the usable capacity, fault tolerance, and efficiency of various RAID levels.",
+      "description": "A free online guide and calculator to understanding storage redundancy and calculating the usable capacity, fault tolerance, and efficiency of various RAID levels.",
       "url": "https://www.icttoolbench.com/tools/storage-redundancy-calculator"
     };
     
@@ -106,7 +106,7 @@ const StorageRedundancyCalculatorPage = () => {
                             </p>
                         </section>
                          <section>
-                            <h3>RAID is Not a Backup!</h3>
+                            <h3>RAID is NOT a Backup!</h3>
                             <p>
                                 This is the most important concept to understand. <strong>RAID protects against hardware failure. A backup protects against data loss.</strong> They are not the same thing.
                             </p>

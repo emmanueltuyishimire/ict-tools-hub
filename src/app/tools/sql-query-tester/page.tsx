@@ -220,4 +220,3 @@ const SqlQueryTesterPage = () => {
 };
 
 export default SqlQueryTesterPage;
-

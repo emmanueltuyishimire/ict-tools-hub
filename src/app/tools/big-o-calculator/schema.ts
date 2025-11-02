@@ -1,3 +1,4 @@
+
 export const faqData = [
     { question: "What is Big O notation?", answer: "Big O notation is a mathematical notation used in computer science to describe the performance or complexity of an algorithm. It specifically describes the worst-case scenario, providing an upper bound on how the runtime or space requirements of an algorithm grow as the input size increases." },
     { question: "Why is Big O important?", answer: "It's crucial for analyzing and comparing algorithms. When solving a problem, there are often multiple ways to write the code. Big O helps developers understand how an algorithm will perform at scale. An algorithm that is fast for 100 items might become incredibly slow for 1 million items. Big O helps predict this behavior, allowing for the selection of more efficient algorithms for large-scale applications." },
@@ -10,20 +11,6 @@ export const faqData = [
     { question: "What is the best vs. worst-case complexity?", answer: "Big O notation describes the worst-case scenario. For example, when searching for an item in a list (linear search), the worst case is that the item is at the very end, requiring you to check every single element (O(n)). The best case is that the item is at the very beginning (O(1)). Big O focuses on the worst case as it provides a reliable upper bound on performance." },
     { question: "How does this relate to other tools like the Random Number Generator?", answer: "The size of the data you're working with is key. If you use a <a href='/tools/random-number-generator' class='text-primary hover:underline'>Random Number Generator</a> to create a list of 10 million numbers, choosing an O(n log n) sorting algorithm over an O(n²) one will be the difference between seconds and hours of computation time." }
 ];
-
-export const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqData.map(item => ({
-        '@type': 'Question',
-        name: item.question,
-        acceptedAnswer: {
-            '@type': 'Answer',
-            text: item.answer.replace(/<[^>]*>?/gm, ''),
-        },
-    })),
-};
-
 
 export const howToSchema = {
     '@context': 'https://schema.org',

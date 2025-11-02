@@ -107,7 +107,7 @@ const CloudMigrationPlanningGuidePage = () => {
                                 <div className="prose prose-sm max-w-none">
                                     <ol>
                                         <li><strong>Discovery:</strong> The resources are known: 4 CPU, 16 GB RAM, 500 GB storage. The application is self-contained.</li>
-                                        <li><strong>Strategy:</strong> The team chooses **Rehost (Lift-and-Shift)** for maximum speed and minimum code changes.</li>
+                                        <li><strong>Strategy:</strong> The team chooses <strong>Rehost (Lift-and-Shift)</strong> for maximum speed and minimum code changes.</li>
                                         <li><strong>Cloud Resource Estimation:</strong>
                                             <ul>
                                                 <li>They use the <Link href="/tools/cloud-instance-cost-calculator" className="text-primary hover:underline">Cloud Instance Cost Calculator</Link> to compare the monthly cost of a 4-CPU, 16-GB RAM general-purpose VM on AWS, Azure, and Google Cloud.</li>
@@ -130,7 +130,7 @@ const CloudMigrationPlanningGuidePage = () => {
                                <div className="prose prose-sm max-w-none">
                                    <ol>
                                        <li><strong>Discovery:</strong> The current database server is consistently using 80% of its 8 vCPUs and 32 GB of RAM. The database size is 250 GB.</li>
-                                       <li><strong>Strategy:</strong> They choose **Replatform ("Lift-and-Tinker")**. They will keep their web application servers as-is but migrate the database from their VM to a managed service like Amazon RDS or Azure Database for MySQL.</li>
+                                       <li><strong>Strategy:</strong> They choose <strong>Replatform ("Lift-and-Tinker")</strong>. They will keep their web application servers as-is but migrate the database from their VM to a managed service like Amazon RDS or Azure Database for MySQL.</li>
                                        <li><strong>Cloud Resource Estimation:</strong>
                                             <ul>
                                                 <li>Instead of a full VM, they look up the pricing for a managed database instance with similar CPU and RAM specs.</li>

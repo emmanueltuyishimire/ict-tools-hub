@@ -229,7 +229,7 @@ export default function CloudSyncTimeCalculatorPage() {
                                   <AccordionItem value={`item-${index}`} key={index}>
                                       <AccordionTrigger>{item.question}</AccordionTrigger>
                                       <AccordionContent>
-                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<[^>]*>?/gm, '') }} />
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} />
                                       </AccordionContent>
                                   </AccordionItem>
                               ))}
