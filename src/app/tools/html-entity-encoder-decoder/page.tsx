@@ -35,7 +35,7 @@ const howToSchema = {
     description: 'A guide to encoding plain text into HTML entities and decoding them back.',
     step: [
         { '@type': 'HowToStep', name: 'Enter Text', text: 'To encode, type plain text into the top box. To decode, paste HTML entities into the bottom box.' },
-        { '@type': 'HowToStep', name: 'View Real-Time Results', text: 'As you type in one box, the converted text appears instantly in the other.' },
+        { '@type': 'HowToStep', name: 'View Real-Time Results', text: 'As you type in one box, the converted text will instantly appear in the other.' },
         { '@type': 'HowToStep', name: 'Copy the Output', text: 'Use the copy button to grab the converted text for your code.' },
         { '@type': 'HowToStep', name: 'Swap or Clear', text: 'Use the swap button to switch the content of the boxes or the clear button to reset.' }
     ],
@@ -52,9 +52,22 @@ const keyTerminologies = [
 
 
 export default function HtmlEntityEncoderDecoderPage() {
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer.replace(/<[^>]*>?/gm, ''),
+      },
+    })),
+  };
+
   return (
     <>
-      <StructuredData data={faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))} />
+      <StructuredData data={faqSchema} />
       <StructuredData data={howToSchema} />
       <div className="max-w-4xl mx-auto space-y-12">
           <PageHeader
