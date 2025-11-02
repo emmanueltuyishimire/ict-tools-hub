@@ -101,12 +101,12 @@ const BackupStorageCalculatorPage = () => {
                                     <ol>
                                         <li><strong>Inputs:</strong>
                                             <ul>
-                                                <li>Initial Data Size: `500` GB</li>
-                                                <li>Backup Type: `Full`</li>
-                                                <li>Retention: `7`</li>
+                                                <li>Initial Data Size: <strong>500</strong> GB</li>
+                                                <li>Backup Type: <strong>Full</strong></li>
+                                                <li>Retention: <strong>7</strong></li>
                                             </ul>
                                         </li>
-                                        <li><strong>Calculation:</strong> `7 backups * 500 GB/backup = 3500 GB`</li>
+                                        <li><strong>Calculation:</strong> <strong>7 backups × 500 GB/backup = 3500 GB</strong></li>
                                         <li><strong>Result:</strong> They will need <strong>3.5 TB</strong> of storage space. This shows how quickly full backups can consume storage.</li>
                                     </ol>
                                 </div>
@@ -123,17 +123,17 @@ const BackupStorageCalculatorPage = () => {
                                     <ol>
                                         <li><strong>Inputs:</strong>
                                             <ul>
-                                                <li>Initial Data Size: `500` GB</li>
-                                                <li>Backup Type: `Incremental`</li>
-                                                <li>Change Rate: `5` %</li>
-                                                <li>Retention: `7` (1 full + 6 incremental)</li>
+                                                <li>Initial Data Size: <strong>500</strong> GB</li>
+                                                <li>Backup Type: <strong>Incremental</strong></li>
+                                                <li>Change Rate: <strong>5</strong> %</li>
+                                                <li>Retention: <strong>7</strong> (1 full + 6 incremental)</li>
                                             </ul>
                                         </li>
                                         <li><strong>Calculation:</strong>
                                              <ul>
-                                                <li>Day 1 (Full): `500 GB`</li>
-                                                <li>Day 2-7 (Incremental): `6 backups * (500 GB * 5%) = 6 * 25 GB = 150 GB`</li>
-                                                <li>Total: `500 GB + 150 GB = 650 GB`</li>
+                                                <li>Day 1 (Full): <strong>500 GB</strong></li>
+                                                <li>Day 2-7 (Incremental): <strong>6 backups × (500 GB × 5%) = 6 × 25 GB = 150 GB</strong></li>
+                                                <li>Total: <strong>500 GB + 150 GB = 650 GB</strong></li>
                                              </ul>
                                         </li>
                                         <li><strong>Result:</strong> They now only need <strong>650 GB</strong> of storage for a week's worth of backups, a massive saving compared to the full backup strategy.</li>
@@ -211,7 +211,7 @@ const BackupStorageCalculatorPage = () => {
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Small Business Server Backup</h3>
-                            <p className="text-sm text-muted-foreground">A small business has a 500 GB file server with a daily change rate of about 5%. They want to keep 14 days of backups. Using the calculator, they compare a 'full' strategy (14 x 500GB = 7 TB) versus an 'incremental' strategy (500GB + 13 x 25GB ≈ 825 GB). The massive storage savings make the incremental strategy the clear choice.</p>
+                            <p className="text-sm text-muted-foreground">A small business has a 500 GB file server with a daily change rate of about 5%. They want to keep 14 days of backups. Using the calculator, they compare a 'full' strategy (14 × 500GB = 7 TB) versus an 'incremental' strategy (500GB + 13 × 25GB ≈ 825 GB). The massive storage savings make the incremental strategy the clear choice.</p>
                         </div>
                          <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Database Backup Planning</h3>

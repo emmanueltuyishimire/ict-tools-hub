@@ -133,7 +133,7 @@ const FactorialCalculatorPage = () => {
                   <p>In computer science, there are two primary ways to calculate a factorial:</p>
                    <ul className="list-disc pl-5">
                        <li><strong>Iteration:</strong> This approach uses a simple loop that starts at 1 and multiplies each number up to n. It is efficient in both time (O(n)) and memory. This is the method our calculator uses.</li>
-                       <li><strong>Recursion:</strong> A recursive function is one that calls itself. A factorial can be elegantly defined recursively: `factorial(n) = n * factorial(n-1)`. While elegant, this can be less efficient for very large numbers due to the overhead of function calls, which can lead to a "stack overflow" error. It's a classic example used to teach the concept of recursion.</li>
+                       <li><strong>Recursion:</strong> A recursive function is one that calls itself. A factorial can be elegantly defined recursively: `factorial(n) = n × factorial(n-1)`. While elegant, this can be less efficient for very large numbers due to the overhead of function calls, which can lead to a "stack overflow" error. It's a classic example used to teach the concept of recursion.</li>
                   </ul>
               </section>
           </CardContent>
@@ -147,7 +147,7 @@ const FactorialCalculatorPage = () => {
                 <CardContent>
                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                         <li><strong>Stirling's Approximation:</strong> For very large n, calculating n! directly becomes impossible. Stirling's approximation is a famous formula used to estimate the value of n!, especially useful in physics and statistics.</li>
-                        <li><strong>Combinations:</strong> Factorials are the basis for calculating combinations (the number of ways to choose k items from a set of n, where order doesn't matter), using the formula n! / (k! * (n-k)!).</li>
+                        <li><strong>Combinations:</strong> Factorials are the basis for calculating combinations (the number of ways to choose k items from a set of n, where order doesn't matter), using the formula n! / (k! × (n-k)!).</li>
                         <li><strong>Handling Large Numbers:</strong> Factorial values grow incredibly fast. `20!` is already over 2 quintillion. This tool uses `BigInt` to handle numbers that exceed the limits of standard JavaScript numbers, but even that has its limits in a browser environment.</li>
                     </ul>
                 </CardContent>
@@ -217,7 +217,7 @@ const FactorialCalculatorPage = () => {
                   <Card className="hover:border-primary transition-colors h-full">
                       <CardHeader>
                           <CardTitle className="text-base flex items-center justify-between">Fibonacci Sequence Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                          <CardDescription className="text-xs">Generate another important mathematical sequence with unique properties.</CardDescription>
+                          <CardDescription className="text-xs">Generate another important mathematical sequence with its own unique properties.</CardDescription>
                       </CardHeader>
                   </Card>
               </Link>

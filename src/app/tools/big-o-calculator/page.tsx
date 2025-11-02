@@ -185,7 +185,7 @@ const BigOCalculatorPage = () => {
                                        <li>This continues until every item has been compared to every other item.</li>
                                    </ol>
                                </div>
-                               <p className="text-sm text-muted-foreground"><strong>Worst Case:</strong> For a list of 100 items, this results in 100 * 100 = 10,000 comparisons. If the list grows to 1,000 items, it becomes 1,000,000 comparisons. The number of operations grows with the square of the input size, `n`. This is <strong>O(n²)</strong> complexity and becomes very slow, very quickly. A more efficient approach would use a hash set, which has an average time complexity of O(n).</p>
+                               <p className="text-sm text-muted-foreground"><strong>Worst Case:</strong> For a list of 100 items, this results in 100 × 100 = 10,000 comparisons. If the list grows to 1,000 items, it becomes 1,000,000 comparisons. The number of operations grows with the square of the input size, `n`. This is <strong>O(n²)</strong> complexity and becomes very slow, very quickly. A more efficient approach would use a hash set, which has an average time complexity of O(n).</p>
                             </CardContent>
                         </Card>
                     </div>
