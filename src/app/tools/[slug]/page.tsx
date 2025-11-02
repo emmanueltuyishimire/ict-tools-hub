@@ -92,6 +92,7 @@ import { DuplicateRowFinder } from '@/app/tools/duplicate-row-finder/duplicate-r
 import { ColumnTypeConverter } from '@/app/tools/column-type-converter/column-type-converter';
 import { SqlInjectionTester } from '@/app/tools/sql-injection-tester/sql-injection-tester';
 import { DatabaseHealthChecker } from '@/app/tools/db-health-checker/db-health-checker';
+import BigOComplexityQuizPage from '@/app/tools/big-o-quiz/page';
 
 
 export async function generateMetadata({ params: rawParams }: { params: { slug: string } }) {
@@ -204,6 +205,7 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'column-type-converter': ColumnTypeConverter,
   'sql-injection-tester': SqlInjectionTester,
   'db-health-checker': DatabaseHealthChecker,
+  'big-o-quiz': BigOComplexityQuizPage,
 };
 
 export default async function ToolPage({ params: rawParams }: { params: { slug: string } }) {
