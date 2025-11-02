@@ -75,6 +75,64 @@ const TpsCalculatorPage = () => {
                 </section>
                 
                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 1: Benchmarking a Database Server</CardTitle>
+                                <CardDescription>After running a load test, you need to find the average TPS the server was able to handle.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> You run a load test that executes <strong>1,800,000</strong> transactions over a period of <strong>10 minutes</strong>.</p>
+                                <div className="prose prose-sm max-w-none">
+                                    <ol>
+                                        <li><strong>Inputs:</strong>
+                                            <ul>
+                                                <li>Total Transactions: <strong>1,800,000</strong></li>
+                                                <li>Time Period: <strong>10</strong> Minutes</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Calculation:</strong>
+                                            <ul>
+                                                <li>First, convert the time period to seconds: 10 minutes × 60 seconds/minute = 600 seconds.</li>
+                                                <li>Then, divide the total transactions by the total seconds: 1,800,000 / 600 = 3000.</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Result:</strong> The tool will show <strong>3,000 TPS</strong>. This gives you a clear performance benchmark for your database server under that specific load.</li>
+                                    </ol>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 2: Planning for Peak Web Traffic</CardTitle>
+                                <CardDescription>You are planning for a Black Friday sale and need to know the average TPS your web servers must handle during the peak hour.</CardDescription>
+                            </CardHeader>
+                             <CardContent className="space-y-4">
+                               <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> You forecast <strong>3.6 million</strong> total page views (requests) during your single busiest hour (e.g., 9 PM).</p>
+                               <div className="prose prose-sm max-w-none">
+                                   <ol>
+                                       <li><strong>Inputs:</strong>
+                                            <ul>
+                                                <li>Total Transactions: <strong>3,600,000</strong></li>
+                                                <li>Time Period: <strong>1</strong> Hour</li>
+                                            </ul>
+                                       </li>
+                                       <li><strong>Calculation:</strong>
+                                            <ul>
+                                                <li>Convert the time period to seconds: 1 hour × 3600 seconds/hour = 3600 seconds.</li>
+                                                <li>Divide total requests by total seconds: 3,600,000 / 3600 = 1000.</li>
+                                            </ul>
+                                       </li>
+                                       <li><strong>Result:</strong> Your system needs to be able to handle an average of <strong>1,000 TPS</strong> to serve all users during the peak hour. You can use this metric to configure your server cluster and load balancers.</li>
+                                   </ol>
+                               </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
+
+                <section>
                    <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
                    <Card>
                       <CardContent className="p-6">
