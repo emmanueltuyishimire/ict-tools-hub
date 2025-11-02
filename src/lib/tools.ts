@@ -1,4 +1,3 @@
-
 import {
   type LucideIcon,
   Network,
@@ -169,7 +168,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Uptime / Availability Calculator', slug: 'uptime-calculator', description: 'Calculate system uptime and availability.' },
       { name: 'Backup Schedule Calculator', slug: 'backup-scheduler', description: 'Calculate backup schedules.' },
       { name: 'Data Retention Period Calculator', slug: 'data-retention-calculator', description: 'Calculate data retention periods.' },
-      { name: 'Replication / Sharding Estimator', slug: 'replication-estimator', description: 'Estimate replication needs.' },
+      { name: 'Replication / Sharding Estimator', slug: 'replication-estimator', description: 'Plan database replication and sharding.' },
       { name: 'User Quota Calculator', slug: 'user-quota-calculator', description: 'Calculate user quotas.' },
       { name: 'Transaction / TPS Calculator', slug: 'tps-calculator', description: 'Calculate transactions per second.' },
       { name: 'Log Rotation Calculator', slug: 'log-rotation-calculator', description: 'Calculate log rotation schedules.' },
