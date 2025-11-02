@@ -57,7 +57,7 @@ const SqlQueryTesterPage = () => {
             <div className="max-w-5xl mx-auto space-y-12">
                 <PageHeader
                     title="SQL Query Tester (Educational)"
-                    description="Practice writing basic SQL queries in a safe, client-side environment. This tool allows you to run simple SELECT statements against pre-defined sample tables to help you learn and test SQL syntax."
+                    description="Practice writing basic SQL queries in a safe, client-side environment. This tool allows you to run simple SELECT statements against pre-defined or custom-built sample tables to help you learn and test SQL syntax."
                 />
                 
                 <Alert>
@@ -73,13 +73,22 @@ const SqlQueryTesterPage = () => {
                 <section>
                     <h2 className="text-2xl font-bold mb-4">How to Use the SQL Query Tester</h2>
                     <Card className="prose prose-sm max-w-none text-foreground p-6">
-                        <p>This interactive tool lets you practice the fundamentals of SQL without needing to set up a database.</p>
+                        <p>This interactive tool lets you practice the fundamentals of SQL without needing to set up a database. You can query the default sample data or create your own.</p>
+                        
+                        <h4>1. Write and Run Queries</h4>
                         <ol>
-                            <li><strong>Examine the Sample Data:</strong> Below the query editor, you'll find sample tables like `users` and `products`. Familiarize yourself with the available columns and data.</li>
-                            <li><strong>Write Your Query:</strong> In the "SQL Query" text area, write a simple `SELECT` statement. Start with something easy like <code className="font-code bg-muted p-1 rounded-sm">SELECT * FROM users</code>.</li>
+                            <li><strong>Write Your Query:</strong> In the "Query Editor" at the top, write a simple `SELECT` statement. For example, start with <code className="font-code bg-muted p-1 rounded-sm">SELECT * FROM users</code>.</li>
                             <li><strong>Add a Filter (Optional):</strong> Try adding a `WHERE` clause to filter your results, for example: <code className="font-code bg-muted p-1 rounded-sm">SELECT * FROM users WHERE country = 'Canada'</code>.</li>
                             <li><strong>Execute the Query:</strong> Click the "Run Query" button.</li>
-                            <li><strong>Analyze the Results:</strong> The "Results" table will update to show the rows returned by your query. If there's a syntax error, a helpful message will appear.</li>
+                            <li><strong>Analyze the Results:</strong> A "Results" table will appear showing the rows returned by your query. If there's a syntax error, a helpful message will appear instead.</li>
+                        </ol>
+
+                        <h4>2. View and Edit Your Data</h4>
+                        <ol>
+                            <li><strong>Navigate the Tabs:</strong> In the "Sample Data" section, you can switch between "View Data" for a read-only look at the tables and "Edit Data" to modify them.</li>
+                            <li><strong>Directly Edit Cells:</strong> In the "Edit Data" tab, simply click on any cell to change its value. The data type (number or text) will be preserved where possible.</li>
+                            <li><strong>Manage Rows and Columns:</strong> Use the `+ Add Row` button to add new data. Use the trash icon next to any row or in any column header to delete it. You can also add new columns to a table.</li>
+                            <li><strong>Create New Tables:</strong> At the bottom of the "Edit Data" tab, click the "Create New Table" button to add a completely new table to the database. You can then query this new table by its name.</li>
                         </ol>
                     </Card>
                 </section>
