@@ -155,26 +155,35 @@ const VdiskSizeEstimatorPage = () => {
                     <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">Cloud VM Deployment</h3>
-                            <p className="text-sm text-muted-foreground">An engineer is deploying a new web server on AWS. Instead of picking a default disk size, they use the estimator to plan. They determine they need 30GB for the OS, 10GB for logs, and 8GB for swap, for a total of 48GB. They provision a 60GB General Purpose SSD (gp3) virtual disk, providing a safe buffer for growth while minimizing cost.</p>
+                            <h3 className="font-semibold text-lg mb-2">New Web Server Setup</h3>
+                            <p className="text-sm text-muted-foreground">A sysadmin is provisioning a new Linux web server with a 100 GB disk. Using the estimator, they plan a layout: 30 GB for `/` (OS and Apache), 8 GB for swap, 20 GB for `/var` (to contain web logs), and the remaining ~42 GB for `/home` where the website content will live. This ensures that a sudden spike in log files won't crash the root filesystem.</p>
                         </div>
                          <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">On-Premises Server Virtualization</h3>
-                            <p className="text-sm text-muted-foreground">A sysadmin is migrating a physical file server with a 2TB hard drive to a VMware environment. They analyze the server and find it's only using 500GB of space. Instead of creating a massive 2TB thick-provisioned virtual disk, they create a 600GB thin-provisioned disk. This saves a huge amount of space on their expensive SAN storage and can be easily expanded later if needed.</p>
+                            <h3 className="font-semibold text-lg mb-2">Developer Workstation</h3>
+                            <p className="text-sm text-muted-foreground">A developer is setting up a new Linux desktop with a 500 GB SSD. They want a large home directory for their projects and personal files. They allocate 50 GB for `/` and a generous 430 GB for `/home`. This separation allows them to easily back up their entire `/home` directory or even reinstall the OS without losing their critical work.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Database Server Planning</h3>
+                            <p className="text-sm text-muted-foreground">For a dedicated PostgreSQL server, the database administrator knows that the data files (in `/var/lib/postgresql`) and transaction logs will grow significantly. They use the estimator on a 1 TB disk to allocate a massive 800 GB partition specifically for `/var`, ensuring the database has ample room to grow without impacting the core operating system on the `/` partition.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Cloud VM Provisioning</h3>
+                            <p className="text-sm text-muted-foreground">An engineer is creating a VM in the cloud. Instead of using one single virtual disk, they provision multiple: a small 30 GB disk for the OS (`/`), and a larger 200 GB high-speed disk which they mount at `/data` for their application's primary storage. This allows them to scale or snapshot the data disk independently of the OS disk.</p>
                         </div>
                     </div>
                 </section>
-                
+
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
                         <CardHeader>
-                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips for Partitioning</CardTitle></div>
                         </CardHeader>
                         <CardContent>
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                                <li><strong>Separate Disks for Different Roles:</strong> For critical servers like databases, a best practice is to use multiple virtual disks. Use one for the OS, another for the database files, and a third for transaction logs. This improves performance by distributing I/O and allows you to back up or resize each component independently.</li>
-                                <li><strong>Use Monitoring to Right-Size:</strong> Don't guess. Use your hypervisor's or cloud provider's monitoring tools to track the actual disk usage inside your VMs. If a VM has a 200GB disk but has only ever used 40GB, you can safely shrink it to save costs.</li>
-                                <li><strong>Plan for Growth:</strong> Always factor in future data growth when sizing your initial disk. Use our <Link href="/tools/storage-growth-estimator" className="text-primary hover:underline">Storage Growth Estimator</Link> to project your needs over time.</li>
+                                <li><strong>Swap Size Rule of Thumb:</strong> A common guideline for swap space is: equal to RAM for up to 2GB of RAM, half of RAM for 2-8GB of RAM, and a flat 4-8GB for systems with more than 8GB of RAM.</li>
+                                <li><strong>Use LVM:</strong> For maximum flexibility, use Logical Volume Management (LVM) during your Linux installation. LVM adds a layer of abstraction that makes it much easier to resize, add, or remove partitions on the fly without having to reformat the entire disk.</li>
+                                <li><strong>Monitor Disk Usage:</strong> After setting up your server, use monitoring tools (like `df -h` or dedicated software like Prometheus) to keep an eye on partition usage. Set up alerts to warn you when a partition is nearing capacity.</li>
+                                <li><strong>Consider XFS vs. ext4:</strong> For very large filesystems (multiple terabytes) or files (e.g., video storage), the XFS filesystem often offers better performance than the more common ext4.</li>
                             </ul>
                         </CardContent>
                     </Card>
@@ -201,14 +210,15 @@ const VdiskSizeEstimatorPage = () => {
                               {faqData.map((item, index) => (
                                   <AccordionItem value={`item-${index}`} key={index}>
                                       <AccordionTrigger>{item.question}</AccordionTrigger>
-                                      <AccordionContent>{item.answer}</AccordionContent>
+                                      <AccordionContent>
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} />
+                                      </AccordionContent>
                                   </AccordionItem>
                               ))}
                           </Accordion>
                       </CardContent>
                   </Card>
               </section>
-
               <section>
                   <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -244,5 +254,3 @@ const VdiskSizeEstimatorPage = () => {
 };
 
 export default VdiskSizeEstimatorPage;
-
-    
