@@ -17,8 +17,8 @@ export const howToSchema = {
     step: [
         { '@type': 'HowToStep', name: 'Step 1: Examine the Vulnerable Code', text: 'Observe the example code that shows how user input is being insecurely concatenated into a SQL query.' },
         { '@type': 'HowToStep', name: 'Step 2: Try a Normal Login', text: 'Enter a valid username and password from the sample data table to see how a legitimate login query is constructed.' },
-        { '@type': 'HowToStep', name: 'Step 3: Attempt an Injection', text: 'In the username field, enter an injection string like `admin\\\'--`. Leave the password field blank.' },
-        { '@type': 'HowToStep', name: 'Step 4: Analyze the Executed Query', text: 'Observe how your input has altered the SQL query, causing the password check to be ignored. The simulator will show a \\'successful\\' login, demonstrating the bypass.' },
+        { '@type': 'HowToStep', name: 'Step 3: Attempt an Injection', text: "In the username field, enter an injection string like `admin'--`. Leave the password field blank." },
+        { '@type': 'HowToStep', name: 'Step 4: Analyze the Executed Query', text: 'Observe how your input has altered the SQL query, causing the password check to be ignored. The simulator will show a \'successful\' login, demonstrating the bypass.' },
     ],
     totalTime: 'PT2M'
 };
