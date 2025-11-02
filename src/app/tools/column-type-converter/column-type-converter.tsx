@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Lightbulb, CheckCircle } from 'lucide-react';
 import { dataTypeSizes } from './schema';
+import { Textarea } from '@/components/ui/textarea';
 
 type DataType = keyof typeof dataTypeSizes;
 
