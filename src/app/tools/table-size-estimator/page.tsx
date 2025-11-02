@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { DbStorageEstimator } from '@/app/tools/db-storage-estimator/db-storage-estimator';
@@ -184,47 +185,39 @@ const TableSizeEstimatorPage = () => {
                         </div>
                          <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Deciding on an Index</h3>
-                            <p className="text-sm text-muted-foreground">A developer wants to add a new index to a very large table to speed up a query. They use the estimator to calculate the approximate size of the new index by adding its columns and setting the row count. This helps them understand the storage cost of the performance improvement, allowing them to make an informed trade-off.</p>
+                            <p className="text-sm text-muted-foreground">A developer wants to add a new index to a very large table to speed up a query. They use our <Link href="/tools/index-size-calculator" className="text-primary hover:underline">Index Size Calculator</Link> to estimate the storage cost of the new index, allowing them to make an informed trade-off between performance gain and disk space consumption.</p>
                         </div>
                     </div>
                 </section>
-
-                <section>
-                    <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
-                     <Card>
-                        <CardContent className="p-6">
-                            <ul className="space-y-4">
-                                <li className="flex items-start gap-4">
-                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                                    <div>
-                                        <h4 className="font-semibold">Choose the Right Data Type</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                            Don't use a `BIGINT` when a `TINYINT` will do. Don't use a `VARCHAR(1000)` for a two-letter country code. Use the smallest, most appropriate data type for your data to minimize row size from the start.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li className="flex items-start gap-4">
-                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                                    <div>
-                                        <h4 className="font-semibold">Be Judicious with Indexes</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                            Indexes are essential for read performance but they slow down writes (as the index must also be updated) and consume disk space. Only create indexes on columns that are frequently used in `WHERE` clauses, `JOIN` conditions, or `ORDER BY` statements.
-                                        </p>
-                                    </div>
-                                </li>
-                                 <li className="flex items-start gap-4">
-                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                                    <div>
-                                        <h4 className="font-semibold">Monitor, Don't Guess</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                            This tool provides an excellent baseline. However, the best way to plan for the future is to monitor the actual growth of your database over time. Use your database's built-in tools or a monitoring service to track table and index sizes. Use this real-world data to refine your forecasts with our <Link href="/tools/storage-growth-estimator" className="text-primary hover:underline">Storage Growth Estimator</Link>.
-                                        </p>
-                                    </div>
-                                </li>
+                
+                <div className="grid md:grid-cols-2 gap-8">
+                    <Card>
+                        <CardHeader>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips for Sizing</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                            <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Right-Size Data Types:</strong> Don't use a `BIGINT` for a status flag that only needs a `TINYINT`. Using the smallest appropriate data type for each column is the most fundamental storage optimization.</li>
+                                <li><strong>Understand `VARCHAR` vs `TEXT`/`BLOB`:</strong> For very large text or binary data, many databases store `TEXT` or `BLOB` data "off-page", meaning the main table row only stores a small pointer. This keeps the main table compact and fast to scan.</li>
+                                <li><strong>`NULL` Has a Cost:</strong> Storing `NULL` values isn't free. Most database engines use a bitmap in the row header to track which columns are null, adding a small amount of overhead for every nullable column.</li>
+                                <li><strong>Estimate Index Separately:</strong> For a more detailed analysis, use this tool to calculate your raw data size, then use our <Link href="/tools/index-size-calculator" className="text-primary hover:underline">Index Size Calculator</Link> to estimate the size of each planned index. Add these together for a comprehensive total.</li>
                             </ul>
                         </CardContent>
-                     </Card>
-                </section>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                             <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Ignoring Index Overhead:</strong> Forgetting that indexes can often consume as much or more space than the data itself. A 25% overhead estimate is a bare minimum; 50-100% is more realistic for tables with several indexes.</li>
+                                <li><strong>Underestimating Growth:</strong> This tool estimates current size. You must combine this with a growth forecast (using our <Link href="/tools/storage-growth-estimator" className="text-primary hover:underline">Storage Growth Estimator</Link>) to plan for the future.</li>
+                                <li><strong>Ignoring Page Fill Factor:</strong> Databases intentionally leave pages partially empty to accommodate future `UPDATE`s. This means a 1TB database will consume more than 1TB on disk. This tool's "Overhead" field is a simplified way to account for this.</li>
+                                <li><strong>Using `CHAR` Instead of `VARCHAR`:</strong> Using a `CHAR(255)` for a column where most entries are short is wasteful. `CHAR` always reserves the full amount of space, whereas `VARCHAR` only uses what's needed.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                </div>
                 
                <section>
                   <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
