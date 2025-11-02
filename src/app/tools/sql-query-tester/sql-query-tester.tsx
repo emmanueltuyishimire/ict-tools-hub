@@ -20,10 +20,11 @@ import {
   DialogDescription,
   DialogFooter,
   DialogTrigger,
+  DialogClose
 } from '@/components/ui/dialog';
 
 // Default Sample data
-const initialData = {
+const initialTables: { [key: string]: any[] } = {
     users: [
         { id: 1, name: 'Alice', age: 30, country: 'USA' },
         { id: 2, name: 'Bob', age: 25, country: 'Canada' },
@@ -54,7 +55,7 @@ const executeQuery = (query: string, data: { [key: string]: any[] }) => {
 
     const table = data[tableName.toLowerCase()];
     if (!table || !Array.isArray(table)) {
-        throw new Error(`Table not found: '${tableName}'. Available tables: 'users', 'products'.`);
+        throw new Error(`Table not found: '${tableName}'. Available tables: ${Object.keys(data).join(', ')}.`);
     }
 
     let results = table;
@@ -66,7 +67,7 @@ const executeQuery = (query: string, data: { [key: string]: any[] }) => {
         }
         const [, column, stringValue1, stringValue2, numberValue] = whereMatch;
 
-        if(!table[0] || !(column in table[0])) {
+        if(table.length > 0 && !(column in table[0])) {
             throw new Error(`Column '${column}' not found in table '${tableName}'.`);
         }
         
@@ -84,25 +85,19 @@ export function SqlQueryTester() {
     const [queryError, setQueryError] = useState('');
     const [headers, setHeaders] = useState<string[]>([]);
     
-    const [userData, setUserData] = useState(initialData.users);
-    const [productsData, setProductsData] = useState(initialData.products);
+    const [tables, setTables] = useState(initialTables);
 
-    const currentData = {
-        users: userData,
-        products: productsData,
-    };
-    
     const handleRunQuery = () => {
         try {
             setQueryError('');
-            const queryResults = executeQuery(query, currentData);
+            const queryResults = executeQuery(query, tables);
             setResults(queryResults);
             if (queryResults.length > 0) {
                 setHeaders(Object.keys(queryResults[0]));
             } else {
                 const tableName = query.match(/FROM\s+([a-zA-Z0-9_]+)/i)?.[1].toLowerCase();
-                if(tableName && currentData[tableName as keyof typeof currentData] && currentData[tableName as keyof typeof currentData].length > 0) {
-                    setHeaders(Object.keys(currentData[tableName as keyof typeof currentData][0]));
+                if(tableName && tables[tableName] && tables[tableName].length > 0) {
+                    setHeaders(Object.keys(tables[tableName][0]));
                 } else {
                     setHeaders([]);
                 }
@@ -114,98 +109,132 @@ export function SqlQueryTester() {
         }
     };
     
-    const handleTableChange = (tableName: 'users' | 'products', rowIndex: number, column: string, value: string) => {
-        const setData = tableName === 'users' ? setUserData : setProductsData;
-        setData(prevData => {
-            const newData = [...prevData];
-            const originalValue = newData[rowIndex][column];
-            newData[rowIndex] = { ...newData[rowIndex], [column]: typeof originalValue === 'number' && !isNaN(Number(value)) ? Number(value) : value };
-            return newData;
+    const handleTableChange = (tableName: string, rowIndex: number, column: string, value: string) => {
+        setTables(prevTables => {
+            const newTableData = [...prevTables[tableName]];
+            const originalValue = newTableData[rowIndex][column];
+            newTableData[rowIndex] = { ...newTableData[rowIndex], [column]: typeof originalValue === 'number' && !isNaN(Number(value)) ? Number(value) : value };
+            return { ...prevTables, [tableName]: newTableData };
         });
     };
 
-    const handleAddRow = (tableName: 'users' | 'products') => {
-        const setData = tableName === 'users' ? setUserData : setProductsData;
-        const data = tableName === 'users' ? userData : productsData;
-        const newRow = Object.keys(data[0] || {}).reduce((acc, key) => {
-            acc[key] = typeof data[0][key] === 'number' ? 0 : '';
-            return acc;
-        }, {} as any);
-        setData(prevData => [...prevData, newRow]);
+    const handleAddRow = (tableName: string) => {
+        setTables(prevTables => {
+            const table = prevTables[tableName];
+            const newRow = Object.keys(table[0] || {id: 0}).reduce((acc, key) => {
+                acc[key] = typeof table[0][key] === 'number' ? 0 : '';
+                return acc;
+            }, {} as any);
+            return { ...prevTables, [tableName]: [...table, newRow] };
+        });
     };
 
-    const handleRemoveRow = (tableName: 'users' | 'products', rowIndex: number) => {
-        const setData = tableName === 'users' ? setUserData : setProductsData;
-        setData(prevData => prevData.filter((_, index) => index !== rowIndex));
+    const handleRemoveRow = (tableName: string, rowIndex: number) => {
+        setTables(prevTables => ({
+            ...prevTables,
+            [tableName]: prevTables[tableName].filter((_, index) => index !== rowIndex)
+        }));
     };
 
-    const handleAddColumn = (tableName: 'users' | 'products', columnName: string) => {
+    const handleAddColumn = (tableName: string, columnName: string) => {
         if (!columnName || /[^a-zA-Z0-9_]/.test(columnName) || /^[0-9]/.test(columnName)) {
             alert('Invalid column name. Use only letters, numbers, and underscores, and do not start with a number.');
             return;
         }
-        const setData = tableName === 'users' ? setUserData : setProductsData;
-        setData(prevData => prevData.map(row => ({...row, [columnName]: ''})));
+        setTables(prevTables => ({
+            ...prevTables,
+            [tableName]: prevTables[tableName].map(row => ({...row, [columnName]: ''}))
+        }));
     };
 
-    const handleRemoveColumn = (tableName: 'users' | 'products', columnName: string) => {
-        const setData = tableName === 'users' ? setUserData : setProductsData;
-        setData(prevData => {
-            return prevData.map(row => {
+    const handleRemoveColumn = (tableName: string, columnName: string) => {
+        setTables(prevTables => ({
+            ...prevTables,
+            [tableName]: prevTables[tableName].map(row => {
                 const newRow = {...row};
                 delete (newRow as any)[columnName];
                 return newRow;
-            });
-        });
+            })
+        }));
     };
 
-    const EditableTable = ({ tableName, data, onUpdate, onAddRow, onRemoveRow, onAddColumn, onRemoveColumn }: { tableName: 'users'|'products', data: any[], onUpdate: Function, onAddRow: Function, onRemoveRow: Function, onAddColumn: Function, onRemoveColumn: Function }) => {
+    const handleCreateTable = (tableName: string) => {
+        if (!tableName || /[^a-zA-Z0-9_]/.test(tableName) || /^[0-9]/.test(tableName)) {
+            alert('Invalid table name. Use only letters, numbers, and underscores, and do not start with a number.');
+            return;
+        }
+        if (tables[tableName.toLowerCase()]) {
+            alert(`Table '${tableName}' already exists.`);
+            return;
+        }
+        setTables(prevTables => ({
+            ...prevTables,
+            [tableName.toLowerCase()]: [{ id: 1, name: 'new_value' }]
+        }));
+    };
+
+     const handleRemoveTable = (tableName: string) => {
+        if (window.confirm(`Are you sure you want to delete the table '${tableName}'? This cannot be undone.`)) {
+             setTables(prevTables => {
+                const newTables = {...prevTables};
+                delete newTables[tableName];
+                return newTables;
+            });
+        }
+    };
+
+    const EditableTable = ({ tableName, data, onUpdate, onAddRow, onRemoveRow, onAddColumn, onRemoveColumn }: { tableName: string, data: any[], onUpdate: Function, onAddRow: Function, onRemoveRow: Function, onAddColumn: Function, onRemoveColumn: Function }) => {
         const [newColumnName, setNewColumnName] = useState('');
-        if (!data || data.length === 0) return (
-             <div className="space-y-2">
-                <h4 className="font-semibold capitalize">{tableName}</h4>
-                <p className='text-sm text-muted-foreground'>No data to display. Add a row to get started.</p>
-                <Button size="sm" variant="outline" onClick={() => onAddRow(tableName)}><Plus className="mr-2 h-4 w-4" /> Add Row to {tableName}</Button>
-            </div>
-        );
-        const tableHeaders = Object.keys(data[0]);
+        if (!data) return null;
+        
+        const tableHeaders = data.length > 0 ? Object.keys(data[0]) : [];
+
         return (
-            <div className="space-y-2">
-                <h4 className="font-semibold capitalize">{tableName}</h4>
-                <div className="overflow-x-auto rounded-md border">
-                    <Table>
-                        <TableHeader><TableRow>{tableHeaders.map(h => 
-                            <TableHead key={h} className="relative group">
-                                {h}
-                                <Button size="icon" variant="ghost" className="h-5 w-5 absolute top-1 right-0 opacity-0 group-hover:opacity-100" onClick={() => onRemoveColumn(tableName, h)}>
-                                    <Trash2 className="h-3 w-3 text-destructive" />
-                                </Button>
-                            </TableHead>
-                        )}<TableHead className="w-[50px]"></TableHead></TableRow></TableHeader>
-                        <TableBody>
-                            {data.map((row, rowIndex) => (
-                                <TableRow key={rowIndex}>
-                                    {tableHeaders.map(header => (
-                                        <TableCell key={header}>
-                                            <Input
-                                                value={row[header]}
-                                                onChange={(e) => onUpdate(tableName, rowIndex, header, e.target.value)}
-                                                className="h-8 font-mono"
-                                                type={typeof row[header] === 'number' ? 'number' : 'text'}
-                                            />
-                                        </TableCell>
-                                    ))}
-                                    <TableCell>
-                                        <Button size="icon" variant="ghost" onClick={() => onRemoveRow(tableName, rowIndex)}>
-                                            <Trash2 className="h-4 w-4 text-destructive" />
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+            <div className="space-y-2 border p-4 rounded-lg">
+                <div className='flex justify-between items-center'>
+                    <h4 className="font-semibold capitalize">{tableName}</h4>
+                    <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => handleRemoveTable(tableName)}>
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                    </Button>
                 </div>
-                 <div className="flex gap-2">
+                {data.length === 0 ? (
+                    <p className='text-sm text-muted-foreground'>This table is empty. Add a row or column to get started.</p>
+                ) : (
+                    <div className="overflow-x-auto rounded-md border">
+                        <Table>
+                            <TableHeader><TableRow>{tableHeaders.map(h => 
+                                <TableHead key={h} className="relative group">
+                                    {h}
+                                    <Button size="icon" variant="ghost" className="h-5 w-5 absolute top-1 right-0 opacity-0 group-hover:opacity-100" onClick={() => onRemoveColumn(tableName, h)}>
+                                        <Trash2 className="h-3 w-3 text-destructive" />
+                                    </Button>
+                                </TableHead>
+                            )}<TableHead className="w-[50px]"></TableHead></TableRow></TableHeader>
+                            <TableBody>
+                                {data.map((row, rowIndex) => (
+                                    <TableRow key={rowIndex}>
+                                        {tableHeaders.map(header => (
+                                            <TableCell key={header}>
+                                                <Input
+                                                    value={row[header]}
+                                                    onChange={(e) => onUpdate(tableName, rowIndex, header, e.target.value)}
+                                                    className="h-8 font-mono"
+                                                    type={typeof row[header] === 'number' ? 'number' : 'text'}
+                                                />
+                                            </TableCell>
+                                        ))}
+                                        <TableCell>
+                                            <Button size="icon" variant="ghost" onClick={() => onRemoveRow(tableName, rowIndex)}>
+                                                <Trash2 className="h-4 w-4 text-destructive" />
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+                )}
+                 <div className="flex gap-2 pt-2">
                      <Button size="sm" variant="outline" onClick={() => onAddRow(tableName)}><Plus className="mr-2 h-4 w-4" /> Add Row</Button>
                      <Dialog>
                         <DialogTrigger asChild>
@@ -225,13 +254,45 @@ export function SqlQueryTester() {
                                 </div>
                             </div>
                             <DialogFooter>
-                                <Button onClick={() => { onAddColumn(tableName, newColumnName); setNewColumnName(''); }}>Add Column</Button>
+                                <DialogClose asChild>
+                                    <Button onClick={() => { onAddColumn(tableName, newColumnName); setNewColumnName(''); }}>Add Column</Button>
+                                </DialogClose>
                             </DialogFooter>
                         </DialogContent>
                     </Dialog>
                  </div>
             </div>
         )
+    };
+    
+     const AddTableDialog = () => {
+        const [newTableName, setNewTableName] = useState('');
+        return (
+             <Dialog>
+                <DialogTrigger asChild>
+                    <Button><Plus className="mr-2 h-4 w-4" /> Create New Table</Button>
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Create New Table</DialogTitle>
+                        <DialogDescription>
+                            Enter a name for the new table. It will be initialized with a sample row and column.
+                        </DialogDescription>
+                    </DialogHeader>
+                     <div className="grid gap-4 py-4">
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="table-name" className="text-right">Table Name</Label>
+                            <Input id="table-name" value={newTableName} onChange={(e) => setNewTableName(e.target.value)} className="col-span-3 font-code" />
+                        </div>
+                    </div>
+                    <DialogFooter>
+                        <DialogClose asChild>
+                             <Button onClick={() => { handleCreateTable(newTableName); setNewTableName(''); }}>Create Table</Button>
+                        </DialogClose>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        );
     };
 
     return (
@@ -299,44 +360,38 @@ export function SqlQueryTester() {
             <Card>
                  <Tabs defaultValue="view" className="w-full">
                     <CardHeader>
-                        <div className="flex justify-between items-center">
-                            <CardTitle>Sample Data</CardTitle>
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div>
+                                <CardTitle>Sample Data</CardTitle>
+                                <CardDescription>You can query the following tables: {Object.keys(tables).join(', ')}.</CardDescription>
+                            </div>
                             <TabsList>
                                 <TabsTrigger value="view">View Data</TabsTrigger>
                                 <TabsTrigger value="edit">Edit Data</TabsTrigger>
                             </TabsList>
                         </div>
-                         <CardDescription>You can query the following tables: `users` and `products`.</CardDescription>
                     </CardHeader>
-                    <TabsContent value="view" className="p-6 pt-0 grid gap-6 md:grid-cols-2">
-                         <div>
-                            <h4 className="font-semibold mb-2">users</h4>
-                            <div className="overflow-x-auto rounded-md border">
-                                <Table>
-                                    <TableHeader><TableRow>{Object.keys(userData[0] || {}).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
-                                    <TableBody>
-                                        {userData.slice(0, 5).map((row: any, i: number) => <TableRow key={i}>{Object.values(row).map((val: any, j) => <TableCell key={j}>{val}</TableCell>)}</TableRow>)}
-                                         {userData.length > 5 && <TableRow><TableCell colSpan={Object.keys(userData[0] || {}).length} className="text-center text-muted-foreground">...and more</TableCell></TableRow>}
-                                    </TableBody>
-                                </Table>
+                    <TabsContent value="view" className="p-6 pt-0 grid gap-6">
+                        {Object.entries(tables).map(([tableName, data]) => (
+                            <div key={tableName}>
+                                <h4 className="font-semibold mb-2 capitalize">{tableName}</h4>
+                                <div className="overflow-x-auto rounded-md border">
+                                    <Table>
+                                        <TableHeader><TableRow>{Object.keys(data[0] || {}).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
+                                        <TableBody>
+                                            {data.slice(0, 5).map((row: any, i: number) => <TableRow key={i}>{Object.values(row).map((val: any, j) => <TableCell key={j}>{val}</TableCell>)}</TableRow>)}
+                                            {data.length > 5 && <TableRow><TableCell colSpan={Object.keys(data[0] || {}).length} className="text-center text-muted-foreground">...and {data.length - 5} more rows</TableCell></TableRow>}
+                                        </TableBody>
+                                    </Table>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <h4 className="font-semibold mb-2">products</h4>
-                            <div className="overflow-x-auto rounded-md border">
-                                <Table>
-                                    <TableHeader><TableRow>{Object.keys(productsData[0] || {}).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
-                                    <TableBody>
-                                        {productsData.slice(0,5).map((row: any, i: number) => <TableRow key={i}>{Object.values(row).map((val: any, j) => <TableCell key={j}>{val}</TableCell>)}</TableRow>)}
-                                        {productsData.length > 5 && <TableRow><TableCell colSpan={Object.keys(productsData[0] || {}).length} className="text-center text-muted-foreground">...and more</TableCell></TableRow>}
-                                    </TableBody>
-                                </Table>
-                            </div>
-                        </div>
+                        ))}
                     </TabsContent>
                     <TabsContent value="edit" className="p-6 pt-0 space-y-6">
-                        <EditableTable tableName="users" data={userData} onUpdate={handleTableChange} onAddRow={handleAddRow} onRemoveRow={handleRemoveRow} onAddColumn={handleAddColumn} onRemoveColumn={handleRemoveColumn}/>
-                        <EditableTable tableName="products" data={productsData} onUpdate={handleTableChange} onAddRow={handleAddRow} onRemoveRow={handleRemoveRow} onAddColumn={handleAddColumn} onRemoveColumn={handleRemoveColumn} />
+                        {Object.entries(tables).map(([tableName, data]) => (
+                            <EditableTable key={tableName} tableName={tableName} data={data} onUpdate={handleTableChange} onAddRow={handleAddRow} onRemoveRow={handleRemoveRow} onAddColumn={handleAddColumn} onRemoveColumn={handleRemoveColumn}/>
+                        ))}
+                        <AddTableDialog />
                     </TabsContent>
                 </Tabs>
             </Card>
