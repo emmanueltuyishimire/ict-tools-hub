@@ -84,11 +84,11 @@ export default function CloudSyncTimeCalculatorPage() {
                             <li><strong>Calculate Time:</strong> Click the "Calculate Transfer Time" button.</li>
                             <li><strong>Analyze the Estimate:</strong> The tool will show the estimated duration of the transfer. This helps you decide if a transfer is feasible over your network or if you need a faster connection or an alternative method.</li>
                         </ol>
-                        <Alert>
-                            <Lightbulb className="h-4 w-4" />
+                        <Alert variant="destructive">
+                            <AlertTriangle className="h-4 w-4" />
                             <AlertTitle>Important: Use Your Upload Speed!</AlertTitle>
                             <AlertDescription>
-                                Most internet plans are advertised with their download speed. For cloud syncs, your much slower upload speed is the bottleneck. Always use your upload speed for an accurate estimate.
+                                Most internet plans are advertised with their download speed. For cloud syncs, your much slower <strong>upload bandwidth</strong> is the bottleneck. Always use your upload speed for an accurate estimate.
                             </AlertDescription>
                         </Alert>
                     </Card>
@@ -113,7 +113,7 @@ export default function CloudSyncTimeCalculatorPage() {
                                             </ul>
                                        </li>
                                        <li><strong>Calculation:</strong> The tool converts 2 TB to bits and divides by 50 megabits per second.</li>
-                                       <li><strong>Result:</strong> The estimated time is approximately **3 days and 17 hours**. This crucial information tells the IT admin that the backup is not a quick process. They can now plan to run it over a long weekend to avoid impacting the office's internet performance during business hours. It also highlights how a seemingly fast internet connection can be slow for large uploads.</li>
+                                       <li><strong>Result:</strong> The estimated time is approximately <strong>3 days and 17 hours</strong>. This crucial information tells the IT admin that the backup is not a quick process. They can now plan to run it over a long weekend to avoid impacting the office's internet performance during business hours. It also highlights how a seemingly fast internet connection can be slow for large uploads.</li>
                                    </ol>
                                </div>
                             </CardContent>
@@ -149,7 +149,7 @@ export default function CloudSyncTimeCalculatorPage() {
                         <section>
                             <h3>The Upload Bottleneck</h3>
                             <p>
-                                For decades, consumer and small business internet usage has been dominated by downloading: streaming video, browsing websites, and loading images. As a result, ISPs have built their networks to be **asymmetrical**, providing high download speeds but much lower upload speeds. A typical cable internet plan might offer 500 Mbps download but only 20-50 Mbps upload.
+                                For decades, consumer and small business internet usage has been dominated by downloading: streaming video, browsing websites, and loading images. As a result, ISPs have built their networks to be <strong>asymmetrical</strong>, providing high download speeds but much lower upload speeds. A typical cable internet plan might offer 500 Mbps download but only 20-50 Mbps upload.
                             </p>
                             <p>
                                 With the rise of the cloud, this has become a major bottleneck. Your ability to back up your data, sync your files, or migrate a server is entirely constrained by your upload bandwidth. As this calculator demonstrates, even a "fast" internet connection can lead to multi-day or multi-week transfer times for terabyte-scale datasets. This is the first and most important consideration in any cloud sync project.
