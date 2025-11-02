@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
@@ -76,17 +75,22 @@ function* linearSearch(arr: number[], target: number): Generator<Step> {
 
 export function AlgorithmStepSimulator() {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<Algorithm>('bubbleSort');
-  const [initialArray, setInitialArray] = useState<number[]>(generateRandomArray());
+  const [initialArray, setInitialArray] = useState<number[]>([]);
   const [history, setHistory] = useState<Step[]>([]);
   const [stepIndex, setStepIndex] = useState(0);
   const [status, setStatus] = useState<SimulationStatus>('idle');
   const [speed, setSpeed] = useState(500);
-  const [target, setTarget] = useState<number>(() => initialArray[Math.floor(initialArray.length / 2)]);
+  const [target, setTarget] = useState<number>(0);
   const [challengeMode, setChallengeMode] = useState(false);
   const [challengeSelection, setChallengeSelection] = useState<number[]>([]);
   const [challengeScore, setChallengeScore] = useState({ correct: 0, incorrect: 0 });
 
+  useEffect(() => {
+    handleRandomize();
+  }, []);
+
   const generator = useMemo(() => {
+    if (initialArray.length === 0) return null;
     if (selectedAlgorithm === 'bubbleSort') {
         return bubbleSort(initialArray);
     }
@@ -123,7 +127,6 @@ export function AlgorithmStepSimulator() {
       const newArray = generateRandomArray();
       setInitialArray(newArray);
       setTarget(newArray[Math.floor(newArray.length / 2)]);
-      // history will be re-calculated by effect
   }, []);
 
   const handleStep = useCallback((force = false) => {

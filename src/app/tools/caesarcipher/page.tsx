@@ -1,229 +1,249 @@
-import React from 'react';
+
 import { PageHeader } from '@/components/page-header';
-import { SqlQueryTester } from './sql-query-tester';
+import { CaesarCipher } from './caesar-cipher';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand } from 'lucide-react';
+import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, ArrowRightLeft, Copy } from 'lucide-react';
 import Link from 'next/link';
-import { faqData, howToSchema, keyTerminologies } from './schema';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const metadata = {
-    title: 'SQL Query Tester | Online SQL Editor | ICT Toolbench',
-    description: 'A simple, client-side SQL query tester for practicing basic SELECT statements. Run queries against sample data sets and learn the fundamentals of SQL.',
-    openGraph: {
-        title: 'SQL Query Tester | Online SQL Editor | ICT Toolbench',
-        description: 'Practice your SQL skills with our interactive, in-browser query tester. No database required.',
-        url: '/tools/sql-query-tester',
-    }
+    title: 'Caesar Cipher Encoder / Decoder | ICT Toolbench',
+    description: 'Explore the classic Caesar cipher with our real-time encoder and decoder. Choose any shift value from 1 to 25 to encrypt and decrypt messages instantly.',
 };
 
-const SqlQueryTesterPage = () => {
-    const faqSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqData.map(item => ({
-            '@type': 'Question',
-            name: item.question,
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: item.answer.replace(/<[^>]*>?/gm, ''),
-            },
-        })),
-    };
+const faqData = [
+    { question: "What is a Caesar cipher?", answer: "A Caesar cipher is one of the oldest and simplest forms of encryption. It is a substitution cipher where each letter in the plaintext is shifted a certain number of places down the alphabet. For example, with a shift of 3, 'A' would become 'D', 'B' would become 'E', and so on. The alphabet wraps around, so 'Z' with a shift of 3 would become 'C'." },
+    { question: "Is the Caesar cipher secure?", answer: "Absolutely not. It is extremely insecure by modern standards. Since there are only 25 possible shifts, an attacker can easily try all of them in a brute-force attack to find the original message. It should only be used for educational purposes or simple puzzles." },
+    { question: "How does this tool work?", answer: "This tool takes your text and a chosen shift value (from 1 to 25). For each letter in the text, it calculates its new position in the alphabet based on the shift and reconstructs the new message. The same process works in reverse for decoding." },
+    { question: "What is the difference between this and ROT13?", answer: "ROT13 is a specific type of Caesar cipher where the shift value is always 13. Because 13 is half of 26, ROT13 is its own inverse (encoding and decoding use the same operation). This tool allows you to use any shift from 1 to 25, making it a more general Caesar cipher implementation. You can try our dedicated <a href='/tools/rot13-encoder-decoder' class='text-primary hover:underline'>ROT13 tool</a> to see this in action." },
+    { question: "What happens to numbers, spaces, and symbols?", answer: "In a standard Caesar cipher, any characters that are not letters of the alphabet are left unchanged. This tool follows that convention, only shifting the letters A-Z (both uppercase and lowercase)." },
+    { question: "Who was Caesar and did he really use this?", answer: "The cipher is named after Julius Caesar, the Roman general and statesman, who, according to the historian Suetonius, used it with a shift of three to protect his military communications. If a message was intercepted, it would be unreadable to anyone who didn't know the secret shift key." },
+    { question: "What is 'brute-force attack' in this context?", answer: "A brute-force attack is a trial-and-error method used to decode encrypted data. For a Caesar cipher, an attacker would simply try decoding the message with a shift of 1, then a shift of 2, then 3, and so on, up to 25. One of these attempts will produce readable text, breaking the cipher instantly." },
+    { question: "Is it possible to have a shift greater than 25?", answer: "While you could, it would be redundant. A shift of 26 would result in the original text. A shift of 27 would be identical to a shift of 1, as the alphabet wraps around. Therefore, only shifts from 1 to 25 produce unique ciphers." },
+    { question: "What is a 'substitution cipher'?", answer: "A substitution cipher is a method of encryption where units of plaintext are replaced with ciphertext according to a regular system. In a simple substitution cipher like Caesar's, each letter is replaced by another letter. More complex ciphers can substitute letters for symbols or groups of letters." },
+    { question: "How could I make this cipher stronger?", answer: "A simple Caesar cipher is weak because every letter is shifted by the same amount. A stronger (but still breakable) version would be a 'polyalphabetic cipher' like the Vigenère cipher, where the shift value changes for each letter based on a keyword. Modern encryption, like our <a href='/tools/encryption-decryption-tool' class='text-primary hover:underline'>AES Encryption Tool</a>, is vastly more complex and not based on simple letter substitution." },
+];
 
-    const softwareAppSchema = {
+const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Use the Caesar Cipher Tool',
+    description: 'A step-by-step guide to encoding and decoding text with a Caesar cipher.',
+    step: [
+        { '@type': 'HowToStep', name: 'Select a Shift Value', text: 'Use the slider to choose a shift value between 1 and 25. This is your secret key.' },
+        { '@type': 'HowToStep', name: 'Enter Text', text: 'To encode, type your message into the top "Decoded" box. To decode, paste the ciphertext into the bottom "Encoded" box.' },
+        { '@type': 'HowToStep', name: 'View Instant Results', text: 'The tool will automatically apply the shift to your text and display the result in the other box in real-time.' },
+        { '@type': 'HowToStep', name: 'Copy or Swap', text: 'Use the copy icon to copy the output. Use the swap button to switch the contents of the two text boxes.' },
+    ],
+    totalTime: 'PT1M'
+};
+
+const keyTerminologies = [
+    { term: 'Caesar Cipher', definition: 'A substitution cipher where each letter is shifted a fixed number of places down the alphabet.' },
+    { term: 'Shift Key', definition: 'The number of positions each letter is shifted in a Caesar cipher. This is the "secret" needed to decode the message.' },
+    { term: 'Plaintext', definition: 'The original, readable message before encryption.' },
+    { term: 'Ciphertext', definition: 'The encrypted, unreadable message after the cipher has been applied.' },
+    { term: 'Brute-Force Attack', definition: 'An attack method that involves systematically trying all possible keys (in this case, all 25 shifts) until the correct one is found.' },
+    { term: 'Cryptography', definition: 'The practice and study of techniques for secure communication in the presence of third parties.' },
+];
+
+export default function CaesarCipherPage() {
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer.replace(/<[^>]*>?/gm, ''),
+      },
+    })),
+  };
+
+  const softwareAppSchema = {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": "SQL Query Tester",
+      "name": "Caesar Cipher Encoder / Decoder",
       "operatingSystem": "All",
-      "applicationCategory": "DeveloperApplication",
+      "applicationCategory": "SecurityApplication",
       "offers": {
         "@type": "Offer",
         "price": "0",
         "priceCurrency": "USD"
       },
-      "description": "An educational, client-side tool for testing basic SQL SELECT queries against sample datasets.",
-      "url": "https://www.icttoolbench.com/tools/sql-query-tester"
-    };
+      "description": "An educational tool to demonstrate the Caesar substitution cipher with a variable shift.",
+      "url": "https://www.icttoolbench.com/tools/caesar-cipher"
+  };
 
-    return (
-        <>
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
-            <StructuredData data={softwareAppSchema} />
-            <div className="max-w-5xl mx-auto space-y-12">
-                <PageHeader
-                    title="SQL Query Tester (Educational)"
-                    description="Practice writing basic SQL queries in a safe, client-side environment. This tool allows you to run simple SELECT statements against pre-defined or custom-built sample tables to help you learn and test SQL syntax."
-                />
-                
-                <Alert>
-                    <AlertTriangle className="h-4 w-4" />
-                    <AlertTitle>Educational Tool Only</AlertTitle>
-                    <AlertDescription>
-                        This tool simulates a database in your browser and only supports basic `SELECT * FROM ... WHERE ...` queries with simple equality and comparison operators. It is designed for learning and demonstration, not for production database work.
-                    </AlertDescription>
-                </Alert>
+  return (
+    <>
+      <StructuredData data={faqSchema} />
+      <StructuredData data={howToSchema} />
+      <StructuredData data={softwareAppSchema} />
+      <div className="max-w-4xl mx-auto space-y-12">
+        <PageHeader
+          title="Caesar Cipher Encoder / Decoder"
+          description="Encrypt and decrypt messages using the classic Caesar cipher. Choose any shift value to transform your text and learn the fundamentals of substitution ciphers."
+        />
+        <CaesarCipher />
 
-                <SqlQueryTester />
+        <section>
+          <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
+          <Card className="prose prose-sm max-w-none text-foreground p-6">
+              <p>This tool lets you experiment with one of history's most famous ciphers. It works in real-time for both encoding and decoding.</p>
+              <ol>
+                  <li><strong>Select the Shift Value:</strong> Use the slider to pick your "secret key"—the number of places you want to shift the letters (from 1 to 25). A shift of 3 is the classic Caesar cipher.</li>
+                  <li><strong>Enter Your Text:</strong> Type your plaintext message into the top "Decoded" box to encrypt it, or paste your ciphertext into the bottom "Encoded" box to decrypt it.</li>
+                  <li><strong>See the Instant Result:</strong> The translated text will appear in the other box as you type.</li>
+                  <li><strong>Swap or Copy:</strong> Use the swap button (<ArrowRightLeft className="inline h-4 w-4" />) to instantly switch the contents of the two boxes. Use the copy button (<Copy className="inline h-4 w-4" />) to grab the output.</li>
+              </ol>
+          </Card>
+        </section>
 
-                <section>
-                    <h2 className="text-2xl font-bold mb-4">How to Use the SQL Query Tester</h2>
-                    <Card className="prose prose-sm max-w-none text-foreground p-6">
-                        <p>This interactive tool lets you practice the fundamentals of SQL without needing to set up a database. You can query the default sample data or create your own.</p>
-                        
-                        <h4>1. Write and Run Queries</h4>
-                        <ol>
-                            <li><strong>Write Your Query:</strong> In the "Query Editor" at the top, write a simple `SELECT` statement. For example, start with <code className="font-code bg-muted p-1 rounded-sm">SELECT * FROM users</code>.</li>
-                            <li><strong>Add a Filter (Optional):</strong> Try adding a `WHERE` clause to filter your results, for example: <code className="font-code bg-muted p-1 rounded-sm">SELECT * FROM users WHERE country = 'Canada'</code>. You can use operators like `=`, `!=`, `>`, `<`, `>=`, and `<=`.</li>
-                            <li><strong>Execute the Query:</strong> Click the "Run Query" button.</li>
-                            <li><strong>Analyze the Results:</strong> A "Results" table will appear showing the rows returned by your query. If there's a syntax error, a helpful message will appear instead.</li>
-                        </ol>
+        <section>
+           <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+           <Card>
+              <CardContent className="p-6">
+                  <dl className="space-y-4">
+                      {keyTerminologies.map((item) => (
+                          <div key={item.term}>
+                              <dt className="font-semibold">{item.term}</dt>
+                              <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                          </div>
+                      ))}
+                  </dl>
+              </CardContent>
+           </Card>
+        </section>
 
-                        <h4>2. View, Edit, and Create Data</h4>
-                        <ol>
-                            <li><strong>Navigate the Tabs:</strong> In the "Sample Data" section, you can switch between "View Data" for a read-only look at the tables and "Edit Data" to modify them.</li>
-                            <li><strong>Directly Edit Cells:</strong> In the "Edit Data" tab, simply click on any cell to change its value. The data type (number or text) will be preserved where possible.</li>
-                            <li><strong>Manage Rows, Columns, and Tables:</strong> Use the `+ Add Row`, `+ Add Column`, and `Create New Table` buttons to fully customize your dataset. Use the trash icon to delete rows, columns, or entire tables.</li>
-                        </ol>
-                    </Card>
-                </section>
-
-                <section>
-                   <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
-                   <Card>
-                      <CardContent className="p-6">
-                          <dl className="space-y-4">
-                              {keyTerminologies.map((item) => (
-                                  <div key={item.term}>
-                                      <dt className="font-semibold">{item.term}</dt>
-                                      <dd className="text-muted-foreground text-sm">{item.definition}</dd>
-                                  </div>
-                              ))}
-                          </dl>
-                      </CardContent>
-                   </Card>
-                </section>
-
-                <Card className='bg-secondary/30 border-primary/20'>
-                    <CardHeader>
-                        <div className='flex items-center gap-2 text-primary'>
-                            <BookOpen className="h-6 w-6" aria-hidden="true" />
-                            <CardTitle className="text-primary">Educational Deep Dive: The Language of Data</CardTitle>
-                        </div>
-                        <CardDescription>From simple lookups to complex joins, understand the core statements that allow you to communicate with relational databases.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
-                        <section>
-                            <h3>What is SQL?</h3>
-                            <p>
-                                SQL (Structured Query Language) is the standard language for managing and manipulating relational databases. A relational database organizes data into tables with rows and columns, similar to a collection of spreadsheets that can be linked together. SQL provides a declarative way to tell the database what data you want, and the database engine figures out the most efficient way to retrieve it.
-                            </p>
-                        </section>
-                        <section>
-                            <h3>The Four Core Operations: CRUD</h3>
-                            <p>Most database interactions can be broken down into four basic operations, known as CRUD:</p>
-                             <ul className="list-disc pl-5">
-                               <li><strong>Create:</strong> Adding new data. Done with the `INSERT` statement.</li>
-                               <li><strong>Read:</strong> Retrieving data. Done with the `SELECT` statement. This is the most common operation and the focus of this tool.</li>
-                               <li><strong>Update:</strong> Modifying existing data. Done with the `UPDATE` statement.</li>
-                               <li><strong>Delete:</strong> Removing data. Done with the `DELETE` statement.</li>
-                            </ul>
-                        </section>
-                         <section>
-                            <h3>The <strong>SELECT</strong> Statement: Asking Questions</h3>
-                            <p>The `SELECT` statement is how you query the database for information. Its basic structure is:</p>
-                             <div className="bg-muted p-4 rounded-md font-code text-sm">
-                                SELECT <span className="text-primary">[column1, column2, ...]</span> FROM <span className="text-accent">[table_name]</span> WHERE <span className="text-yellow-600">[condition]</span>;
-                            </div>
-                             <ul className="list-disc pl-5 mt-4">
-                                <li>The `SELECT` clause specifies which columns you want to see. Using `*` means you want all columns.</li>
-                                <li>The `FROM` clause specifies which table you are querying.</li>
-                                <li>The `WHERE` clause is an optional filter to specify which rows you want to retrieve based on a condition (e.g., `WHERE price > 100`).</li>
-                             </ul>
-                             <p>As you get more advanced, you can add clauses like `JOIN` (to combine data from multiple tables), `GROUP BY` (to aggregate data), and `ORDER BY` (to sort the results). You can validate table relationships for JOINs with our <Link href="/tools/key-validator" className="text-primary hover:underline">Primary / Foreign Key Validator</Link>.</p>
-                        </section>
-                    </CardContent>
-                </Card>
-
-                <div className="grid md:grid-cols-2 gap-8">
-                    <Card>
-                        <CardHeader>
-                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
-                        </CardHeader>
-                        <CardContent>
-                            <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                                <li><strong>Be Specific with Columns:</strong> Avoid using `SELECT *` in production code. Explicitly list the columns you need. This makes your query clearer and more resilient to database schema changes.</li>
-                                <li><strong>Filter with `WHERE`:</strong> Always use a `WHERE` clause to filter your data. Retrieving an entire multi-million row table is slow and inefficient.</li>
-                                <li><strong>Use `LIMIT`:</strong> When exploring data, add `LIMIT 100` to the end of your query to get a small sample of the results quickly without having to wait for the full query to complete.</li>
-                                <li><strong>Format for Readability:</strong> For complex queries, use line breaks and indentation to make them easier to read and debug. You can use our <Link href="/tools/code-formatter" className="text-primary hover:underline">Code Formatter</Link> for this.</li>
-                            </ul>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader>
-                             <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
-                        </CardHeader>
-                        <CardContent>
-                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                                <li><strong>SQL Injection:</strong> A critical security vulnerability where user input is directly concatenated into a query string. This can allow an attacker to run malicious SQL commands. Always use parameterized queries or prepared statements in your application code to prevent this.</li>
-                                <li><strong>Forgetting `WHERE` in an `UPDATE` or `DELETE`:</strong> The most terrifying mistake for a DBA. Forgetting the `WHERE` clause in an `UPDATE` or `DELETE` statement will cause it to apply to <strong>every single row</strong> in the table, potentially leading to catastrophic data loss.</li>
-                                <li><strong>Ambiguous `JOIN`s:</strong> When joining tables that have columns with the same name, failing to specify which table you mean (e.g., `users.id` vs. `orders.id`) will result in an error.</li>
-                            </ul>
-                        </CardContent>
-                    </Card>
-                </div>
-                
-               <section>
-                  <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
-                  <Card>
-                      <CardContent className="p-6">
-                          <Accordion type="single" collapsible className="w-full">
-                              {faqData.map((item, index) => (
-                                  <AccordionItem value={`item-${index}`} key={index}>
-                                      <AccordionTrigger>{item.question}</AccordionTrigger>
-                                      <AccordionContent>{item.answer}</AccordionContent>
-                                  </AccordionItem>
-                              ))}
-                          </Accordion>
-                      </CardContent>
-                  </Card>
-              </section>
-
+        <Card className='bg-secondary/30 border-primary/20'>
+          <CardHeader>
+              <div className='flex items-center gap-2 text-primary'>
+                  <BookOpen className="h-6 w-6" aria-hidden="true" />
+                  <CardTitle className="text-primary">Educational Deep Dive: A Foundation of Cryptography</CardTitle>
+              </div>
+              <CardDescription>Explore the history of the Caesar cipher, how it works, and why its weaknesses paved the way for modern encryption.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
               <section>
-                  <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      <Link href="/tools/db-storage-estimator" className="block">
-                          <Card className="hover:border-primary transition-colors h-full">
-                              <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Database Storage Estimator</CardTitle>
-                                  <CardDescription className="text-xs">Estimate how much disk space your tables might consume.</CardDescription>
-                              </CardHeader>
-                          </Card>
-                      </Link>
-                      <Link href="/tools/json-formatter" className="block">
-                          <Card className="hover:border-primary transition-colors h-full">
-                              <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">JSON Formatter</CardTitle>
-                                  <CardDescription className="text-xs">Format and validate JSON, a common data format returned by database APIs.</CardDescription>
-                              </CardHeader>
-                          </Card>
-                      </Link>
-                       <Link href="/tools/code-formatter" className="block">
-                          <Card className="hover:border-primary transition-colors h-full">
-                              <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Code Formatter</CardTitle>
-                                  <CardDescription className="text-xs">Clean up and format your complex SQL queries for better readability.</CardDescription>
-                              </CardHeader>
-                          </Card>
-                      </Link>
-                  </div>
+                  <h3 className="font-bold text-xl">The First Military-Grade Encryption</h3>
+                  <p>
+                    The Caesar cipher is named after Julius Caesar, who used it to protect sensitive military communications over 2,000 years ago. By shifting each letter by a pre-agreed number (his was a shift of 3), he could send messages that would be meaningless to an enemy if intercepted. Only a receiver who knew the "key" (the shift value) could reverse the process and read the original message. This represents one of the earliest documented uses of a substitution cipher for tactical advantage.
+                  </p>
               </section>
+              <section>
+                  <h3 className="font-bold text-xl">How it Works: Modular Arithmetic</h3>
+                  <p>The cipher's logic is based on modular arithmetic. Each letter is assigned a number (A=0, B=1, etc.). To encrypt, you add the shift value to the letter's number and take the result modulo 26 (the number of letters in the alphabet). To decrypt, you subtract the shift value.</p>
+                  <p>For example, with a shift of 3, the letter 'X' (value 23) becomes:</p>
+                  <p className="font-code bg-muted p-2 rounded-md">(23 + 3) mod 26 = 26 mod 26 = 0</p>
+                  <p>A value of 0 corresponds to the letter 'A'. So, 'X' becomes 'A'. The special case of this is <Link href="/tools/rot13-encoder-decoder" className="text-primary hover:underline">ROT13</Link>, where the shift is 13. Since 13 is half of 26, adding 13 twice brings you back to the start, making it its own inverse.</p>
+              </section>
+              <section>
+                  <h3 className="font-bold text-xl">Why It's Insecure: Frequency Analysis</h3>
+                  <p>
+                    The Caesar cipher is trivial to break. Since there are only 25 possible keys, an attacker can simply try every key until one produces readable text (a brute-force attack). Even more powerfully, it can be broken with <strong>frequency analysis</strong>. In any language, certain letters appear more frequently than others (in English, 'E', 'T', and 'A' are the most common). By analyzing the ciphertext and seeing which letter appears most often, a cryptanalyst can make an educated guess about what that letter corresponds to (likely 'E') and thereby deduce the shift key. This weakness is inherent in all monoalphabetic substitution ciphers and led to the development of more complex polyalphabetic ciphers.
+                  </p>
+              </section>
+          </CardContent>
+        </Card>
+        
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Educational Puzzles</h3>
+                    <p className="text-sm text-muted-foreground">The Caesar cipher is a classic tool for creating puzzles in escape rooms, scavenger hunts, and educational materials for children. It provides a fun and engaging way to introduce the basic concepts of cryptography without being overly complex.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Basic Data Obfuscation</h3>
+                    <p className="text-sm text-muted-foreground">While not secure, a Caesar cipher can be used for very basic obfuscation to hide plain text from a casual glance. For example, a developer might use it to lightly obscure a hint or answer in a game's source code.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Historical Context</h3>
+                    <p className="text-sm text-muted-foreground">Studying the Caesar cipher is a great way to understand the history of cryptography and appreciate the ingenuity of ancient military communications. It provides a baseline for understanding why modern, complex algorithms are necessary.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Learning Programming Logic</h3>
+                    <p className="text-sm text-muted-foreground">Implementing a Caesar cipher is a common and excellent beginner's exercise in programming. It teaches fundamental concepts like character encoding (ASCII), string manipulation, and modular arithmetic.</p>
+                </div>
             </div>
-        </>
-    );
-};
+        </section>
 
-export default SqlQueryTesterPage;
+        <div className="grid md:grid-cols-2 gap-8">
+            <Card>
+                <CardHeader>
+                    <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Brute-Force Decoding:</strong> If you receive a Caesar-encrypted message but don't know the key, you can simply use this tool and slide the shift value from 1 to 25. One of the positions will reveal the original message.</li>
+                        <li><strong>Recognizing the Cipher:</strong> If a block of text seems to be gibberish but has the same letter frequency and word structure as normal text, it might be a simple substitution cipher like Caesar's.</li>
+                        <li><strong>Combining Ciphers:</strong> For slightly more advanced (but still insecure) fun, you can combine ROT13 with other simple ciphers, like a reversing cipher. First apply ROT13, then reverse the resulting string.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader>
+                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Using it for Security:</strong> The most critical mistake. The Caesar cipher provides no real security. Never use it to protect any information that is even remotely sensitive.</li>
+                        <li><strong>Forgetting the Key:</strong> If you encrypt a message with a specific shift and forget the value, you'll have to brute-force it yourself to get it back (though with only 25 options, this is easy).</li>
+                        <li><strong>Assuming it Works on All Characters:</strong> Remember that numbers and symbols are not affected. If your message contains them, they will remain in the ciphertext, which can be a clue for a cryptanalyst.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+        </div>
+
+       <section>
+          <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+          <Card>
+              <CardContent className="p-6">
+                  <Accordion type="single" collapsible className="w-full">
+                      {faqData.map((item, index) => (
+                          <AccordionItem value={`item-${index}`} key={index}>
+                              <AccordionTrigger>{item.question}</AccordionTrigger>
+                              <AccordionContent><div dangerouslySetInnerHTML={{ __html: item.answer }} /></AccordionContent>
+                          </AccordionItem>
+                      ))}
+                  </Accordion>
+              </CardContent>
+          </Card>
+      </section>
+      
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <Link href="/tools/rot13-encoder-decoder" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">ROT13 Encoder / Decoder<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">Try out the most famous and specific version of the Caesar cipher.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+              <Link href="/tools/hash-generator-md5-sha" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">Hash Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">Compare this simple cipher to modern, one-way hash functions used for real security.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+               <Link href="/tools/encryption-decryption-tool" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">AES Encryption Tool<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">Explore modern, secure symmetric encryption using the AES standard.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+          </div>
+      </section>
+      </div>
+    </>
+  );
+}

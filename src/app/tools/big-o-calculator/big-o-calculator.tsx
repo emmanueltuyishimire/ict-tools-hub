@@ -176,7 +176,7 @@ export function BigOCalculator() {
             <CardContent className="space-y-6">
                 <Card className="bg-muted/30">
                     <CardHeader>
-                         <CardTitle className={cn("text-xl", currentData.color.replace('hsl(var(--','text-').replace('))', ''))}>
+                         <CardTitle className={cn("text-xl", currentData.color.includes('destructive') ? 'text-destructive' : 'text-[color:var(--color)]' )} style={{'--color': currentData.color} as React.CSSProperties}>
                             {selectedComplexity} - {currentData.label}
                         </CardTitle>
                         <CardDescription>{currentData.description}</CardDescription>
