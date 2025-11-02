@@ -364,7 +364,7 @@ const BigOComplexityQuizPage = () => {
         "priceCurrency": "USD"
       },
       "description": "An interactive quiz to test knowledge of Big O notation and algorithm time complexity.",
-      "url": "https://www.icttoolbench.com/tools/big-o-quiz"
+      "url": "https://www.icttoolshub.com/tools/big-o-quiz"
     };
 
     return (

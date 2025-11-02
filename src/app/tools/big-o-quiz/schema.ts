@@ -1,4 +1,5 @@
 
+
 export const faqData = [
     { question: "Why is Big O notation important for technical interviews?", answer: "Big O is a standard way to discuss the efficiency of code. Interviewers use it to gauge a candidate's understanding of algorithms and data structures, and their ability to write performant, scalable code. Being able to analyze the time and space complexity of a solution is a critical skill." },
     { question: "Is O(n) faster than O(n²)?", answer: "Yes, for any reasonably large input. O(n) (linear time) means the runtime grows in direct proportion to the input size 'n'. O(n²) (quadratic time) means the runtime grows with the square of the input size. As 'n' gets larger, the O(n) algorithm will be vastly more efficient." },

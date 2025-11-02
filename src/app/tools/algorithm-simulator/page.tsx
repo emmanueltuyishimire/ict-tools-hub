@@ -12,10 +12,10 @@ import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const metadata = {
-    title: 'Algorithm Step Simulator | Visualize Sorting & Searching | ICT Toolbench',
+    title: 'Algorithm Step Simulator | Visualize Sorting & Searching | ICT Tools Hub',
     description: 'An interactive, step-by-step simulator to visualize how fundamental algorithms like Bubble Sort and Linear Search work. Perfect for computer science students and developers.',
     openGraph: {
-        title: 'Algorithm Step Simulator | Visualize Sorting & Searching | ICT Toolbench',
+        title: 'Algorithm Step Simulator | Visualize Sorting & Searching | ICT Tools Hub',
         description: 'Watch algorithms in action with our step-by-step visualizer. Understand the logic of Bubble Sort, Linear Search, and more with an interactive educational tool.',
         url: '/tools/algorithm-simulator',
     }
@@ -47,7 +47,7 @@ const AlgorithmSimulatorPage = () => {
             "priceCurrency": "USD"
         },
         "description": "An interactive, educational tool to help users visualize how sorting and searching algorithms work on a step-by-step basis.",
-        "url": "https://www.icttoolbench.com/tools/algorithm-simulator"
+        "url": "https://www.icttoolshub.com/tools/algorithm-simulator"
     };
 
     return (

@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <PageHeader
-        title="Welcome to ICT Toolbench"
+        title="Welcome to ICT Tools Hub"
         description="A comprehensive suite of 200+ free online tools for students, developers, network admins, and tech enthusiasts. Explore the categories below to find the tool you need."
       />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

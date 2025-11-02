@@ -19,10 +19,10 @@ import {
 } from "@/components/ui/table"
 
 export const metadata = {
-    title: 'Time Complexity Estimator & Big O Calculator | ICT Toolbench',
+    title: 'Time Complexity Estimator & Big O Calculator | ICT Tools Hub',
     description: 'An interactive Big O calculator to estimate and visualize algorithm time complexity. Learn the fundamentals of O(n), O(log n), O(n²) with examples and guides.',
     openGraph: {
-        title: 'Time Complexity Estimator & Big O Calculator | ICT Toolbench',
+        title: 'Time Complexity Estimator & Big O Calculator | ICT Tools Hub',
         description: 'Visualize how algorithms scale with our interactive Big O calculator. Essential for students and developers learning about time complexity and performance.',
         url: '/tools/big-o-calculator',
     }
@@ -54,7 +54,7 @@ const BigOCalculatorPage = () => {
         "priceCurrency": "USD"
       },
       "description": "An interactive, educational tool to help users understand and visualize Big O notation and the performance of common algorithms as data scales.",
-      "url": "https://www.icttoolbench.com/tools/big-o-calculator"
+      "url": "https://www.icttoolshub.com/tools/big-o-calculator"
     };
 
     return (

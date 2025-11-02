@@ -21,18 +21,18 @@ const sourceCodePro = Source_Code_Pro({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.icttoolbench.com'), // Replace with your actual domain
+  metadataBase: new URL('https://www.icttoolshub.com'), // Replace with your actual domain
   title: {
-    default: 'ICT Toolbench - Your Ultimate Tech Toolkit',
-    template: '%s | ICT Toolbench',
+    default: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
+    template: '%s | ICT Tools Hub',
   },
   description:
     'A comprehensive suite of 200+ free online tools for students, developers, network admins, and tech enthusiasts. Networking, programming, security, and more.',
   openGraph: {
-    title: 'ICT Toolbench - Your Ultimate Tech Toolkit',
+    title: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     description: 'A comprehensive suite of free online tools for ICT professionals and students.',
-    url: 'https://www.icttoolbench.com', // Replace with your actual domain
-    siteName: 'ICT Toolbench',
+    url: 'https://www.icttoolshub.com', // Replace with your actual domain
+    siteName: 'ICT Tools Hub',
     images: [
       {
         url: '/og-image.png', // Replace with your actual OG image path
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ICT Toolbench - Your Ultimate Tech Toolkit',
+    title: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     description: 'A comprehensive suite of free online tools for ICT professionals and students.',
     // images: ['/og-image.png'], // Replace with your actual OG image path
   },
@@ -54,9 +54,9 @@ export const metadata: Metadata = {
 const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'ICT Toolbench',
+  name: 'ICT Tools Hub',
   description: 'A comprehensive suite of free online tools for ICT professionals, students, and enthusiasts, including networking, programming, and security utilities.',
-  url: 'https://www.icttoolbench.com', // Replace with actual URL
+  url: 'https://www.icttoolshub.com', // Replace with actual URL
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'All',
   offers: {
