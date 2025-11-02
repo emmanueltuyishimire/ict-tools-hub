@@ -1,7 +1,7 @@
 
 export const faqData = [
     { question: "What is the primary difference between replication and sharding?", answer: "Replication copies the same data to multiple servers to scale read operations and provide high availability. Sharding partitions data across multiple servers to scale write operations. Replication handles read-heavy workloads; sharding handles write-heavy workloads at massive scale." },
-    { question: "When should I use read replicas (replication)?", answer: "You should use read replicas when your application is 'read-heavy'—meaning it performs many more read queries (`SELECT`) than write queries (`INSERT`, `UPDATE`). This is typical for blogs, content websites, and most e-commerce stores. It's the first and most common step in database scaling." },
+    { question: "When should I use read replicas (replication)?", answer: "You should use read replicas when your application is 'read-heavy'—meaning it performs many more read queries (SELECT) than write queries (INSERT, UPDATE). This is typical for blogs, content websites, and most e-commerce stores. It's the first and most common step in database scaling." },
     { question: "When should I consider sharding?", answer: "You should only consider sharding after you have exhausted all other options. If your application's write load is so high that even the largest possible single primary server cannot handle it, or your dataset is too large to fit on a single server, then sharding is the next logical step. It's a strategy for hyper-scale applications." },
     { question: "What is 'replication lag'?", answer: "Replication lag is the delay between when data is written to the primary database and when it becomes visible on a read replica. Since most replication is asynchronous, this delay can be a few milliseconds to several seconds. Applications must be designed to handle this, for example, by directing a user's own reads to the primary for a short time after they make a change." },
     { "question": "What is a 'shard key'?", "answer": "A shard key is a specific column in your database table that is used to determine which shard a particular row of data should be stored on. For example, in a `users` table, the `user_id` might be the shard key. The choice of a good shard key that distributes data evenly is one of the most critical decisions in a sharding strategy." },
@@ -34,4 +34,5 @@ export const keyTerminologies = [
     { term: 'Read Replica', definition: 'A read-only copy of a primary database that is used to serve `SELECT` queries, reducing the load on the primary.' },
     { term: 'Shard Key', definition: 'A column used to determine which shard a particular row of data belongs to.' },
     { term: 'Replication Lag', definition: 'The delay between a write operation on the primary database and its appearance on a read replica.' },
-    { term: 'High Availability (HA)', definition
+    { term: 'High Availability (HA)', definition: 'A system design approach that ensures a high level of operational performance, usually through redundancy, to minimize downtime.' }
+];
