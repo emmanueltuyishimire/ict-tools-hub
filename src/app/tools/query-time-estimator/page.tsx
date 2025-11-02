@@ -137,7 +137,7 @@ const QueryTimeEstimatorPage = () => {
                           <dl className="space-y-4">
                               {keyTerminologies.map((item) => (
                                   <div key={item.term}>
-                                      <dt><strong>{item.term}</strong></dt>
+                                      <dt className="font-bold">{item.term}</dt>
                                       <dd className="text-muted-foreground text-sm">{item.definition}</dd>
                                   </div>
                               ))}
@@ -189,7 +189,7 @@ const QueryTimeEstimatorPage = () => {
                                 <li className="flex items-start gap-4">
                                     <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                                     <div>
-                                        <h4 className="font-semibold">Use `EXPLAIN ANALYZE`</h4>
+                                        <h4 className="font-bold">Use `EXPLAIN ANALYZE`</h4>
                                         <p className="text-sm text-muted-foreground">
                                             The most powerful tool for debugging a slow query is the database's own `EXPLAIN` command. Running `EXPLAIN ANALYZE` before your query will show you the exact execution plan the optimizer chose and how much time was spent on each step. This will tell you definitively if it's using an index or performing a slow table scan.
                                         </p>
@@ -198,7 +198,7 @@ const QueryTimeEstimatorPage = () => {
                                 <li className="flex items-start gap-4">
                                     <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                                     <div>
-                                        <h4 className="font-semibold">Index Your Foreign Keys</h4>
+                                        <h4 className="font-bold">Index Your Foreign Keys</h4>
                                         <p className="text-sm text-muted-foreground">
                                             Always create an index on any column that is a foreign key. This is critical for the performance of `JOIN` operations.
                                         </p>
@@ -207,7 +207,7 @@ const QueryTimeEstimatorPage = () => {
                                  <li className="flex items-start gap-4">
                                     <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                                     <div>
-                                        <h4 className="font-semibold">Cache Your Hot Data</h4>
+                                        <h4 className="font-bold">Cache Your Hot Data</h4>
                                         <p className="text-sm text-muted-foreground">
                                            The fastest disk read is the one you don't have to make. Ensure your database server has enough RAM to cache its most frequently accessed data. For web applications, using a caching layer like Redis can absorb a huge number of read queries before they even hit the database. Our <Link href="/tools/storage-memory-cost-analyzer" className="text-primary hover:underline">Storage vs. Memory Cost Analyzer</Link> illustrates the performance-cost trade-off here.
                                         </p>
@@ -218,6 +218,57 @@ const QueryTimeEstimatorPage = () => {
                      </Card>
                 </section>
                 
+                <div className="grid md:grid-cols-2 gap-8">
+                    <Card>
+                        <CardHeader>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                            <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Index Selectively:</strong> Don't index every column. Only index columns that are frequently used in `WHERE`, `JOIN`, and `ORDER BY` clauses. Use your database's query analysis tools (like `EXPLAIN`) to identify which queries are performing slow table scans.</li>
+                                <li><strong>Composite Index Order Matters:</strong> The order of columns in a composite index is important. Place the column that is most frequently used for filtering first.</li>
+                                <li><strong>Use Full-Text Search for Text:</strong> For searching within large text fields, a standard B-Tree index is inefficient. Use a specialized Full-Text Search index for much better performance.</li>
+                                <li><strong>Keep Statistics Updated:</strong> The query optimizer relies on statistics about your data to make good decisions. Ensure your database is configured to regularly run `ANALYZE` or update its statistics.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                             <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Missing Indexes:</strong> The number one cause of slow database performance. Failing to create an index on a frequently queried column will force a full table scan every time.</li>
+                                <li><strong>Using Functions on Indexed Columns:</strong> A query like `WHERE LOWER(email) = 'test@example.com'` will prevent the database from using a standard index on the `email` column. You would need a function-based index for this.</li>
+                                <li><strong>Over-indexing:</strong> Adding too many indexes to a table will slow down write operations (`INSERT`, `UPDATE`, `DELETE`), as every index needs to be updated.</li>
+                                <li><strong>Ignoring Cardinality:</strong> An index on a column with very low cardinality (very few unique values, like a boolean 'status' column) is often not helpful, as the optimizer will likely decide a table scan is faster.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                </div>
+
+                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-bold text-lg mb-2">Social Media Feed</h3>
+                            <p className="text-sm text-muted-foreground">To display a user's feed, a social media app needs to fetch the 50 most recent posts from people they follow. This operation is typically O(1) or O(log n), as it fetches a fixed number of items from an indexed database, regardless of how many total posts exist. It's fast and scalable.</p>
+                        </div>
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-bold text-lg mb-2">Finding "Friends of Friends"</h3>
+                            <p className="text-sm text-muted-foreground">To suggest new connections, a social network might check for "friends of friends". This involves iterating through all of your friends, and then for each friend, iterating through all of their friends. This nested loop approach leads to O(n²) complexity, which can be slow if you have many friends with many connections.</p>
+                        </div>
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-bold text-lg mb-2">Autocomplete Search</h3>
+                            <p className="text-sm text-muted-foreground">When you type into a search bar and it suggests completions, this is often powered by a specialized data structure called a Trie. Searching a Trie is O(k) where k is the length of the string you've typed, not the total number of possible words. This makes it incredibly fast and feel instantaneous.</p>
+                        </div>
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-bold text-lg mb-2">Sorting an E-commerce Product List</h3>
+                            <p className="text-sm text-muted-foreground">An e-commerce site needs to sort thousands of products by price. If it used an inefficient O(n²) sorting algorithm (like bubble sort), the page could take many seconds to load. By using an efficient O(n log n) algorithm (like merge sort or quicksort), the sorting is completed in milliseconds, providing a smooth user experience.</p>
+                        </div>
+                    </div>
+                </section>
+                
                <section>
                   <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
                   <Card>
@@ -226,7 +277,9 @@ const QueryTimeEstimatorPage = () => {
                               {faqData.map((item, index) => (
                                   <AccordionItem value={`item-${index}`} key={index}>
                                       <AccordionTrigger>{item.question}</AccordionTrigger>
-                                      <AccordionContent>{item.answer}</AccordionContent>
+                                      <AccordionContent>
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/href="\/tools\/([^"]*)"/g, 'href="/tools/$1" class="text-primary hover:underline"') }} />
+                                      </AccordionContent>
                                   </AccordionItem>
                               ))}
                           </Accordion>
@@ -239,4 +292,3 @@ const QueryTimeEstimatorPage = () => {
 };
 
 export default QueryTimeEstimatorPage;
-
