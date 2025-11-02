@@ -56,7 +56,7 @@ const FileIntegrityCheckerPage = () => {
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
           title="File Integrity Checker"
-          description="Verify that your files are original and uncorrupted by generating their cryptographic hashes. This tool helps you ensure file integrity by calculating MD5, SHA-1, SHA-256, and SHA-512 checksums directly in your browser."
+          description="Verify that your files are original and uncorrupted by generating their cryptographic hashes. This tool helps you ensure file integrity by calculating SHA-1, SHA-256, and SHA-512 checksums directly in your browser."
         />
         
         <FileIntegrityChecker />
@@ -67,7 +67,7 @@ const FileIntegrityCheckerPage = () => {
               <p>This tool creates a "digital fingerprint" for your files, allowing you to verify that they haven't been altered or corrupted.</p>
               <ol>
                   <li><strong>Select a File:</strong> Drag and drop a file into the designated area, or click on it to open a file selection dialog. The file will not be uploaded; all processing happens on your local machine.</li>
-                  <li><strong>Wait for Calculation:</strong> The tool will read the file and calculate its MD5, SHA-1, SHA-256, and SHA-512 hashes. For very large files, this may take a few moments. A loading indicator will appear.</li>
+                  <li><strong>Wait for Calculation:</strong> The tool will read the file and calculate its hashes. For very large files, this may take a few moments. A loading indicator will appear.</li>
                   <li><strong>Compare the Hashes:</strong> Compare the generated hash (usually SHA-256) with the one provided by the source of the file (e.g., the download page for a piece of software).</li>
                   <li><strong>Verify Integrity:</strong> If the hashes match exactly, you can be confident that your file is identical to the original. If they do not match, the file may have been corrupted during download or tampered with.</li>
               </ol>
@@ -102,7 +102,7 @@ const FileIntegrityCheckerPage = () => {
               <section>
                   <h3>What is a Checksum?</h3>
                   <p>
-                    A checksum is a small, fixed-size piece of data computed from a larger block of digital data. Its purpose is to detect errors or changes that may have been introduced during transmission or storage. A cryptographic hash function (like MD5 or SHA-256) is an advanced type of checksum algorithm. It creates a unique "digital fingerprint" for a file.
+                    A checksum is a small, fixed-size piece of data computed from a larger block of digital data. Its purpose is to detect errors or changes that may have been introduced during transmission or storage. A cryptographic hash function (like SHA-256) is an advanced type of checksum algorithm. It creates a unique "digital fingerprint" for a file.
                   </p>
                   <p>The key property of a cryptographic hash is that if even a single bit in the original file is changed, the resulting hash will be completely different and unrecognizable. This makes it an incredibly powerful tool for verifying file integrity.</p>
               </section>

@@ -1,14 +1,17 @@
 
 'use client';
 
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Copy, Check, Fingerprint, File as FileIcon, Loader2 } from 'lucide-react';
+import { Copy, Check, File as FileIcon, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AlertTriangle } from 'lucide-react';
+
 
 // Helper function to format bytes
 const formatBytes = (bytes: number, decimals = 2) => {
@@ -20,7 +23,7 @@ const formatBytes = (bytes: number, decimals = 2) => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 };
 
-// Hasher function using Web Crypto API and a JS fallback for MD5
+// Hasher function using Web Crypto API
 async function digestMessage(
     arrayBuffer: ArrayBuffer,
     algorithm: 'SHA-1' | 'SHA-256' | 'SHA-512'
@@ -29,26 +32,6 @@ async function digestMessage(
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
-
-
-// A simple, pure JS MD5 implementation is needed as Web Crypto doesn't support it for security reasons.
-// This is for checksum purposes only.
-function md5(buffer: ArrayBuffer) {
-    // This is a complex algorithm. For brevity, a placeholder is used.
-    // In a real implementation, a library like spark-md5 would be used.
-    // For this demonstration, we'll return a placeholder string. A real implementation is very long.
-    // To avoid shipping a huge block of potentially error-prone JS, we will simulate this part.
-    // In a real app, a library would be added to package.json.
-    // Let's create a representative hash from the file size to show functionality.
-    const view = new Uint8Array(buffer);
-    let hash = 0;
-    for (let i = 0; i < view.length; i++) {
-        hash = (hash << 5) - hash + view[i];
-        hash |= 0; 
-    }
-    return ('00000000' + hash.toString(16)).substr(-8) + ('00000000' + (hash*2).toString(16)).substr(-8) + ('00000000' + (hash*3).toString(16)).substr(-8) + ('00000000' + (hash*4).toString(16)).substr(-8);
-}
-
 
 const HashOutput = ({ name, value }: { name: string, value: string | null }) => {
     const { toast } = useToast();
@@ -86,7 +69,7 @@ export function FileIntegrityChecker() {
     const [file, setFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [hashes, setHashes] = useState({
-        md5: '', sha1: '', sha256: '', sha512: ''
+        sha1: '', sha256: '', sha512: ''
     });
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -105,25 +88,30 @@ export function FileIntegrityChecker() {
 
         const calculateHashes = async () => {
             setIsLoading(true);
+            setHashes({ sha1: '', sha256: '', sha512: '' }); // Reset hashes
             const reader = new FileReader();
             
             reader.onload = async (event) => {
                 const arrayBuffer = event.target?.result as ArrayBuffer;
                 if (arrayBuffer) {
-                    const [sha1, sha256, sha512] = await Promise.all([
-                        digestMessage(arrayBuffer, 'SHA-1'),
-                        digestMessage(arrayBuffer, 'SHA-256'),
-                        digestMessage(arrayBuffer, 'SHA-512'),
-                    ]);
-                    const md5Hash = md5(arrayBuffer); // This is a synchronous JS implementation
-                    setHashes({ md5: md5Hash, sha1, sha256, sha512 });
+                    try {
+                        const [sha1, sha256, sha512] = await Promise.all([
+                            digestMessage(arrayBuffer, 'SHA-1'),
+                            digestMessage(arrayBuffer, 'SHA-256'),
+                            digestMessage(arrayBuffer, 'SHA-512'),
+                        ]);
+                        setHashes({ sha1, sha256, sha512 });
+                    } catch (e) {
+                         console.error("Hashing failed:", e);
+                    } finally {
+                        setIsLoading(false);
+                    }
                 }
-                setIsLoading(false);
             };
             
             reader.onerror = () => {
                 setIsLoading(false);
-                // Handle error
+                console.error("File reading failed.");
             };
 
             reader.readAsArrayBuffer(file);
@@ -180,7 +168,13 @@ export function FileIntegrityChecker() {
                                 </div>
                             ) : (
                                 <>
-                                    <HashOutput name="MD5" value={hashes.md5} />
+                                    <Alert>
+                                        <AlertTriangle className="h-4 w-4" />
+                                        <AlertTitle>Notice</AlertTitle>
+                                        <AlertDescription>
+                                            MD5 is no longer considered cryptographically secure and is omitted. Please use SHA-256 for integrity checks.
+                                        </AlertDescription>
+                                    </Alert>
                                     <HashOutput name="SHA-1" value={hashes.sha1} />
                                     <HashOutput name="SHA-256" value={hashes.sha256} />
                                     <HashOutput name="SHA-512" value={hashes.sha512} />
