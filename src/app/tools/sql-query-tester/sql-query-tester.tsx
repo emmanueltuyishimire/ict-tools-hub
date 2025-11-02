@@ -8,9 +8,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { AlertCircle, Play } from 'lucide-react';
+import { AlertCircle, Play, Plus, Trash2 } from 'lucide-react';
 import { CodeBlock } from '@/components/code-block';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Input } from '@/components/ui/input';
 
 // Default Sample data
 const initialData = {
@@ -68,35 +69,21 @@ const executeQuery = (query: string, data: { [key: string]: any[] }) => {
     return results;
 };
 
-
 export function SqlQueryTester() {
     const [query, setQuery] = useState('SELECT * FROM users WHERE country = \'USA\'');
     const [results, setResults] = useState<any[]>([]);
     const [queryError, setQueryError] = useState('');
     const [headers, setHeaders] = useState<string[]>([]);
     
-    const [usersJson, setUsersJson] = useState(JSON.stringify(initialData.users, null, 2));
-    const [productsJson, setProductsJson] = useState(JSON.stringify(initialData.products, null, 2));
-    const [jsonError, setJsonError] = useState('');
+    const [userData, setUserData] = useState(initialData.users);
+    const [productsData, setProductsData] = useState(initialData.products);
 
-    const currentData = useMemo(() => {
-        try {
-            setJsonError('');
-            return {
-                users: JSON.parse(usersJson),
-                products: JSON.parse(productsJson),
-            };
-        } catch (e) {
-            setJsonError('Invalid JSON format in one of the tables. Please correct it before running a query.');
-            return null;
-        }
-    }, [usersJson, productsJson]);
+    const currentData = {
+        users: userData,
+        products: productsData,
+    };
     
     const handleRunQuery = () => {
-        if (!currentData || jsonError) {
-             setQueryError(jsonError || 'Cannot run query due to invalid table data.');
-             return;
-        }
         try {
             setQueryError('');
             const queryResults = executeQuery(query, currentData);
@@ -104,10 +91,9 @@ export function SqlQueryTester() {
             if (queryResults.length > 0) {
                 setHeaders(Object.keys(queryResults[0]));
             } else {
-                // If there are no results, we can try to infer headers from the table definition
                 const tableName = query.match(/FROM\s+([a-zA-Z0-9_]+)/i)?.[1].toLowerCase();
-                if(tableName && currentData[tableName] && currentData[tableName].length > 0) {
-                    setHeaders(Object.keys(currentData[tableName][0]));
+                if(tableName && currentData[tableName as keyof typeof currentData] && currentData[tableName as keyof typeof currentData].length > 0) {
+                    setHeaders(Object.keys(currentData[tableName as keyof typeof currentData][0]));
                 } else {
                     setHeaders([]);
                 }
@@ -119,6 +105,68 @@ export function SqlQueryTester() {
         }
     };
     
+    const handleTableChange = (tableName: 'users' | 'products', rowIndex: number, column: string, value: string) => {
+        const setData = tableName === 'users' ? setUserData : setProductsData;
+        setData(prevData => {
+            const newData = [...prevData];
+            const originalValue = newData[rowIndex][column];
+            newData[rowIndex] = { ...newData[rowIndex], [column]: typeof originalValue === 'number' ? Number(value) : value };
+            return newData;
+        });
+    };
+
+    const handleAddRow = (tableName: 'users' | 'products') => {
+        const setData = tableName === 'users' ? setUserData : setProductsData;
+        const data = tableName === 'users' ? userData : productsData;
+        const newRow = Object.keys(data[0] || {}).reduce((acc, key) => {
+            acc[key] = typeof data[0][key] === 'number' ? 0 : '';
+            return acc;
+        }, {} as any);
+        setData(prevData => [...prevData, newRow]);
+    };
+
+    const handleRemoveRow = (tableName: 'users' | 'products', rowIndex: number) => {
+        const setData = tableName === 'users' ? setUserData : setProductsData;
+        setData(prevData => prevData.filter((_, index) => index !== rowIndex));
+    };
+
+    const EditableTable = ({ tableName, data, onUpdate, onAddRow, onRemoveRow }: { tableName: 'users'|'products', data: any[], onUpdate: Function, onAddRow: Function, onRemoveRow: Function }) => {
+        if (!data || data.length === 0) return null;
+        const tableHeaders = Object.keys(data[0]);
+        return (
+            <div className="space-y-2">
+                <h4 className="font-semibold capitalize">{tableName}</h4>
+                <div className="overflow-x-auto rounded-md border">
+                    <Table>
+                        <TableHeader><TableRow>{tableHeaders.map(h => <TableHead key={h}>{h}</TableHead>)}<TableHead className="w-[50px]"></TableHead></TableRow></TableHeader>
+                        <TableBody>
+                            {data.map((row, rowIndex) => (
+                                <TableRow key={rowIndex}>
+                                    {tableHeaders.map(header => (
+                                        <TableCell key={header}>
+                                            <Input
+                                                value={row[header]}
+                                                onChange={(e) => onUpdate(tableName, rowIndex, header, e.target.value)}
+                                                className="h-8 font-mono"
+                                                type={typeof row[header] === 'number' ? 'number' : 'text'}
+                                            />
+                                        </TableCell>
+                                    ))}
+                                    <TableCell>
+                                        <Button size="icon" variant="ghost" onClick={() => onRemoveRow(tableName, rowIndex)}>
+                                            <Trash2 className="h-4 w-4 text-destructive" />
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+                 <Button size="sm" variant="outline" onClick={() => onAddRow(tableName)}><Plus className="mr-2 h-4 w-4" /> Add Row to {tableName}</Button>
+            </div>
+        )
+    };
+
     return (
         <div className="space-y-6">
             <Card>
@@ -188,7 +236,7 @@ export function SqlQueryTester() {
                             <CardTitle>Sample Data</CardTitle>
                             <TabsList>
                                 <TabsTrigger value="view">View Data</TabsTrigger>
-                                <TabsTrigger value="edit">Edit Data (JSON)</TabsTrigger>
+                                <TabsTrigger value="edit">Edit Data</TabsTrigger>
                             </TabsList>
                         </div>
                          <CardDescription>You can query the following tables: `users` and `products`.</CardDescription>
@@ -198,10 +246,10 @@ export function SqlQueryTester() {
                             <h4 className="font-semibold mb-2">users</h4>
                             <div className="overflow-x-auto rounded-md border">
                                 <Table>
-                                    <TableHeader><TableRow>{Object.keys(initialData.users[0]).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
+                                    <TableHeader><TableRow>{Object.keys(userData[0] || {}).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
                                     <TableBody>
-                                        {currentData?.users?.slice(0, 5).map((row: any, i: number) => <TableRow key={i}>{Object.values(row).map((val: any, j) => <TableCell key={j}>{val}</TableCell>)}</TableRow>)}
-                                         {currentData && currentData.users.length > 5 && <TableRow><TableCell colSpan={Object.keys(initialData.users[0]).length} className="text-center text-muted-foreground">...and more</TableCell></TableRow>}
+                                        {userData.slice(0, 5).map((row: any, i: number) => <TableRow key={i}>{Object.values(row).map((val: any, j) => <TableCell key={j}>{val}</TableCell>)}</TableRow>)}
+                                         {userData.length > 5 && <TableRow><TableCell colSpan={Object.keys(userData[0] || {}).length} className="text-center text-muted-foreground">...and more</TableCell></TableRow>}
                                     </TableBody>
                                 </Table>
                             </div>
@@ -210,41 +258,18 @@ export function SqlQueryTester() {
                             <h4 className="font-semibold mb-2">products</h4>
                             <div className="overflow-x-auto rounded-md border">
                                 <Table>
-                                    <TableHeader><TableRow>{Object.keys(initialData.products[0]).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
+                                    <TableHeader><TableRow>{Object.keys(productsData[0] || {}).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
                                     <TableBody>
-                                        {currentData?.products?.slice(0,5).map((row: any, i: number) => <TableRow key={i}>{Object.values(row).map((val: any, j) => <TableCell key={j}>{val}</TableCell>)}</TableRow>)}
-                                        {currentData && currentData.products.length > 5 && <TableRow><TableCell colSpan={Object.keys(initialData.products[0]).length} className="text-center text-muted-foreground">...and more</TableCell></TableRow>}
+                                        {productsData.slice(0,5).map((row: any, i: number) => <TableRow key={i}>{Object.values(row).map((val: any, j) => <TableCell key={j}>{val}</TableCell>)}</TableRow>)}
+                                        {productsData.length > 5 && <TableRow><TableCell colSpan={Object.keys(productsData[0] || {}).length} className="text-center text-muted-foreground">...and more</TableCell></TableRow>}
                                     </TableBody>
                                 </Table>
                             </div>
                         </div>
                     </TabsContent>
                     <TabsContent value="edit" className="p-6 pt-0 space-y-6">
-                        {jsonError && (
-                            <Alert variant="destructive">
-                                <AlertCircle className="h-4 w-4" />
-                                <AlertTitle>JSON Error</AlertTitle>
-                                <AlertDescription>{jsonError}</AlertDescription>
-                            </Alert>
-                        )}
-                        <div className="space-y-2">
-                            <Label htmlFor="users-json">users table (JSON)</Label>
-                            <Textarea
-                                id="users-json"
-                                value={usersJson}
-                                onChange={(e) => setUsersJson(e.target.value)}
-                                className="font-mono h-48"
-                            />
-                        </div>
-                         <div className="space-y-2">
-                            <Label htmlFor="products-json">products table (JSON)</Label>
-                            <Textarea
-                                id="products-json"
-                                value={productsJson}
-                                onChange={(e) => setProductsJson(e.target.value)}
-                                className="font-mono h-48"
-                            />
-                        </div>
+                        <EditableTable tableName="users" data={userData} onUpdate={handleTableChange} onAddRow={handleAddRow} onRemoveRow={handleRemoveRow} />
+                        <EditableTable tableName="products" data={productsData} onUpdate={handleTableChange} onAddRow={handleAddRow} onRemoveRow={handleRemoveRow} />
                     </TabsContent>
                 </Tabs>
             </Card>
