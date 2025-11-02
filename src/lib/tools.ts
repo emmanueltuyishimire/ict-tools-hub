@@ -119,7 +119,6 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Encryption / Decryption Tool', slug: 'encryption-decryption-tool', description: 'Encrypt or decrypt text using AES.' },
       { name: 'Two-Factor Auth TOTP Demo', slug: 'totp-demo', description: 'Educational TOTP demo.' },
       { name: 'Base32 / Base58 Encoder / Decoder', slug: 'base32-58-encoder-decoder', description: 'Encode/decode Base32/58.' },
-      { name: 'File Integrity Checker', slug: 'file-integrity-checker', description: 'Generate checksums for files.' },
       { name: 'Random Key Generator', slug: 'random-key-generator', description: 'Generate a random encryption key.' },
       { name: 'Private / Public Key Pair Generator', slug: 'key-pair-generator', description: 'Generate a key pair (educational).' },
       { name: 'Secure Token Generator', slug: 'secure-token-generator', description: 'Generate a secure token.' },
