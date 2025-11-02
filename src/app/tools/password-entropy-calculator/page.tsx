@@ -50,15 +50,17 @@ const softwareAppSchema = {
     "operatingSystem": "All",
     "applicationCategory": "SecurityApplication",
     "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
     },
     "description": "A free, client-side tool to calculate the entropy of a password in bits, providing a quantitative measure of its strength against brute-force attacks.",
     "url": "https://www.icttoolbench.com/tools/password-entropy-calculator"
 };
 
-const faqSchema = {
+
+export default function PasswordEntropyCalculatorPage() {
+  const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqData.map(item => ({
@@ -69,9 +71,8 @@ const faqSchema = {
             text: item.answer.replace(/<[^>]*>?/gm, ''),
         },
     })),
-};
+  };
 
-export default function PasswordEntropyCalculatorPage() {
   return (
     <>
       <StructuredData data={faqSchema} />
@@ -119,7 +120,7 @@ export default function PasswordEntropyCalculatorPage() {
               <section>
                   <h3>From Rules to Randomness</h3>
                   <p>
-                    For years, password strength was judged by simple, rule-based systems: "must contain an uppercase letter, a number, and a symbol." Our <Link href="/tools/password-strength-checker" className="text-primary hover:underline">Password Strength Checker</a> uses these rules for a quick assessment. However, a more accurate way to measure a password's true strength is by calculating its <strong>entropy</strong>.
+                    For years, password strength was judged by simple, rule-based systems: "must contain an uppercase letter, a number, and a symbol." Our <Link href="/tools/password-strength-checker" className="text-primary hover:underline">Password Strength Checker</Link> uses these rules for a quick assessment. However, a more accurate way to measure a password's true strength is by calculating its <strong>entropy</strong>.
                   </p>
                   <p>
                     Entropy, measured in "bits," is a concept from information theory that quantifies unpredictability. In the context of passwords, it tells you how many guesses a brute-force attack would need to make, on average, to crack your password. Each bit of entropy doubles the difficulty of cracking the password. The difference between a 40-bit password and a 41-bit password is that the 41-bit password is twice as hard to crack.
@@ -129,7 +130,7 @@ export default function PasswordEntropyCalculatorPage() {
                   <h3>The Formula for Strength: `E = L * log₂(R)`</h3>
                   <p>The entropy (E) of a password is calculated with a simple formula:</p>
                    <p className='text-center font-bold font-code text-xl bg-muted p-4 rounded-md'>
-                        Entropy = Length × log₂(Size of Character Pool)
+                        Entropy = Length × log<sub>2</sub>(Size of Character Pool)
                    </p>
                    <p>Let's break that down:</p>
                   <ul className="list-disc pl-5">
