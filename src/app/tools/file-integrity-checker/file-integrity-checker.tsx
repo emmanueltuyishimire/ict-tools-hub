@@ -100,7 +100,6 @@ async function digestMessage(buffer: ArrayBuffer, algorithm: 'SHA-1' | 'SHA-256'
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-
 const HashOutput = ({ name, value }: { name: string, value: string | null }) => {
     const [copied, setCopied] = useState(false);
     const { toast } = useToast();
@@ -135,7 +134,7 @@ const HashOutput = ({ name, value }: { name: string, value: string | null }) => 
 
 export function FileIntegrityChecker() {
     const [file, setFile] = useState<File | null>(null);
-    const [hashes, setHashes] = useState({ md5: null, sha1: null, sha256: null, sha512: null });
+    const [hashes, setHashes] = useState<{ md5: string | null, sha1: string | null, sha256: string | null, sha512: string | null }>({ md5: null, sha1: null, sha256: null, sha512: null });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     
@@ -225,4 +224,8 @@ export function FileIntegrityChecker() {
                         <HashOutput name="SHA-256" value={hashes.sha256} />
                         <HashOutput name="SHA-512" value={hashes.sha512} />
                     </div>
-                
+                )}
+            </CardContent>
+        </Card>
+    );
+}
