@@ -4,8 +4,9 @@ import { PasswordEntropyCalculator } from './password-entropy-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
+import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
+import { faqData, howToSchema, keyTerminologies } from './schema';
 
 export const metadata = {
     title: 'Password Entropy Calculator | ICT Toolbench',
@@ -17,61 +18,34 @@ export const metadata = {
     }
 };
 
-const faqData = [
-    { question: "What is password entropy?", answer: "Password entropy is a quantitative measure of a password's unpredictability or randomness. It is measured in 'bits.' A higher entropy value means there are more possible combinations, making the password exponentially harder for an attacker to guess or brute-force." },
-    { question: "How is entropy calculated?", answer: "The formula is `E = L * log₂(R)`, where 'E' is the entropy in bits, 'L' is the password length, and 'R' is the size of the character pool (e.g., 26 for lowercase letters, 62 for alphanumeric). This tool calculates 'R' based on the characters you actually use in your password." },
-    { question: "What is a 'good' entropy value?", answer: "Security standards vary, but a common guideline is: Below 40 bits is very weak. 40-60 bits is weak. 60-80 bits is acceptable. 80-120 bits is strong. Above 120 bits is very strong and provides excellent protection against all current and foreseeable brute-force attacks." },
-    { question: "Why is entropy a better measure than just 'strength'?", answer: "A 'strength' meter is often a qualitative guess based on simple rules (e.g., has a number, has a symbol). Entropy is a quantitative, mathematical measure of a password's resistance to brute-force attacks. A long, simple passphrase can have much higher entropy than a short, 'complex' password, a fact this tool can demonstrate clearly." },
-    { question: "Is it safe to type my password here?", answer: "Yes. This tool is 100% client-side. All calculations are performed in your browser using JavaScript. Your password is never sent to our servers or stored anywhere." },
-    { question: "What is a 'character pool'?", answer: "The character pool is the set of unique characters a password could be made from. For example, if you only use lowercase letters, the pool size is 26. If you use lowercase, uppercase, and numbers, the pool size is 26 + 26 + 10 = 62. The larger the character pool, the higher the entropy for a given length." },
-    { question: "How does this relate to the Password Strength Checker?", answer: "Our <a href='/tools/password-strength-checker' class='text-primary hover:underline'>Password Strength Checker</a> provides a quick, visual score. This tool provides the underlying mathematical value (entropy) that determines that score. It's for users who want to dive deeper into the 'why' of password security." },
-    { question: "What is a brute-force attack?", answer: "A brute-force attack is an attempt to crack a password by systematically trying every single possible combination. The time it takes is directly related to the password's entropy. Higher entropy means an exponentially longer time to crack." },
-    { question: "Does entropy account for dictionary attacks?", answer: "No. The standard entropy calculation assumes every character is chosen with equal randomness. It does not account for an attacker using a 'dictionary' of common words, names, or previously breached passwords. This is why using random, non-dictionary words in a passphrase is so important." },
-    { question: "How can I increase my password's entropy?", answer: "There are two ways: 1) Increase the length of the password. This is the most effective method. 2) Increase the size of the character pool by including more character types (uppercase, lowercase, numbers, symbols)." },
-];
-
-const howToSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'HowTo',
-    name: 'How to Calculate Password Entropy',
-    description: 'A step-by-step guide to measuring the entropy of your password.',
-    step: [
-        { '@type': 'HowToStep', name: 'Enter Your Password', text: 'Type or paste the password you want to analyze into the input field.' },
-        { '@type': 'HowToStep', name: 'Review the Entropy Score', text: 'The tool will instantly calculate and display the entropy value in bits.' },
-        { '@type': 'HowToStep', name: 'Analyze the Breakdown', text: 'The results will show the factors used in the calculation: the password length and the detected size of the character pool (e.g., lowercase + numbers).' },
-    ],
-    totalTime: 'PT1M'
-};
-
-const softwareAppSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Password Entropy Calculator",
-    "operatingSystem": "All",
-    "applicationCategory": "SecurityApplication",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "description": "A free, client-side tool to calculate the entropy of a password in bits, providing a quantitative measure of its strength against brute-force attacks.",
-    "url": "https://www.icttoolbench.com/tools/password-entropy-calculator"
-};
-
-
-export default function PasswordEntropyCalculatorPage() {
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqData.map(item => ({
-        '@type': 'Question',
-        name: item.question,
-        acceptedAnswer: {
-            '@type': 'Answer',
-            text: item.answer.replace(/<[^>]*>?/gm, ''),
+const PasswordEntropyCalculatorPage = () => {
+    const softwareAppSchema = {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Password Entropy Calculator",
+        "operatingSystem": "All",
+        "applicationCategory": "SecurityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
         },
-    })),
-  };
+        "description": "A free, client-side tool to calculate the entropy of a password in bits, providing a quantitative measure of its strength against brute-force attacks.",
+        "url": "https://www.icttoolbench.com/tools/password-entropy-calculator"
+    };
+
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer.replace(/<[^>]*>?/gm, ''),
+            },
+        })),
+    };
 
   return (
     <>
@@ -108,6 +82,60 @@ export default function PasswordEntropyCalculatorPage() {
           </Card>
         </section>
 
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+            <div className="space-y-6">
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-xl">Example 1: The "Complex" but Short Password</CardTitle>
+                        <CardDescription>A common password that meets typical complexity rules but lacks sufficient entropy.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <p className="text-sm text-muted-foreground"><strong>Password:</strong> <code className="font-code bg-muted p-1 rounded-sm">P@ssw0rd!9</code></p>
+                        <div className="prose prose-sm max-w-none">
+                            <ol>
+                                <li><strong>Analysis:</strong> The password has a length of 10. It uses four character sets: uppercase ('P'), lowercase ('a', 's', 'w', 'r', 'd'), symbols ('@', '!'), and numbers ('0', '9'). The character pool size is 26+26+10+32 = 94.</li>
+                                <li><strong>Entropy Calculation:</strong> `10 * log₂(94) ≈ 10 * 6.55 = 65.5 bits`.</li>
+                                <li><strong>Result:</strong> The tool will show an entropy of around 65 bits, which is considered "Medium" or "Acceptable" but not truly strong. While it ticks all the complexity boxes, its short length and dictionary-based root word ("password") make it vulnerable.</li>
+                            </ol>
+                        </div>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-xl">Example 2: The Long Passphrase</CardTitle>
+                        <CardDescription>Demonstrating how length is the most powerful factor in creating high-entropy passwords.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <p className="text-sm text-muted-foreground"><strong>Password:</strong> <code className="font-code bg-muted p-1 rounded-sm">green-desk-run-fast</code></p>
+                        <div className="prose prose-sm max-w-none">
+                            <ol>
+                                <li><strong>Analysis:</strong> The password has a length of 21. It uses only two character sets: lowercase letters and one symbol ('-'). The character pool size is 26+1 = 27.</li>
+                                <li><strong>Entropy Calculation:</strong> `21 * log₂(27) ≈ 21 * 4.75 = 99.8 bits`.</li>
+                                <li><strong>Result:</strong> The tool will show an entropy of nearly 100 bits, which is "Strong". This demonstrates how significantly length outweighs complexity. This passphrase is far more secure than the first example, despite being simpler to type and remember.</li>
+                            </ol>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+        </section>
+
+        <section>
+           <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+           <Card>
+              <CardContent className="p-6">
+                  <dl className="space-y-4">
+                      {keyTerminologies.map((item) => (
+                          <div key={item.term}>
+                              <dt className="font-semibold">{item.term}</dt>
+                              <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                          </div>
+                      ))}
+                  </dl>
+              </CardContent>
+           </Card>
+        </section>
+
         <Card className='bg-secondary/30 border-primary/20'>
           <CardHeader>
               <div className='flex items-center gap-2 text-primary'>
@@ -120,7 +148,7 @@ export default function PasswordEntropyCalculatorPage() {
               <section>
                   <h3>From Rules to Randomness</h3>
                   <p>
-                    For years, password strength was judged by simple, rule-based systems: "must contain an uppercase letter, a number, and a symbol." Our <Link href="/tools/password-strength-checker" className="text-primary hover:underline">Password Strength Checker</Link> uses these rules for a quick assessment. However, a more accurate way to measure a password's true strength is by calculating its <strong>entropy</strong>.
+                    For years, password strength was judged by simple, rule-based systems: "must contain an uppercase letter, a number, and a symbol." Our <strong><Link href="/tools/password-strength-checker" className="text-primary hover:underline">Password Strength Checker</Link></strong> uses these rules for a quick assessment. However, a more accurate way to measure a password's true strength is by calculating its <strong>entropy</strong>.
                   </p>
                   <p>
                     Entropy, measured in "bits," is a concept from information theory that quantifies unpredictability. In the context of passwords, it tells you how many guesses a brute-force attack would need to make, on average, to crack your password. Each bit of entropy doubles the difficulty of cracking the password. The difference between a 40-bit password and a 41-bit password is that the 41-bit password is twice as hard to crack.
@@ -152,6 +180,70 @@ export default function PasswordEntropyCalculatorPage() {
         </Card>
 
         <section>
+            <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
+            <Card>
+                <CardContent className="p-6">
+                    <ul className="space-y-4">
+                        <li className="flex items-start gap-4">
+                            <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                            <div>
+                                <h4 className="font-semibold">Prioritize Length Above All</h4>
+                                <p className="text-sm text-muted-foreground">
+                                    The easiest way to dramatically increase entropy is to add more characters. A 16-character password is exponentially stronger than a 12-character one, even with the same character set.
+                                </p>
+                            </div>
+                        </li>
+                        <li className="flex items-start gap-4">
+                            <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                            <div>
+                                <h4 className="font-semibold">Use Passphrases for Memorability</h4>
+                                <p className="text-sm text-muted-foreground">
+                                    For master passwords you must memorize, use a passphrase of 4-5 random, unrelated words (e.g., "Correct-Horse-Battery-Staple"). This provides high entropy while being easier to remember than a complex random string. Use our <strong><Link href="/tools/password-generator" className="text-primary hover:underline">Password Generator</Link></strong> to create these.
+                                </p>
+                            </div>
+                        </li>
+                        <li className="flex items-start gap-4">
+                            <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                            <div>
+                                <h4 className="font-semibold">Store Passwords Securely</h4>
+                                <p className="text-sm text-muted-foreground">
+                                    Never store passwords in plain text. They should always be processed with a secure one-way hashing algorithm like Argon2 or bcrypt. You can learn the basics of this process with our <strong><Link href="/tools/hash-generator-md5-sha" className="text-primary hover:underline">Hash Generator</Link></strong>.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </CardContent>
+            </Card>
+        </section>
+
+        <div className="grid md:grid-cols-2 gap-8">
+            <Card>
+                <CardHeader>
+                    <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Target 80+ Bits:</strong> For any important account, aim for an entropy score of at least 80 bits. This is considered strong enough to resist brute-force attacks from even the most powerful adversaries for the foreseeable future.</li>
+                        <li><strong>Entropy is Not Everything:</strong> This calculation assumes pure randomness. If your "random" password is a common phrase or a word from a dictionary, its real-world security is much lower. Avoid dictionary words.</li>
+                        <li><strong>Use a Password Manager:</strong> The best way to achieve high entropy is to let a password manager generate and store a long, truly random password for each account. You don't need to remember it, so it can be as complex as possible.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader>
+                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Confusing Complexity with Strength:</strong> Adding one symbol to an 8-character password makes it 'complex' but only adds a small amount of entropy. Adding four more letters adds far more security.</li>
+                        <li><strong>Predictable Patterns:</strong> Passwords like "Summer2024!" might seem random, but attackers' tools are programmed to check for common words followed by years and symbols.</li>
+                        <li><strong>Ignoring Leaked Password Databases:</strong> An attacker's first step is often to check if your password has appeared in a previous data breach. A password's strength is irrelevant if it's already on a public list.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+        </div>
+
+       <section>
           <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
           <Card>
               <CardContent className="p-6">
@@ -167,9 +259,9 @@ export default function PasswordEntropyCalculatorPage() {
                   </Accordion>
               </CardContent>
           </Card>
-        </section>
+      </section>
 
-        <section>
+      <section>
           <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <Link href="/tools/password-strength-checker" className="block">
@@ -202,3 +294,5 @@ export default function PasswordEntropyCalculatorPage() {
     </>
   );
 }
+
+export default PasswordEntropyCalculatorPage;

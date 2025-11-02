@@ -19,7 +19,7 @@ const checkPasswordStrength = (password: string) => {
         length: password.length >= 12,
         uppercase: /[A-Z]/.test(password),
         lowercase: /[a-z]/.test(password),
-        number: /\d/.test(password),
+        number: /\d]/.test(password),
         specialChar: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password),
     };
 
@@ -47,7 +47,7 @@ const calculateEntropy = (password: string) => {
     let charPool = 0;
     if (/[a-z]/.test(password)) charPool += 26;
     if (/[A-Z]/.test(password)) charPool += 26;
-    if (/\d/.test(password)) charPool += 10;
+    if (/\d]/.test(password)) charPool += 10;
     if (/[^a-zA-Z0-9]/.test(password)) charPool += 32; // Approximate special characters
     if (charPool === 0) return 0;
     
@@ -118,7 +118,7 @@ export function PasswordStrengthChecker() {
                 
                 <div className='space-y-3'>
                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium">Strength: <span className={cn('font-bold', color.replace('bg-', 'text-'))}>{label}</span></span>
+                        <span className="text-sm font-medium">Strength: <strong className={cn(color.replace('bg-', 'text-'))}>{label}</strong></span>
                          <span className="text-sm font-medium">Entropy: <Link href="/tools/password-entropy-calculator" className="text-primary hover:underline font-bold font-code">{entropy} bits</Link></span>
                      </div>
                     <Progress value={strengthPercentage} className={cn('h-3 transition-all', color)} />

@@ -19,29 +19,19 @@ import {
 const calculateEntropyDetails = (password: string) => {
     if (!password) return { entropy: 0, poolSize: 0, length: 0 };
     
-    let charPool = new Set<string>();
     let poolSize = 0;
     
-    const lowerCaseChars = "abcdefghijklmnopqrstuvwxyz";
-    const upperCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const numberChars = "0123456789";
-    const symbolChars = "!@#$%^&*()_+-=[]{};':\"\\|,.<>/?";
-
     if (/[a-z]/.test(password)) {
-        lowerCaseChars.split('').forEach(c => charPool.add(c));
         poolSize += 26;
     }
     if (/[A-Z]/.test(password)) {
-        upperCaseChars.split('').forEach(c => charPool.add(c));
         poolSize += 26;
     }
-    if (/\d/.test(password)) {
-        numberChars.split('').forEach(c => charPool.add(c));
+    if (/\d]/.test(password)) {
         poolSize += 10;
     }
     // A simplified but effective approximation for symbols
     if (/[^a-zA-Z0-9]/.test(password)) {
-        symbolChars.split('').forEach(c => charPool.add(c));
         poolSize += 32;
     }
 

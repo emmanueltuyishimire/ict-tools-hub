@@ -27,7 +27,7 @@ const faqData = [
     { question: "Why is using the same password on multiple sites dangerous?", answer: "This is called password reuse. If one site you use suffers a data breach and your password is leaked, attackers will try that same email and password combination on hundreds of other popular sites (like banking, email, and social media). This is known as 'credential stuffing.' Using a unique password for every site is critical." },
     { question: "What is a password manager and should I use one?", answer: "A password manager is a secure application designed to store and manage all your passwords in an encrypted vault. It allows you to generate and use long, complex, unique passwords for every site without having to memorize them. You only need to remember one strong master password. Using a password manager is one of the most effective security practices you can adopt." },
     { question: "What is hashing and how does it relate to passwords?", answer: "Hashing is a one-way process that turns a password into a fixed-length, unique string of characters. Websites should store the 'hash' of your password, not the password itself. When you log in, they hash what you type and compare it to the stored hash. This means even if their database is stolen, your actual password is not revealed. You can see this in action with our <a href='/tools/hash-generator-md5-sha' class='text-primary hover:underline'>Hash Generator</a>." },
-    { question: "What is 2FA (Two-Factor Authentication)?", answer: "2FA adds a second layer of security beyond your password, usually a temporary code from an app on your phone. Even if an attacker steals your password, they cannot log in without this second factor. You should enable it on every service that offers it. Explore how it works with our <a href='/tools/totp-demo' class='text-primary hover:underline'>Two-Factor Auth TOTP Demo</a>." }
+    { question: "What is 2FA (Two-Factor Authentication)?", answer: "2FA adds a second layer of security beyond your password, usually a temporary code from an app on your phone. Even if an attacker steals your password, they can't log in without this second factor. You should enable it on every service that offers it. Explore how it works with our <a href='/tools/totp-demo' class='text-primary hover:underline'>Two-Factor Auth TOTP Demo</a>." }
 ];
 
 const howToSchema = {
@@ -60,20 +60,19 @@ const softwareAppSchema = {
     "url": "https://www.icttoolbench.com/tools/password-strength-checker"
 };
 
-const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqData.map(item => ({
-        '@type': 'Question',
-        name: item.question,
-        acceptedAnswer: {
-            '@type': 'Answer',
-            text: item.answer.replace(/<[^>]*>?/gm, ''),
-        },
-    })),
-};
-
-export default function PasswordStrengthCheckerPage() {
+const PasswordStrengthCheckerPage = () => {
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer.replace(/<[^>]*>?/gm, ''),
+            },
+        })),
+    };
   return (
     <>
       <StructuredData data={faqSchema} />
@@ -95,7 +94,7 @@ export default function PasswordStrengthCheckerPage() {
                   <li><strong>Enter Password:</strong> Start typing your password in the input field. All analysis happens securely in your browser—nothing is sent to our servers.</li>
                   <li><strong>Review Strength Meter:</strong> The colored bar provides an at-a-glance assessment of the password's strength, from "Very Weak" (red) to "Very Strong" (emerald).</li>
                   <li><strong>Check the Criteria:</strong> The checklist below the meter will update in real-time, showing if your password meets key criteria like length, use of uppercase letters, numbers, and symbols.</li>
-                  <li><strong>Understand Entropy:</strong> The "Entropy" score gives you a precise mathematical value for your password's randomness. For a deeper understanding of this metric, check out our <Link href="/tools/password-entropy-calculator" className="text-primary hover:underline">Password Entropy Calculator</Link>.</li>
+                  <li><strong>Understand Entropy:</strong> The "Entropy" score gives you a precise mathematical value for your password's randomness. For a deeper understanding of this metric, check out our <strong><Link href="/tools/password-entropy-calculator" className="text-primary hover:underline">Password Entropy Calculator</Link></strong>.</li>
               </ol>
             </Card>
         </section>
@@ -130,7 +129,7 @@ export default function PasswordStrengthCheckerPage() {
                          <ol>
                             <li><strong>Analysis:</strong> The tool notes the excellent length (32 characters). It only uses lowercase letters and hyphens (a special character).</li>
                             <li><strong>Result:</strong> The strength meter will show "Very Strong". The entropy score will be very high.</li>
-                            <li><strong>Insight:</strong> This proves that a long, easy-to-remember passphrase is far more secure than a short, complex password. The sheer number of possible combinations from the length outweighs the limited character set. For even stronger passphrases, use our <Link href="/tools/password-generator" className="text-primary hover:underline">Password Generator</Link> to create one.</li>
+                            <li><strong>Insight:</strong> This proves that a long, easy-to-remember passphrase is far more secure than a short, complex password. The sheer number of possible combinations from the length outweighs the limited character set. For even stronger passphrases, use our <strong><Link href="/tools/password-generator" className="text-primary hover:underline">Password Generator</Link></strong> to create one.</li>
                          </ol>
                      </div>
                   </CardContent>
@@ -169,7 +168,7 @@ export default function PasswordStrengthCheckerPage() {
                         <li><strong>Above 120 bits:</strong> Very Strong. Overkill for most uses, but provides extreme security, resistant even to future advances in computing power (for the foreseeable future).</li>
                     </ul>
                     <p>
-                        Entropy is calculated based on two factors: the length of the password and the size of the character pool it draws from (lowercase, uppercase, numbers, symbols). Adding just one character type (e.g., a single number to an all-lowercase password) can significantly increase the character pool and boost the entropy. You can explore this concept further with our <Link href="/tools/password-entropy-calculator" className="text-primary hover:underline">Password Entropy Calculator</Link>.
+                        Entropy is calculated based on two factors: the length of the password and the size of the character pool it draws from (lowercase, uppercase, numbers, symbols). Adding just one character type (e.g., a single number to an all-lowercase password) can significantly increase the character pool and boost the entropy. You can explore this concept further with our <strong><Link href="/tools/password-entropy-calculator" className="text-primary hover:underline">Password Entropy Calculator</Link></strong>.
                     </p>
                 </section>
             </CardContent>
@@ -185,7 +184,7 @@ export default function PasswordStrengthCheckerPage() {
                           <div>
                               <h4 className="font-semibold">Use a Password Manager</h4>
                               <p className="text-sm text-muted-foreground">
-                                The single best thing you can do for your security. A password manager can generate and store long, unique, random passwords for every website. You only need to remember one strong master password. This eliminates password reuse, the #1 cause of account takeovers.
+                                The single best thing you can do for your security. A password manager can generate and store long, unique, random passwords for every website. You only need to remember one strong master password.
                               </p>
                           </div>
                       </li>
@@ -194,7 +193,7 @@ export default function PasswordStrengthCheckerPage() {
                           <div>
                               <h4 className="font-semibold">Enable Two-Factor Authentication (2FA)</h4>
                               <p className="text-sm text-muted-foreground">
-                                2FA adds a second layer of security, usually a temporary code from an app on your phone. Even if an attacker steals your password, they can't log in without this second factor. Enable it on every service that offers it. Explore how it works with our <Link href="/tools/totp-demo" className="text-primary hover:underline">Two-Factor Auth TOTP Demo</Link>.
+                                2FA adds a second layer of security, usually a temporary code from an app on your phone. Even if an attacker steals your password, they can't log in without this second factor. Enable it on every service that offers it. Explore how it works with our <strong><Link href="/tools/totp-demo" className="text-primary hover:underline">Two-Factor Auth TOTP Demo</Link></strong>.
                               </p>
                           </div>
                       </li>
@@ -203,7 +202,7 @@ export default function PasswordStrengthCheckerPage() {
                           <div>
                               <h4 className="font-semibold">Favor Long Passphrases</h4>
                               <p className="text-sm text-muted-foreground">
-                                Create a long password from a memorable but random sequence of words, like <strong>Green-Desk-Run-Fast-47!</strong>. It's easier to remember than <strong>Tr0ub4d&amp;r</strong> but significantly harder to crack due to its length. Our <Link href="/tools/password-generator" className="text-primary hover:underline">Password Generator</Link> can help create these.
+                                Create a long password from a memorable but random sequence of words, like <strong>Green-Desk-Run-Fast-47!</strong>. It's easier to remember than <strong>Tr0ub4d&amp;r</strong> but significantly harder to crack due to its length. Our <strong><Link href="/tools/password-generator" className="text-primary hover:underline">Password Generator</Link></strong> can help create these.
                               </p>
                           </div>
                       </li>
@@ -295,7 +294,7 @@ export default function PasswordStrengthCheckerPage() {
                     <Card className="hover:border-primary transition-colors h-full">
                         <CardHeader>
                             <CardTitle className="text-base flex items-center justify-between">Password Entropy Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                            <CardDescription className="text-xs">Dive deeper into the math behind password strength by calculating entropy values.</CardDescription>
+                            <CardDescription className="text-xs">Dive deeper into the math behind password strength by calculating entropy in bits.</CardDescription>
                         </CardHeader>
                     </Card>
                 </Link>
@@ -313,3 +312,5 @@ export default function PasswordStrengthCheckerPage() {
     </>
   );
 }
+
+export default PasswordStrengthCheckerPage;
