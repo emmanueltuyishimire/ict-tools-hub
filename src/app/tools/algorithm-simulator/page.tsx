@@ -9,14 +9,6 @@ import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 
 export const metadata = {
     title: 'Algorithm Step Simulator | Visualize Sorting & Searching | ICT Toolbench',
@@ -54,7 +46,7 @@ const AlgorithmSimulatorPage = () => {
             "priceCurrency": "USD"
         },
         "description": "An interactive, educational tool to help users visualize how sorting and searching algorithms work on a step-by-step basis.",
-        "url": "https://www.your-app-url.com/tools/algorithm-simulator"
+        "url": "https://www.icttoolbench.com/tools/algorithm-simulator"
     };
 
     return (
@@ -197,7 +189,7 @@ const AlgorithmSimulatorPage = () => {
                 </Card>
 
                 <section>
-                    <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
+                    <h2 className="text-2xl font-bold mb-4">Practical Tips for Learning</h2>
                      <Card>
                         <CardContent className="p-6">
                             <ul className="space-y-4">
