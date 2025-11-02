@@ -1,6 +1,4 @@
 
-'use client';
-
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { DataTransferTimeCalculator } from '../data-transfer-calculator/data-transfer-calculator';

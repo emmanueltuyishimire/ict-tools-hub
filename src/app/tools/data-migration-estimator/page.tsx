@@ -1,6 +1,4 @@
 
-'use client';
-
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -112,7 +110,7 @@ const DataMigrationEstimatorPage = () => {
                                         <li><span className="font-bold">Strategy:</span> The team chooses <strong>Rehost (Lift-and-Shift)</strong> for maximum speed and minimum code changes.</li>
                                         <li><span className="font-bold">Cloud Resource Estimation:</span>
                                             <ul>
-                                                <li>They use the <Link href="/tools/cloud-instance-cost-calculator" className="text-primary hover:underline">Cloud Instance Cost Calculator</Link> to compare the monthly cost of a 4-CPU, 16-GB RAM general-purpose VM on AWS, Azure, and Google Cloud.</li>
+                                                <li>They use the <Link href="/tools/cloud-instance-cost-calculator" className="text-primary hover:underline">Cloud Instance Cost Calculator</Link> to compare the monthly costs of a 4-CPU, 16-GB RAM general-purpose VM on AWS, Azure, and Google Cloud.</li>
                                                 <li>They use the <Link href="/tools/cloud-storage-cost-estimator" className="text-primary hover:underline">Cloud Storage Cost Estimator</Link> to calculate the cost of a 500 GB SSD block storage volume.</li>
                                                 <li>Egress is negligible, so they skip the <Link href="/tools/bandwidth-cost-calculator" className="text-primary hover:underline">Bandwidth Cost Calculator</Link>.</li>
                                             </ul>

@@ -1,6 +1,4 @@
 
-'use client';
-
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { RaidCalculator } from '../raid-calculator/raid-calculator';
@@ -137,16 +135,53 @@ const StorageRedundancyCalculatorPage = () => {
                     </CardContent>
                 </Card>
                 
-                 <section>
+                <div className="grid md:grid-cols-2 gap-8">
+                    <Card>
+                        <CardHeader>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                            <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Never Use RAID 5 with Large Drives:</strong> For modern, high-capacity drives (e.g., > 2TB), RAID 5 is considered unsafe. The long rebuild time after a single disk failure puts immense stress on the remaining drives, significantly increasing the probability of a second disk failing during the rebuild, which would result in total data loss. Use RAID 6 or RAID 10 for large arrays.</li>
+                                <li><strong>Use Identical Drives:</strong> For best performance and reliability, always use identical drives (same manufacturer, model, size, and speed) in your RAID array.</li>
+                                <li><strong>RAID is NOT a Backup:</strong> This is the most critical rule. RAID protects against hardware failure; it does not protect against accidental deletion, file corruption, malware, or catastrophic events like fire or theft. You must still have a comprehensive backup strategy. Use our <Link href="/tools/backup-scheduler" className="text-primary hover:underline">Backup Scheduler</Link> to plan it.</li>
+                                <li><strong>Hot Spares:</strong> For critical systems, configure a "hot spare." This is an unused disk in the array that can automatically take the place of a failed disk and start the rebuild process immediately, without waiting for manual intervention.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                             <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Using RAID 0 for Important Data:</strong> The performance gain is tempting, but using RAID 0 for anything other than temporary, non-critical data is a recipe for disaster. The risk of data loss is multiplied by the number of disks.</li>
+                                <li><strong>Ignoring Failed Disk Alerts:</strong> A RAID array with a failed disk is in a vulnerable, degraded state. Ignoring the warning signs and not replacing the failed drive promptly is a major risk.</li>
+                                <li><strong>Mixing Drive Sizes:</strong> While some RAID controllers allow this, the array will treat all drives as if they are the size of the smallest disk in the set, wasting capacity on the larger drives.</li>
+                                <li><strong>Software vs. Hardware RAID:</strong> Be aware of the difference. Software RAID is managed by the OS and uses system CPU/RAM, which can impact performance. Hardware RAID uses a dedicated controller card, which is faster and more robust but also more expensive.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                </div>
+                
+                <section>
                     <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">Small Business File Server</h3>
-                            <p className="text-sm text-muted-foreground">A small business is setting up a 4-disk NAS (Network Attached Storage) device to store its critical company files. They use the calculator to evaluate a RAID 5 setup. This shows them they will have the capacity of 3 disks with the ability to survive one disk failure, providing a good balance of storage and protection for their budget.</p>
+                            <h3 className="font-semibold text-lg mb-2">Home NAS (Network Attached Storage)</h3>
+                            <p className="text-sm text-muted-foreground">A home user setting up a 4-bay NAS for storing family photos and media files wants a balance of capacity and protection. Using the calculator, they compare RAID 5 (good capacity, 1 disk failure) and RAID 10 (less capacity, better performance/rebuilds). They decide RAID 5 is a cost-effective choice for their needs.</p>
                         </div>
                          <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">Cloud VM Storage</h3>
-                            <p className="text-sm text-muted-foreground">A cloud engineer is provisioning storage for a critical application VM. Cloud providers often offer storage options with built-in redundancy (e.g., "Locally-Redundant Storage" or "Geo-Redundant Storage"). The engineer uses their understanding of redundancy to choose a geo-redundant option, which creates copies of the data in a separate data center, protecting the application against a region-wide outage.</p>
+                            <h3 className="font-semibold text-lg mb-2">High-Performance Database Server</h3>
+                            <p className="text-sm text-muted-foreground">A database administrator needs to build a storage array for a high-transaction SQL database. Performance and uptime are critical. They use the calculator with 8 disks and determine that RAID 10, despite its 50% efficiency, is the best choice because it offers excellent read/write speeds and robust fault tolerance with fast rebuild times.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Video Editing Workstation</h3>
+                            <p className="text-sm text-muted-foreground">A video editor needs a large, fast "scratch disk" for editing 4K video files. The final project is backed up elsewhere. They use the calculator to model a RAID 0 array with four 2TB SSDs, giving them a massive 8TB of ultra-fast storage, prioritizing speed over data safety for this specific, temporary workflow.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Large-Scale Archive Server</h3>
+                            <p className="text-sm text-muted-foreground">An organization is building a 12-disk archive server for long-term storage. Data integrity is crucial. They use the calculator to compare RAID 5 and RAID 6. They see that RAID 6 can survive two disk failures, which is a much safer option for an array of this size, and they accept the capacity trade-off for the increased peace of mind.</p>
                         </div>
                     </div>
                 </section>
