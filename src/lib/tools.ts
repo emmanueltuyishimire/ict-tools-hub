@@ -1,5 +1,4 @@
 
-
 import {
   type LucideIcon,
   Network,
@@ -17,6 +16,7 @@ import {
   Calculator,
   Palette,
   Timer,
+  KeyRound,
 } from 'lucide-react';
 
 export type Tool = {
@@ -112,8 +112,8 @@ export const toolCategories: ToolCategory[] = [
     name: 'Security & Password',
     icon: Shield,
     tools: [
-      { name: 'Password Strength Checker', slug: 'password-strength-checker', description: 'Check the strength of a password.' },
       { name: 'Password Generator', slug: 'password-generator', description: 'Generate secure passwords.' },
+      { name: 'Password Strength Checker', slug: 'password-strength-checker', description: 'Check the strength of a password.' },
       { name: 'Password Entropy Calculator', slug: 'password-entropy-calculator', description: 'Calculate the entropy of a password in bits.' },
       { name: 'Hash Generator', slug: 'hash-generator', description: 'Generate various hashes (MD5, SHA1, SHA256).' },
       { name: 'Encryption / Decryption Tool', slug: 'encryption-decryption-tool', description: 'Encrypt or decrypt text.' },

@@ -66,6 +66,7 @@ import { CodeSnippetFormatter } from '@/app/tools/code-snippet-formatter/code-sn
 import { VariableNameValidator } from '@/app/tools/variable-name-validator/variable-name-validator';
 import { UnicodeAsciiConverter } from '@/app/tools/unicode-ascii-converter/unicode-ascii-converter';
 import { PasswordEntropyCalculator } from '@/app/tools/password-entropy-calculator/password-entropy-calculator';
+import { PasswordGenerator } from '@/app/tools/password-generator/password-generator';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -139,6 +140,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'code-snippet-formatter': CodeSnippetFormatter,
     'variable-name-validator': VariableNameValidator,
     'unicode-ascii-converter': UnicodeAsciiConverter,
+    'password-generator': PasswordGenerator,
 };
 
 
