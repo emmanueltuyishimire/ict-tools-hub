@@ -12,6 +12,15 @@ import { AlertCircle, Play, Plus, Trash2 } from 'lucide-react';
 import { CodeBlock } from '@/components/code-block';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 
 // Default Sample data
 const initialData = {
@@ -110,7 +119,7 @@ export function SqlQueryTester() {
         setData(prevData => {
             const newData = [...prevData];
             const originalValue = newData[rowIndex][column];
-            newData[rowIndex] = { ...newData[rowIndex], [column]: typeof originalValue === 'number' ? Number(value) : value };
+            newData[rowIndex] = { ...newData[rowIndex], [column]: typeof originalValue === 'number' && !isNaN(Number(value)) ? Number(value) : value };
             return newData;
         });
     };
@@ -130,15 +139,49 @@ export function SqlQueryTester() {
         setData(prevData => prevData.filter((_, index) => index !== rowIndex));
     };
 
-    const EditableTable = ({ tableName, data, onUpdate, onAddRow, onRemoveRow }: { tableName: 'users'|'products', data: any[], onUpdate: Function, onAddRow: Function, onRemoveRow: Function }) => {
-        if (!data || data.length === 0) return null;
+    const handleAddColumn = (tableName: 'users' | 'products', columnName: string) => {
+        if (!columnName || /[^a-zA-Z0-9_]/.test(columnName) || /^[0-9]/.test(columnName)) {
+            alert('Invalid column name. Use only letters, numbers, and underscores, and do not start with a number.');
+            return;
+        }
+        const setData = tableName === 'users' ? setUserData : setProductsData;
+        setData(prevData => prevData.map(row => ({...row, [columnName]: ''})));
+    };
+
+    const handleRemoveColumn = (tableName: 'users' | 'products', columnName: string) => {
+        const setData = tableName === 'users' ? setUserData : setProductsData;
+        setData(prevData => {
+            return prevData.map(row => {
+                const newRow = {...row};
+                delete (newRow as any)[columnName];
+                return newRow;
+            });
+        });
+    };
+
+    const EditableTable = ({ tableName, data, onUpdate, onAddRow, onRemoveRow, onAddColumn, onRemoveColumn }: { tableName: 'users'|'products', data: any[], onUpdate: Function, onAddRow: Function, onRemoveRow: Function, onAddColumn: Function, onRemoveColumn: Function }) => {
+        const [newColumnName, setNewColumnName] = useState('');
+        if (!data || data.length === 0) return (
+             <div className="space-y-2">
+                <h4 className="font-semibold capitalize">{tableName}</h4>
+                <p className='text-sm text-muted-foreground'>No data to display. Add a row to get started.</p>
+                <Button size="sm" variant="outline" onClick={() => onAddRow(tableName)}><Plus className="mr-2 h-4 w-4" /> Add Row to {tableName}</Button>
+            </div>
+        );
         const tableHeaders = Object.keys(data[0]);
         return (
             <div className="space-y-2">
                 <h4 className="font-semibold capitalize">{tableName}</h4>
                 <div className="overflow-x-auto rounded-md border">
                     <Table>
-                        <TableHeader><TableRow>{tableHeaders.map(h => <TableHead key={h}>{h}</TableHead>)}<TableHead className="w-[50px]"></TableHead></TableRow></TableHeader>
+                        <TableHeader><TableRow>{tableHeaders.map(h => 
+                            <TableHead key={h} className="relative group">
+                                {h}
+                                <Button size="icon" variant="ghost" className="h-5 w-5 absolute top-1 right-0 opacity-0 group-hover:opacity-100" onClick={() => onRemoveColumn(tableName, h)}>
+                                    <Trash2 className="h-3 w-3 text-destructive" />
+                                </Button>
+                            </TableHead>
+                        )}<TableHead className="w-[50px]"></TableHead></TableRow></TableHeader>
                         <TableBody>
                             {data.map((row, rowIndex) => (
                                 <TableRow key={rowIndex}>
@@ -162,7 +205,31 @@ export function SqlQueryTester() {
                         </TableBody>
                     </Table>
                 </div>
-                 <Button size="sm" variant="outline" onClick={() => onAddRow(tableName)}><Plus className="mr-2 h-4 w-4" /> Add Row to {tableName}</Button>
+                 <div className="flex gap-2">
+                     <Button size="sm" variant="outline" onClick={() => onAddRow(tableName)}><Plus className="mr-2 h-4 w-4" /> Add Row</Button>
+                     <Dialog>
+                        <DialogTrigger asChild>
+                            <Button size="sm" variant="outline"><Plus className="mr-2 h-4 w-4" /> Add Column</Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Add New Column to '{tableName}'</DialogTitle>
+                                <DialogDescription>
+                                    Enter a name for the new column. It will be added to all rows with an empty default value.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <div className="grid gap-4 py-4">
+                                <div className="grid grid-cols-4 items-center gap-4">
+                                    <Label htmlFor="column-name" className="text-right">Column Name</Label>
+                                    <Input id="column-name" value={newColumnName} onChange={(e) => setNewColumnName(e.target.value)} className="col-span-3 font-code" />
+                                </div>
+                            </div>
+                            <DialogFooter>
+                                <Button onClick={() => { onAddColumn(tableName, newColumnName); setNewColumnName(''); }}>Add Column</Button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                 </div>
             </div>
         )
     };
@@ -268,8 +335,8 @@ export function SqlQueryTester() {
                         </div>
                     </TabsContent>
                     <TabsContent value="edit" className="p-6 pt-0 space-y-6">
-                        <EditableTable tableName="users" data={userData} onUpdate={handleTableChange} onAddRow={handleAddRow} onRemoveRow={handleRemoveRow} />
-                        <EditableTable tableName="products" data={productsData} onUpdate={handleTableChange} onAddRow={handleAddRow} onRemoveRow={handleRemoveRow} />
+                        <EditableTable tableName="users" data={userData} onUpdate={handleTableChange} onAddRow={handleAddRow} onRemoveRow={handleRemoveRow} onAddColumn={handleAddColumn} onRemoveColumn={handleRemoveColumn}/>
+                        <EditableTable tableName="products" data={productsData} onUpdate={handleTableChange} onAddRow={handleAddRow} onRemoveRow={handleRemoveRow} onAddColumn={handleAddColumn} onRemoveColumn={handleRemoveColumn} />
                     </TabsContent>
                 </Tabs>
             </Card>
