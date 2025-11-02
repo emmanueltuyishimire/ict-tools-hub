@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableCaption } from '@/components/ui/table';
+import { NormalizationChecker } from './normalization-checker';
 
 export const metadata = {
     title: 'Database Normalization Checker & Guide | 1NF, 2NF, 3NF | ICT Toolbench',
@@ -60,31 +61,88 @@ const NormalizationCheckerPage = () => {
                     description="Build robust and efficient databases by understanding the principles of normalization. This guide provides a step-by-step framework to analyze your table structures and achieve up to Third Normal Form (3NF)."
                 />
                 
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Why a Guide, Not an Automated Checker?</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <Alert>
-                            <AlertTriangle className="h-4 w-4" />
-                            <AlertTitle>Normalization Requires Human Insight</AlertTitle>
-                            <AlertDescription>
-                                True database normalization isn't just about syntax; it's about understanding the meaning and relationships within your data (functional dependencies). An automated tool cannot know the business logic behind your data. This guide provides the knowledge and a step-by-step process for you to apply these critical design principles to your own database schema.
-                            </AlertDescription>
-                        </Alert>
-                    </CardContent>
-                </Card>
+                <Alert>
+                    <AlertTriangle className="h-4 w-4" />
+                    <AlertTitle>This is an Interactive Guide</AlertTitle>
+                    <AlertDescription>
+                        True normalization requires human insight into data relationships. The checklist tool below will guide you through the validation process for your own database design.
+                    </AlertDescription>
+                </Alert>
+
+                <NormalizationChecker />
 
                 <section>
-                    <h2 className="text-2xl font-bold mb-4">How to Check for Normalization</h2>
+                    <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
                     <Card className="prose prose-sm max-w-none text-foreground p-6">
-                        <p>Follow these three steps to progressively normalize a database table. A table must be in 1NF before it can be in 2NF, and in 2NF before it can be in 3NF.</p>
+                        <p>This interactive checklist helps you apply formal normalization rules to your table design. A table must be in 1NF before it can be in 2NF, and in 2NF before it can be in 3NF.</p>
                         <ol>
-                            <li><strong>Step 1: Achieve First Normal Form (1NF).</strong> Ensure your table has a primary key and that all columns contain atomic (indivisible) values. Eliminate any repeating groups by moving them to a separate table.</li>
-                            <li><strong>Step 2: Achieve Second Normal Form (2NF).</strong> First, ensure your table is in 1NF. This step only applies if you have a composite primary key. Identify any columns that depend only on a *part* of the composite primary key (a partial dependency) and move them to a new table.</li>
-                            <li><strong>Step 3: Achieve Third Normal Form (3NF).</strong> First, ensure your table is in 2NF. Identify any columns that are not dependent on the primary key, but on another non-key column (a transitive dependency). Move these columns and the column they depend on to a new table.</li>
+                            <li><strong>Step 1: Check for First Normal Form (1NF).</strong> Answer the two questions for 1NF. If your table has a primary key and all columns have single, atomic values, it passes.</li>
+                            <li><strong>Step 2: Check for Second Normal Form (2NF).</strong> This step is only relevant if your table has a composite key (made of multiple columns). If it does, you must confirm that all other columns depend on the *entire* key, not just a part of it.</li>
+                            <li><strong>Step 3: Check for Third Normal Form (3NF).</strong> Finally, ensure no non-key columns depend on other non-key columns. Each attribute should depend only on the primary key.</li>
+                            <li><strong>Review Final Result:</strong> The tool will give you a final status based on the checkboxes you have filled, helping you understand how normalized your design is.</li>
                         </ol>
                     </Card>
+                </section>
+                
+                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 1: The Project Management Table (Fixing 1NF)</CardTitle>
+                                <CardDescription>Normalizing a table that tracks employees and their projects.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Initial (Un-normalized) Table:</strong></p>
+                                <Table className="bg-background text-sm">
+                                    <TableCaption>Un-normalized `orders` table</TableCaption>
+                                    <TableHeader><TableRow><TableHead>employee_id</TableHead><TableHead>employee_name</TableHead><TableHead>projects</TableHead></TableRow></TableHeader>
+                                    <TableBody><TableRow><TableCell>E1</TableCell><TableCell>Bob</TableCell><TableCell>Project A, Project B</TableCell></TableRow></TableBody>
+                                </Table>
+                                <p className="text-sm"><strong>Problem:</strong> Violates 1NF. The `projects` column is not atomic; it contains a list. This makes it impossible to query for all employees on "Project B".</p>
+                                <p className="text-sm text-muted-foreground"><strong>1NF Solution:</strong> Split into two tables.</p>
+                                <Table className="bg-background text-sm">
+                                    <TableCaption>employees</TableCaption>
+                                    <TableHeader><TableRow><TableHead>employee_id (PK)</TableHead><TableHead>employee_name</TableHead></TableRow></TableHeader>
+                                    <TableBody><TableRow><TableCell>E1</TableCell><TableCell>Bob</TableCell></TableRow></TableBody>
+                                </Table>
+                                 <Table className="bg-background text-sm mt-2">
+                                    <TableCaption>employee_projects (Junction Table)</TableCaption>
+                                    <TableHeader><TableRow><TableHead>employee_id (PK, FK)</TableHead><TableHead>project_id (PK, FK)</TableHead></TableRow></TableHeader>
+                                    <TableBody>
+                                        <TableRow><TableCell>E1</TableCell><TableCell>A</TableCell></TableRow>
+                                        <TableRow><TableCell>E1</TableCell><TableCell>B</TableCell></TableRow>
+                                    </TableBody>
+                                </Table>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 2: The University Course Table (Fixing 3NF)</CardTitle>
+                                <CardDescription>Fixing a transitive dependency in a student enrollment table.</CardDescription>
+                            </CardHeader>
+                             <CardContent className="space-y-4">
+                               <p className="text-sm text-muted-foreground"><strong>Initial Table (in 2NF):</strong></p>
+                                <Table className="bg-background text-sm">
+                                     <TableCaption>Violates 3NF</TableCaption>
+                                    <TableHeader><TableRow><TableHead>student_id (PK)</TableHead><TableHead>course_id</TableHead><TableHead>professor_id</TableHead><TableHead>professor_office</TableHead></TableRow></TableHeader>
+                                    <TableBody><TableRow><TableCell>S101</TableCell><TableCell>CS101</TableCell><TableCell>P5</TableCell><TableCell>Room 302</TableCell></TableRow></TableBody>
+                                </Table>
+                               <p className="text-sm"><strong>Problem:</strong> Violates 3NF. The `professor_office` does not depend on the primary key (`student_id`). It depends on a non-key column, `professor_id`. If Professor P5 moves offices, you'd have to update every single row for every student they teach.</p>
+                               <p className="text-sm text-muted-foreground"><strong>3NF Solution:</strong> Split into two tables.</p>
+                                <Table className="bg-background text-sm">
+                                    <TableCaption>professors (New Table)</TableCaption>
+                                    <TableHeader><TableRow><TableHead>professor_id (PK)</TableHead><TableHead>professor_office</TableHead></TableRow></TableHeader>
+                                    <TableBody><TableRow><TableCell>P5</TableCell><TableCell>Room 302</TableCell></TableRow></TableBody>
+                                </Table>
+                                <Table className="bg-background text-sm mt-2">
+                                    <TableCaption>student_enrollments (now in 3NF)</TableCaption>
+                                    <TableHeader><TableRow><TableHead>student_id (PK, FK)</TableHead><TableHead>course_id (PK, FK)</TableHead><TableHead>professor_id (FK)</TableHead></TableRow></TableHeader>
+                                     <TableBody><TableRow><TableCell>S101</TableCell><TableCell>CS101</TableCell><TableCell>P5</TableCell></TableRow></TableBody>
+                                </Table>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </section>
 
                 <section>
@@ -184,65 +242,6 @@ const NormalizationCheckerPage = () => {
                     </CardContent>
                 </Card>
 
-                <section>
-                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
-                    <div className="space-y-6">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="text-xl">Example 1: The Project Management Table</CardTitle>
-                                <CardDescription>Normalizing a table that tracks employees and their projects.</CardDescription>
-                            </CardHeader>
-                            <CardContent className="space-y-4">
-                                <p className="text-sm text-muted-foreground"><strong>Initial (Un-normalized) Table:</strong></p>
-                                <Table className="bg-background text-sm">
-                                    <TableHeader><TableRow><TableHead>employee_id</TableHead><TableHead>employee_name</TableHead><TableHead>projects</TableHead></TableRow></TableHeader>
-                                    <TableBody><TableRow><TableCell>E1</TableCell><TableCell>Bob</TableCell><TableCell>Project A, Project B</TableCell></TableRow></TableBody>
-                                </Table>
-                                <p className="text-sm"><strong>Problem:</strong> Violates 1NF. The `projects` column is not atomic; it contains a list. This makes it impossible to query for all employees on "Project B".</p>
-                                <p className="text-sm text-muted-foreground"><strong>1NF Solution:</strong> Split into two tables.</p>
-                                <Table className="bg-background text-sm">
-                                    <TableCaption>employees</TableCaption>
-                                    <TableHeader><TableRow><TableHead>employee_id (PK)</TableHead><TableHead>employee_name</TableHead></TableRow></TableHeader>
-                                    <TableBody><TableRow><TableCell>E1</TableCell><TableCell>Bob</TableCell></TableRow></TableBody>
-                                </Table>
-                                 <Table className="bg-background text-sm mt-2">
-                                    <TableCaption>employee_projects (Junction Table)</TableCaption>
-                                    <TableHeader><TableRow><TableHead>employee_id (PK, FK)</TableHead><TableHead>project_id (PK, FK)</TableHead></TableRow></TableHeader>
-                                    <TableBody>
-                                        <TableRow><TableCell>E1</TableCell><TableCell>A</TableCell></TableRow>
-                                        <TableRow><TableCell>E1</TableCell><TableCell>B</TableCell></TableRow>
-                                    </TableBody>
-                                </Table>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="text-xl">Example 2: The University Course Table</CardTitle>
-                                <CardDescription>Fixing a transitive dependency in a student enrollment table.</CardDescription>
-                            </CardHeader>
-                             <CardContent className="space-y-4">
-                               <p className="text-sm text-muted-foreground"><strong>Initial Table (in 2NF):</strong></p>
-                                <Table className="bg-background text-sm">
-                                    <TableHeader><TableRow><TableHead>student_id (PK)</TableHead><TableHead>course_id</TableHead><TableHead>professor_id</TableHead><TableHead>professor_office</TableHead></TableRow></TableHeader>
-                                    <TableBody><TableRow><TableCell>S101</TableCell><TableCell>CS101</TableCell><TableCell>P5</TableCell><TableCell>Room 302</TableCell></TableRow></TableBody>
-                                </Table>
-                               <p className="text-sm"><strong>Problem:</strong> Violates 3NF. The `professor_office` does not depend on the primary key (`student_id`). It depends on a non-key column, `professor_id`. If Professor P5 moves offices, you'd have to update every single row for every student they teach.</p>
-                               <p className="text-sm text-muted-foreground"><strong>3NF Solution:</strong> Split into two tables.</p>
-                                <Table className="bg-background text-sm">
-                                    <TableCaption>professors (New Table)</TableCaption>
-                                    <TableHeader><TableRow><TableHead>professor_id (PK)</TableHead><TableHead>professor_office</TableHead></TableRow></TableHeader>
-                                    <TableBody><TableRow><TableCell>P5</TableCell><TableCell>Room 302</TableCell></TableRow></TableBody>
-                                </Table>
-                                <Table className="bg-background text-sm mt-2">
-                                    <TableCaption>student_enrollments (now in 3NF)</TableCaption>
-                                    <TableHeader><TableRow><TableHead>student_id (PK, FK)</TableHead><TableHead>course_id (PK, FK)</TableHead><TableHead>professor_id (FK)</TableHead></TableRow></TableHeader>
-                                     <TableBody><TableRow><TableCell>S101</TableCell><TableCell>CS101</TableCell><TableCell>P5</TableCell></TableRow></TableBody>
-                                </Table>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </section>
-                
                  <section>
                     <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
                      <Card>
@@ -306,6 +305,20 @@ const NormalizationCheckerPage = () => {
                         </CardContent>
                     </Card>
                 </div>
+                
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">E-commerce Product Catalog</h3>
+                            <p className="text-sm text-muted-foreground">A properly normalized catalog has a `products` table, a `categories` table, and a `product_categories` junction table. This avoids storing a list of categories in the product table (1NF), prevents storing the category description with every product (3NF), and allows a product to belong to multiple categories efficiently.</p>
+                        </div>
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Refactoring a Legacy Spreadsheet</h3>
+                            <p className="text-sm text-muted-foreground">A company has been tracking sales in a massive Excel spreadsheet with columns for customer name, customer address, product name, and product price. To build a real application, a developer normalizes this by creating separate `customers`, `products`, and `orders` tables, eliminating huge amounts of redundant data and preventing update anomalies.</p>
+                        </div>
+                    </div>
+                </section>
                 
                <section>
                   <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>

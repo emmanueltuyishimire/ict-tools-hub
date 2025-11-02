@@ -86,6 +86,7 @@ import { BackupScheduler } from '@/app/tools/backup-scheduler/backup-scheduler';
 import { StorageGrowthEstimator } from '@/app/tools/storage-growth-estimator/storage-growth-estimator';
 import { DatabaseGrowthCalculator } from '@/app/tools/db-growth-calculator/db-growth-calculator';
 import { PrimaryForeignKeyValidator } from '@/app/tools/key-validator/key-validator';
+import { NormalizationChecker } from '@/app/tools/normalization-checker/normalization-checker';
 
 
 export async function generateMetadata({ params: rawParams }: { params: { slug: string } }) {
@@ -191,7 +192,7 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'storage-growth-estimator': StorageGrowthEstimator,
   'db-growth-calculator': DatabaseGrowthCalculator,
   'key-validator': PrimaryForeignKeyValidator,
-  'normalization-checker': () => null, // Placeholder for the guide page
+  'normalization-checker': NormalizationChecker,
 };
 
 export default async function ToolPage({ params: rawParams }: { params: { slug: string } }) {
