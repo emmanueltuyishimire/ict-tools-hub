@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { Base32_58EncoderDecoder } from './base32-58-encoder-decoder';
@@ -7,6 +8,8 @@ import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+
 
 export const metadata = {
     title: 'Base32 & Base58 Encoder / Decoder | ICT Toolbench',
@@ -33,10 +36,23 @@ const Base32_58Page = () => {
         "description": "A free online tool to encode and decode text to and from Base32 and Base58 formats, with educational content on their applications.",
         "url": "https://www.icttoolbench.com/tools/base32-58-encoder-decoder"
     };
+    
+    const faqSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqData.map(item => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: {
+              '@type': 'Answer',
+              text: item.answer.replace(/<[^>]*>?/gm, ''),
+          },
+      })),
+    };
 
     return (
     <>
-      <StructuredData data={faqData} />
+      <StructuredData data={faqSchema} />
       <StructuredData data={howToSchema} />
       <StructuredData data={softwareAppSchema} />
       <div className="max-w-4xl mx-auto space-y-12">
@@ -58,6 +74,64 @@ const Base32_58Page = () => {
                   <li><strong>Copy the Output:</strong> Use the copy icon next to any box to copy the result to your clipboard.</li>
               </ol>
           </Card>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+          <div className="space-y-6">
+              <Card>
+                  <CardHeader>
+                      <CardTitle className="text-xl">Example 1: Encoding a String to Base32</CardTitle>
+                      <CardDescription>See how the word "Hello" is converted into a case-insensitive Base32 string.</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                     <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> You need to encode the simple text "Hello" for a system that requires Base32.</p>
+                     <div className="prose prose-sm max-w-none">
+                         <ol>
+                             <li><strong>ASCII to Binary:</strong> First, each character is converted to its 8-bit ASCII binary representation.
+                                <ul className="list-disc pl-5">
+                                  <li>H → 01001000</li>
+                                  <li>e → 01100101</li>
+                                  <li>l → 01101100</li>
+                                  <li>l → 01101100</li>
+                                  <li>o → 01101111</li>
+                                </ul>
+                             </li>
+                             <li><strong>Concatenate and Re-group:</strong> The binary strings are joined together and then re-grouped into 5-bit chunks (since 2<sup>5</sup> = 32).
+                               <p className="font-code bg-muted p-2 rounded-sm break-all">01001 00001 10010 10110 11000 11011 00011 01111</p>
+                             </li>
+                             <li><strong>Binary to Base32 Characters:</strong> Each 5-bit chunk is converted to its decimal value, which then maps to a character in the Base32 alphabet (A-Z, 2-7).
+                                <ul className="list-disc pl-5">
+                                  <li>01001 (9) → J</li>
+                                  <li>00001 (1) → B</li>
+                                  <li>10010 (18) → S</li>
+                                  <li>...and so on.</li>
+                                </ul>
+                             </li>
+                             <li><strong>Final Result:</strong> The final encoded string is <code className="font-code bg-muted p-1 rounded-sm">JBSWY3DP</code>. Notice how it's all uppercase and uses no ambiguous characters.</li>
+                         </ol>
+                     </div>
+                  </CardContent>
+              </Card>
+              <Card>
+                  <CardHeader>
+                      <CardTitle className="text-xl">Example 2: Generating a Bitcoin-like Address with Base58</CardTitle>
+                      <CardDescription>Understand why Base58 is the choice for cryptocurrencies.</CardDescription>
+                  </CardHeader>
+                   <CardContent className="space-y-4">
+                     <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> You have a hexadecimal string representing a wallet hash (e.g., from our <Link href="/tools/hash-generator-md5-sha" className="text-primary hover:underline">Hash Generator</Link>) and need to convert it to the human-readable Base58 format.</p>
+                     <div className="prose prose-sm max-w-none">
+                         <ol>
+                            <li><strong>Start with a Hex String:</strong> Let's use a simplified hex string like `00E4A4...`</li>
+                            <li><strong>Convert to a Large Integer:</strong> The entire hex string is treated as one massive number.</li>
+                            <li><strong>Repeated Division:</strong> This large number is repeatedly divided by 58 (the size of the Base58 alphabet). The remainder of each division gives us an index for a character in the Base58 character set (`123...abc...`).</li>
+                            <li><strong>Construct the String:</strong> The characters are collected in reverse order to form the final Base58 string. The process also accounts for leading zeros, which are preserved as '1's at the start of the address.</li>
+                             <li><strong>Final Result:</strong> A long, unambiguous string like <code className="font-code bg-muted p-1 rounded-sm">1PMycacnSnD...</code> is produced. The key takeaway is the character set: it contains no `0`, `O`, `I`, or `l`, making it much safer to transcribe manually than a Base64 string. You can test this by encoding and decoding a hex string with our tool.</li>
+                         </ol>
+                     </div>
+                  </CardContent>
+              </Card>
+          </div>
         </section>
 
         <section>
@@ -160,6 +234,63 @@ const Base32_58Page = () => {
               </CardContent>
           </Card>
       </section>
+
+      <div className="grid md:grid-cols-2 gap-8">
+            <Card>
+                <CardHeader>
+                    <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Identify by Character Set:</strong> If you see an encoded string that contains only uppercase letters and numbers 2-7, it's Base32. If it contains mixed-case letters and numbers but no 0, O, I, or l, it's Base58.</li>
+                        <li><strong>Choose for Your Use Case:</strong> Use Base58 for anything a human might have to read or type. Use Base32 for case-insensitive systems or filenames. Use Base64 for general-purpose data transfer where human readability is not a concern.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader>
+                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                </CardHeader>
+                <CardContent>
+                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                        <li><strong>Assuming Encryption:</strong> Like Base64, these are encoding schemes, not encryption. They provide zero security and are easily reversible.</li>
+                        <li><strong>Mixing Up Alphabets:</strong> Trying to decode a Base58 string with a Base32 decoder (or vice-versa) will fail due to the different character sets.</li>
+                        <li><strong>Ignoring Checksums:</strong> Real-world implementations like Bitcoin's Base58Check include a checksum to validate the address and prevent typos. This tool uses the raw Base58 encoding, so it won't validate those checksums.</li>
+                    </ul>
+                </CardContent>
+            </Card>
+        </div>
+
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Link href="/tools/base64-encoder-decoder" className="block">
+                <Card className="hover:border-primary transition-colors h-full">
+                    <CardHeader>
+                        <CardTitle className="text-base flex items-center justify-between">Base64 Encoder/Decoder<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                        <CardDescription className="text-xs">Compare Base32/58 with the most common binary-to-text encoding standard.</CardDescription>
+                    </CardHeader>
+                </Card>
+            </Link>
+            <Link href="/tools/totp-demo" className="block">
+                <Card className="hover:border-primary transition-colors h-full">
+                    <CardHeader>
+                        <CardTitle className="text-base flex items-center justify-between">2FA TOTP Demo<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                        <CardDescription className="text-xs">See how Base32 is used in practice to create secret keys for two-factor authentication.</CardDescription>
+                    </CardHeader>
+                </Card>
+            </Link>
+            <Link href="/tools/hash-generator-md5-sha" className="block">
+                <Card className="hover:border-primary transition-colors h-full">
+                    <CardHeader>
+                        <CardTitle className="text-base flex items-center justify-between">Hash Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                        <CardDescription className="text-xs">Generate the kind of cryptographic hash that is often encoded using Base58 for wallet addresses.</CardDescription>
+                    </CardHeader>
+                </Card>
+            </Link>
+        </div>
+      </section>
+
       </div>
     </>
   );
