@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -26,7 +27,6 @@ const pricing = {
 };
 
 type Provider = keyof typeof pricing | 'custom';
-type Region<P extends Provider> = P extends keyof typeof pricing[P] : string;
 
 export function CloudStorageCostEstimator() {
     const [storage, setStorage] = useState(1024);
