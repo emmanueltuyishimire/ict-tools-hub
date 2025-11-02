@@ -149,7 +149,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Cloud Instance Cost Calculator', slug: 'cloud-instance-cost-calculator', description: 'Calculate cloud instance costs.' },
       { name: 'Storage vs. Memory Cost Analyzer', slug: 'storage-memory-cost-analyzer', description: 'Analyze storage vs. memory costs.' },
       { name: 'File Conversion Estimator', slug: 'file-conversion-estimator', description: 'Estimate file conversion sizes.' },
-      { name: 'Data Retention Period Calculator', slug: 'data-retention-calculator-cloud', description: 'Calculate data retention periods.' },
+      { name: 'Data Retention Period Calculator', slug: 'data-retention-calculator', description: 'Calculate data retention periods.' },
       { name: 'Snapshot / Backup Scheduler', slug: 'backup-scheduler', description: 'Schedule snapshots and backups.' },
       { name: 'Storage Growth Estimator', slug: 'storage-growth-estimator', description: 'Estimate storage growth.' },
       { name: 'RAID Storage Calculator', slug: 'raid-calculator', description: 'Calculate RAID storage.' },
