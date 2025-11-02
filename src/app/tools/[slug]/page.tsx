@@ -1,4 +1,5 @@
 
+
 import { allTools } from '@/lib/tools';
 import { notFound } from 'next/navigation';
 import { PageHeader } from '@/components/page-header';
@@ -190,6 +191,7 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'storage-growth-estimator': StorageGrowthEstimator,
   'db-growth-calculator': DatabaseGrowthCalculator,
   'key-validator': PrimaryForeignKeyValidator,
+  'normalization-checker': () => null, // Placeholder for the guide page
 };
 
 export default async function ToolPage({ params: rawParams }: { params: { slug: string } }) {
