@@ -90,12 +90,12 @@ const SqlInjectionTesterPage = () => {
                 </section>
                 
                  <section>
-                    <h2 className="text-2xl font-bold mb-4">Worked Example</h2>
+                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
                     <div className="space-y-6">
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-xl">Authentication Bypass with `' OR 1=1--`</CardTitle>
-                                <CardDescription>A classic and powerful SQLi payload that works on many vulnerable systems.</CardDescription>
+                                <CardTitle className="text-xl">Example 1: The Universal Pass - `' OR 1=1 --`</CardTitle>
+                                <CardDescription>A classic and powerful SQLi payload that works on many vulnerable systems to log in as the first user in the database, often the administrator.</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> You are testing a login form and want to see if you can log in without knowing any users' credentials.</p>
@@ -108,7 +108,25 @@ const SqlInjectionTesterPage = () => {
                                        <li><strong>Analyze the Executed Query:</strong> The server concatenates your input, resulting in the following query:
                                             <p className="font-code bg-muted p-2 rounded-sm text-xs">SELECT * FROM users WHERE username = '' OR 1=1<span className="text-muted-foreground">--' AND password = ''</span></p>
                                        </li>
-                                       <li><strong>Understand the Result:</strong> The database evaluates the `WHERE` clause. Since `1=1` is always true, the condition becomes true for every single row. The `--` comments out the rest of the line, so the password check is completely ignored. The query returns the first user in the database (usually the admin), and the application logs you in as that user.</li>
+                                       <li><strong>Understand the Result:</strong> The database evaluates the `WHERE` clause. Since `1=1` is always true, the condition `username = '' OR 1=1` becomes true for every single row. The `--` comments out the rest of the line, so the password check is completely ignored. The query returns all users, and the application, seeing that rows were returned, typically logs you in as the first user in the table (which is often the `admin`).</li>
+                                   </ol>
+                               </div>
+                            </CardContent>
+                        </Card>
+                         <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 2: Targeted Login - `admin' -- `</CardTitle>
+                                <CardDescription>A more subtle attack that targets a specific, known username to bypass their password check.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                               <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> You know a valid username (`admin`) but do not know their password.</p>
+                               <div className="prose prose-sm max-w-none">
+                                   <ol>
+                                       <li><strong>Craft the Payload:</strong> Enter <code className="font-code bg-muted p-1 rounded-sm">admin'-- </code> into the username field. Note the space after the comment dashes.</li>
+                                       <li><strong>Analyze the Executed Query:</strong> The resulting query becomes:
+                                            <p className="font-code bg-muted p-2 rounded-sm text-xs">SELECT * FROM users WHERE username = 'admin'<span className="text-muted-foreground">--' AND password = ''</span></p>
+                                       </li>
+                                       <li><strong>Understand the Result:</strong> The database evaluates `WHERE username = 'admin'`. This is a valid condition that finds the admin user. The `--` then comments out the entire `AND password = ...` part of the query. The database successfully finds and returns the admin user row, and the application grants you access. This is a more targeted attack than the `' OR 1=1` method.</li>
                                    </ol>
                                </div>
                             </CardContent>
@@ -171,7 +189,7 @@ const query = \`SELECT * FROM users WHERE username = '\${username}' AND password
                                 </pre>
                             </div>
                              <p>
-                                The `--` is a comment operator in SQL. The database sees the condition as `WHERE username = '' OR 1=1`, which is always true. It ignores the rest of the line, including the password check. The query then returns all users, and the application, seeing that rows were returned, logs the attacker in.
+                                The `--` is a comment operator in SQL. The database sees the condition as `WHERE username = '' OR 1=1`, which is always true. It ignores the rest of the line, including the password check. The query then returns all users, and the application, seeing that rows were returned, logs the attacker in. You can practice writing legitimate queries with our <Link href="/tools/sql-query-tester" className="text-primary hover:underline">SQL Query Tester</Link>.
                             </p>
                         </section>
                          <section>
@@ -188,59 +206,53 @@ const query = \`SELECT * FROM users WHERE username = '\${username}' AND password
                                 </pre>
                             </div>
                             <p>
-                               The database parses this query and "prepares" it. The application then sends the user's input separately. The database engine treats this input strictly as data and safely inserts it into the placeholders. Even if an attacker provides malicious input, it is never executed as code; it is only treated as a literal string to be compared, and the login will fail.
+                               The database parses this query and "prepares" it. The application then sends the user's input separately. The database engine treats this input strictly as data and safely inserts it into the placeholders. Even if an attacker provides malicious input, it is never executed as code; it is only treated as a literal string to be compared, and the login will fail. This separation makes injection impossible.
                             </p>
                         </section>
                     </CardContent>
                 </Card>
                 
                  <section>
-                    <h2 className="text-2xl font-bold mb-4">Practical Tips for Prevention</h2>
-                     <Card>
-                        <CardContent className="p-6">
-                            <ul className="space-y-4">
-                                <li className="flex items-start gap-4">
-                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                                    <div>
-                                        <h4 className="font-semibold">Always Use Parameterized Queries</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                           This is the most important rule. Whatever your programming language or database library, it will have a standard, safe way to execute parameterized queries. Use it exclusively for all database interactions.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li className="flex items-start gap-4">
-                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                                    <div>
-                                        <h4 className="font-semibold">Use an ORM</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                           Object-Relational Mapping (ORM) libraries (like Sequelize for Node.js, SQLAlchemy for Python, or Hibernate for Java) generally use parameterized queries by default, providing a layer of protection automatically.
-                                        </p>
-                                    </div>
-                                </li>
-                                 <li className="flex items-start gap-4">
-                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                                    <div>
-                                        <h4 className="font-semibold">Principle of Least Privilege</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                            Configure your application's database user with only the minimum permissions it needs. For example, a user account for a public-facing website should only have `SELECT`, `INSERT`, and `UPDATE` permissions, not `DROP TABLE` or administrative rights. This limits the damage an attacker can do even if an injection vulnerability is found.
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </CardContent>
-                     </Card>
+                    <h2 className="text-2xl font-bold mb-4">Real-Life Applications & Consequences</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Authentication Bypass</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-sm text-muted-foreground">As demonstrated in this tool, an attacker can bypass login forms to gain unauthorized access to an application, potentially as an administrator, giving them full control over the system.</p>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Information Disclosure</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-sm text-muted-foreground">Attackers can use `UNION`-based SQLi to append a new query to the original one, allowing them to extract sensitive data from other tables in the database. This is how massive data breaches of customer information, credit card details, and personal data often occur.</p>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Data Destruction or Modification</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-sm text-muted-foreground">An attacker could inject a destructive command like `; DROP TABLE users;--` at the end of an input field. If the database user has sufficient permissions, this could delete entire tables, leading to catastrophic and irreversible data loss. This highlights the importance of using least-privilege database users.</p>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </section>
 
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
                         <CardHeader>
-                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips for Developers</CardTitle></div>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips for Prevention</CardTitle></div>
                         </CardHeader>
                         <CardContent>
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                                <li><strong>Validate Input on the Server:</strong> While not a replacement for parameterized queries, you should still validate user input on the server side to ensure it conforms to the expected format (e.g., an email looks like an email, a number is a number).</li>
-                                <li><strong>Use Linters and Static Analysis:</strong> Use security-focused static analysis tools (SAST) in your development pipeline. They can often automatically detect code patterns that are vulnerable to SQL injection.</li>
-                                <li><strong>Keep Frameworks Updated:</strong> Always keep your web frameworks, libraries, and ORMs up to date. They often include security patches for newly discovered vulnerabilities.</li>
+                                <li><strong>Always Use Parameterized Queries:</strong> This is the most important rule. Whatever your programming language or database library, it will have a standard, safe way to execute parameterized queries. Use it exclusively for all database interactions.</li>
+                                <li><strong>Use an ORM:</strong> Object-Relational Mapping (ORM) libraries (like Sequelize for Node.js or SQLAlchemy for Python) generally use parameterized queries by default, providing a layer of protection automatically.</li>
+                                <li><strong>Principle of Least Privilege:</strong> Configure your application's database user with only the minimum permissions it needs. For example, a user account for a public-facing website should only have `SELECT`, `INSERT`, and `UPDATE` permissions, not `DROP TABLE` or administrative rights.</li>
+                                <li><strong>Validate Input on the Server:</strong> While not a replacement for parameterized queries, you should still validate user input to ensure it conforms to the expected format (e.g., an email looks like an email, a number is a number). Our <Link href="/tools/variable-name-validator" className="text-primary hover:underline">Variable Name Validator</Link> can help with basic checks.</li>
                             </ul>
                         </CardContent>
                     </Card>
@@ -250,8 +262,8 @@ const query = \`SELECT * FROM users WHERE username = '\${username}' AND password
                         </CardHeader>
                         <CardContent>
                              <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                                <li><strong>Trusting Any User Input:</strong> The #1 rule of security: never trust user input. Assume all data coming from a user (including form fields, URL parameters, and HTTP headers) is potentially malicious.</li>
-                                <li><strong>"Sanitizing" Instead of Parameterizing:</strong> Trying to write your own function to "sanitize" input by stripping out characters like single quotes. This is a fragile approach that is easily bypassed by experienced attackers using advanced encoding techniques.</li>
+                                <li><strong>Trusting Any User Input:</strong> The #1 rule of security: never trust user input. Assume all data from users (including form fields, URL parameters, and HTTP headers) is potentially malicious.</li>
+                                <li><strong>"Sanitizing" Instead of Parameterizing:</strong> Trying to write your own function to "sanitize" input by stripping out characters like single quotes. This is a fragile, blacklist-based approach that is easily bypassed by experienced attackers using advanced encoding techniques like those shown in our <Link href="/tools/url-encoder-decoder" className="text-primary hover:underline">URL Encoder</Link>.</li>
                                 <li><strong>Concatenating in "Safe" Queries:</strong> Believing that SQL injection only applies to login forms. Any query that includes user input—including `UPDATE` statements or even parts of a `LIMIT` clause—can be vulnerable if not parameterized.</li>
                             </ul>
                         </CardContent>
