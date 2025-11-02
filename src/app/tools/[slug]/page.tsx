@@ -1,7 +1,7 @@
-
+'use client';
 
 import { allTools } from '@/lib/tools';
-import { notFound } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Construction } from 'lucide-react';
@@ -72,7 +72,7 @@ import { EncryptionDecryptionTool } from '@/app/tools/encryption-decryption-tool
 import { TotpDemo } from '@/app/tools/totp-demo/totp-demo';
 import { Base32_58EncoderDecoder } from '@/app/tools/base32-58-encoder-decoder/base32-58-encoder-decoder';
 import { FileIntegrityChecker } from '@/app/tools/file-integrity-checker/file-integrity-checker';
-import { AlgorithmStepSimulator } from '../algorithm-simulator/algorithm-simulator';
+import { AlgorithmStepSimulator } from '@/app/tools/algorithm-simulator/algorithm-simulator';
 import { CloudStorageCostEstimator } from '@/app/tools/cloud-storage-cost-estimator/cloud-storage-cost-estimator';
 import { BandwidthCostCalculator } from '@/app/tools/bandwidth-cost-calculator/bandwidth-cost-calculator';
 import { BackupStorageCalculator } from '@/app/tools/backup-storage-calculator/backup-storage-calculator';
@@ -94,30 +94,8 @@ import { DatabaseHealthChecker } from '@/app/tools/db-health-checker/db-health-c
 import BigOComplexityQuizPage from '@/app/tools/big-o-quiz/page';
 import { RecursionSimulator } from '@/app/tools/recursion-simulator/recursion-simulator';
 
-
-export async function generateMetadata({ params: rawParams }: { params: { slug: string } }) {
-  const params = await rawParams;
-  const tool = allTools.find((t) => t.slug === params.slug);
-
-  if (!tool) {
-    return {
-      title: 'Tool Not Found',
-    };
-  }
-
-  return {
-    title: `${tool.name} | ICT Tools Hub`,
-    description: tool.description,
-    openGraph: {
-        title: `${tool.name} | ICT Tools Hub`,
-        description: tool.description,
-        url: `/tools/${tool.slug}`,
-    }
-  };
-}
-
 // This map is crucial for rendering the correct component based on the slug
-const toolComponentMap: { [key: string]: React.ComponentType } = {
+const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
   'ip-to-binary': IpToBinaryConverter,
   'binary-to-ip': BinaryToIpConverter,
   'subnet-calculator': SubnetCalculator,
@@ -208,8 +186,8 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'recursion-simulator': RecursionSimulator,
 };
 
-export default async function ToolPage({ params: rawParams }: { params: { slug: string } }) {
-  const params = await rawParams;
+export default function ToolPage() {
+  const params = useParams<{ slug: string }>();
   const tool = allTools.find((t) => t.slug === params.slug);
   const ToolComponent = toolComponentMap[params.slug];
 
