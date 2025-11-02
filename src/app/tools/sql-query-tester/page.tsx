@@ -83,12 +83,11 @@ const SqlQueryTesterPage = () => {
                             <li><strong>Analyze the Results:</strong> A "Results" table will appear showing the rows returned by your query. If there's a syntax error, a helpful message will appear instead.</li>
                         </ol>
 
-                        <h4>2. View and Edit Your Data</h4>
+                        <h4>2. View, Edit, and Create Data</h4>
                         <ol>
                             <li><strong>Navigate the Tabs:</strong> In the "Sample Data" section, you can switch between "View Data" for a read-only look at the tables and "Edit Data" to modify them.</li>
                             <li><strong>Directly Edit Cells:</strong> In the "Edit Data" tab, simply click on any cell to change its value. The data type (number or text) will be preserved where possible.</li>
-                            <li><strong>Manage Rows and Columns:</strong> Use the `+ Add Row` button to add new data. Use the trash icon next to any row or in any column header to delete it. You can also add new columns to a table.</li>
-                            <li><strong>Create New Tables:</strong> At the bottom of the "Edit Data" tab, click the "Create New Table" button to add a completely new table to the database. You can then query this new table by its name.</li>
+                            <li><strong>Manage Rows, Columns, and Tables:</strong> Use the `+ Add Row`, `+ Add Column`, and `Create New Table` buttons to fully customize your dataset. Use the trash icon to delete rows, columns, or entire tables.</li>
                         </ol>
                     </Card>
                 </section>
@@ -135,7 +134,7 @@ const SqlQueryTesterPage = () => {
                             </ul>
                         </section>
                          <section>
-                            <h3>The `SELECT` Statement: Asking Questions</h3>
+                            <h3>The <strong>SELECT</strong> Statement: Asking Questions</h3>
                             <p>The `SELECT` statement is how you query the database for information. Its basic structure is:</p>
                              <div className="bg-muted p-4 rounded-md font-code text-sm">
                                 SELECT <span className="text-primary">[column1, column2, ...]</span> FROM <span className="text-accent">[table_name]</span> WHERE <span className="text-yellow-600">[condition]</span>;
@@ -171,7 +170,7 @@ const SqlQueryTesterPage = () => {
                         <CardContent>
                              <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                                 <li><strong>SQL Injection:</strong> A critical security vulnerability where user input is directly concatenated into a query string. This can allow an attacker to run malicious SQL commands. Always use parameterized queries or prepared statements in your application code to prevent this. This educational tool does not have this vulnerability as it doesn't connect to a real database.</li>
-                                <li><strong>Forgetting `WHERE` in an `UPDATE` or `DELETE`:</strong> The most terrifying mistake for a DBA. Forgetting the `WHERE` clause in an `UPDATE` or `DELETE` statement will cause it to apply to *every single row* in the table, potentially leading to catastrophic data loss.</li>
+                                <li><strong>Forgetting `WHERE` in an `UPDATE` or `DELETE`:</strong> The most terrifying mistake for a DBA. Forgetting the `WHERE` clause in an `UPDATE` or `DELETE` statement will cause it to apply to <strong>every single row</strong> in the table, potentially leading to catastrophic data loss.</li>
                                 <li><strong>Ambiguous `JOIN`s:</strong> When joining tables that have columns with the same name, failing to specify which table you mean (e.g., `users.id` vs. `orders.id`) will result in an error.</li>
                             </ul>
                         </CardContent>
