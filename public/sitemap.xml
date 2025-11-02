@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.icttoolshub.com/</loc>
@@ -44,6 +45,12 @@
   </url>
   <url>
     <loc>https://www.icttoolshub.com/tools/latency-estimator</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.icttoolshub.com/tools/password-strength-checker</loc>
     <lastmod>2024-01-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -361,12 +368,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.icttoolshub.com/tools/password-strength-checker</loc>
-    <lastmod>2024-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.icttoolshub.com/tools/password-entropy-calculator</loc>
     <lastmod>2024-01-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -392,6 +393,12 @@
   </url>
   <url>
     <loc>https://www.icttoolshub.com/tools/file-integrity-checker</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.icttoolshub.com/tools/algorithm-simulator</loc>
     <lastmod>2024-01-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -475,49 +482,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.icttoolshub.com/tools/sql-query-tester</loc>
-    <lastmod>2024-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.icttoolshub.com/tools/db-storage-estimator</loc>
     <lastmod>2024-01-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.icttoolshub.com/tools/user-quota-calculator</loc>
-    <lastmod>2024-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.icttoolshub.com/tools/tps-calculator</loc>
-    <lastmod>2024-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.icttoolshub.com/tools/log-rotation-calculator</loc>
-    <lastmod>2024-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.icttoolshub.com/tools/index-size-calculator</loc>
-    <lastmod>2024-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.icttoolshub.com/tools/query-time-estimator</loc>
-    <lastmod>2024-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.icttoolshub.com/tools/database-growth-calculator</loc>
+    <loc>https://www.icttoolshub.com/tools/db-growth-calculator</loc>
     <lastmod>2024-01-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -541,6 +512,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.icttoolshub.com/tools/table-size-estimator</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.icttoolshub.com/tools/column-type-converter</loc>
     <lastmod>2024-01-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -559,31 +536,55 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.icttoolshub.com/tools/code-generator</loc>
-    <lastmod>2024-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.icttoolshub.com/tools/big-o-calculator</loc>
-    <lastmod>2024-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.icttoolshub.com/tools/big-o-quiz</loc>
     <lastmod>2024-01-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.icttoolshub.com/tools/algorithm-simulator</loc>
+    <loc>https://www.icttoolshub.com/tools/recursion-simulator</loc>
     <lastmod>2024-01-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.icttoolshub.com/tools/recursion-simulator</loc>
+    <loc>https://www.icttoolshub.com/tools/code-generator</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.icttoolshub.com/tools/cloud-sync-time-calculator</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.icttoolshub.com/tools/data-migration-estimator</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.icttoolshub.com/tools/replication-estimator</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.icttoolshub.com/tools/storage-redundancy-calculator</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.icttoolshub.com/tools/vm-scaling-calculator</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.icttoolshub.com/tools/vdisk-size-estimator</loc>
     <lastmod>2024-01-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
