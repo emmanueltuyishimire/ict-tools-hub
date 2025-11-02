@@ -31,7 +31,7 @@ const howToSchema = {
     step: [
         { '@type': 'HowToStep', name: 'Enter Text', text: 'Type or paste the text you want to encode into the top "Decoded" box. To decode, paste your ROT13-encoded text into the bottom "Encoded" box.' },
         { '@type': 'HowToStep', name: 'View Instant Results', text: 'The tool works in real-time. As you type in one box, the correctly translated text will instantly appear in the other.' },
-        { '@type': 'HowToStep', name: 'Copy or Swap', text: 'Use the copy button to grab the output. Use the swap button to switch the contents of the two boxes.' },
+        { '@type': 'HowToStep', name: 'Copy or Swap', text: 'Use the copy button to grab the output. Use the swap button to switch the contents of the two text boxes.' },
     ],
     totalTime: 'PT1M'
 };
@@ -45,9 +45,22 @@ const keyTerminologies = [
 ];
 
 export default function Rot13Page() {
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer.replace(/<[^>]*>?/gm, ''),
+      },
+    })),
+  };
+
   return (
     <>
-      <StructuredData data={faqData} />
+      <StructuredData data={faqSchema} />
       <StructuredData data={howToSchema} />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
@@ -143,7 +156,7 @@ export default function Rot13Page() {
                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                         <li><strong>Recognize ROT13:</strong> If you see a block of seemingly random letters but with preserved punctuation and numbers, there's a good chance it's ROT13. Paste it into the decoder to check.</li>
                         <li><strong>Simple Puzzles:</strong> ROT13 is great for creating simple puzzles or secret messages for games and fun activities.</li>
-                        <li><strong>Combining Ciphers:</strong> For slightly more advanced (but still insecure) fun, you can combine ROT13 with other simple ciphers, like a reversing cipher.</li>
+                        <li><strong>Combining Ciphers:</strong> For slightly more advanced (but still insecure) fun, you can combine ROT13 with other simple ciphers, like a reversing cipher. First apply ROT13, then reverse the resulting string.</li>
                     </ul>
                 </CardContent>
             </Card>
@@ -168,17 +181,15 @@ export default function Rot13Page() {
                       {faqData.map((item, index) => (
                           <AccordionItem value={`item-${index}`} key={index}>
                               <AccordionTrigger>{item.question}</AccordionTrigger>
-                              <AccordionContent>
-                                <div dangerouslySetInnerHTML={{ __html: item.answer }} />
-                              </AccordionContent>
+                              <AccordionContent><div dangerouslySetInnerHTML={{ __html: item.answer }} /></AccordionContent>
                           </AccordionItem>
                       ))}
                   </Accordion>
               </CardContent>
           </Card>
       </section>
-
-      <section>
+      
+        <section>
           <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <Link href="/tools/caesar-cipher" className="block">

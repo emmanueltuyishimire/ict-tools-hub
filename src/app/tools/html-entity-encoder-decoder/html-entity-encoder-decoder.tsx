@@ -128,7 +128,7 @@ export function HtmlEntityEncoderDecoder() {
 
     return (
         <div className="max-w-4xl mx-auto space-y-12">
-            <StructuredData data={faqSchema} />
+            <StructuredData data={faqData} />
             <StructuredData data={howToSchema} />
             <Card>
                 <CardContent className="p-6 space-y-6">
@@ -184,7 +184,7 @@ export function HtmlEntityEncoderDecoder() {
                 <Card className="prose prose-sm max-w-none text-foreground p-6">
                     <p>This tool provides real-time, two-way conversion between plain text and HTML entities.</p>
                     <ol>
-                        <li><strong>Live Conversion:</strong> As you type in one box, the other updates instantly.</li>
+                        <li><strong>Live Conversion:</strong> As you type in either box, the other will update instantly.</li>
                         <li><strong>To Encode:</strong> Type plain text with special characters (e.g., <strong>&lt;h1&gt;Title&lt;/h1&gt;</strong>) into the top "Decoded" box. The safe HTML entity version will appear in the "Encoded" box.</li>
                         <li><strong>To Decode:</strong> Paste text containing HTML entities (e.g., <strong>&amp;lt;p&amp;gt;</strong>) into the bottom "Encoded" box to see the original plain text.</li>
                     </ol>

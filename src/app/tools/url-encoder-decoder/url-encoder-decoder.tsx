@@ -210,7 +210,7 @@ export function UrlEncoderDecoder() {
                     </section>
                     <section>
                         <h3 className="font-bold text-xl">Percent-Encoding: The Universal Language of URLs</h3>
-                        <p>URL encoding, officially known as **Percent-Encoding**, is a mechanism to represent any character within a URL safely. It works by replacing a problematic character with a three-character sequence:</p>
+                        <p>URL encoding, officially known as <strong>Percent-Encoding</strong>, is a mechanism to represent any character within a URL safely. It works by replacing a problematic character with a three-character sequence:</p>
                         <ol>
                            <li>A percent sign (`%`).</li>
                            <li>Two hexadecimal digits representing the ASCII value of the character.</li>

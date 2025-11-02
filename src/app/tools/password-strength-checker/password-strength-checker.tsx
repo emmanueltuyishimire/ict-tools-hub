@@ -74,7 +74,7 @@ const faqData = [
     { question: "Why should I avoid using personal information?", answer: "Attackers often use information they know about you (your name, birthday, pet's name, etc.) in 'dictionary attacks.' They will try common words and personal details first. A password should be completely random and unrelated to your personal life." },
     { question: "What is a 'brute-force' attack?", answer: "A brute-force attack is a method where an attacker systematically tries every possible combination of characters until they find the correct password. The stronger and longer your password, the more time and computing power this attack requires, making it impractical." },
     { question: "Why is using the same password on multiple sites dangerous?", answer: "This is called password reuse. If one site you use suffers a data breach and your password is leaked, attackers will try that same email and password combination on hundreds of other popular sites (like banking, email, and social media). This is known as 'credential stuffing.' Using a unique password for every site is critical." },
-    { question: "What is a password manager and should I use one?", answer: "A password manager is a secure application designed to store and manage all your passwords in an encrypted vault. It allows you to generate and use long, complex, unique passwords for every site without having to memorize them. You only need to remember one master password. Using a password manager is one of the most effective security practices you can adopt." },
+    { question: "What is a password manager and should I use one?", answer: "A password manager is a secure application designed to store and manage all your passwords in an encrypted vault. It allows you to generate and use long, complex, unique passwords for every site without having to memorize them. You only need to remember one strong master password. Using a password manager is one of the most effective security practices you can adopt." },
 ];
 
 const howToSchema = {
@@ -181,20 +181,20 @@ export function PasswordStrengthChecker() {
                 <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
                     <section>
                         <h3 className="font-bold text-xl">Beyond Complexity: Why Length is King</h3>
-                        <p>For decades, we were taught that a "complex" password with a mix of symbols, numbers, and cases was the key to security. While character variety is important, modern password cracking techniques have shown that **length is the single most dominant factor in password strength.**</p>
-                        <p>An attacker's primary method is the brute-force attack, where they try every possible combination. Each character you add to your password increases the number of possible combinations exponentially. A 10-character password using all character types is significantly stronger than an 8-character one, and a 16-character password is astronomically stronger still. This is why many security experts now recommend longer "passphrases" (e.g., `GreenDeskRunFast47!`) over shorter, more complex, and harder-to-remember passwords (e.g., `G#4rF&9k`).</p>
+                        <p>For decades, we were taught that a "complex" password with a mix of symbols, numbers, and cases was the key to security. While character variety is important, modern password cracking techniques have shown that <strong>length is the single most dominant factor in password strength.</strong></p>
+                        <p>An attacker's primary method is the brute-force attack, where they try every possible combination. Each character you add to your password increases the number of possible combinations exponentially. A 10-character password using all character types is significantly stronger than an 8-character one, and a 16-character password is astronomically stronger still. This is why many security experts now recommend longer "passphrases" (e.g., `GreenDeskRunFast47!`) over shorter, more complex, and harder-to-remember passwords (e.g., `Tr0ub4d&r`).</p>
                     </section>
                      <section>
                         <h3 className="font-bold text-xl">Understanding Entropy: The True Measure of Strength</h3>
-                        <p>The "Strength" meter gives you a general idea, but the **Entropy** value provides a precise, mathematical measure of a password's unpredictability. Entropy is measured in "bits." The higher the number of bits, the more random and secure the password is. Here’s a simple guide to interpreting entropy values:</p>
+                        <p>The "Strength" meter gives you a general idea, but the <strong>Entropy</strong> value provides a precise, mathematical measure of a password's unpredictability. Entropy is measured in "bits." The higher the number of bits, the more random and secure the password is. Here’s a simple guide to interpreting entropy values:</p>
                         <ul className="list-disc pl-5">
-                           <li>**Below 40 bits:** Very Weak. Can be cracked almost instantly by modern hardware.</li>
-                            <li>**40 - 60 bits:** Weak. Vulnerable to standard brute-force attacks.</li>
-                            <li>**60 - 80 bits:** Medium. Reasonably secure against casual attackers but potentially vulnerable to dedicated, high-powered attacks.</li>
-                            <li>**80 - 120 bits:** Strong. Considered secure for most purposes. It would take centuries or longer to crack with current technology.</li>
-                            <li>**Above 120 bits:** Very Strong. Overkill for most uses, but provides extreme security, resistant even to future advances in computing power (for the foreseeable future).</li>
+                           <li><strong>Below 40 bits:</strong> Very Weak. Can be cracked almost instantly by modern hardware.</li>
+                            <li><strong>40 - 60 bits:</strong> Weak. Vulnerable to standard brute-force attacks.</li>
+                            <li><strong>60 - 80 bits:</strong> Medium. Reasonably secure against casual attackers but potentially vulnerable to dedicated, high-powered attacks.</li>
+                            <li><strong>80 - 120 bits:</strong> Strong. Considered secure for most purposes. It would take centuries or longer to crack with current technology.</li>
+                            <li><strong>Above 120 bits:</strong> Very Strong. Overkill for most uses, but provides extreme security, resistant even to future advances in computing power (for the foreseeable future).</li>
                         </ul>
-                        <p>Entropy is calculated based on two factors: the length of the password and the size of the character pool it draws from (lowercase, uppercase, numbers, symbols). Adding just one character type (e.g., a single number to an all-lowercase password) can significantly increase the character pool and boost the entropy. You can explore this further with our <Link href="/tools/password-entropy-calculator" className="text-primary hover:underline">Password Entropy Calculator</Link>.</p>
+                        <p>Entropy is calculated based on two factors: the length of the password and the size of the character pool it draws from (lowercase, uppercase, numbers, symbols). Adding just one character type (e.g., a single number to an all-lowercase password) can significantly increase the character pool and boost the entropy. You can explore this concept further with our <Link href="/tools/password-entropy-calculator" className="text-primary hover:underline">Password Entropy Calculator</Link>.</p>
                     </section>
                 </CardContent>
             </Card>
@@ -255,7 +255,7 @@ export function PasswordStrengthChecker() {
                             </CardHeader>
                         </Card>
                     </Link>
-                    <Link href="/tools/hash-generator" className="block">
+                    <Link href="/tools/hash-generator-md5-sha" className="block">
                         <Card className="hover:border-primary transition-colors h-full">
                             <CardHeader>
                                 <CardTitle className="text-base flex items-center justify-between">Hash Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>

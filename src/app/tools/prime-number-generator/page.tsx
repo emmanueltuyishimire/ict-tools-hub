@@ -81,7 +81,7 @@ const PrimeNumberGeneratorPage = () => {
                   <dl className="space-y-4">
                       {keyTerminologies.map((item) => (
                           <div key={item.term}>
-                              <dt><strong>{item.term}</strong></dt>
+                              <dt className="font-semibold">{item.term}</dt>
                               <dd className="text-muted-foreground text-sm">{item.definition}</dd>
                           </div>
                       ))}

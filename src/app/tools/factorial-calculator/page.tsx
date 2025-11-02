@@ -229,5 +229,3 @@ const FactorialCalculatorPage = () => {
 };
 
 export default FactorialCalculatorPage;
-
-    

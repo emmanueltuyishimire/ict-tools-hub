@@ -202,7 +202,7 @@ export default function Base64Page() {
                       </CardHeader>
                   </Card>
               </Link>
-              <Link href="/tools/hash-generator" className="block">
+              <Link href="/tools/hash-generator-md5-sha" className="block">
                   <Card className="hover:border-primary transition-colors h-full">
                       <CardHeader>
                           <CardTitle className="text-base flex items-center justify-between">Hash Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>

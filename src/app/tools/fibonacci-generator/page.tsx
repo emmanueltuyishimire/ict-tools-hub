@@ -105,7 +105,7 @@ const FibonacciGeneratorPage = () => {
                     The Fibonacci sequence is a series of numbers in which each number is the sum of the two preceding ones. It usually starts with 0 and 1.
                   </p>
                   <p className='text-center font-bold font-code text-2xl'>
-                    0, 1, 1, 2, 5, 8, 13, 21, 34, ...
+                    0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
                   </p>
                   <p>
                     The sequence is defined by the recurrence relation: <strong>F(n) = F(n-1) + F(n-2)</strong>, with the seed values F(0) = 0 and F(1) = 1. This simple formula gives rise to a sequence with profound connections to mathematics and the natural world.

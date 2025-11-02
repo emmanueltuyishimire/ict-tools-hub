@@ -62,7 +62,7 @@ export default function HtmlEntityEncoderDecoderPage() {
               <Card className="prose prose-sm max-w-none text-foreground p-6">
                   <p>This tool provides real-time, two-way conversion between plain text and HTML entities.</p>
                   <ol>
-                      <li><strong>Live Conversion:</strong> As you type in one box, the other will update instantly with the converted content.</li>
+                      <li><strong>Live Conversion:</strong> As you type in either box, the other will update instantly with the converted content.</li>
                       <li><strong>To Encode:</strong> Type plain text with special characters (e.g., <strong>&lt;h1&gt;Title&lt;/h1&gt;</strong>) into the top "Decoded" box. The safe HTML entity version will appear in the "Encoded" box.</li>
                       <li><strong>To Decode:</strong> Paste text containing HTML entities (e.g., <strong>&amp;lt;p&amp;gt;</strong>) into the bottom "Encoded" box to see the original plain text.</li>
                       <li><strong>Swap & Copy:</strong> Use the `Swap` button (<ArrowRightLeft className="inline h-4 w-4" />) to instantly switch the contents of the two boxes. Use the `Copy` icon (<Copy className="inline h-4 w-4" />) above either box to copy its content to your clipboard.</li>
