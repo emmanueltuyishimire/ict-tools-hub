@@ -1,11 +1,17 @@
 
 'use client';
+import { useState, useEffect } from 'react';
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarTrigger } from '@/components/ui/sidebar';
 import { Logo } from '@/components/logo';
 import { MainNav } from '@/components/main-nav';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
-  const currentYear = new Date().getFullYear();
+  const [year, setYear] = useState(new Date().getFullYear());
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+
   const footerLinks = [
     { name: 'About', href: 'https://calculation.site/about' },
     { name: 'Contact', href: 'https://calculation.site/contact' },
@@ -37,7 +43,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <footer className="py-6 px-6 border-t bg-background">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
                     <div className="text-center md:text-left">
-                        © {currentYear} {' '}
+                        © {year} {' '}
                         <a 
                             href="https://calculation.site" 
                             target="_blank" 
