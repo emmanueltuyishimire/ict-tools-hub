@@ -271,7 +271,7 @@ const BigOCalculatorPage = () => {
                                     <div>
                                         <h4 className="font-semibold">Generate Test Data</h4>
                                         <p className="text-sm text-muted-foreground">
-                                            Your algorithm might be fast with 100 items, but how does it perform with 100,000? Use a <Link href="/tools/random-number-generator" className="text-primary hover:underline">Random Number Generator</Link> or <Link href="/tools/random-string-generator" className="text-primary hover:underline">Random String Generator</Link> to create large datasets to test your code's performance at scale and see if your Big O analysis holds true.
+                                            Your algorithm might be fast with 100 items, but how does it perform with 100,000? Use our <Link href="/tools/random-number-generator" className="text-primary hover:underline">Random Number Generator</Link> or <Link href="/tools/random-string-generator" className="text-primary hover:underline">Random String Generator</Link> to create large datasets to test your code's performance at scale and see if your Big O analysis holds true.
                                         </p>
                                     </div>
                                 </li>

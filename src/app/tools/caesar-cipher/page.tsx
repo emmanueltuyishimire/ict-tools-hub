@@ -122,7 +122,7 @@ export default function CaesarCipherPage() {
                   <p>The cipher's logic is based on modular arithmetic. Each letter is assigned a number (A=0, B=1, etc.). To encrypt, you add the shift value to the letter's number and take the result modulo 26 (the number of letters in the alphabet). To decrypt, you subtract the shift value.</p>
                   <p>For example, with a shift of 3, the letter 'X' (value 23) becomes:</p>
                   <p className="font-code bg-muted p-2 rounded-md">(23 + 3) mod 26 = 26 mod 26 = 0</p>
-                  <p>A value of 0 corresponds to the letter 'A'. So, 'X' becomes 'A'. The special case of this is <a href="/tools/rot13-encoder-decoder" className="text-primary hover:underline">ROT13</a>, where the shift is 13. Since 13 is half of 26, adding 13 twice brings you back to the start, making it its own inverse.</p>
+                  <p>A value of 0 corresponds to the letter 'A'. So, 'X' becomes 'A'. The special case of this is <Link href="/tools/rot13-encoder-decoder" className="text-primary hover:underline">ROT13</Link>, where the shift is 13. Since 13 is half of 26, adding 13 twice brings you back to the start, making it its own inverse.</p>
               </section>
               <section>
                   <h3 className="font-bold text-xl">Why It's Insecure: Frequency Analysis</h3>

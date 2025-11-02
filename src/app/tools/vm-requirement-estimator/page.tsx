@@ -249,7 +249,7 @@ const VmRequirementEstimatorPage = () => {
               <section>
                   <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      <Link href="/tools/cloud-instance-cost-calculator" className="block">
+                      <Link href="/tools/cloud-storage-cost-estimator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
                                   <CardTitle className="text-base flex items-center justify-between">Cloud Instance Cost Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>

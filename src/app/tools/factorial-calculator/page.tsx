@@ -134,7 +134,7 @@ const FactorialCalculatorPage = () => {
                   <p>In computer science, there are two primary ways to calculate a factorial:</p>
                    <ul className="list-disc pl-5">
                        <li><strong>Iteration:</strong> This approach uses a simple loop that starts at 1 and multiplies each number up to n. It is efficient in both time (O(n)) and memory. This is the method our calculator uses.</li>
-                       <li><strong>Recursion:</strong> A recursive function is one that calls itself. A factorial can be elegantly defined recursively: `factorial(n) = n × factorial(n-1)`. While elegant, this can be less efficient for very large numbers due to the overhead of function calls, which can lead to a "stack overflow" error. It's a classic example used to teach the concept of recursion.</li>
+                       <li><strong>Recursion:</strong> A recursive function is one that calls itself. A factorial can be elegantly defined recursively: `factorial(n) = n × factorial(n-1)`. While elegant, this can be less efficient for very large numbers due to the overhead of function calls, which can lead to a "stack overflow" error. It's a classic example used to teach the concept of recursion. You can see recursion in action with our <Link href="/tools/algorithm-simulator" className="text-primary hover:underline">Algorithm Step Simulator</Link>.</li>
                   </ul>
               </section>
           </CardContent>

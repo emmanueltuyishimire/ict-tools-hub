@@ -5,9 +5,10 @@ import { DiskUsageEstimator } from './disk-usage-estimator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
+import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const metadata = {
     title: 'Disk Usage / Partition Estimator | ICT Toolbench',
@@ -119,7 +120,7 @@ const DiskUsageEstimatorPage = () => {
                              <li><strong>`/home`:</strong> This partition is dedicated to user data. Each user gets their own directory inside `/home` (e.g., `/home/username`). Separating `/home` allows you to back up or resize user data independently of the OS.</li>
                              <li><strong>`/var`:</strong> This directory holds variable data. Its most important content is log files (in `/var/log`), which can grow very quickly on a busy server. Other variable data like mail spools and databases (like MySQL's default data directory) also live here. Giving `/var` its own partition prevents runaway logs from crashing the server.</li>
                              <li><strong>`/tmp`:</strong> This directory is for temporary files created by users and applications. It is usually cleared on reboot. Isolating it prevents temporary files from filling up a more critical partition.</li>
-                             <li><strong>`swap`:</strong> Swap space is a portion of the disk used as virtual memory. When the server runs out of physical RAM, the operating system will move inactive pages of memory to the swap space to free up RAM. While not a substitute for adequate RAM, having a dedicated swap partition is essential for system stability under heavy load.</li>
+                             <li><strong>`swap`:</strong> Swap space is a portion of the disk used as virtual memory. When the server runs out of physical RAM, the operating system will move inactive pages of memory to the swap space to free up RAM. While not a substitute for adequate RAM, having a dedicated swap partition is essential for system stability under heavy load. You can estimate your RAM needs with our <Link href="/tools/vm-requirement-estimator" className="text-primary hover:underline">VM RAM &amp; CPU Requirement Estimator</Link>.</li>
                           </ul>
                       </section>
                   </CardContent>
@@ -191,6 +192,35 @@ const DiskUsageEstimatorPage = () => {
                       </CardContent>
                   </Card>
               </section>
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <Link href="/tools/vm-requirement-estimator" className="block">
+                            <Card className="hover:border-primary transition-colors h-full">
+                                <CardHeader>
+                                    <CardTitle className="text-base flex items-center justify-between">VM Requirement Estimator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                    <CardDescription className="text-xs">Estimate the CPU and RAM needs for your server, which influences swap size decisions.</CardDescription>
+                                </CardHeader>
+                            </Card>
+                        </Link>
+                        <Link href="/tools/backup-storage-calculator" className="block">
+                            <Card className="hover:border-primary transition-colors h-full">
+                                <CardHeader>
+                                    <CardTitle className="text-base flex items-center justify-between">Backup Storage Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                    <CardDescription className="text-xs">Plan how much additional storage you'll need for your backup partition or a separate backup disk.</CardDescription>
+                                </CardHeader>
+                            </Card>
+                        </Link>
+                        <Link href="/tools/raid-calculator" className="block">
+                            <Card className="hover:border-primary transition-colors h-full">
+                                <CardHeader>
+                                    <CardTitle className="text-base flex items-center justify-between">RAID Storage Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                    <CardDescription className="text-xs">Determine the usable capacity of a RAID array, which you can then plan to partition with this tool.</CardDescription>
+                                </CardHeader>
+                            </Card>
+                        </Link>
+                    </div>
+                </section>
             </div>
         </>
     );

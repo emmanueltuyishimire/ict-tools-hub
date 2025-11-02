@@ -209,7 +209,7 @@ const PrimeCheckerPage = () => {
                   <Card className="hover:border-primary transition-colors h-full">
                       <CardHeader>
                           <CardTitle className="text-base flex items-center justify-between">Fibonacci Sequence Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                          <CardDescription className="text-xs">Explore another fundamental sequence in mathematics.</CardDescription>
+                          <CardDescription className="text-xs">Explore another fundamental mathematical sequence with its own unique properties.</CardDescription>
                       </CardHeader>
                   </Card>
               </Link>
