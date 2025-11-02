@@ -1,12 +1,12 @@
 
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle, Lightbulb } from 'lucide-react';
+import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle, Lightbulb, Timer } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Button } from '@/components/ui/button';
@@ -22,8 +22,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Input } from '@/components/ui/input';
 
-const quizQuestions = [
+const allQuizQuestions = [
     {
         code: `function findFirst(items) {\n  return items[0];\n}`,
         options: ['O(1)', 'O(n)', 'O(log n)'],
@@ -53,19 +54,60 @@ const quizQuestions = [
         options: ['O(n)', 'O(log n)', 'O(n²)'],
         correctAnswer: 'O(n²)',
         explanation: 'The nested loops are the key here. The outer loop runs n times, and for each of those iterations, the inner loop also runs n times. The total number of operations is approximately n * n, resulting in O(n²) complexity.'
+    },
+    {
+        code: `// Recursive factorial calculation\nfunction factorial(n) {\n  if (n === 0) return 1;\n  return n * factorial(n - 1);\n}`,
+        options: ['O(n)', 'O(1)', 'O(n²)'],
+        correctAnswer: 'O(n)',
+        explanation: 'The function calls itself `n` times before reaching the base case (n=0). This creates a call stack of depth `n`, leading to linear time complexity, O(n).'
+    },
+    {
+        code: `function sumAndProduct(items) {\n  let sum = 0; // O(1)\n  let product = 1; // O(1)\n\n  for (let item of items) { // O(n)\n    sum += item;\n  }\n\n  for (let item of items) { // O(n)\n    product *= item;\n  }\n\n  return [sum, product];\n}`,
+        options: ['O(n²)', 'O(n)', 'O(1)'],
+        correctAnswer: 'O(n)',
+        explanation: 'The function has two separate loops that each run `n` times. The total complexity is O(n + n), which simplifies to O(2n). In Big O notation, we drop constant factors, so the final complexity is O(n).'
+    },
+    {
+        code: `// Merge Sort\nfunction mergeSort(items) {\n  if (items.length <= 1) return items;\n  const middle = Math.floor(items.length / 2);\n  const left = items.slice(0, middle);\n  const right = items.slice(middle);\n  return merge(mergeSort(left), mergeSort(right));\n}`,
+        options: ['O(n²)', 'O(n log n)', 'O(n)'],
+        correctAnswer: 'O(n log n)',
+        explanation: 'This represents the Merge Sort algorithm. The list is recursively divided in half (which gives the log n part), and then each element is merged back together (which gives the n part). The resulting complexity is O(n log n), a hallmark of efficient sorting algorithms.'
     }
 ];
 
 function BigOQuiz() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [userAnswers, setUserAnswers] = useState<(string | null)[]>(new Array(quizQuestions.length).fill(null));
+    const [userAnswers, setUserAnswers] = useState<(string | null)[]>([]);
     const [quizState, setQuizState] = useState<'not-started' | 'in-progress' | 'finished'>('not-started');
+    const [quizQuestions, setQuizQuestions] = useState<typeof allQuizQuestions>([]);
+    const [settings, setSettings] = useState({ numQuestions: 5, timeLimit: 2 }); // Default 5 questions, 2 minutes
+    const [timeLeft, setTimeLeft] = useState(0);
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     const score = useMemo(() => {
+        if (quizQuestions.length === 0) return 0;
         return userAnswers.reduce((total, answer, index) => {
-            return total + (answer === quizQuestions[index].correctAnswer ? 1 : 0);
+            return total + (answer === quizQuestions[index]?.correctAnswer ? 1 : 0);
         }, 0);
-    }, [userAnswers]);
+    }, [userAnswers, quizQuestions]);
+
+    const finishQuiz = useCallback(() => {
+        if (timerRef.current) clearInterval(timerRef.current);
+        setQuizState('finished');
+    }, []);
+
+    useEffect(() => {
+        if (quizState === 'in-progress' && timeLeft > 0) {
+            timerRef.current = setInterval(() => {
+                setTimeLeft(prev => prev - 1);
+            }, 1000);
+        } else if (timeLeft === 0 && quizState === 'in-progress') {
+            finishQuiz();
+        }
+        return () => {
+            if (timerRef.current) clearInterval(timerRef.current);
+        };
+    }, [quizState, timeLeft, finishQuiz]);
 
     const handleAnswer = (answer: string) => {
         const newAnswers = [...userAnswers];
@@ -77,13 +119,19 @@ function BigOQuiz() {
         if (currentQuestionIndex < quizQuestions.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         } else {
-            setQuizState('finished');
+            finishQuiz();
         }
     };
     
     const handleStart = () => {
+        // Shuffle and slice questions
+        const shuffled = [...allQuizQuestions].sort(() => 0.5 - Math.random());
+        const selectedQuestions = shuffled.slice(0, settings.numQuestions);
+        
+        setQuizQuestions(selectedQuestions);
         setCurrentQuestionIndex(0);
-        setUserAnswers(new Array(quizQuestions.length).fill(null));
+        setUserAnswers(new Array(selectedQuestions.length).fill(null));
+        setTimeLeft(settings.timeLimit * 60);
         setQuizState('in-progress');
     };
     
@@ -91,11 +139,36 @@ function BigOQuiz() {
         return (
              <Card>
                 <CardHeader>
-                    <CardTitle>Test Your Knowledge</CardTitle>
-                    <CardDescription>This short quiz will test your ability to identify the time complexity of common algorithms.</CardDescription>
+                    <CardTitle>Quiz Setup</CardTitle>
+                    <CardDescription>Configure your quiz then click Start.</CardDescription>
                 </CardHeader>
-                <CardContent className="flex justify-center">
-                    <Button onClick={handleStart}>Start Quiz</Button>
+                <CardContent className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="num-questions">Number of Questions</Label>
+                            <Input
+                                id="num-questions"
+                                type="number"
+                                min="1"
+                                max={allQuizQuestions.length}
+                                value={settings.numQuestions}
+                                onChange={(e) => setSettings(s => ({...s, numQuestions: Math.max(1, Math.min(allQuizQuestions.length, parseInt(e.target.value) || 1))}))}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                             <Label htmlFor="time-limit">Time Limit (minutes)</Label>
+                            <Input
+                                id="time-limit"
+                                type="number"
+                                min="1"
+                                value={settings.timeLimit}
+                                onChange={(e) => setSettings(s => ({...s, timeLimit: Math.max(1, parseInt(e.target.value) || 1)}))}
+                            />
+                        </div>
+                    </div>
+                    <div className="flex justify-center">
+                        <Button onClick={handleStart}>Start Quiz</Button>
+                    </div>
                 </CardContent>
             </Card>
         )
@@ -115,7 +188,7 @@ function BigOQuiz() {
                         <div key={index} className={`p-4 border rounded-lg ${userAnswers[index] === q.correctAnswer ? 'border-green-500/50 bg-green-500/5' : 'border-destructive/50 bg-destructive/5'}`}>
                             <p className="font-medium">Question {index + 1}:</p>
                             <CodeBlock code={q.code} language="javascript" className="my-2"/>
-                            <p className="text-sm">Your answer: <span className="font-semibold">{userAnswers[index]}</span></p>
+                            <p className="text-sm">Your answer: <span className="font-semibold">{userAnswers[index] || 'No Answer'}</span></p>
                             <p className="text-sm">Correct answer: <span className="font-semibold">{q.correctAnswer}</span></p>
                              {userAnswers[index] !== q.correctAnswer && (
                                 <p className="text-xs text-muted-foreground mt-2">{q.explanation}</p>
@@ -123,7 +196,7 @@ function BigOQuiz() {
                         </div>
                     ))}
                      <div className="flex justify-center">
-                        <Button onClick={handleStart}>Try Again</Button>
+                        <Button onClick={() => setQuizState('not-started')}>New Quiz</Button>
                     </div>
                 </CardContent>
             </Card>
@@ -131,12 +204,22 @@ function BigOQuiz() {
     }
     
     const currentQuestion = quizQuestions[currentQuestionIndex];
+    if (!currentQuestion) return null; // Should not happen
+    
     const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
 
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Question {currentQuestionIndex + 1} of {quizQuestions.length}</CardTitle>
+                <div className="flex justify-between items-center">
+                    <CardTitle>Question {currentQuestionIndex + 1} of {quizQuestions.length}</CardTitle>
+                    <div className="flex items-center gap-2 text-lg font-medium text-muted-foreground">
+                        <Timer className="h-5 w-5" />
+                        <span className='font-mono'>{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}</span>
+                    </div>
+                </div>
                  <Progress value={progress} className="w-full h-2 mt-2" />
             </CardHeader>
             <CardContent className="space-y-6">
@@ -207,10 +290,11 @@ const BigOComplexityQuizPage = () => {
                     <Card className="prose prose-sm max-w-none text-foreground p-6">
                         <p>This quiz is designed to be a quick and interactive learning tool.</p>
                         <ol>
-                            <li><strong>Start the Quiz:</strong> Click the "Start Quiz" button to begin.</li>
+                            <li><strong>Configure Your Quiz:</strong> Choose the number of questions you want and set a time limit in minutes.</li>
+                            <li><strong>Start the Quiz:</strong> Click the "Start Quiz" button to begin. A random set of questions will be selected.</li>
                             <li><strong>Analyze the Code:</strong> For each question, carefully read the provided JavaScript code snippet. Pay attention to loops, nested loops, and how the function's operations relate to the size of the input.</li>
                             <li><strong>Select an Answer:</strong> Choose the Big O notation that best represents the worst-case time complexity of the function.</li>
-                            <li><strong>Proceed or Finish:</strong> Click "Next Question" to continue. After the final question, click "Finish Quiz" to see your score.</li>
+                             <li><strong>Proceed or Finish:</strong> Click "Next Question" to continue. After the final question, or when the timer runs out, click "Finish Quiz" to see your score.</li>
                              <li><strong>Review Your Results:</strong> At the end, the tool will show you which questions you got right and wrong, along with detailed explanations for the incorrect answers to help you learn.</li>
                         </ol>
                     </Card>
