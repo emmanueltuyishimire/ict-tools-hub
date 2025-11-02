@@ -1,4 +1,3 @@
-
 import {
   type LucideIcon,
   Network,
@@ -17,6 +16,7 @@ import {
   Palette,
   Timer,
   KeyRound,
+  FileCheck,
 } from 'lucide-react';
 
 export type Tool = {
