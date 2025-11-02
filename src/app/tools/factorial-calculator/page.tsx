@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { FactorialCalculator } from './factorial-calculator';
@@ -146,7 +147,7 @@ const FactorialCalculatorPage = () => {
                 </CardHeader>
                 <CardContent>
                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                        <li><strong>Stirling's Approximation:</strong> For very large n, calculating n! directly becomes impossible. Stirling's approximation is a famous formula used to estimate the value of n!, especially useful in physics and statistics.</li>
+                        <li><strong>Stirling's Approximation:</strong> For very large n, calculating n! directly becomes impossible. Stirling's approximation is a famous formula (n! ≈ √(2πn) × (n/e)ⁿ) used to estimate the value of n!, especially useful in physics and statistics.</li>
                         <li><strong>Combinations:</strong> Factorials are the basis for calculating combinations (the number of ways to choose k items from a set of n, where order doesn't matter), using the formula n! / (k! × (n-k)!).</li>
                         <li><strong>Handling Large Numbers:</strong> Factorial values grow incredibly fast. `20!` is already over 2 quintillion. This tool uses `BigInt` to handle numbers that exceed the limits of standard JavaScript numbers, but even that has its limits in a browser environment.</li>
                     </ul>

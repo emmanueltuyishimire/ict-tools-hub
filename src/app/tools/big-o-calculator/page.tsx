@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { BigOCalculator } from './big-o-calculator';
@@ -113,7 +114,7 @@ const BigOCalculatorPage = () => {
                                 Big O notation is a mathematical way to describe the performance and complexity of an algorithm. It answers the fundamental question: "As the input to my algorithm gets bigger, how much slower will it run?" It's not about measuring the exact time in seconds, but about describing the <strong>growth rate</strong> of the algorithm's runtime in the worst-case scenario. This allows developers to compare different solutions and choose the one that will remain efficient and scalable as data volumes increase.
                             </p>
                             <p>
-                                When analyzing an algorithm, Big O simplifies the complexity by ignoring constant factors and lower-order terms. For example, an algorithm that takes `3n² + 10n + 5` operations is simply described as `O(n²)`. This is because as the input size `n` becomes very large, the `n²` term will overwhelmingly dominate the runtime, making the other terms insignificant. Understanding this helps in making informed decisions, similar to how our <Link href="/tools/response-time-calculator" className='text-primary hover:underline'>Response Time Calculator</Link> helps in understanding server performance beyond just raw speed.
+                                When analyzing an algorithm, Big O simplifies the complexity by ignoring constant factors and lower-order terms. For example, an algorithm that takes <strong>3n² + 10n + 5</strong> operations is simply described as <strong>O(n²)</strong>. This is because as the input size `n` becomes very large, the `n²` term will overwhelmingly dominate the runtime, making the other terms insignificant. Understanding this helps in making informed decisions, similar to how our <Link href="/tools/response-time-calculator" className='text-primary hover:underline'>Response Time Calculator</Link> helps in understanding server performance beyond just raw speed.
                             </p>
                         </section>
                         <section>
@@ -252,7 +253,7 @@ const BigOCalculatorPage = () => {
                                     <div>
                                         <h4 className="font-semibold">Optimize Your Database</h4>
                                         <p className="text-sm text-muted-foreground">
-                                            A slow database query can turn a fast `O(1)` request into a multi-second ordeal. Ensure your tables are properly indexed. An index acts like a sorted list for your data, allowing the database to use efficient `O(log n)` search algorithms instead of a full `O(n)` table scan.
+                                            A slow database query can turn a fast <strong>O(1)</strong> request into a multi-second ordeal. Ensure your tables are properly indexed. An index acts like a sorted list for your data, allowing the database to use efficient <strong>O(log n)</strong> search algorithms instead of a full <strong>O(n)</strong> table scan.
                                         </p>
                                     </div>
                                 </li>
@@ -261,7 +262,7 @@ const BigOCalculatorPage = () => {
                                     <div>
                                         <h4 className="font-semibold">Choose the Right Data Structure</h4>
                                         <p className="text-sm text-muted-foreground">
-                                            The data structure you choose has a profound impact on time complexity. Need fast lookups? A hash map (`Object` or `Map` in JS) offers average `O(1)` access. Need sorted data? A balanced binary search tree provides `O(log n)` insertions and lookups. Knowing the Big O of common operations for different data structures is key.
+                                            The data structure you choose has a profound impact on time complexity. Need fast lookups? A hash map (`Object` or `Map` in JS) offers average <strong>O(1)</strong> access. Need sorted data? A balanced binary search tree provides <strong>O(log n)</strong> insertions and lookups. Knowing the Big O of common operations for different data structures is key.
                                         </p>
                                     </div>
                                 </li>
