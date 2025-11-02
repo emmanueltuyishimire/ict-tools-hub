@@ -130,6 +130,28 @@ const PasswordGeneratorPage = () => {
               </section>
           </CardContent>
         </Card>
+        
+        <section>
+            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Creating New User Accounts</h3>
+                    <p className="text-sm text-muted-foreground">When signing up for a new online service, instead of trying to invent a memorable but weak password, use the generator to create a 16+ character random password. Save it directly to your password manager. This ensures your new account is secure from day one without the mental effort.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Generating API Keys and Secrets</h3>
+                    <p className="text-sm text-muted-foreground">A developer needs to generate a client secret for an OAuth 2.0 application. This secret must be highly random and unguessable. They use the generator to create a 48-character alphanumeric string. Since this key will only be used by machines, memorability is irrelevant, and maximum entropy is the goal. For this purpose, they can use our <Link href='/tools/random-string-generator' className='text-primary hover:underline'>Random String Generator</Link> tool.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Securing a Home Wi-Fi Network</h3>
+                    <p className="text-sm text-muted-foreground">To prevent neighbors or unauthorized users from accessing their home network, a user generates a long, 24-character random password including letters, numbers, and symbols. While slightly inconvenient to enter the first time, it provides strong protection for all devices on the network. They can then share this password with guests via their phone's QR code feature.</p>
+                </div>
+                 <div className="bg-card p-6 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">Setting Up a New Server or Database</h3>
+                    <p className="text-sm text-muted-foreground">A system administrator is provisioning a new database server. To secure the root user account, they generate a 32-character random password. This password is then stored securely in the company's enterprise password vault and is never written down or memorized, ensuring the database is protected against brute-force attacks from its inception.</p>
+                </div>
+            </div>
+        </section>
 
          <section>
             <h2 className="text-2xl font-bold mb-4">Practical Tips for Password Nirvana</h2>
@@ -141,7 +163,7 @@ const PasswordGeneratorPage = () => {
                             <div>
                                 <h4 className="font-semibold">Use a Password Manager</h4>
                                 <p className="text-sm text-muted-foreground">
-                                    This is the most important step. A password manager (like Bitwarden, 1Password, or LastPass) generates, stores, and fills in unique, strong passwords for you. You only need to remember one master password.
+                                    This is the most important step. A password manager (like Bitwarden, 1Password, or LastPass) generates, stores, and fills in unique, strong passwords for you. You only need to remember one strong master password.
                                 </p>
                             </div>
                         </li>
