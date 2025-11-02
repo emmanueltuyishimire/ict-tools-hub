@@ -68,6 +68,7 @@ import { PasswordEntropyCalculator } from '@/app/tools/password-entropy-calculat
 import { PasswordGenerator } from '@/app/tools/password-generator/password-generator';
 import { EncryptionDecryptionTool } from '@/app/tools/encryption-decryption-tool/encryption-decryption-tool';
 import { TotpDemo } from '@/app/tools/totp-demo/totp-demo';
+import { Base32_58EncoderDecoder } from '@/app/tools/base32-58-encoder-decoder/base32-58-encoder-decoder';
 import { Metadata } from 'next';
 
 export async function generateStaticParams() {
@@ -166,6 +167,7 @@ const toolComponents: Record<string, React.ComponentType> = {
     'password-generator': PasswordGenerator,
     'encryption-decryption-tool': EncryptionDecryptionTool,
     'totp-demo': TotpDemo,
+    'base32-58-encoder-decoder': Base32_58EncoderDecoder
 };
 
 
