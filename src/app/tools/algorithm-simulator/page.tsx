@@ -6,7 +6,7 @@ import { AlgorithmStepSimulator } from './algorithm-simulator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
+import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle, Gamepad } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 
@@ -68,20 +68,39 @@ const AlgorithmSimulatorPage = () => {
                         <p>This tool is designed to provide an intuitive, visual understanding of how algorithms process data. Follow these steps to get started:</p>
                         <ol>
                             <li><strong>Select an Algorithm:</strong> Choose which algorithm you'd like to see in action from the dropdown menu, such as <strong>Bubble Sort</strong> or <strong>Linear Search</strong>.</li>
-                            <li><strong>Prepare Your Data:</strong> Use the <strong>Randomize</strong> button to create a new array of numbers. If you've selected a search algorithm, an input will appear for you to enter the number you want to find. You can generate custom numbers with our <Link href="/tools/random-number-generator" className="text-primary hover:underline">Random Number Generator</Link>.</li>
-                            <li><strong>Control the Simulation:</strong>
+                            <li><strong>Prepare Your Data:</strong> Use the <strong>Randomize</strong> button to create a new array of numbers. If you've selected a search algorithm, an input will appear for you to enter the number you want to find.</li>
+                            <li><strong>Choose Your Mode:</strong>
                                 <ul>
-                                    <li>Click <strong>Play</strong> to watch the algorithm run automatically at a set speed.</li>
-                                    <li>Click <strong>Pause</strong> to halt the simulation at any point.</li>
-                                    <li>Click <strong>Step</strong> to advance the algorithm by one single operation. This is the best way to carefully study the logic.</li>
-                                    <li>Click <strong>Reset</strong> to return to the initial state with the same data.</li>
+                                    <li><strong>Simulation Mode (Default):</strong> Use the play, pause, and step controls to watch the algorithm run.</li>
+                                    <li><strong>Challenge Mode:</strong> Toggle the "Challenge Mode" switch to turn the visualizer into a game.</li>
                                 </ul>
                             </li>
-                            <li><strong>Follow Along:</strong> The visualization will use colors to highlight the elements being compared, swapped, or examined. The log below the visualization provides a plain-English explanation of what is happening at each step.</li>
+                            <li><strong>Follow Along or Play:</strong> In simulation mode, the visualization uses colors to highlight elements being compared or swapped, and the log explains each step. In challenge mode, you must click the elements you think the algorithm will check next to advance.</li>
                         </ol>
                     </Card>
                 </section>
                 
+                <Card className='border-primary/20 bg-primary/5'>
+                    <CardHeader>
+                        <div className='flex items-center gap-2 text-primary'>
+                            <Gamepad className="h-6 w-6" aria-hidden="true" />
+                            <CardTitle className="text-primary">Challenge Yourself!</CardTitle>
+                        </div>
+                        <CardDescription>Turn learning into a game. The best way to understand an algorithm is to predict its next move.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="prose prose-sm max-w-none text-foreground">
+                        <p>Watching a simulation is great, but active learning is even better. Our <strong>Challenge Mode</strong> turns the simulator into an interactive quiz:</p>
+                        <ol>
+                           <li>Flip the "Challenge Mode" switch in the simulator.</li>
+                           <li>The simulation will pause and wait for your input.</li>
+                           <li>Read the log message, which describes the current state.</li>
+                           <li>Click on the array element(s) you believe the algorithm will compare or check in the very next step.</li>
+                           <li>If you're correct, the simulation advances. If not, try again! Your score is tracked to see how well you're doing.</li>
+                        </ol>
+                        <p>This active participation forces you to think like the algorithm, solidifying your understanding of its step-by-step logic in a way that passive observation cannot.</p>
+                    </CardContent>
+                </Card>
+
                 <section>
                     <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
                     <div className="space-y-6">
@@ -207,7 +226,7 @@ const AlgorithmSimulatorPage = () => {
                                     <div>
                                         <h4 className="font-semibold">Predict the Next Move</h4>
                                         <p className="text-sm text-muted-foreground">
-                                            Pause the simulation and ask yourself: "What will happen next?" Which elements will be compared? Will a swap occur? Making a prediction and then verifying it with the next step is a powerful active learning technique.
+                                            Pause the simulation and ask yourself: "What will happen next?" Which elements will be compared? Will a swap occur? Making a prediction and then verifying it with the next step is a powerful active learning technique. Our <strong>Challenge Mode</strong> gamifies this exact process.
                                         </p>
                                     </div>
                                 </li>
@@ -232,8 +251,7 @@ const AlgorithmSimulatorPage = () => {
                         </CardHeader>
                         <CardContent>
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                                <li><strong>Use the "Step" Button:</strong> The best way to learn is to use the "Step" button to walk through the algorithm one operation at a time. Read the log message for each step to connect the visual change to the underlying logic.</li>
-                                <li><strong>Predict the Next Move:</strong> Pause the simulation and try to predict what the algorithm will do next. Which elements will be compared? Will a swap occur? This active learning reinforces the concepts.</li>
+                                <li><strong>Use Challenge Mode:</strong> The best way to learn is to actively participate. Use the "Challenge Mode" to test your understanding by predicting the algorithm's next move.</li>
                                 <li><strong>Compare Algorithms:</strong> Run Bubble Sort on a dataset, then reset and run a different sorting algorithm (when available) on the same data. This will visually demonstrate the vast differences in efficiency between algorithms.</li>
                                 <li><strong>Think About Edge Cases:</strong> Use the "Randomize" button to generate different datasets. How does Bubble Sort perform on a list that is already sorted? Or a list that is reverse-sorted? These are important edge cases.</li>
                             </ul>
