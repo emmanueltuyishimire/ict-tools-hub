@@ -83,6 +83,35 @@ const DataRetentionCalculatorPage = () => {
                 </section>
                 
                 <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Example</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Calculating a 7-Year Financial Record Retention</CardTitle>
+                                <CardDescription>Determine the exact deletion date for a financial record created on a specific date, based on a common 7-year retention policy.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> Your organization has a policy to retain all financial transaction records for a minimum of 7 years from the date of creation. You need to find out when a record created on March 15, 2020, can be scheduled for deletion.</p>
+                                <div className="prose prose-sm max-w-none">
+                                    <ol>
+                                        <li><strong>Set the Start Date:</strong> In the calculator, set the "Start Date" to <strong>2020-03-15</strong>.</li>
+                                        <li><strong>Set the Retention Period:</strong> In the "Retention Period" input, enter the number <strong>7</strong>.</li>
+                                        <li><strong>Set the Unit:</strong> From the dropdown menu next to the retention period, select <strong>Years</strong>.</li>
+                                        <li><strong>Analyze the Result:</strong> The calculator will perform the date addition and display the result.
+                                            <ul>
+                                                <li><strong>End of Retention Date:</strong> The tool will show <strong>March 15, 2027</strong>. This is the last day the data must be kept.</li>
+                                                <li><strong>Deletion Date:</strong> The helper text will note that the data can be deleted on or after <strong>March 16, 2027</strong>.</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Action:</strong> Based on this result, you can schedule an automated script or a manual review to purge this specific record any time after March 15, 2027, ensuring you have met your compliance obligation without storing the data unnecessarily long. This helps manage storage costs, which you can model with our <Link href="/tools/cloud-storage-cost-estimator" className="text-primary hover:underline">Cloud Storage Cost Estimator</Link>.</li>
+                                    </ol>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
+
+                <section>
                    <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
                    <Card>
                       <CardContent className="p-6">
