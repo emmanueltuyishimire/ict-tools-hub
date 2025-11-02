@@ -11,33 +11,20 @@ import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const metadata = {
-    title: 'Table Size Estimator | Database Storage Planning | ICT Toolbench',
+    title: 'Database Table Size Estimator | Storage Planning | ICT Toolbench',
     description: 'Estimate your database table storage requirements by defining your table schema and row count. A tool for DBAs and developers to plan capacity and forecast costs.',
     openGraph: {
-        title: 'Table Size Estimator | Database Storage Planning | ICT Toolbench',
+        title: 'Database Table Size Estimator | Storage Planning | ICT Toolbench',
         description: 'Plan your database storage needs by modeling table schemas and estimating total size, including index overhead.',
         url: '/tools/table-size-estimator',
     }
 };
 
 const TableSizeEstimatorPage = () => {
-    const faqSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqData.map(item => ({
-            '@type': 'Question',
-            name: item.question,
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: item.answer.replace(/<[^>]*>?/gm, ''),
-            },
-        })),
-    };
-
     const softwareAppSchema = {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": "Table Size Estimator",
+      "name": "Database Table Size Estimator",
       "operatingSystem": "All",
       "applicationCategory": "DeveloperApplication",
       "offers": {
@@ -51,13 +38,13 @@ const TableSizeEstimatorPage = () => {
 
     return (
         <>
-            <StructuredData data={faqSchema} />
+            <StructuredData data={faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))} />
             <StructuredData data={howToSchema} />
             <StructuredData data={softwareAppSchema} />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
                     title="Database Table Size Estimator"
-                    description="Plan your database capacity by modeling your table schema and forecasting total storage needs, including indexes and overhead. A crucial first step in designing a scalable and cost-effective database."
+                    description="Plan your database capacity by modeling your table schema and forecasting total storage needs, including indexes and overhead. This tool is a crucial first step for database architects, developers, and system administrators in designing a scalable and cost-effective database."
                 />
                 
                 <DbStorageEstimator />
@@ -115,23 +102,7 @@ const TableSizeEstimatorPage = () => {
                         </Card>
                     </div>
                 </section>
-
-                <section>
-                   <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
-                   <Card>
-                      <CardContent className="p-6">
-                          <dl className="space-y-4">
-                              {keyTerminologies.map((item) => (
-                                  <div key={item.term}>
-                                      <dt className="font-semibold">{item.term}</dt>
-                                      <dd className="text-muted-foreground text-sm">{item.definition}</dd>
-                                  </div>
-                              ))}
-                          </dl>
-                      </CardContent>
-                   </Card>
-                </section>
-
+                
                 <Card className='bg-secondary/30 border-primary/20'>
                     <CardHeader>
                         <div className='flex items-center gap-2 text-primary'>
@@ -153,7 +124,7 @@ const TableSizeEstimatorPage = () => {
                                 A database index is a special data structure that dramatically speeds up data retrieval operations. Without an index, finding a specific user in a million-row table would require a "full table scan," which is extremely slow. With an index on the `email` column, the database can find that user almost instantly.
                             </p>
                             <p>
-                                However, this performance comes at a cost: <strong>storage space</strong>. An index is essentially a sorted copy of the data from one or more columns, along with pointers back to the original rows. This means that every index you create on a table consumes additional disk space. A complex table with 5-6 indexes can easily double its total storage footprint. The "Overhead" percentage in our calculator is designed to help you account for this critical trade-off between read performance and storage cost.
+                                However, this performance comes at a cost: <strong>storage space</strong>. An index is essentially a sorted copy of the data from one or more columns, along with pointers back to the original rows. This means that every index you create on a table consumes additional disk space. A complex table with 5-6 indexes can easily double its total storage footprint. The "Overhead" percentage in our calculator is a simplified way to account for this critical trade-off between read performance and storage cost. Our <Link href="/tools/index-size-calculator" className="text-primary hover:underline">Index Size Calculator</Link> can help you estimate this more precisely.
                             </p>
                         </section>
                         <section>
@@ -168,7 +139,44 @@ const TableSizeEstimatorPage = () => {
                     </CardContent>
                 </Card>
 
-                 <section>
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
+                     <Card>
+                        <CardContent className="p-6">
+                            <ul className="space-y-4">
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Choose the Right Data Type</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            Don't use a `BIGINT` when a `TINYINT` will do. Don't use a `VARCHAR(1000)` for a two-letter country code. Use the smallest, most appropriate data type for your data to minimize row size from the start.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Be Judicious with Indexes</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            Indexes are essential for read performance but they slow down writes (as the index must also be updated) and consume disk space. Only create indexes on columns that are frequently used in `WHERE` clauses, `JOIN` conditions, or `ORDER BY` statements.
+                                        </p>
+                                    </div>
+                                </li>
+                                 <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Monitor, Don't Guess</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            This tool provides an excellent baseline. However, the best way to plan for the future is to monitor the actual growth of your database over time. Use your database's built-in tools or a monitoring service to track table and index sizes. Use this real-world data to refine your forecasts with our <Link href="/tools/storage-growth-estimator" className="text-primary hover:underline">Storage Growth Estimator</Link>.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </CardContent>
+                     </Card>
+                </section>
+                
+                <section>
                     <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-card p-6 rounded-lg">
