@@ -1,7 +1,7 @@
-
 'use client';
 
 import { useActionState, useRef, useEffect } from 'react';
+import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -332,7 +332,7 @@ export function HttpHeaderChecker() {
              <section>
                 <h2 className="text-2xl font-bold mb-4">Related Tools & Articles</h2>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Link href="/tools/ssl-expiry-checker" className="block">
+                    <Link href="/tools/ssl-checker" className="block">
                         <Card className="hover:border-primary transition-colors h-full">
                             <CardHeader>
                                 <CardTitle className="text-base flex items-center justify-between">SSL Certificate Checker<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
