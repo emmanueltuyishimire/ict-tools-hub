@@ -64,7 +64,7 @@ const SqlQueryTesterPage = () => {
                     <AlertTriangle className="h-4 w-4" />
                     <AlertTitle>Educational Tool Only</AlertTitle>
                     <AlertDescription>
-                        This tool simulates a database in your browser and only supports basic `SELECT * FROM ... WHERE ...` queries. It is designed for learning and demonstration, not for production database work.
+                        This tool simulates a database in your browser and only supports basic `SELECT * FROM ... WHERE ...` queries with simple equality and comparison operators. It is designed for learning and demonstration, not for production database work.
                     </AlertDescription>
                 </Alert>
 
@@ -78,7 +78,7 @@ const SqlQueryTesterPage = () => {
                         <h4>1. Write and Run Queries</h4>
                         <ol>
                             <li><strong>Write Your Query:</strong> In the "Query Editor" at the top, write a simple `SELECT` statement. For example, start with <code className="font-code bg-muted p-1 rounded-sm">SELECT * FROM users</code>.</li>
-                            <li><strong>Add a Filter (Optional):</strong> Try adding a `WHERE` clause to filter your results, for example: <code className="font-code bg-muted p-1 rounded-sm">SELECT * FROM users WHERE country = 'Canada'</code>.</li>
+                            <li><strong>Add a Filter (Optional):</strong> Try adding a `WHERE` clause to filter your results, for example: <code className="font-code bg-muted p-1 rounded-sm">SELECT * FROM users WHERE country = 'Canada'</code>. You can use operators like `=`, `!=`, `>`, `<`, `>=`, and `<=`.</li>
                             <li><strong>Execute the Query:</strong> Click the "Run Query" button.</li>
                             <li><strong>Analyze the Results:</strong> A "Results" table will appear showing the rows returned by your query. If there's a syntax error, a helpful message will appear instead.</li>
                         </ol>

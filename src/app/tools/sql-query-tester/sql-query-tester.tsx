@@ -61,11 +61,11 @@ const executeQuery = (query: string, data: { [key: string]: any[] }) => {
     let results = table;
 
     if (whereClause) {
-        const whereMatch = whereClause.match(/([a-zA-Z0-9_]+)\s*=\s*(?:'([^']*)'|"([^"]*)"|(\d+(?:\.\d+)?))/);
+        const whereMatch = whereClause.match(/([a-zA-Z0-9_]+)\s*(=|>|<|>=|<=|!=)\s*(?:'([^']*)'|"([^"]*)"|(\d+(?:\.\d+)?))/);
         if (!whereMatch) {
-            throw new Error("Unsupported WHERE clause. Use 'column = 'value'', 'column = \"value\"', or 'column = number'.");
+            throw new Error("Unsupported WHERE clause. Use 'column = 'value'', 'column > number', etc.");
         }
-        const [, column, stringValue1, stringValue2, numberValue] = whereMatch;
+        const [, column, operator, stringValue1, stringValue2, numberValue] = whereMatch;
 
         if(table.length > 0 && !(column in table[0])) {
             throw new Error(`Column '${column}' not found in table '${tableName}'.`);
@@ -73,7 +73,18 @@ const executeQuery = (query: string, data: { [key: string]: any[] }) => {
         
         const value = stringValue1 !== undefined ? stringValue1 : (stringValue2 !== undefined ? stringValue2 : parseFloat(numberValue));
         
-        results = table.filter((row: any) => row[column] == value);
+        results = table.filter((row: any) => {
+           const rowValue = row[column];
+           switch (operator) {
+               case '=': return rowValue == value;
+               case '!=': return rowValue != value;
+               case '>': return rowValue > value;
+               case '<': return rowValue < value;
+               case '>=': return rowValue >= value;
+               case '<=': return rowValue <= value;
+               default: return false;
+           }
+        });
     }
     
     return results;
@@ -95,9 +106,16 @@ export function SqlQueryTester() {
             if (queryResults.length > 0) {
                 setHeaders(Object.keys(queryResults[0]));
             } else {
-                const tableName = query.match(/FROM\s+([a-zA-Z0-9_]+)/i)?.[1].toLowerCase();
-                if(tableName && tables[tableName] && tables[tableName].length > 0) {
-                    setHeaders(Object.keys(tables[tableName][0]));
+                const tableNameMatch = query.match(/FROM\s+([a-zA-Z0-9_]+)/i);
+                if (tableNameMatch) {
+                    const tableName = tableNameMatch[1].toLowerCase();
+                     if(tables[tableName] && tables[tableName].length > 0) {
+                        setHeaders(Object.keys(tables[tableName][0]));
+                    } else if (tables[tableName]) {
+                        setHeaders([]); // Table exists but is empty
+                    } else {
+                        setHeaders([]);
+                    }
                 } else {
                     setHeaders([]);
                 }
@@ -121,7 +139,11 @@ export function SqlQueryTester() {
     const handleAddRow = (tableName: string) => {
         setTables(prevTables => {
             const table = prevTables[tableName];
-            const newRow = Object.keys(table[0] || {id: 0}).reduce((acc, key) => {
+            if (!table || table.length === 0) {
+                 // If table is empty, create a row with a default 'id' column
+                return { ...prevTables, [tableName]: [{ id: 1 }] };
+            }
+            const newRow = Object.keys(table[0]).reduce((acc, key) => {
                 acc[key] = typeof table[0][key] === 'number' ? 0 : '';
                 return acc;
             }, {} as any);
@@ -345,7 +367,7 @@ export function SqlQueryTester() {
                                     {results.map((row, rowIndex) => (
                                         <TableRow key={rowIndex}>
                                             {headers.map(header => (
-                                                <TableCell key={`${rowIndex}-${header}`}>{row[header]}</TableCell>
+                                                <TableCell key={`${rowIndex}-${header}`}>{String(row[header])}</TableCell>
                                             ))}
                                         </TableRow>
                                     ))}
@@ -379,7 +401,7 @@ export function SqlQueryTester() {
                                     <Table>
                                         <TableHeader><TableRow>{Object.keys(data[0] || {}).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
                                         <TableBody>
-                                            {data.slice(0, 5).map((row: any, i: number) => <TableRow key={i}>{Object.values(row).map((val: any, j) => <TableCell key={j}>{val}</TableCell>)}</TableRow>)}
+                                            {data.slice(0, 5).map((row: any, i: number) => <TableRow key={i}>{Object.values(row).map((val: any, j) => <TableCell key={j}>{String(val)}</TableCell>)}</TableRow>)}
                                             {data.length > 5 && <TableRow><TableCell colSpan={Object.keys(data[0] || {}).length} className="text-center text-muted-foreground">...and {data.length - 5} more rows</TableCell></TableRow>}
                                         </TableBody>
                                     </Table>
