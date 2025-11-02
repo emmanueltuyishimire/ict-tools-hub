@@ -65,7 +65,7 @@ const StorageRedundancyCalculatorPage = () => {
                     <BookOpen className="h-4 w-4" />
                     <AlertTitle>Guide & Calculator</AlertTitle>
                     <AlertDescription>
-                       This page explains the concept of storage redundancy. The primary method for achieving this is with a <strong>RAID array</strong>. Use the calculator below to explore different RAID levels and their trade-offs.
+                       This guide explains the concept of storage redundancy. The primary method for achieving this is with a <strong>RAID array</strong>. Use the calculator below to explore different RAID levels and their trade-offs.
                     </AlertDescription>
                 </Alert>
 
@@ -102,7 +102,7 @@ const StorageRedundancyCalculatorPage = () => {
                                 In IT and engineering, redundancy is the practice of duplicating critical components or functions of a system with the intention of increasing reliability. The goal is to eliminate single points of failure. If one component fails, a redundant component can take over its function, ensuring the system continues to operate without interruption or data loss.
                             </p>
                             <p>
-                                When it comes to data storage, all hard drives will eventually fail. It's not a question of *if*, but *when*. Storage redundancy is the strategy of storing your data in a way that it can survive the failure of one or more physical drives. The most common and foundational technology for achieving this on a server is <strong>RAID (Redundant Array of Independent Disks)</strong>.
+                                When it comes to data storage, all hard drives will eventually fail. It's not a question of <strong>if</strong>, but <strong>when</strong>. Storage redundancy is the strategy of storing your data in a way that it can survive the failure of one or more physical drives. The most common and foundational technology for achieving this on a server is <strong>RAID (Redundant Array of Independent Disks)</strong>.
                             </p>
                         </section>
                          <section>
