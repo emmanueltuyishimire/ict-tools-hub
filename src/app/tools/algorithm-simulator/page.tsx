@@ -6,9 +6,10 @@ import { AlgorithmStepSimulator } from './algorithm-simulator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle, Gamepad } from 'lucide-react';
+import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle, Gamepad, Lightbulb, Check, X } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const metadata = {
     title: 'Algorithm Step Simulator | Visualize Sorting & Searching | ICT Toolbench',
@@ -89,15 +90,19 @@ const AlgorithmSimulatorPage = () => {
                         <CardDescription>Turn learning into a game. The best way to understand an algorithm is to predict its next move.</CardDescription>
                     </CardHeader>
                     <CardContent className="prose prose-sm max-w-none text-foreground">
-                        <p>Watching a simulation is great, but active learning is even better. Our <strong>Challenge Mode</strong> turns the simulator into an interactive quiz:</p>
+                        <p>Watching a simulation is great, but active learning is even better. Our <strong>Challenge Mode</strong> turns the simulator into an interactive quiz. Here's how it works:</p>
                         <ol>
-                           <li>Flip the "Challenge Mode" switch in the simulator.</li>
-                           <li>The simulation will pause and wait for your input.</li>
-                           <li>Read the log message, which describes the current state.</li>
-                           <li>Click on the array element(s) you believe the algorithm will compare or check in the very next step.</li>
-                           <li>If you're correct, the simulation advances. If not, try again! Your score is tracked to see how well you're doing.</li>
+                           <li>Flip the "Challenge Mode" switch in the simulator. The simulation will pause and wait for your input.</li>
+                           <li>Read the log message, which describes the current state of the algorithm (e.g., "Comparing elements...").</li>
+                           <li>Based on the algorithm's rules, click on the array element(s) you believe it will check or compare in the very next step.</li>
+                           <li><strong>Feedback:</strong>
+                                <ul>
+                                   <li>If you are correct, the element will flash <strong className="text-green-600">green</strong>, your score will increase, and the simulation will automatically advance to the next step.</li>
+                                   <li>If you are incorrect, the element will flash <strong className="text-red-600">red</strong>, your incorrect score will increase, and you can try again.</li>
+                                </ul>
+                           </li>
+                           <li>Continue predicting each step to complete the algorithm. This active participation forces you to think like the algorithm, solidifying your understanding of its step-by-step logic.</li>
                         </ol>
-                        <p>This active participation forces you to think like the algorithm, solidifying your understanding of its step-by-step logic in a way that passive observation cannot.</p>
                     </CardContent>
                 </Card>
 
