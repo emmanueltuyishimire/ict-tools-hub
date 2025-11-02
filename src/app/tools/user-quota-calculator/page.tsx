@@ -5,7 +5,7 @@ import { UserQuotaCalculator } from './user-quota-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
+import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle, Lightbulb } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -230,3 +230,6 @@ const UserQuotaCalculatorPage = () => {
 
 export default UserQuotaCalculatorPage;
 
+
+
+    
