@@ -87,7 +87,7 @@ const DataCompressionCalculatorPage = () => {
                                 <div className="prose prose-sm max-w-none">
                                     <ol>
                                         <li><strong>Input:</strong> `1.2` MB</li>
-                                        <li><strong>Calculation (Brotli):</strong> The tool estimates an ~80% reduction. `1.2 MB * 0.20 = 0.24 MB`.</li>
+                                        <li><strong>Calculation (Brotli):</strong> The tool estimates an ~80% reduction. `1.2 MB × 0.20 = 0.24 MB`.</li>
                                         <li><strong>Result:</strong> The estimated size is <strong>245.76 KB</strong>. This means the user's browser only needs to download about 246 KB instead of 1200 KB, dramatically improving the site's load time.</li>
                                     </ol>
                                 </div>
@@ -103,7 +103,7 @@ const DataCompressionCalculatorPage = () => {
                                  <div className="prose prose-sm max-w-none">
                                     <ol>
                                         <li><strong>Input:</strong> `500` MB</li>
-                                        <li><strong>Calculation (Gzip):</strong> The tool estimates a ~75% reduction. `500 MB * 0.25 = 125 MB`.</li>
+                                        <li><strong>Calculation (Gzip):</strong> The tool estimates a ~75% reduction. `500 MB × 0.25 = 125 MB`.</li>
                                         <li><strong>Result:</strong> The estimated compressed size is <strong>125 MB</strong>. This reduces their daily storage cost by 75% and also makes uploading the backup four times faster.</li>
                                     </ol>
                                 </div>
@@ -151,7 +151,7 @@ const DataCompressionCalculatorPage = () => {
                             <p>For web performance, two lossless algorithms dominate:</p>
                             <ul className="list-disc pl-5">
                                 <li><strong>Gzip:</strong> Based on the DEFLATE algorithm, Gzip has been the standard for web compression for decades. It's fast, efficient, and supported by virtually every server and browser. It's an excellent baseline for any web performance strategy.</li>
-                                <li><strong>Brotli:</strong> A newer algorithm developed by Google, Brotli uses a more modern compression technique and includes a pre-defined dictionary of common words and code snippets found on the web. This allows it to achieve significantly better compression ratios than Gzip (often 15-25% smaller) for the same files, at the cost of slightly slower compression times.</li>
+                                <li><strong>Brotli:</strong> A newer algorithm developed by Google, Brotli uses a more advanced compression technique and includes a pre-defined dictionary of common words and code snippets found on the web. This allows it to achieve significantly better compression ratios than Gzip (often 15-25% smaller) for the same files, at the cost of slightly slower compression times.</li>
                             </ul>
                             <p>
                                 The modern best practice is to configure your server to serve Brotli-compressed files to browsers that support it (which is most of them) and fall back to Gzip for older clients. You can check which compression your server is using with our <Link href="/tools/http-header-checker" className="text-primary hover:underline">HTTP Header Checker</Link>.
@@ -169,7 +169,56 @@ const DataCompressionCalculatorPage = () => {
                     </CardContent>
                 </Card>
 
-                 <section>
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Web Performance Optimization</h3>
+                            <p className="text-sm text-muted-foreground">A developer runs a performance audit on their website and finds their main JavaScript bundle is 800 KB. By using this tool, they see that enabling Brotli compression could reduce it to around 160 KB. This 80% reduction in file size would dramatically speed up the site's load time, especially for mobile users.</p>
+                        </div>
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Reducing Cloud Egress Costs</h3>
+                            <p className="text-sm text-muted-foreground">A company hosts a web app that serves large JSON API responses, leading to high data transfer (egress) costs. An engineer uses the estimator to show that by enabling Gzip compression on their API server, they could reduce their monthly bandwidth usage from 2 TB to approximately 500 GB, resulting in significant cost savings on their cloud bill.</p>
+                        </div>
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Database Backup Storage</h3>
+                            <p className="text-sm text-muted-foreground">A database administrator needs to store daily backups of a 2GB SQL database dump. By running it through this estimator, they see that compressing the dump with Gzip would reduce its size to ~500MB. This 75% saving significantly cuts down on their long-term cloud storage costs for backups.</p>
+                        </div>
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Transferring Large Log Files</h3>
+                            <p className="text-sm text-muted-foreground">A developer needs to download a 10GB server log file for analysis. Using the estimator, they see that compressing it first would reduce the download size to about 2.5GB. They can then use the <Link href="/tools/data-transfer-calculator" className="text-primary hover:underline">Data Transfer Time Calculator</Link> to see this reduces their download time by 75%, saving them valuable time.</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <div className="grid md:grid-cols-2 gap-8">
+                    <Card>
+                        <CardHeader>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                            <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Check Your Server's Compression:</strong> Use your browser's developer tools (Network tab), load your website, and inspect the response headers for a key asset like your main CSS file. Look for the `Content-Encoding: gzip` or `Content-Encoding: br` header. If it's missing, compression is not enabled.</li>
+                                <li><strong>Minify First, Compress Second:</strong> Always run your text assets through a minifier before compression. Minification removes unnecessary code, giving the compression algorithm a cleaner, denser file to work with, resulting in even smaller final sizes.</li>
+                                <li><strong>Dynamic vs. Static Compression:</strong> Servers can compress files "on the fly" for each request (dynamic compression) or pre-compress them and save them to disk (static compression). Static compression is more efficient as the work is only done once, making it ideal for assets that don't change often.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                            <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                            <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Compressing Images:</strong> Don't try to Gzip or Brotli images (JPG, PNG, WebP). They are already highly compressed. Doing so can actually make the file size larger due to the compression overhead.</li>
+                                <li><strong>Low Compression Level:</strong> Both Gzip and Brotli have compression levels (usually 1-9 for Gzip, 1-11 for Brotli). Using a very low level might be fast but will result in poor savings. For pre-compressing static assets, use the highest level. For on-the-fly compression, a mid-range level (like 4-6) is a good balance of speed and effectiveness.</li>
+                                <li><strong>Ignoring Caching:</strong> Compression reduces size for the first download. Proper caching headers prevent the browser from needing to re-download the file at all on subsequent visits. The two work together for optimal performance.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                </div>
+
+                <section>
                     <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
                     <Card>
                         <CardContent className="p-6">
