@@ -85,7 +85,8 @@ import { DataRetentionCalculator } from '@/app/tools/data-retention-calculator/d
 import { BackupScheduler } from '@/app/tools/backup-scheduler/backup-scheduler';
 import { StorageGrowthEstimator } from '@/app/tools/storage-growth-estimator/storage-growth-estimator';
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata({ params: rawParams }: { params: { slug: string } }) {
+  const params = await rawParams;
   const tool = allTools.find((t) => t.slug === params.slug);
 
   if (!tool) {
@@ -187,7 +188,8 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'storage-growth-estimator': StorageGrowthEstimator,
 };
 
-export default function ToolPage({ params }: { params: { slug: string } }) {
+export default async function ToolPage({ params: rawParams }: { params: { slug: string } }) {
+  const params = await rawParams;
   const tool = allTools.find((t) => t.slug === params.slug);
   const ToolComponent = toolComponentMap[params.slug];
 
