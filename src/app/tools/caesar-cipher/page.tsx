@@ -1,4 +1,5 @@
 
+
 import { PageHeader } from '@/components/page-header';
 import { CaesarCipher } from './caesar-cipher';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -6,47 +7,13 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, ArrowRightLeft, Copy } from 'lucide-react';
 import Link from 'next/link';
+import { faqData, howToSchema, keyTerminologies } from './schema';
+
 
 export const metadata = {
     title: 'Caesar Cipher Encoder / Decoder | ICT Toolbench',
     description: 'Explore the classic Caesar cipher with our real-time encoder and decoder. Choose any shift value from 1 to 25 to encrypt and decrypt messages instantly.',
 };
-
-const faqData = [
-    { question: "What is a Caesar cipher?", answer: "A Caesar cipher is one of the oldest and simplest forms of encryption. It is a substitution cipher where each letter in the plaintext is shifted a certain number of places down the alphabet. For example, with a shift of 3, 'A' would become 'D', 'B' would become 'E', and so on. The alphabet wraps around, so 'Z' with a shift of 3 would become 'C'." },
-    { question: "Is the Caesar cipher secure?", answer: "Absolutely not. It is extremely insecure by modern standards. Since there are only 25 possible shifts, an attacker can easily try all of them in a brute-force attack to find the original message. It should only be used for educational purposes or simple puzzles." },
-    { question: "How does this tool work?", answer: "This tool takes your text and a chosen shift value (from 1 to 25). For each letter in the text, it calculates its new position in the alphabet based on the shift and reconstructs the new message. The same process works in reverse for decoding." },
-    { question: "What is the difference between this and ROT13?", answer: "ROT13 is a specific type of Caesar cipher where the shift value is always 13. Because 13 is half of 26, ROT13 is its own inverse (encoding and decoding use the same operation). This tool allows you to use any shift from 1 to 25, making it a more general Caesar cipher implementation. You can try our dedicated <a href='/tools/rot13-encoder-decoder' class='text-primary hover:underline'>ROT13 tool</a> to see this in action." },
-    { question: "What happens to numbers, spaces, and symbols?", answer: "In a standard Caesar cipher, any characters that are not letters of the alphabet are left unchanged. This tool follows that convention, only shifting the letters A-Z (both uppercase and lowercase)." },
-    { question: "Who was Caesar and did he really use this?", answer: "The cipher is named after Julius Caesar, the Roman general and statesman, who, according to the historian Suetonius, used it with a shift of three to protect his military communications. If a message was intercepted, it would be unreadable to anyone who didn't know the secret shift key." },
-    { question: "What is 'brute-force attack' in this context?", answer: "A brute-force attack is a trial-and-error method used to decode encrypted data. For a Caesar cipher, an attacker would simply try decoding the message with a shift of 1, then a shift of 2, then 3, and so on, up to 25. One of these attempts will produce readable text, breaking the cipher instantly." },
-    { question: "Is it possible to have a shift greater than 25?", answer: "While you could, it would be redundant. A shift of 26 would result in the original text. A shift of 27 would be identical to a shift of 1, as the alphabet wraps around. Therefore, only shifts from 1 to 25 produce unique ciphers." },
-    { question: "What is a 'substitution cipher'?", answer: "A substitution cipher is a method of encryption where units of plaintext are replaced with ciphertext according to a regular system. In a simple substitution cipher like Caesar's, each letter is replaced by another letter. More complex ciphers can substitute letters for symbols or groups of letters." },
-    { question: "How could I make this cipher stronger?", answer: "A simple Caesar cipher is weak because every letter is shifted by the same amount. A stronger (but still breakable) version would be a 'polyalphabetic cipher' like the Vigenère cipher, where the shift value changes for each letter based on a keyword. Modern encryption, like our <a href='/tools/encryption-decryption-tool' class='text-primary hover:underline'>AES Encryption Tool</a>, is vastly more complex and not based on simple letter substitution." },
-];
-
-const howToSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'HowTo',
-    name: 'How to Use the Caesar Cipher Tool',
-    description: 'A step-by-step guide to encoding and decoding text with a Caesar cipher.',
-    step: [
-        { '@type': 'HowToStep', name: 'Select a Shift Value', text: 'Use the slider to choose a shift value between 1 and 25. This is your secret key.' },
-        { '@type': 'HowToStep', name: 'Enter Text', text: 'To encode, type your message into the top "Decoded" box. To decode, paste the ciphertext into the bottom "Encoded" box.' },
-        { '@type': 'HowToStep', name: 'View Instant Results', text: 'The tool will automatically apply the shift to your text and display the result in the other box in real-time.' },
-        { '@type': 'HowToStep', name: 'Copy or Swap', text: 'Use the copy icon to copy the output. Use the swap button to switch the contents of the two text boxes.' },
-    ],
-    totalTime: 'PT1M'
-};
-
-const keyTerminologies = [
-    { term: 'Caesar Cipher', definition: 'A substitution cipher where each letter is shifted a fixed number of places down the alphabet.' },
-    { term: 'Shift Key', definition: 'The number of positions each letter is shifted in a Caesar cipher. This is the "secret" needed to decode the message.' },
-    { term: 'Plaintext', definition: 'The original, readable message before encryption.' },
-    { term: 'Ciphertext', definition: 'The encrypted, unreadable message after the cipher has been applied.' },
-    { term: 'Brute-Force Attack', definition: 'An attack method that involves systematically trying all possible keys (in this case, all 25 shifts) until the correct one is found.' },
-    { term: 'Cryptography', definition: 'The practice and study of techniques for secure communication in the presence of third parties.' },
-];
 
 export default function CaesarCipherPage() {
   const faqSchema = {
@@ -62,10 +29,26 @@ export default function CaesarCipherPage() {
     })),
   };
 
+    const softwareAppSchema = {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Caesar Cipher Encoder / Decoder",
+      "operatingSystem": "All",
+      "applicationCategory": "SecurityApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "An educational tool to demonstrate the Caesar substitution cipher with a variable shift.",
+      "url": "https://www.icttoolbench.com/tools/caesar-cipher"
+  };
+
   return (
     <>
       <StructuredData data={faqSchema} />
       <StructuredData data={howToSchema} />
+      <StructuredData data={softwareAppSchema} />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
           title="Caesar Cipher Encoder / Decoder"
@@ -138,7 +121,7 @@ export default function CaesarCipherPage() {
             <div className="grid md:grid-cols-2 gap-6">
                 <div className="bg-card p-6 rounded-lg">
                     <h3 className="font-semibold text-lg mb-2">Educational Puzzles</h3>
-                    <p className="text-sm text-muted-foreground">The Caesar cipher is a classic tool for creating puzzles in escape rooms, scavenger hunts, and educational materials for children. It offers a fun and engaging way to introduce the basic concepts of cryptography without being overly complex.</p>
+                    <p className="text-sm text-muted-foreground">The Caesar cipher is a classic tool for creating puzzles in escape rooms, scavenger hunts, and educational materials for children. It provides a fun and engaging way to introduce the basic concepts of cryptography without being overly complex.</p>
                 </div>
                  <div className="bg-card p-6 rounded-lg">
                     <h3 className="font-semibold text-lg mb-2">Basic Data Obfuscation</h3>

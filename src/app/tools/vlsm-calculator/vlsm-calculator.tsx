@@ -41,14 +41,14 @@ const faqData = [
     { question: "What happens to the leftover IP addresses?", answer: "After the VLSM calculation is complete, any remaining IP address space within the major network that was not allocated to a subnet is considered 'unallocated'. This space can be reserved for future growth or used for new subnets later, as long as there is a large enough contiguous block to meet the new requirement." },
     { question: "Is it better to use a /30 or a /31 for a WAN link?", answer: "Traditionally, a /30 was used, providing 4 total IPs (2 usable for devices, 1 for network ID, 1 for broadcast). However, modern best practice (RFC 3021) recommends using a /31 for point-to-point links. A /31 provides 2 total IPs, both of which are assigned to the devices, eliminating waste from network and broadcast addresses that are unnecessary on a link with only two endpoints." },
     { question: "How do I calculate the required CIDR for a number of hosts?", answer: "You need to find the smallest power of 2 that is greater than or equal to the number of hosts plus two (for the network and broadcast addresses). For example, for 30 hosts, you need 30+2=32 addresses. 2^5 = 32. So you need 5 host bits. Since an IPv4 address has 32 bits total, the network portion will be 32 - 5 = 27 bits. Therefore, you need a /27 subnet." },
-    { question: "Does this calculator work for IPv6?", answer: "No, this calculator is designed exclusively for IPv4. IPv6 uses a 128-bit address space and a similar concept of subnetting with prefix lengths, but the calculations and terminology are different. IPv6 does not use VLSM in the same way as IPv4." },
-    { question: "What is 'route summarization' and how does VLSM relate to it?", answer: "Route summarization (or supernetting) is the process of combining multiple smaller network routes into a single, more general route. VLSM is the process of breaking a network down, while summarization is the process of building it back up. A well-designed VLSM scheme makes route summarization more effective, which can significantly reduce the size of routing tables and improve router performance." },
+    { question: "Does this calculator work for IPv6?", answer: "No, this calculator is designed exclusively for IPv4. IPv6 uses a 128-bit address space and a similar concept of subnetting with prefix lengths, but the calculations and terminology are different." },
+    { question: "What is 'route summarization' and how does VLSM relate to it?", answer: "Route summarization (or supernetting) is the process of combining multiple smaller network routes into a single, more general route. VLSM is the process of breaking a network down, while summarization is the reverse process. A well-designed VLSM scheme makes route summarization more effective, which can significantly reduce the size of routing tables and improve router performance." },
 ];
 
 const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })),
+    mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } })),
 };
 
 const howToSchema = {
@@ -454,7 +454,7 @@ export function VlsmCalculator() {
                     </CardContent>
                 </Card>
             </div>
-
+            
             <section>
                 <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
                 <div className="grid md:grid-cols-2 gap-6">
