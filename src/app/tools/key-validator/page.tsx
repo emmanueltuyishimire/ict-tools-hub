@@ -5,7 +5,7 @@ import { PrimaryForeignKeyValidator } from './key-validator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
+import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -169,6 +169,28 @@ const PrimaryForeignKeyValidatorPage = () => {
                     </CardContent>
                 </Card>
                 
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">E-commerce Order System</h3>
+                            <p className="text-sm text-muted-foreground">In an e-commerce database, the `orders` table has a `customer_id` foreign key referencing the `customers` table. This ensures that every order is linked to a valid, existing customer, preventing "ghost" orders and maintaining data accuracy for shipping and reporting.</p>
+                        </div>
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Social Media Posts and Comments</h3>
+                            <p className="text-sm text-muted-foreground">A `comments` table has a `post_id` foreign key pointing to the `posts` table. This guarantees that every comment is associated with an actual post. If a post is deleted, a `CASCADE DELETE` rule could automatically remove all its associated comments, keeping the database clean.</p>
+                        </div>
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Employee and Department Management</h3>
+                            <p className="text-sm text-muted-foreground">An `employees` table might have a `department_id` foreign key referencing the `departments` table. An employee can have a `NULL` department ID if they are unassigned, but if a value is present, it must be a valid ID that exists in the `departments` table.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Validating Data Imports</h3>
+                            <p className="text-sm text-muted-foreground">Before importing a large CSV file of sales data into a database, a data engineer can use a script (or this tool conceptually) to validate that all `product_id`s in the sales data exist in their master `products` table, preventing the import of thousands of rows of invalid data.</p>
+                        </div>
+                    </div>
+                </section>
+                
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
                         <CardHeader>
@@ -204,7 +226,7 @@ const PrimaryForeignKeyValidatorPage = () => {
                               {faqData.map((item, index) => (
                                   <AccordionItem value={`item-${index}`} key={index}>
                                       <AccordionTrigger>{item.question}</AccordionTrigger>
-                                      <AccordionContent>{item.answer}</AccordionContent>
+                                      <AccordionContent><div dangerouslySetInnerHTML={{ __html: item.answer.replace(/href="\/tools\/([^"]*)"/g, 'href="/tools/$1" class="text-primary hover:underline"') }} /></AccordionContent>
                                   </AccordionItem>
                               ))}
                           </Accordion>
