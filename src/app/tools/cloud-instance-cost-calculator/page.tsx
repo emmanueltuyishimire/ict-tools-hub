@@ -68,7 +68,7 @@ const CloudInstanceCostCalculatorPage = () => {
                         <p>This tool gives you a quick, high-level estimate for cloud compute costs to help with initial planning and comparison.</p>
                         <ol>
                             <li><strong>Select Cloud Provider &amp; Region:</strong> Choose your preferred cloud provider and the region where you plan to deploy your VM. Pricing varies significantly by region.</li>
-                            <li><strong>Enter VM Resources:</strong> Input the number of virtual CPUs (vCPUs) and the amount of RAM (in GB) that you require for your instance. You can get a baseline for this using our <Link href="/tools/vm-requirement-estimator">VM Requirement Estimator</Link>.</li>
+                            <li><strong>Enter VM Resources:</strong> Input the number of virtual CPUs (vCPUs) and the amount of RAM (in GB) that you require for your instance. You can get a baseline for this using our <Link href="/tools/vm-requirement-estimator" className="text-primary hover:underline">VM Requirement Estimator</Link>.</li>
                             <li><strong>Calculate Cost:</strong> The tool will automatically calculate the estimated monthly cost based on the On-Demand pricing for the selected provider's general-purpose instance family in that region.</li>
                             <li><strong>Use Custom Pricing (Optional):</strong> Select "Custom" as the provider to enter your own hourly rates for vCPU and RAM, allowing you to model costs for any provider or specific instance type.</li>
                         </ol>
@@ -114,8 +114,8 @@ const CloudInstanceCostCalculatorPage = () => {
                             </p>
                             <ul className="list-disc pl-5">
                                 <li><strong>Compute (vCPU and RAM):</strong> This is the core of your instance cost, billed per hour or per second. It's the processing power and memory you reserve. This tool estimates this component.</li>
-                                <li><strong>Storage (Disk):</strong> You pay for the virtual hard disk attached to your VM. This is usually priced per GB-month. Faster storage (like Provisioned IOPS SSDs) costs more than standard storage. Use our <Link href="/tools/cloud-storage-cost-estimator">Cloud Storage Cost Estimator</Link> to model this.</li>
-                                <li><strong>Data Transfer (Egress):</strong> You are charged for data that leaves the cloud provider's network. This can be a significant and often overlooked cost. Use our <Link href="/tools/bandwidth-cost-calculator">Bandwidth Cost Calculator</Link> to estimate this.</li>
+                                <li><strong>Storage (Disk):</strong> You pay for the virtual hard disk attached to your VM. This is usually priced per GB-month. Faster storage (like Provisioned IOPS SSDs) costs more than standard storage. Use our <Link href="/tools/cloud-storage-cost-estimator" className="text-primary hover:underline">Cloud Storage Cost Estimator</Link> to model this.</li>
+                                <li><strong>Data Transfer (Egress):</strong> You are charged for data that leaves the cloud provider's network. This can be a significant and often overlooked cost. Use our <Link href="/tools/bandwidth-cost-calculator" className="text-primary hover:underline">Bandwidth Cost Calculator</Link> to estimate this.</li>
                             </ul>
                         </section>
                         <section>

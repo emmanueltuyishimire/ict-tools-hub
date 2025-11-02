@@ -91,7 +91,7 @@ const BandwidthCostCalculatorPage = () => {
                                 <CardDescription>Estimating egress costs for a content-heavy blog with significant traffic.</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
-                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> A successful blog serves 5 TB of data per month (images, CSS, JS) from an AWS S3 bucket in <code>us-east-1</code>.</p>
+                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> A successful blog serves 5 TB of data per month (images, CSS, JS) from an AWS S3 bucket in <strong>us-east-1</strong>.</p>
                                 <div className="prose prose-sm max-w-none">
                                     <ol>
                                         <li><strong>Inputs:</strong>
@@ -154,7 +154,7 @@ const BandwidthCostCalculatorPage = () => {
                         <section>
                             <h3>What is Egress and Why Is It So Expensive?</h3>
                             <p>
-                                In the world of cloud computing, "egress" refers to any network traffic that leaves the cloud provider's network and goes out to the public internet. While providers make it free and easy to get your data <em>into</em> their cloud (ingress), they charge a fee for every gigabyte that leaves.
+                                In the world of cloud computing, <strong>egress</strong> refers to any network traffic that leaves the cloud provider's network and goes out to the public internet. While providers make it free and easy to get your data <em>into</em> their cloud (ingress), they charge a fee for every gigabyte that leaves.
                             </p>
                             <p>
                                 This is often the most surprising and significant cost for new cloud users. Why? Because providers have to pay for the massive, high-speed, and redundant internet connectivity required to deliver content globally. These costs are passed on to the customer. A simple web application serving images and videos can easily generate terabytes of egress traffic, potentially resulting in a bill that is far higher than the cost of the servers themselves. You can estimate how long this will take with our <Link href="/tools/data-transfer-calculator" className="text-primary hover:underline">Data Transfer Time Calculator</Link>.
@@ -175,7 +175,7 @@ const BandwidthCostCalculatorPage = () => {
                             <p>Not all data transfer is created equal. It's crucial to understand the different types:</p>
                              <ul className="list-disc pl-5">
                                <li><strong>Egress to Internet (This Tool's Focus):</strong> Data leaving the cloud to a user on the public internet. This is the most expensive type.</li>
-                               <li><strong>Inter-Region Transfer:</strong> Data moving between two different cloud regions (e.g., from a server in <code>us-east-1</code> to a database in <code>eu-west-1</code>). This is cheaper than internet egress but is still a significant cost. You may need to do this for <Link href="/tools/storage-redundancy-calculator" className="text-primary hover:underline">Storage Redundancy</Link>.</li>
+                               <li><strong>Inter-Region Transfer:</strong> Data moving between two different cloud regions (e.g., from a server in <strong>us-east-1</strong> to a database in <strong>eu-west-1</strong>). This is cheaper than internet egress but is still a significant cost. You may need to do this for <Link href="/tools/storage-redundancy-calculator" className="text-primary hover:underline">Storage Redundancy</Link>.</li>
                                <li><strong>Intra-Region Transfer:</strong> Data moving between services within the same cloud region (e.g., from an EC2 instance to an S3 bucket in the same region). This is often free or very cheap, making it a key architectural consideration for cost optimization.</li>
                             </ul>
                         </section>
