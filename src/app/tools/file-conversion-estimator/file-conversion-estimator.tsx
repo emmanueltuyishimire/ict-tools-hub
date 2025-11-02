@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -74,7 +74,7 @@ export function FileConversionEstimator() {
     };
     
     // Reset formats when conversion type changes
-    React.useEffect(() => {
+    useEffect(() => {
         const options = conversionOptions[conversionType];
         setFromFormat(options.from[0]);
         setToFormat(options.to.find(f => f !== options.from[0]) || options.to[0]);
