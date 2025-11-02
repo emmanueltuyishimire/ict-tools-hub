@@ -86,7 +86,7 @@ const NormalizationCheckerPage = () => {
                         </ol>
                     </Card>
                 </section>
-                
+
                 <section>
                    <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
                    <Card>
@@ -130,11 +130,12 @@ const NormalizationCheckerPage = () => {
                             </ol>
                             <p>Consider this un-normalized table:</p>
                              <Table className="bg-background">
+                                <TableCaption>Un-normalized `orders` table</TableCaption>
                                 <TableHeader><TableRow><TableHead>order_id</TableHead><TableHead>customer_name</TableHead><TableHead>products</TableHead></TableRow></TableHeader>
                                 <TableBody><TableRow><TableCell>101</TableCell><TableCell>Alice</TableCell><TableCell>Laptop, Mouse</TableCell></TableRow></TableBody>
                             </Table>
                             <p>This violates 1NF because the `products` column contains a list, not an atomic value. To fix this, we create a separate `order_items` table, moving the repeating group there:</p>
-                            <Table className="bg-background">
+                            <Table className="bg-background mt-4">
                                 <TableCaption>orders (now in 1NF)</TableCaption>
                                 <TableHeader><TableRow><TableHead>order_id (PK)</TableHead><TableHead>customer_name</TableHead></TableRow></TableHeader>
                                 <TableBody><TableRow><TableCell>101</TableCell><TableCell>Alice</TableCell></TableRow></TableBody>
@@ -153,6 +154,7 @@ const NormalizationCheckerPage = () => {
                             <p>A table is in 2NF if it is in 1NF and every non-key column is fully functionally dependent on the entire primary key. This rule only applies to tables with a <strong>composite primary key</strong> (a primary key made of two or more columns).</p>
                             <p>Consider our `order_items` table, now with more detail. The primary key is (`order_id`, `product_id`).</p>
                              <Table className="bg-background">
+                                <TableCaption>order_items (violates 2NF)</TableCaption>
                                 <TableHeader><TableRow><TableHead>order_id (PK)</TableHead><TableHead>product_id (PK)</TableHead><TableHead>product_name</TableHead><TableHead>quantity</TableHead></TableRow></TableHeader>
                                 <TableBody><TableRow><TableCell>101</TableCell><TableCell>P5</TableCell><TableCell>Laptop</TableCell><TableCell>1</TableCell></TableRow></TableBody>
                             </Table>
@@ -173,6 +175,7 @@ const NormalizationCheckerPage = () => {
                             <p>A table is in 3NF if it is in 2NF and has no transitive dependencies. A transitive dependency is when a non-key column depends on another non-key column, rather than directly on the primary key.</p>
                             <p>Consider our original `orders` table, but with more customer detail:</p>
                              <Table className="bg-background">
+                                <TableCaption>orders (violates 3NF)</TableCaption>
                                 <TableHeader><TableRow><TableHead>order_id (PK)</TableHead><TableHead>customer_id</TableHead><TableHead>customer_zip_code</TableHead><TableHead>customer_city</TableHead></TableRow></TableHeader>
                                 <TableBody><TableRow><TableCell>101</TableCell><TableCell>C1</TableCell><TableCell>90210</TableCell><TableCell>Beverly Hills</TableCell></TableRow></TableBody>
                             </Table>
@@ -180,19 +183,101 @@ const NormalizationCheckerPage = () => {
                         </section>
                     </CardContent>
                 </Card>
+
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Worked Examples</h2>
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 1: The Project Management Table</CardTitle>
+                                <CardDescription>Normalizing a table that tracks employees and their projects.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-sm text-muted-foreground"><strong>Initial (Un-normalized) Table:</strong></p>
+                                <Table className="bg-background text-sm">
+                                    <TableHeader><TableRow><TableHead>employee_id</TableHead><TableHead>employee_name</TableHead><TableHead>projects</TableHead></TableRow></TableHeader>
+                                    <TableBody><TableRow><TableCell>E1</TableCell><TableCell>Bob</TableCell><TableCell>Project A, Project B</TableCell></TableRow></TableBody>
+                                </Table>
+                                <p className="text-sm"><strong>Problem:</strong> Violates 1NF. The `projects` column is not atomic; it contains a list. This makes it impossible to query for all employees on "Project B".</p>
+                                <p className="text-sm text-muted-foreground"><strong>1NF Solution:</strong> Split into two tables.</p>
+                                <Table className="bg-background text-sm">
+                                    <TableCaption>employees</TableCaption>
+                                    <TableHeader><TableRow><TableHead>employee_id (PK)</TableHead><TableHead>employee_name</TableHead></TableRow></TableHeader>
+                                    <TableBody><TableRow><TableCell>E1</TableCell><TableCell>Bob</TableCell></TableRow></TableBody>
+                                </Table>
+                                 <Table className="bg-background text-sm mt-2">
+                                    <TableCaption>employee_projects (Junction Table)</TableCaption>
+                                    <TableHeader><TableRow><TableHead>employee_id (PK, FK)</TableHead><TableHead>project_id (PK, FK)</TableHead></TableRow></TableHeader>
+                                    <TableBody>
+                                        <TableRow><TableCell>E1</TableCell><TableCell>A</TableCell></TableRow>
+                                        <TableRow><TableCell>E1</TableCell><TableCell>B</TableCell></TableRow>
+                                    </TableBody>
+                                </Table>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl">Example 2: The University Course Table</CardTitle>
+                                <CardDescription>Fixing a transitive dependency in a student enrollment table.</CardDescription>
+                            </CardHeader>
+                             <CardContent className="space-y-4">
+                               <p className="text-sm text-muted-foreground"><strong>Initial Table (in 2NF):</strong></p>
+                                <Table className="bg-background text-sm">
+                                    <TableHeader><TableRow><TableHead>student_id (PK)</TableHead><TableHead>course_id</TableHead><TableHead>professor_id</TableHead><TableHead>professor_office</TableHead></TableRow></TableHeader>
+                                    <TableBody><TableRow><TableCell>S101</TableCell><TableCell>CS101</TableCell><TableCell>P5</TableCell><TableCell>Room 302</TableCell></TableRow></TableBody>
+                                </Table>
+                               <p className="text-sm"><strong>Problem:</strong> Violates 3NF. The `professor_office` does not depend on the primary key (`student_id`). It depends on a non-key column, `professor_id`. If Professor P5 moves offices, you'd have to update every single row for every student they teach.</p>
+                               <p className="text-sm text-muted-foreground"><strong>3NF Solution:</strong> Split into two tables.</p>
+                                <Table className="bg-background text-sm">
+                                    <TableCaption>professors (New Table)</TableCaption>
+                                    <TableHeader><TableRow><TableHead>professor_id (PK)</TableHead><TableHead>professor_office</TableHead></TableRow></TableHeader>
+                                    <TableBody><TableRow><TableCell>P5</TableCell><TableCell>Room 302</TableCell></TableRow></TableBody>
+                                </Table>
+                                <Table className="bg-background text-sm mt-2">
+                                    <TableCaption>student_enrollments (now in 3NF)</TableCaption>
+                                    <TableHeader><TableRow><TableHead>student_id (PK, FK)</TableHead><TableHead>course_id (PK, FK)</TableHead><TableHead>professor_id (FK)</TableHead></TableRow></TableHeader>
+                                     <TableBody><TableRow><TableCell>S101</TableCell><TableCell>CS101</TableCell><TableCell>P5</TableCell></TableRow></TableBody>
+                                </Table>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
                 
                  <section>
-                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
-                    <div className="grid md:grid-cols-2 gap-6">
-                        <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">Designing a New Database Schema</h3>
-                            <p className="text-sm text-muted-foreground">A developer is designing the database for a new project. Before writing any code, they map out their tables and columns on a whiteboard. They walk through the normalization rules (1NF, 2NF, 3NF) for each table to ensure the initial design is clean, efficient, and free of data anomalies, saving significant refactoring time later.</p>
-                        </div>
-                         <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">Refactoring a Legacy System</h3>
-                            <p className="text-sm text-muted-foreground">A company has a legacy application built on a single, massive table with dozens of columns, leading to slow performance and data inconsistencies. A database administrator uses the principles of normalization to break this "God table" apart into a set of smaller, related tables (e.g., `customers`, `products`, `orders`), improving data integrity and query speed.</p>
-                        </div>
-                    </div>
+                    <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
+                     <Card>
+                        <CardContent className="p-6">
+                            <ul className="space-y-4">
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Start with a Good Design</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                           It is always easier to normalize your data model during the design phase than to refactor a live database with millions of rows. Draw your tables and relationships on a whiteboard first.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Use Surrogate Keys</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                           Use auto-incrementing integers or UUIDs as your primary keys. They have no business meaning and will never change, which makes relationships much more stable. You can use our <Link href="/tools/random-string-generator" className="text-primary hover:underline">Random String Generator</Link> to create UUIDs.
+                                        </p>
+                                    </div>
+                                </li>
+                                 <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Denormalize with Caution</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            For read-heavy applications like analytics dashboards, it's sometimes acceptable to intentionally "denormalize" data to avoid complex `JOIN`s and improve query speed. This should be a conscious decision, not an accident of poor design.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </CardContent>
+                     </Card>
                 </section>
 
                 <div className="grid md:grid-cols-2 gap-8">
@@ -231,7 +316,7 @@ const NormalizationCheckerPage = () => {
                                   <AccordionItem value={`item-${index}`} key={index}>
                                       <AccordionTrigger>{item.question}</AccordionTrigger>
                                       <AccordionContent>
-                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/href="\/tools\/([^"]*)"/g, 'href="/tools/$1" class="text-primary hover:underline"') }} />
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer }} />
                                       </AccordionContent>
                                   </AccordionItem>
                               ))}
