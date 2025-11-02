@@ -1,6 +1,4 @@
 
-'use client';
-
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -10,6 +8,7 @@ import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle, Database, Cop
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { RaidCalculator } from '../raid-calculator/raid-calculator';
 
 export const metadata = {
     title: 'Replication & Sharding Planning Guide | ICT Toolbench',

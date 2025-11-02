@@ -144,7 +144,7 @@ const StorageRedundancyCalculatorPage = () => {
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                                 <li><strong>Never Use RAID 5 with Large Drives:</strong> For modern, high-capacity drives (e.g., > 2TB), RAID 5 is considered unsafe. The long rebuild time after a single disk failure puts immense stress on the remaining drives, significantly increasing the probability of a second disk failing during the rebuild, which would result in total data loss. Use RAID 6 or RAID 10 for large arrays.</li>
                                 <li><strong>Use Identical Drives:</strong> For best performance and reliability, always use identical drives (same manufacturer, model, size, and speed) in your RAID array.</li>
-                                <li><strong>RAID is NOT a Backup:</strong> This is the most critical rule. RAID protects against hardware failure; it does not protect against accidental deletion, file corruption, malware, or catastrophic events like fire or theft. You must still have a comprehensive backup strategy. Use our <Link href="/tools/backup-scheduler" className="text-primary hover:underline">Backup Scheduler</Link> to plan it.</li>
+                                <li><strong>RAID is NOT a Backup:</strong> This is the most critical rule. RAID protects against hardware failure; it does not protect against accidental file deletion, file corruption, malware, or catastrophic events like fire or theft. You must still have a comprehensive backup strategy. Use our <Link href="/tools/backup-scheduler" className="text-primary hover:underline">Backup Scheduler</Link> to plan it.</li>
                                 <li><strong>Hot Spares:</strong> For critical systems, configure a "hot spare." This is an unused disk in the array that can automatically take the place of a failed disk and start the rebuild process immediately, without waiting for manual intervention.</li>
                             </ul>
                         </CardContent>
@@ -205,27 +205,27 @@ const StorageRedundancyCalculatorPage = () => {
               <section>
                   <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      <Link href="/tools/raid-calculator" className="block">
+                      <Link href="/tools/backup-storage-calculator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">RAID Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                  <CardDescription className="text-xs">Go to the main tool page for a more detailed guide specifically on RAID levels.</CardDescription>
+                                  <CardTitle className="text-base flex items-center justify-between">Backup Storage Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">Once you know your usable RAID capacity, plan how much space your backups will need.</CardDescription>
                               </CardHeader>
                           </Card>
                       </Link>
-                      <Link href="/tools/disk-usage-estimator" className="block">
+                      <Link href="/tools/data-transfer-calculator" className="block">
+                          <Card className="hover:border-primary transition-colors h-full">
+                              <CardHeader>
+                                  <CardTitle className="text-base flex items-center justify-between">Data Transfer Time Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">Estimate how long it will take to fill your new RAID array or restore data to it.</CardDescription>
+                              </CardHeader>
+                          </Card>
+                      </Link>
+                       <Link href="/tools/disk-usage-estimator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
                                   <CardTitle className="text-base flex items-center justify-between">Disk Usage / Partition Estimator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                  <CardDescription className="text-xs">Once you have your usable capacity, plan how you will partition the logical drive for your operating system.</CardDescription>
-                              </CardHeader>
-                          </Card>
-                      </Link>
-                       <Link href="/tools/backup-scheduler" className="block">
-                          <Card className="hover:border-primary transition-colors h-full">
-                              <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Backup Scheduler<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                  <CardDescription className="text-xs">Remember that RAID is not a backup! Plan your separate backup strategy here.</CardDescription>
+                                  <CardDescription className="text-xs">After determining your usable capacity, plan how you will partition that space for your OS.</CardDescription>
                               </CardHeader>
                           </Card>
                       </Link>

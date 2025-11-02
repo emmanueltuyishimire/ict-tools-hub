@@ -1,5 +1,5 @@
-'use client';
-import React from 'react';
+
+import React from "react";
 import { PageHeader } from '@/components/page-header';
 import { HtmlEntityEncoderDecoder } from './html-entity-encoder-decoder';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -148,10 +148,9 @@ export default function HtmlEntityEncoderDecoderPage() {
                                   </AccordionContent>
                               </AccordionItem>
                           ))}
-                      </Accordion>
-                  </CardContent>
-              </Card>
-          </section>
+                      </AccordionContent>
+                  </Card>
+              </section>
       </div>
     </>
   );

@@ -169,7 +169,7 @@ const RaidCalculatorPage = () => {
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                                 <li><strong>Never Use RAID 5 with Large Drives:</strong> For modern, high-capacity drives (e.g., > 2TB), RAID 5 is considered unsafe. The long rebuild time after a single disk failure puts immense stress on the remaining drives, significantly increasing the probability of a second disk failing during the rebuild, which would result in total data loss. Use RAID 6 or RAID 10 for large arrays.</li>
                                 <li><strong>Use Identical Drives:</strong> For best performance and reliability, always use identical drives (same manufacturer, model, size, and speed) in your RAID array.</li>
-                                <li><strong>RAID is NOT a Backup:</strong> This is the most critical rule. RAID protects against hardware failure; it does not protect against accidental deletion, file corruption, malware, or catastrophic events like fire or theft. You must still have a comprehensive backup strategy. Use our <Link href="/tools/backup-scheduler" className="text-primary hover:underline">Backup Scheduler</Link> to plan it.</li>
+                                <li><strong>RAID is NOT a Backup:</strong> This is the most critical rule. RAID protects against hardware failure; it does not protect against accidental file deletion, file corruption, malware, or catastrophic events like fire or theft. You must still have a comprehensive backup strategy. Use our <Link href="/tools/backup-scheduler" className="text-primary hover:underline">Backup Scheduler</Link> to plan it.</li>
                                 <li><strong>Hot Spares:</strong> For critical systems, configure a "hot spare." This is an unused disk in the array that can automatically take the place of a failed disk and start the rebuild process immediately, without waiting for manual intervention.</li>
                             </ul>
                         </CardContent>
@@ -262,5 +262,3 @@ const RaidCalculatorPage = () => {
 };
 
 export default RaidCalculatorPage;
-
-    
