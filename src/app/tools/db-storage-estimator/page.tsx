@@ -153,7 +153,7 @@ const DbStorageEstimatorPage = () => {
                                 A database index is a special data structure that dramatically speeds up data retrieval operations. Without an index, finding a specific user in a million-row table would require a "full table scan," which is extremely slow. With an index on the `email` column, the database can find that user almost instantly.
                             </p>
                             <p>
-                                However, this performance comes at a cost: **storage space**. An index is essentially a sorted copy of the data from one or more columns, along with pointers back to the original rows. This means that every index you create on a table consumes additional disk space. A complex table with 5-6 indexes can easily double its total storage footprint. The "Overhead" percentage in our calculator is designed to help you account for this critical trade-off between read performance and storage cost.
+                                However, this performance comes at a cost: <strong>storage space</strong>. An index is essentially a sorted copy of the data from one or more columns, along with pointers back to the original rows. This means that every index you create on a table consumes additional disk space. A complex table with 5-6 indexes can easily double its total storage footprint. The "Overhead" percentage in our calculator is designed to help you account for this critical trade-off between read performance and storage cost.
                             </p>
                         </section>
                         <section>
@@ -162,7 +162,7 @@ const DbStorageEstimatorPage = () => {
                                 Databases don't write individual rows to disk one at a time. They read and write data in fixed-size blocks called "pages" (often 8 KB or 16 KB). When you insert a new row, the database engine finds a page with enough free space to hold it. When you update a row and make it larger, the database might need to move it to a new page, leaving empty space behind.
                             </p>
                             <p>
-                                To account for future updates, databases use a "fill factor," which means they intentionally leave a certain percentage of each page empty. This avoids the performance penalty of splitting pages but means your database will consume more disk space than the raw data size alone. This inherent overhead is another reason why a real-world database is always larger than a simple calculation of `row_size * row_count`.
+                                To account for future updates, databases use a "fill factor," which means they intentionally leave a certain percentage of each page empty. This avoids the performance penalty of splitting pages but means your database will consume more disk space than the raw data size alone. This inherent overhead is another reason why a real-world database is always larger than a simple calculation of `row_size` × `row_count`.
                             </p>
                         </section>
                     </CardContent>
@@ -278,5 +278,3 @@ const DbStorageEstimatorPage = () => {
 };
 
 export default DbStorageEstimatorPage;
-
-
