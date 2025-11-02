@@ -4,7 +4,7 @@ import { PasswordStrengthChecker } from './password-strength-checker';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
+import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
@@ -82,7 +82,7 @@ export default function PasswordStrengthCheckerPage() {
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
             title="Password Strength Checker"
-            description="Analyze your password's strength against modern security criteria. Get instant feedback on length, character variety, and entropy to create more secure passwords."
+            description="Analyze your password's strength against modern security criteria. Get instant feedback on length, character variety, and entropy to create more secure passwords for maximum protection."
         />
         
         <PasswordStrengthChecker />
@@ -153,7 +153,7 @@ export default function PasswordStrengthCheckerPage() {
                         For decades, we were taught that a "complex" password with a mix of symbols, numbers, and cases was the key to security. While character variety is important, modern password cracking techniques have shown that <strong>length is the single most dominant factor in password strength.</strong>
                     </p>
                     <p>
-                        An attacker's primary method is the brute-force attack, where they try every possible combination. Each character you add to your password increases the number of possible combinations exponentially. A 10-character password using all character types is significantly stronger than an 8-character one, and a 16-character password is astronomically stronger still. This is why many security experts now recommend longer "passphrases" (e.g., `GreenDeskRunFast47!`) over shorter, more complex, and harder-to-remember passwords (e.g., `Tr0ub4d&r`).
+                        An attacker's primary method is the brute-force attack, where they try every possible combination. Each character you add to your password increases the number of possible combinations exponentially. A 10-character password using all character types is significantly stronger than an 8-character one, and a 16-character password is astronomically stronger still. This is why many security experts now recommend longer "passphrases" (e.g., <strong>GreenDeskRunFast47!</strong>) over shorter, more complex, and harder-to-remember passwords (e.g., <strong>Tr0ub4d&amp;r</strong>).
                     </p>
                 </section>
                  <section>
@@ -203,7 +203,7 @@ export default function PasswordStrengthCheckerPage() {
                           <div>
                               <h4 className="font-semibold">Favor Long Passphrases</h4>
                               <p className="text-sm text-muted-foreground">
-                                Create a long password from a memorable but random sequence of words, like `Green-Desk-Run-Fast-47!`. It's easier to remember than `Tr0ub4d&r` but significantly harder to crack due to its length. Our <Link href="/tools/password-generator" className="text-primary hover:underline">Password Generator</Link> can help create these.
+                                Create a long password from a memorable but random sequence of words, like <strong>Green-Desk-Run-Fast-47!</strong>. It's easier to remember than <strong>Tr0ub4d&amp;r</strong> but significantly harder to crack due to its length. Our <Link href="/tools/password-generator" className="text-primary hover:underline">Password Generator</Link> can help create these.
                               </p>
                           </div>
                       </li>
@@ -231,10 +231,10 @@ export default function PasswordStrengthCheckerPage() {
                 </CardHeader>
                 <CardContent>
                      <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                        <li><strong>Predictable Substitutions:</strong> Avoid common substitutions like `P@ssw0rd` for 'Password'. Attackers' dictionaries are programmed to check for these (e.g., 'a' → '@', 'o' → '0').</li>
+                        <li><strong>Predictable Substitutions:</strong> Avoid common substitutions like <strong>P@ssw0rd</strong> for 'Password'. Attackers' dictionaries are programmed to check for these (e.g., 'a' → '@', 'o' → '0').</li>
                         <li><strong>Using Personal Information:</strong> Don't use your name, birthday, pet's name, or other easily guessable information. Attackers use this personal data in targeted attacks.</li>
                         <li><strong>Sequential Keyboard Patterns:</strong> Avoid patterns like `qwerty`, `asdfgh`, or `123456`. These are among the first things a cracking program will try.</li>
-                        <li><strong>Incrementing Passwords:</strong> Don't just change the number at the end of your password when forced to update (e.g., from `Summer2023!` to `Summer2024!`). This is a predictable pattern that offers little additional security.</li>
+                        <li><strong>Incrementing Passwords:</strong> Don't just change the number at the end of your password when forced to update (e.g., from <strong>Summer2023!</strong> to <strong>Summer2024!</strong>). This is a predictable pattern that offers little additional security.</li>
                     </ul>
                 </CardContent>
             </Card>
