@@ -79,11 +79,17 @@ const DataMigrationEstimatorPage = () => {
                     <Card className="prose prose-sm max-w-none text-foreground p-6">
                         <p>Follow these phases to build a structured and realistic data migration plan and timeline.</p>
                         <ol>
-                            <li><strong>Phase 1: Scope Definition & Data Profiling.</strong> Understand your source data. What's the total size? How many files or database rows are there? Is the data structured (database) or unstructured (files)? Use our <Link href="/tools/db-storage-estimator" className="text-primary hover:underline">Database Storage Estimator</Link> for structured data.</li>
-                            <li><strong>Phase 2: Estimate Transfer Time.</strong> This is the most critical calculation. Use our <Link href="/tools/data-transfer-calculator" className="text-primary hover:underline">Data Transfer Time Calculator</Link> with your total data size and, crucially, your available **upload bandwidth** to get a baseline transfer time. This will tell you if a network transfer is feasible.</li>
-                            <li><strong>Phase 3: Choose a Migration Strategy.</strong> Based on the time estimate and downtime tolerance, choose a strategy. For very large datasets or slow connections, a physical transfer (like AWS Snowball) might be faster. For live systems, a phased approach with continuous replication may be needed.</li>
-                            <li><strong>Phase 4: Factor in Transformation and Validation.</strong> Will the data need to be changed (transformed) before it's loaded into the new system? How will you validate that all data was transferred correctly? Allocate time for developing scripts and performing these checks.</li>
-                            <li><strong>Phase 5: Plan for Downtime & Cutovers.</strong> Determine how much downtime your application can tolerate. A "big bang" migration involves scheduled downtime, while a "trickle" migration happens in the background with a final, quick cutover.</li>
+                            <li><span className="font-bold">Phase 1: Discovery & Assessment.</span> Inventory your current on-premises servers, applications, and databases. Document CPU, RAM, storage size, and performance (IOPS). Use our <Link href="/tools/vm-requirement-estimator" className="text-primary hover:underline">VM Requirement Estimator</Link> to get a baseline for each server.</li>
+                            <li><span className="font-bold">Phase 2: Choose a Migration Strategy (The "6 R's").</span> For each application, decide on a strategy: Rehost (lift-and-shift), Replatform, Repurchase, Refactor/Rearchitect, Retire, or Retain. See the "Educational Deep Dive" below for details on each.</li>
+                            <li><span className="font-bold">Phase 3: Estimate Cloud Resource Costs.</span> Based on your chosen strategy, map your on-premises resources to cloud services.
+                                <ul>
+                                    <li>For servers (Rehost/Replatform), use our <Link href="/tools/cloud-instance-cost-calculator" className="text-primary hover:underline">Cloud Instance Cost Calculator</Link> to estimate monthly compute costs.</li>
+                                    <li>For data, use the <Link href="/tools/cloud-storage-cost-estimator" className="text-primary hover:underline">Cloud Storage Cost Estimator</Link>.</li>
+                                    <li>For network egress, use the <Link href="/tools/bandwidth-cost-calculator" className="text-primary hover:underline">Cloud Bandwidth Cost Calculator</Link>.</li>
+                                </ul>
+                            </li>
+                            <li><span className="font-bold">Phase 4: Estimate Migration & Labor Costs.</span> Factor in the one-time costs: data transfer time (use our <Link href="/tools/data-transfer-calculator" className="text-primary hover:underline">Data Transfer Time Calculator</Link>), labor hours for refactoring, training costs for your team, and any parallel run costs (running both on-prem and cloud environments simultaneously during the transition).</li>
+                            <li><span className="font-bold">Phase 5: Calculate Total Cost of Ownership (TCO).</span> Combine your estimated monthly cloud costs with your one-time migration costs. Compare this to your current on-premises TCO, including hardware, power, cooling, and IT staff time.</li>
                         </ol>
                     </Card>
                 </section>
@@ -93,39 +99,45 @@ const DataMigrationEstimatorPage = () => {
                     <div className="space-y-6">
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-xl">Example 1: On-Premises File Server to Cloud Storage</CardTitle>
-                                <CardDescription>A company needs to move its 5 TB file server to AWS S3.</CardDescription>
+                                <CardTitle className="text-xl">Example 1: Lift-and-Shift a Legacy Web App</CardTitle>
+                                <CardDescription>A company needs to quickly move a legacy internal application out of a closing data center.</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
-                                <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> The office has a 1 Gbps internet connection, but the symmetric upload speed is only <strong>100 Mbps</strong>.</p>
+                                <p className="text-sm text-muted-foreground"><span className="font-bold">Scenario:</span> A monolithic PHP application runs on a single on-premises server with 4 vCPUs, 16 GB RAM, and a 500 GB disk. It serves 100 internal users and has low data transfer.</p>
                                 <div className="prose prose-sm max-w-none">
                                     <ol>
-                                        <li><strong>Estimate Transfer Time:</strong> They use the <Link href="/tools/data-transfer-calculator" className="text-primary hover:underline">Data Transfer Time Calculator</Link> with inputs: `5 TB` and `100 Mbps`.</li>
-                                        <li><strong>Result:</strong> The calculation shows a transfer time of over <strong>4.5 days</strong> of continuous, maxed-out uploading.</li>
-                                        <li><strong>Decision:</strong> The team realizes a simple weekend transfer won't work. They decide to use a tool like AWS DataSync, which can perform the transfer over several weeks in the background without impacting office internet, and then do a final, quick sync during a planned cutover.</li>
+                                        <li><span className="font-bold">Discovery:</span> The resources are known: 4 CPU, 16 GB RAM, 500 GB storage. The application is self-contained.</li>
+                                        <li><span className="font-bold">Strategy:</span> The team chooses <strong>Rehost (Lift-and-Shift)</strong> for maximum speed and minimum code changes.</li>
+                                        <li><span className="font-bold">Cloud Resource Estimation:</span>
+                                            <ul>
+                                                <li>They use the <Link href="/tools/cloud-instance-cost-calculator" className="text-primary hover:underline">Cloud Instance Cost Calculator</Link> to compare the monthly cost of a 4-CPU, 16-GB RAM general-purpose VM on AWS, Azure, and Google Cloud.</li>
+                                                <li>They use the <Link href="/tools/cloud-storage-cost-estimator" className="text-primary hover:underline">Cloud Storage Cost Estimator</Link> to calculate the cost of a 500 GB SSD block storage volume.</li>
+                                                <li>Egress is negligible, so they skip the <Link href="/tools/bandwidth-cost-calculator" className="text-primary hover:underline">Bandwidth Cost Calculator</Link>.</li>
+                                            </ul>
+                                        </li>
+                                        <li><span className="font-bold">Result:</span> They have a clear monthly cost estimate for running the application in the cloud, which they can compare to their current data center costs.</li>
                                     </ol>
                                 </div>
                             </CardContent>
                         </Card>
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-xl">Example 2: Database Migration Between Cloud Providers</CardTitle>
-                                <CardDescription>A startup is moving its 200 GB PostgreSQL database from one cloud provider to another.</CardDescription>
+                                <CardTitle className="text-xl">Example 2: Replatforming a Database</CardTitle>
+                                <CardDescription>A growing company wants to reduce the administrative burden of managing its own database server.</CardDescription>
                             </CardHeader>
                              <CardContent className="space-y-4">
-                               <p className="text-sm text-muted-foreground"><strong>Scenario:</strong> The application can only afford 30 minutes of downtime. Both cloud providers offer high network bandwidth between their data centers.</p>
+                               <p className="text-sm text-muted-foreground"><span className="font-bold">Scenario:</span> A company runs a busy e-commerce site with a self-managed MySQL database on a dedicated server. The IT team spends hours each week on patching, backups, and maintenance.</p>
                                <div className="prose prose-sm max-w-none">
                                    <ol>
-                                       <li><strong>Strategy:</strong> A "big bang" migration is too risky. They choose a replication strategy.</li>
-                                       <li><strong>Plan:</strong>
-                                            <ul className='list-disc pl-5'>
-                                                <li>Set up the new database server at the destination provider.</li>
-                                                <li>Configure logical replication from the old database to the new one. This allows the new database to receive live updates from the old one.</li>
-                                                <li>Wait for the initial sync and replication lag to drop to near-zero.</li>
-                                                <li>During a planned maintenance window, briefly stop the application, ensure all final transactions are replicated, switch the application's connection string to point to the new database, and restart the application.</li>
+                                       <li><span className="font-bold">Discovery:</span> The current database server is consistently using 80% of its 8 vCPUs and 32 GB of RAM. The database size is 250 GB.</li>
+                                       <li><span className="font-bold">Strategy:</span> They choose <strong>Replatform ("Lift-and-Tinker")</strong>. They will keep their web application servers as-is but migrate the database from their VM to a managed service like Amazon RDS or Azure Database for MySQL.</li>
+                                       <li><span className="font-bold">Cloud Resource Estimation:</span>
+                                            <ul>
+                                                <li>Instead of a full VM, they look up the pricing for a managed database instance with similar CPU and RAM specs.</li>
+                                                <li>They use the <Link href="/tools/backup-storage-calculator" className="text-primary hover:underline">Backup Storage Calculator</Link> to estimate the cost of the automated backups included with the managed service.</li>
                                             </ul>
                                        </li>
-                                       <li><strong>Result:</strong> The actual downtime is limited to the few minutes it takes to switch the connection string, easily meeting their 30-minute requirement.</li>
+                                       <li><span className="font-bold">Result:</span> While the direct monthly cost of the managed database might be slightly higher than a raw VM, they can present a TCO argument to management showing significant savings in labor costs for patching, backups, and maintenance, justifying the move.</li>
                                    </ol>
                                </div>
                             </CardContent>
@@ -153,44 +165,115 @@ const DataMigrationEstimatorPage = () => {
                     <CardHeader>
                         <div className='flex items-center gap-2 text-primary'>
                             <BookOpen className="h-6 w-6" aria-hidden="true" />
-                            <CardTitle className="text-primary">Educational Deep Dive: Data Migration Strategies</CardTitle>
+                            <CardTitle className="text-primary">Educational Deep Dive: The 6 R's of Cloud Migration</CardTitle>
                         </div>
-                        <CardDescription>From big bang to trickle, understand the common approaches for moving your data from A to B.</CardDescription>
+                        <CardDescription>From a simple "lift-and-shift" to a full re-architecture, understand the common strategies for moving applications to the cloud.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
                         <section>
-                            <h3>1. Big Bang Migration</h3>
-                            <p>This is the simplest strategy. The system is taken offline (downtime begins), the data is moved in its entirety from the source to the destination, and once the move is complete and verified, the system is brought back online pointing to the new data source. It's one big "lift and shift" operation.</p>
+                            <h3>1. Rehosting ("Lift-and-Shift")</h3>
+                            <p>This is the most straightforward strategy. You move your existing physical or virtual servers directly to a cloud provider's infrastructure (IaaS - Infrastructure as a Service) with minimal changes. You're essentially renting VMs that match your on-premises server specs.</p>
                             <ul className="list-disc pl-5">
-                                <li><strong>Pros:</strong> Simple to plan and execute. No need to worry about synchronizing data changes that happen during the migration.</li>
-                                <li><strong>Cons:</strong> Requires a potentially long period of system downtime. The duration is dictated by how long the data transfer takes. This is often unacceptable for critical applications.</li>
-                                <li><strong>Best for:</strong> Non-critical applications, new project setups, or when a significant period of downtime can be scheduled.</li>
+                                <li><span className="font-bold">Pros:</span> Fastest migration path, lowest initial complexity.</li>
+                                <li><span className="font-bold">Cons:</span> Doesn't take advantage of cloud-native features, can be cost-inefficient if applications are not optimized for the cloud. Often, you're just moving your old problems to a new location.</li>
+                                <li><span className="font-bold">Use Case:</span> Ideal for large-scale legacy migrations where you need to exit a data center quickly. You can estimate the VM costs with our <Link href="/tools/cloud-instance-cost-calculator" className="text-primary hover:underline">Cloud Instance Cost Calculator</Link>.</li>
                             </ul>
                         </section>
                         <section>
-                            <h3>2. Trickle (Phased) Migration</h3>
-                            <p>A trickle migration is a more advanced strategy designed to minimize downtime. It involves setting up a process that continuously replicates data changes from the source to the destination system in real-time while the source system is still live.</p>
-                             <p>The process typically involves an initial bulk data load, followed by ongoing Change Data Capture (CDC) to keep the two systems in sync. The final "cutover" is then very fast, as it only involves switching the application to point to the new data source. The downtime is reduced from hours or days to just minutes.</p>
+                            <h3>2. Replatforming ("Lift-and-Tinker")</h3>
+                            <p>This is a modification of rehosting. You still move the application largely as-is, but you make a few cloud-specific optimizations to get a tangible benefit. A common example is migrating an on-premises database to a managed database service in the cloud, like Amazon RDS or Azure SQL Database. This reduces administrative overhead.</p>
                             <ul className="list-disc pl-5">
-                                <li><strong>Pros:</strong> Minimal to zero downtime, making it ideal for mission-critical 24/7 applications.</li>
-                                <li><strong>Cons:</strong> Much more complex to set up. It requires specialized tools for replication and CDC, and careful monitoring to manage replication lag.</li>
-                                <li><strong>Best for:</strong> Migrating live, mission-critical databases where downtime is not an option.</li>
+                                <li><span className="font-bold">Pros:</span> A good balance of speed and cloud benefits. Reduces management burden for components like databases.</li>
+                                <li><span className="font-bold">Cons:</span> Requires some code changes or configuration updates.</li>
+                                <li><span className="font-bold">Use Case:</span> Migrating a standard web application and switching its self-hosted MySQL database to a managed cloud database service.</li>
+                            </ul>
+                        </section>
+                         <section>
+                            <h3>3. Repurchasing ("Drop-and-Shop")</h3>
+                            <p>This strategy involves moving to a different product, typically a SaaS (Software as a Service) solution. You're dropping your old application and purchasing a new one that is already cloud-native.</p>
+                             <ul className="list-disc pl-5">
+                                <li><span className="font-bold">Pros:</span> Eliminates all infrastructure management. Moves you to a modern, fully managed platform.</li>
+                                <li><span className="font-bold">Cons:</span> Can involve significant licensing costs, data migration challenges, and the need to retrain users.</li>
+                                <li><span className="font-bold">Use Case:</span> Moving from a self-hosted CRM system to Salesforce, or from an on-premises Microsoft Exchange server to Microsoft 365.</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h3>4. Refactoring / Rearchitecting</h3>
+                            <p>This is the most intensive strategy, involving a significant rewrite or re-architecture of the application to take full advantage of cloud-native features. This might mean breaking a monolithic application into microservices, using serverless functions, or leveraging cloud-specific storage and messaging queues.</p>
+                             <ul className="list-disc pl-5">
+                                <li><span className="font-bold">Pros:</span> Achieves the highest levels of performance, scalability, and cost-efficiency in the long run.</li>
+                                <li><span className="font-bold">Cons:</span> Highest upfront cost, risk, and time commitment. Requires specialized cloud development skills.</li>
+                                <li><span className="font-bold">Use Case:</span> A legacy monolithic e-commerce application is rewritten as a series of serverless functions and containerized microservices to handle spiky traffic and reduce idle costs.</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h3>5. Retiring</h3>
+                            <p>During the discovery phase, you may find that some applications are no longer needed. The business value they provide is no longer worth the cost of maintaining them. In this case, the best strategy is to simply turn them off and decommission them.</p>
+                             <ul className="list-disc pl-5">
+                                <li><span className="font-bold">Pros:</span> Immediate cost savings from hardware, software, and maintenance.</li>
+                                <li><span className="font-bold">Cons:</span> Requires careful analysis to ensure the application is truly redundant and has no hidden dependencies.</li>
+                                <li><span className="font-bold">Use Case:</span> An old, unused internal reporting tool that has been replaced by a modern BI platform.</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h3>6. Retaining</h3>
+                            <p>Sometimes, the right decision is to do nothing. Some applications may not be suitable for the cloud due to regulatory constraints, specialized hardware requirements, or costs that would be prohibitive in a cloud environment. These applications are left on-premises.</p>
+                             <ul className="list-disc pl-5">
+                                <li><span className="font-bold">Pros:</span> No migration cost or risk for that application.</li>
+                                <li><span className="font-bold">Cons:</span> Requires maintaining a hybrid on-premises/cloud environment, which can add complexity.</li>
+                                <li><span className="font-bold">Use Case:</span> A factory control system that requires ultra-low latency communication with on-site machinery and cannot tolerate the potential delays of the public internet.</li>
                             </ul>
                         </section>
                     </CardContent>
                 </Card>
+                
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
+                     <Card>
+                        <CardContent className="p-6">
+                            <ul className="space-y-4">
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Start with a Pilot Project</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            Don't try to migrate everything at once. Choose a single, low-risk, but meaningful application as a pilot project. This allows your team to learn the process, understand the true costs, and build confidence before tackling mission-critical workloads.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Don't Forget Hidden Costs</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            Your estimate must include more than just server costs. Factor in data egress fees (use our <Link href="/tools/bandwidth-cost-calculator" className="text-primary hover:underline">Bandwidth Cost Calculator</Link>), storage for backups (use our <Link href="/tools/backup-storage-calculator" className="text-primary hover:underline">Backup Storage Calculator</Link>), software licensing, team training, and the cost of running parallel environments during the transition.
+                                        </p>
+                                    </div>
+                                </li>
+                                 <li className="flex items-start gap-4">
+                                    <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="font-semibold">Optimize Before You Lift-and-Shift</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            Before you rehost a server, analyze its performance. If an on-premises server is only using 10% of its CPU, don't provision an identical, expensive VM in the cloud. Right-size it from the start. Use our <Link href="/tools/vm-requirement-estimator" className="text-primary hover:underline">VM Requirement Estimator</Link> to get a better baseline.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </CardContent>
+                     </Card>
+                </section>
 
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
                         <CardHeader>
-                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips for a Smooth Migration</CardTitle></div>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
                         </CardHeader>
                         <CardContent>
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                                <li><strong>Test, Test, Test:</strong> Perform multiple trial runs of your migration in a staging environment. This helps you refine your process, accurately measure timelines, and uncover unexpected issues before you touch production data.</li>
-                                <li><strong>Validate Everything:</strong> After the migration, don't just assume it worked. Have a validation plan. At a minimum, check row counts in key tables. For critical data, perform checksums on both the source and destination to guarantee a bit-for-bit perfect copy.</li>
-                                <li><strong>Consider Physical Transfer:</strong> For very large datasets (tens of terabytes or more), it's often faster and cheaper to use a physical transfer appliance like AWS Snowball or Azure Data Box than to transfer the data over the internet.</li>
-                                <li><strong>Inform Your Users:</strong> Clearly communicate any planned downtime to your users well in advance.</li>
+                                <li><strong>Leverage Cloud Provider Tools:</strong> All major cloud providers (AWS, Azure, Google) offer their own detailed migration assessment and TCO calculator tools. Use them for the most accurate financial modeling.</li>
+                                <li><strong>Involve Stakeholders Early:</strong> A cloud migration is not just an IT project. Involve finance, security, and business unit leaders from the beginning to ensure alignment on goals, budget, and timelines.</li>
+                                <li><strong>Focus on a Hybrid Model:</strong> For most established organizations, the end state is not 100% cloud, but a hybrid model where some workloads remain on-premises. Plan for secure and efficient connectivity between the two environments.</li>
                             </ul>
                         </CardContent>
                     </Card>
@@ -200,10 +283,10 @@ const DataMigrationEstimatorPage = () => {
                         </CardHeader>
                         <CardContent>
                              <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                                <li><strong>Underestimating Transfer Time:</strong> A classic error is using download speed instead of the much slower upload speed to estimate network transfer time.</li>
-                                <li><strong>Ignoring Data Transformation:</strong> Failing to account for the time and complexity needed to transform data from the old schema to the new schema. This is often the most time-consuming part of the project.</li>
-                                <li><strong>No Rollback Plan:</strong> Not having a clear, tested plan to revert to the old system if the migration fails or critical issues are discovered post-cutover.</li>
-                                <li><strong>Forgetting About DNS Propagation:</strong> When cutting over to a new server, remember that DNS changes can take time to propagate across the internet. Lowering the TTL on your DNS records before the migration can help speed this up.</li>
+                                <li><strong>Underestimating Network Costs:</strong> The number one cause of cloud "bill shock" is unexpected data egress fees. Carefully analyze your application's traffic patterns and model these costs.</li>
+                                <li><strong>Ignoring Application Dependencies:</strong> Moving one application without understanding its dependencies on other on-premises systems can lead to high-latency, "chatty" communication across the internet, degrading performance.</li>
+                                <li><strong>Lack of Cloud Skills:</strong> Assuming your on-premises IT team can immediately manage a cloud environment without proper training. Cloud security, networking, and cost management are specialized skills.</li>
+                                <li><strong>"Lifting and Shifting" Inefficiency:</strong> Moving a poorly architected, inefficient on-premises application to the cloud often results in a more expensive, equally inefficient cloud application.</li>
                             </ul>
                         </CardContent>
                     </Card>
@@ -217,7 +300,9 @@ const DataMigrationEstimatorPage = () => {
                               {faqData.map((item, index) => (
                                   <AccordionItem value={`item-${index}`} key={index}>
                                       <AccordionTrigger>{item.question}</AccordionTrigger>
-                                      <AccordionContent>{item.answer}</AccordionContent>
+                                      <AccordionContent>
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/href="\/tools\/([^"]*)"/g, 'href="/tools/$1" class="text-primary hover:underline"') }} />
+                                      </AccordionContent>
                                   </AccordionItem>
                               ))}
                           </Accordion>
@@ -228,27 +313,27 @@ const DataMigrationEstimatorPage = () => {
               <section>
                   <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      <Link href="/tools/data-transfer-calculator" className="block">
+                      <Link href="/tools/cloud-instance-cost-calculator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Data Transfer Time Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                  <CardDescription className="text-xs">The essential first step: calculate the baseline time your migration will take over the network.</CardDescription>
+                                  <CardTitle className="text-base flex items-center justify-between">Cloud Instance Cost Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">Estimate the monthly cost of your target VMs on AWS, Google Cloud, and Azure.</CardDescription>
                               </CardHeader>
                           </Card>
                       </Link>
-                       <Link href="/tools/cloud-storage-cost-estimator" className="block">
-                          <Card className="hover:border-primary transition-colors h-full">
-                              <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Cloud Storage Cost Estimator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                  <CardDescription className="text-xs">Estimate the monthly cost of storing your data at the destination.</CardDescription>
-                              </CardHeader>
-                          </Card>
-                      </Link>
-                       <Link href="/tools/bandwidth-cost-calculator" className="block">
+                      <Link href="/tools/bandwidth-cost-calculator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
                                   <CardTitle className="text-base flex items-center justify-between">Bandwidth Cost Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                  <CardDescription className="text-xs">Model the potential data egress costs during and after your migration.</CardDescription>
+                                  <CardDescription className="text-xs">Model your expected data egress fees, a critical and often-overlooked cost.</CardDescription>
+                              </CardHeader>
+                          </Card>
+                      </Link>
+                       <Link href="/tools/data-transfer-calculator" className="block">
+                          <Card className="hover:border-primary transition-colors h-full">
+                              <CardHeader>
+                                  <CardTitle className="text-base flex items-center justify-between">Data Transfer Time Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardDescription className="text-xs">Estimate how long your initial data migration will take based on your internet connection speed.</CardDescription>
                               </CardHeader>
                           </Card>
                       </Link>
