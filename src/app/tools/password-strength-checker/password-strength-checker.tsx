@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -19,7 +19,7 @@ const checkPasswordStrength = (password: string) => {
         length: password.length >= 12,
         uppercase: /[A-Z]/.test(password),
         lowercase: /[a-z]/.test(password),
-        number: /\d]/.test(password),
+        number: /\d/.test(password),
         specialChar: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password),
     };
 
@@ -31,7 +31,7 @@ const checkPasswordStrength = (password: string) => {
     if (checks.specialChar) score++;
 
     // Bonus for mixing character types
-    const typesCount = Object.values(checks).filter(v => v === true).length - (checks.length ? 1 : 0);
+    const typesCount = Object.values(checks).filter(v => v === true).length - (checks.length && checks.length ? 1 : 0);
     if (typesCount >= 3) score++;
     if (typesCount >= 4) score++;
     
@@ -47,7 +47,7 @@ const calculateEntropy = (password: string) => {
     let charPool = 0;
     if (/[a-z]/.test(password)) charPool += 26;
     if (/[A-Z]/.test(password)) charPool += 26;
-    if (/\d]/.test(password)) charPool += 10;
+    if (/\d/.test(password)) charPool += 10;
     if (/[^a-zA-Z0-9]/.test(password)) charPool += 32; // Approximate special characters
     if (charPool === 0) return 0;
     
@@ -68,19 +68,23 @@ const getStrengthLabel = (score: number, length: number) => {
 export function PasswordStrengthChecker() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [analysis, setAnalysis] = useState({ score: 0, checks: {}, entropy: 0 });
 
-    const { score, checks } = useMemo(() => checkPasswordStrength(password), [password]);
-    const entropy = useMemo(() => calculateEntropy(password), [password]);
-    const { label, color } = useMemo(() => getStrengthLabel(score, password.length), [score, password.length]);
+    useEffect(() => {
+        const scoreChecks = checkPasswordStrength(password);
+        const entropyValue = calculateEntropy(password);
+        setAnalysis({ ...scoreChecks, entropy: entropyValue });
+    }, [password]);
 
-    const strengthPercentage = password.length > 0 ? (score / 8) * 100 : 0;
+    const { label, color } = getStrengthLabel(analysis.score, password.length);
+    const strengthPercentage = password.length > 0 ? (analysis.score / 8) * 100 : 0;
     
     const checklistItems = [
-        { label: "At least 12 characters long", met: checks.length },
-        { label: "Contains lowercase letters (a-z)", met: checks.lowercase },
-        { label: "Contains uppercase letters (A-Z)", met: checks.uppercase },
-        { label: "Contains numbers (0-9)", met: checks.number },
-        { label: "Contains special characters (!@#...)", met: checks.specialChar },
+        { label: "At least 12 characters long", met: analysis.checks.length },
+        { label: "Contains lowercase letters (a-z)", met: analysis.checks.lowercase },
+        { label: "Contains uppercase letters (A-Z)", met: analysis.checks.uppercase },
+        { label: "Contains numbers (0-9)", met: analysis.checks.number },
+        { label: "Contains special characters (!@#...)", met: analysis.checks.specialChar },
     ];
 
     return (
@@ -119,7 +123,7 @@ export function PasswordStrengthChecker() {
                 <div className='space-y-3'>
                      <div className="flex justify-between items-center">
                         <span className="text-sm font-medium">Strength: <strong className={cn(color.replace('bg-', 'text-'))}>{label}</strong></span>
-                         <span className="text-sm font-medium">Entropy: <Link href="/tools/password-entropy-calculator" className="text-primary hover:underline font-bold font-code">{entropy} bits</Link></span>
+                         <span className="text-sm font-medium">Entropy: <Link href="/tools/password-entropy-calculator" className="text-primary hover:underline font-bold font-code">{analysis.entropy} bits</Link></span>
                      </div>
                     <Progress value={strengthPercentage} className={cn('h-3 transition-all', color)} />
                 </div>

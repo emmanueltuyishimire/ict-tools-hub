@@ -14,26 +14,27 @@ type CodeType = 'js' | 'python' | 'html' | 'css';
 
 // Basic formatters. A real-world app would use a library like Prettier.
 const formatHtml = (code: string): string => {
-  let formatted = '';
   let indentLevel = 0;
-  const tab = '  '; // 2 spaces for indentation
-  code.split(/>\s*</).forEach(element => {
-    if (element.match(/^\/\w/)) {
-      indentLevel--;
+  const tab = '  ';
+  let formattedCode = '';
+  const lines = code.replace(/>\s*</g, '><').split(/(?=<)/g);
+
+  lines.forEach(line => {
+    let trimmedLine = line.trim();
+    if (!trimmedLine) return;
+
+    if (trimmedLine.startsWith('</')) {
+      indentLevel = Math.max(0, indentLevel - 1);
     }
-    let padding = tab.repeat(Math.max(0, indentLevel));
-    // Handle self-closing tags and comments
-    if (element.startsWith('!') || element.startsWith('?')) {
-        formatted += `${padding}<${element}>\n`;
-    } else {
-         formatted += `${padding}<${element.replace(/\/$/, '').trim()}>\n`;
-    }
+
+    formattedCode += tab.repeat(indentLevel) + trimmedLine + '\n';
     
-    if (element.match(/^<?\w/) && !element.match(/.*\/\s*$/) && !['br', 'hr', 'img', 'input', 'meta', 'link'].some(tag => element.startsWith(tag))) {
-      indentLevel++;
+    if (trimmedLine.startsWith('<') && !trimmedLine.startsWith('</') && !trimmedLine.endsWith('/>') && !['<br>', '<hr>', '<img>', '<input>', '<meta>', '<link>'].some(tag => trimmedLine.startsWith(tag))) {
+        indentLevel++;
     }
   });
-  return formatted.trim();
+
+  return formattedCode.trim();
 };
 
 const formatCss = (code: string): string => {

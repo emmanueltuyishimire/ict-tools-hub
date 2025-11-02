@@ -1,14 +1,53 @@
 import type { Metadata } from 'next';
+import { Inter, Source_Code_Pro } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import './globals.css';
 import { AppLayout } from '@/components/app-layout';
 import { Toaster } from '@/components/ui/toaster';
 import { StructuredData } from '@/components/structured-data';
 
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+const sourceCodePro = Source_Code_Pro({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-source-code-pro',
+});
+
+
 export const metadata: Metadata = {
-  title: 'ICT Toolbench - Your Ultimate Tech Toolkit',
+  metadataBase: new URL('https://www.icttoolbench.com'), // Replace with your actual domain
+  title: {
+    default: 'ICT Toolbench - Your Ultimate Tech Toolkit',
+    template: '%s | ICT Toolbench',
+  },
   description:
     'A comprehensive suite of 200+ free online tools for students, developers, network admins, and tech enthusiasts. Networking, programming, security, and more.',
+  openGraph: {
+    title: 'ICT Toolbench - Your Ultimate Tech Toolkit',
+    description: 'A comprehensive suite of free online tools for ICT professionals and students.',
+    url: 'https://www.icttoolbench.com', // Replace with your actual domain
+    siteName: 'ICT Toolbench',
+    images: [
+      {
+        url: '/og-image.png', // Replace with your actual OG image path
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ICT Toolbench - Your Ultimate Tech Toolkit',
+    description: 'A comprehensive suite of free online tools for ICT professionals and students.',
+    // images: ['/og-image.png'], // Replace with your actual OG image path
+  },
 };
 
 const webAppSchema = {
@@ -16,7 +55,7 @@ const webAppSchema = {
   '@type': 'WebApplication',
   name: 'ICT Toolbench',
   description: 'A comprehensive suite of free online tools for ICT professionals, students, and enthusiasts, including networking, programming, and security utilities.',
-  url: 'https://www.your-app-url.com', // Replace with actual URL
+  url: 'https://www.icttoolbench.com', // Replace with actual URL
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'All',
   offers: {
@@ -33,15 +72,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceCodePro.variable}`}>
       <head>
         <StructuredData data={webAppSchema} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Source+Code+Pro&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body
         suppressHydrationWarning={true}

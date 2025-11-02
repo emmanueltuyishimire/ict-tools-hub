@@ -1,5 +1,3 @@
-
-
 import { allTools } from '@/lib/tools';
 import { notFound } from 'next/navigation';
 import { PageHeader } from '@/components/page-header';
@@ -67,6 +65,7 @@ import { VariableNameValidator } from '@/app/tools/variable-name-validator/varia
 import { UnicodeAsciiConverter } from '@/app/tools/unicode-ascii-converter/unicode-ascii-converter';
 import { PasswordEntropyCalculator } from '@/app/tools/password-entropy-calculator/password-entropy-calculator';
 import { PasswordGenerator } from '@/app/tools/password-generator/password-generator';
+import { Metadata } from 'next';
 
 export async function generateStaticParams() {
   return allTools.map((tool) => ({
@@ -79,6 +78,27 @@ type ToolPageProps = {
     slug: string;
   };
 };
+
+export async function generateMetadata({ params }: ToolPageProps): Promise<Metadata> {
+  const tool = allTools.find((t) => t.slug === params.slug);
+
+  if (!tool) {
+    return {
+      title: 'Tool Not Found',
+    };
+  }
+
+  return {
+    title: `${tool.name} | ICT Toolbench`,
+    description: tool.description,
+    openGraph: {
+        title: `${tool.name} | ICT Toolbench`,
+        description: tool.description,
+        url: `/tools/${tool.slug}`,
+    }
+  };
+}
+
 
 const toolComponents: Record<string, React.ComponentType> = {
     'binary-to-ip': BinaryToIpConverter,
@@ -174,6 +194,7 @@ function ComingSoon() {
               src={bgImage.imageUrl}
               alt="Under Construction"
               fill
+              priority
               className="object-cover"
               data-ai-hint={bgImage.imageHint}
             />
