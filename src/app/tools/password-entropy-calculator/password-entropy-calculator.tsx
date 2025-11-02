@@ -30,9 +30,9 @@ const calculateEntropyDetails = (password: string) => {
     if (/\d/.test(password)) {
         poolSize += 10;
     }
-    // A simplified but effective approximation for symbols
-    const specialChars = password.match(/[^a-zA-Z0-9]/g) || [];
-    const uniqueSpecialChars = new Set(specialChars);
+    
+    const specialChars = password.replace(/[a-zA-Z0-9]/g, '');
+    const uniqueSpecialChars = new Set(specialChars.split(''));
     poolSize += uniqueSpecialChars.size;
 
     if (poolSize === 0) return { entropy: 0, poolSize: 0, length: password.length };
