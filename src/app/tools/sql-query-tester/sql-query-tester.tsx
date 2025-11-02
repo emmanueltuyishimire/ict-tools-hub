@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -7,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { AlertCircle, Play, Plus, Trash2 } from 'lucide-react';
+import { AlertCircle, Play, Plus, Trash2, FilePlus2, VenetianMask } from 'lucide-react';
 import { CodeBlock } from '@/components/code-block';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
@@ -204,6 +205,29 @@ export function SqlQueryTester() {
         }
     };
 
+    const handleBuildFromCsv = (tableName: string, csvData: string) => {
+        if (!tableName || /[^a-zA-Z0-9_]/.test(tableName) || /^[0-9]/.test(tableName)) {
+            alert('Invalid table name. Use only letters, numbers, and underscores, and do not start with a number.');
+            return;
+        }
+        
+        const lines = csvData.trim().split('\n');
+        if (lines.length === 0) return;
+        
+        const headers = lines[0].split(',').map(h => h.trim());
+        const dataRows = lines.slice(1).map(line => {
+            const values = line.split(',');
+            const row: {[key: string]: any} = {};
+            headers.forEach((header, index) => {
+                const value = values[index]?.trim() || '';
+                row[header] = !isNaN(Number(value)) && value !== '' ? Number(value) : value;
+            });
+            return row;
+        });
+        
+        setTables(prev => ({...prev, [tableName.toLowerCase()]: dataRows }));
+    };
+
     const EditableTable = ({ tableName, data, onUpdate, onAddRow, onRemoveRow, onAddColumn, onRemoveColumn }: { tableName: string, data: any[], onUpdate: Function, onAddRow: Function, onRemoveRow: Function, onAddColumn: Function, onRemoveColumn: Function }) => {
         const [newColumnName, setNewColumnName] = useState('');
         if (!data) return null;
@@ -286,13 +310,11 @@ export function SqlQueryTester() {
         )
     };
     
-     const AddTableDialog = () => {
+     const AddTableDialog = ({ trigger }: { trigger: React.ReactNode }) => {
         const [newTableName, setNewTableName] = useState('');
         return (
              <Dialog>
-                <DialogTrigger asChild>
-                    <Button><Plus className="mr-2 h-4 w-4" /> Create New Table</Button>
-                </DialogTrigger>
+                <DialogTrigger asChild>{trigger}</DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Create New Table</DialogTitle>
@@ -315,6 +337,40 @@ export function SqlQueryTester() {
             </Dialog>
         );
     };
+
+    const BuildFromCsvDialog = ({ trigger }: { trigger: React.ReactNode }) => {
+        const [tableName, setTableName] = useState('new_table');
+        const [csv, setCsv] = useState('id,name,value\n1,item_a,100\n2,item_b,200');
+
+        return (
+             <Dialog>
+                <DialogTrigger asChild>{trigger}</DialogTrigger>
+                <DialogContent className="sm:max-w-[625px]">
+                    <DialogHeader>
+                        <DialogTitle>Build Table from Scratch</DialogTitle>
+                        <DialogDescription>
+                           Create or replace a table by pasting comma-separated data. The first line should be the headers.
+                        </DialogDescription>
+                    </DialogHeader>
+                     <div className="grid gap-4 py-4">
+                        <div className="space-y-2">
+                             <Label htmlFor="build-table-name">Table Name</Label>
+                             <Input id="build-table-name" value={tableName} onChange={(e) => setTableName(e.target.value)} className="font-code" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="csv-data">Comma-Separated Data</Label>
+                            <Textarea id="csv-data" value={csv} onChange={(e) => setCsv(e.target.value)} className="font-mono h-48" />
+                        </div>
+                    </div>
+                    <DialogFooter>
+                        <DialogClose asChild>
+                             <Button onClick={() => { handleBuildFromCsv(tableName, csv); }}>Create / Replace Table</Button>
+                        </DialogClose>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        )
+    }
 
     return (
         <div className="space-y-6">
@@ -412,7 +468,14 @@ export function SqlQueryTester() {
                         {Object.entries(tables).map(([tableName, data]) => (
                             <EditableTable key={tableName} tableName={tableName} data={data} onUpdate={handleTableChange} onAddRow={handleAddRow} onRemoveRow={handleRemoveRow} onAddColumn={handleAddColumn} onRemoveColumn={handleRemoveColumn}/>
                         ))}
-                        <AddTableDialog />
+                        <div className="flex gap-2">
+                             <AddTableDialog trigger={
+                                <Button><Plus className="mr-2 h-4 w-4" /> Create New Table</Button>
+                             }/>
+                            <BuildFromCsvDialog trigger={
+                                <Button variant="secondary"><FilePlus2 className="mr-2 h-4 w-4" /> Build from Scratch</Button>
+                            }/>
+                        </div>
                     </TabsContent>
                 </Tabs>
             </Card>
