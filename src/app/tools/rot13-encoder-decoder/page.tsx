@@ -159,20 +159,17 @@ export default function Rot13Page() {
                         <li><strong>Combining Ciphers:</strong> For slightly more advanced (but still insecure) fun, you can combine ROT13 with other simple ciphers, like a reversing cipher. First apply ROT13, then reverse the resulting string.</li>
                     </ul>
                 </CardContent>
-            </Card>
-            <Card>
-                <CardHeader>
-                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
-                </CardHeader>
-                <CardContent>
-                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                        <li><strong>Using it for Security:</strong> The most critical mistake. ROT13 provides zero cryptographic security. It can be broken instantly by anyone. Do not use it to protect passwords, private keys, or any sensitive data.</li>
-                        <li><strong>Expecting it to Work on All Characters:</strong> ROT13 only works on the 26 letters of the English alphabet. It does not translate numbers, symbols, or letters from other languages.</li>
-                    </ul>
-                </CardContent>
-            </Card>
-        </div>
-
+            Card>
+            <CardHeader>
+                 <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+            </CardHeader>
+            <CardContent>
+                 <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                    <li><strong>Using it for Security:</strong> The most critical mistake. ROT13 provides zero cryptographic security. It can be broken instantly by anyone. Do not use it to protect passwords, private keys, or any sensitive data.</li>
+                    <li><strong>Expecting it to Work on All Characters:</strong> ROT13 only works on the 26 letters of the English alphabet. It does not translate numbers, symbols, or letters from other languages.</li>
+                </ul>
+            </CardContent>
+        
        <section>
           <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
           <Card>

@@ -36,10 +36,10 @@ const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
     name: 'How to Use the URL Encoder/Decoder',
-    description: 'A step-by-step guide to encoding and decoding URL strings.',
+    description: 'A guide to encoding and decoding URL strings.',
     step: [
         { '@type': 'HowToStep', name: 'Enter Text', text: 'To encode, type or paste your plain text into the "Decoded" text area. To decode, type or paste your encoded string into the "Encoded" text area.' },
-        { '@type': 'HowToStep', name: 'View Instant Results', text: 'The tool works in real-time. As you type in one box, the corresponding encoded or decoded text will instantly appear in the other box.' },
+        { '@type': 'HowToStep', name: 'View Instant Results', text: 'As you type in one box, the corresponding encoded or decoded text will instantly appear in the other box.' },
         { '@type': 'HowToStep', name: 'Copy the Output', text: 'Click the "Copy" button above the output box you need to copy its contents to your clipboard.' },
         { '@type': 'HowToStep', name: 'Swap and Clear', text: 'Use the "Swap" button to switch the content between the two boxes. Use the "Clear" button to reset both text areas.' }
     ],
@@ -125,220 +125,253 @@ export function UrlEncoderDecoder() {
                                 <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleCopy(decoded, 'decoded')}>
                                     {copied === 'decoded' ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
                                 </Button>
-                            </div>
-                            <Textarea
-                                id="decoded-input"
-                                value={decoded}
-                                onChange={handleDecodedChange}
-                                placeholder="Type or paste your plain text here..."
-                                className="h-32 font-code"
-                                aria-label="Decoded text input"
-                            />
-                        </div>
+                            
 
                          <div className="flex justify-center items-center">
                             <Button variant="outline" size="icon" onClick={handleSwap} aria-label="Swap encoded and decoded text">
                                 <ArrowRightLeft className="h-4 w-4" />
-                            </Button>
-                        </div>
-                        
-                        <div className="space-y-2">
+                            
+
+                         
                              <div className="flex justify-between items-center">
                                 <Label htmlFor="encoded-input">Encoded (URL-Safe)</Label>
                                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleCopy(encoded, 'encoded')}>
-                                    {copied === 'encoded' ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
-                                </Button>
-                            </div>
-                            <Textarea
-                                id="encoded-input"
-                                value={encoded}
-                                onChange={handleEncodedChange}
-                                placeholder="Type or paste your URL-encoded string here..."
-                                className="h-32 font-code"
-                                aria-label="Encoded text input"
-                            />
-                        </div>
-                    </div>
-                     <div className="flex justify-center">
+                                    {copied === 'encoded' ?  : }
+                                
+                            
+                         
+                     
+                        
                         <Button onClick={handleClear} variant="destructive">Clear All</Button>
-                     </div>
-                </CardContent>
-            </Card>
+                     
+                
             
-            <section>
-                <h2 className="text-2xl font-bold mb-4">How to Use the URL Encoder/Decoder</h2>
-                <Card className="prose prose-sm max-w-none text-foreground p-6">
-                    <p>This tool provides a seamless, real-time experience for converting text to a URL-safe format and back.</p>
-                    <ol>
-                        <li><strong>Live Conversion:</strong> The tool works instantly. Start typing in either the "Decoded" or "Encoded" box. The other box will automatically update with the converted text.</li>
-                        <li><strong>To Encode:</strong> Type your plain text (e.g., "blue & green widgets?") into the top "Decoded" box. The URL-safe version (e.g., "blue%20%26%20green%20widgets%3F") will appear in the bottom "Encoded" box.</li>
-                        <li><strong>To Decode:</strong> Paste your encoded string (e.g., "search%20results") into the bottom "Encoded" box. The human-readable version ("search results") will appear in the top "Decoded" box.</li>
-                        <li><strong>Swap & Copy:</strong> Use the `Swap` button (<ArrowRightLeft className="inline h-4 w-4" />) to instantly switch the contents of the two boxes. Use the `Copy` icon (<Copy className="inline h-4 w-4" />) above either box to copy its content to your clipboard.</li>
-                    </ol>
-                </Card>
-            </section>
             
-            <section>
-                <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
-                <Card>
-                    <CardContent className="p-6">
-                        <dl className="space-y-4">
-                            {keyTerminologies.map((item) => (
-                                <div key={item.term}>
-                                    <dt className="font-semibold">{item.term}</dt>
-                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
-                                </div>
-                            ))}
-                        </dl>
-                    </CardContent>
-                </Card>
-            </section>
+                
+                
+                    
+                    
+                    The tool provides a seamless, real-time experience for converting text to a URL-safe format and back.
+                    
+                        
+                        
+                            Live Conversion:
+                             The tool works instantly. Start typing in either the "Decoded" or "Encoded" box. The other box will automatically update with the converted text.
+                            
+                        
+                        
+                            To Encode:
+                             Type your plain text (e.g., "blue & green widgets?") into the top "Decoded" box. The URL-safe version (e.g., "blue%20%26%20green%20widgets%3F") will appear in the bottom "Encoded" box.
+                            
+                        
+                        
+                            To Decode:
+                             Paste your encoded string (e.g., "search%20results") into the bottom "Encoded" box. The human-readable version ("search results") will appear in the top "Decoded" box.
+                            
+                        
+                        
+                            Swap & Copy:
+                             Use the  button () to instantly switch the contents of the two boxes. Use the  icon () above either box to copy its content to your clipboard.
+                            
+                        
+                    
+                
+            
+            
+                
+                
+                    
+                    
+                    
+                        
+                            
+                                
+                                
+                            
+                            
+                                
+                                
+                            
+                        
+                    
+                
+            
 
-            <Card className='bg-secondary/30 border-primary/20'>
-                <CardHeader>
-                    <div className='flex items-center gap-2 text-primary'>
-                        <BookOpen className="h-6 w-6" aria-hidden="true" />
-                        <CardTitle className="text-primary">Educational Deep Dive: Why URLs Need Encoding</CardTitle>
-                    </div>
-                    <CardDescription>From spaces to special characters, understand the rules that govern the structure of a URL and why encoding is essential for a functional web.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
-                    <section>
-                        <h3 className="font-bold text-xl">The Anatomy of a URL</h3>
-                        <p>A Uniform Resource Locator (URL) is more than just a web address; it's a structured string with specific rules. A URL is composed of several parts, and certain characters are reserved to define this structure. For example, the question mark (`?`) separates the main path from the query string, and the ampersand (`&`) separates key-value pairs within that query string.</p>
-                        <p>The problem arises when these reserved characters, or other "unsafe" characters like spaces, need to be included as part of the data itself. If you have a search query for "cats & dogs", the ampersand would be misinterpreted by the server as a separator for a new parameter, breaking the query. This is where URL encoding comes in.</p>
-                    </section>
-                    <section>
-                        <h3 className="font-bold text-xl">Percent-Encoding: The Universal Language of URLs</h3>
-                        <p>URL encoding, officially known as <strong>Percent-Encoding</strong>, is a mechanism to represent any character within a URL safely. It works by replacing a problematic character with a three-character sequence:</p>
-                        <ol>
-                           <li>A percent sign (`%`).</li>
-                           <li>Two hexadecimal digits representing the ASCII value of the character.</li>
-                        </ol>
-                        <p>Let's look at some common examples:</p>
-                        <div className="overflow-x-auto my-4">
-                           <Table>
-                              <TableHeader><TableRow><TableHead>Character</TableHead><TableHead>Encoded Value</TableHead><TableHead>Reason for Encoding</TableHead></TableRow></TableHeader>
-                              <TableBody>
-                                 <TableRow><TableCell> (space)</TableCell><TableCell className="font-code">%20</TableCell><TableCell>Spaces are not allowed in URLs.</TableCell></TableRow>
-                                 <TableRow><TableCell>&</TableCell><TableCell className="font-code">%26</TableCell><TableCell>Reserved character for separating query parameters.</TableCell></TableRow>
-                                 <TableRow><TableCell>?</TableCell><TableCell className="font-code">%3F</TableCell><TableCell>Reserved character for starting the query string.</TableCell></TableRow>
-                                 <TableRow><TableCell>/</TableCell><TableCell className="font-code">%2F</TableCell><TableCell>Reserved character for separating path segments.</TableCell></TableRow>
-                                 <TableRow><TableCell>#</TableCell><TableCell className="font-code">%23</TableCell><TableCell>Reserved character for identifying URL fragments.</TableCell></TableRow>
-                               </TableBody>
-                           </Table>
-                        </div>
-                        <p>By encoding these characters, you ensure that they are treated as literal data by the receiving server, rather than as structural parts of the URL.</p>
-                    </section>
-                     <section>
-                        <h3 className="font-bold text-xl">`encodeURIComponent` vs. `encodeURI`</h3>
-                        <p>JavaScript provides two main functions for this purpose, and it's crucial to know which one to use. This tool uses `encodeURIComponent` because it is the correct choice for most web development tasks.</p>
-                        <ul className="list-disc pl-5">
-                           <li><strong>`encodeURIComponent()`:</strong> This function is aggressive. It assumes you are encoding a piece of a URL, like a query parameter's value or a path segment. It encodes all characters that have special meaning, including ` / ? : @ & = + $ # `. You should use this when building a URL from parts, for example: <br/> <code className="font-code bg-muted p-1 rounded-sm">{`const query = encodeURIComponent("Q&A about cats"); const url = \`https://example.com/search?q=\${query}\`;`}</code></li>
-                            <li><strong>`encodeURI()`:</strong> This function is less aggressive. It assumes you are passing it a full, valid URI and you don't want to break its structure. Therefore, it does *not* encode the reserved characters listed above. It is useful for encoding a URL that a user might have typed with spaces or non-ASCII characters, but it's generally less common.</li>
-                        </ul>
-                    </section>
-                </CardContent>
-            </Card>
-
-            <div className="grid md:grid-cols-2 gap-8">
-                <Card>
-                    <CardHeader>
-                        <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
-                    </CardHeader>
-                    <CardContent>
-                        <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                            <li><strong>Check Browser Address Bar:</strong> Your browser automatically encodes URLs when you type them or click links. You can often see the encoded result directly in the address bar after submitting a search form.</li>
-                            <li><strong>Decoding for Readability:</strong> When you see a long, confusing URL in server logs or analytics, paste it into the "Encoded" box of this tool to quickly decode it and understand the user's original query.</li>
-                            <li><strong>Use for `mailto:` Links:</strong> URL encoding is essential for creating complex `mailto:` links that include a pre-filled subject and body, as these fields often contain spaces and special characters.</li>
-                            <li><strong>Bookmarklet Creation:</strong> Developers often create browser bookmarklets using JavaScript. All code within the bookmarklet must be URL-encoded to function correctly.</li>
-                        </ul>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader>
-                         <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
-                    </CardHeader>
-                    <CardContent>
-                         <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                            <li><strong>Double Encoding:</strong> Accidentally encoding a string that is already encoded. This will result in `%` being encoded as `%25`, leading to strings like `%2520` instead of `%20`, which will not decode correctly.</li>
-                            <li><strong>Encoding the Full URL:</strong> Using `encodeURIComponent()` on an entire URL (`https://example.com/path?q=test`). This will break the URL by encoding the colons and slashes (`https%3A%2F%2Fexample.com...`), making it unusable.</li>
-                            <li><strong>Not Encoding Query Parameters:</strong> Forgetting to encode user-generated content before adding it to a URL's query string. This is a common source of bugs and can lead to security vulnerabilities.</li>
-                            <li><strong>Assuming Plus `+` for Spaces:</strong> While some systems use `+` for spaces, the universal standard is `%20`. Relying on `+` can lead to issues if the receiving server does not interpret it correctly.</li>
-                        </ul>
-                    </CardContent>
-                </Card>
-            </div>
+             
+                
+                    
+                    
+                     Educational Deep Dive: Why URLs Need Encoding
+                    
+                
+                
+                    
+                    
+                        
+                         The Anatomy of a URL
+                        
+                        A Uniform Resource Locator (URL) is more than just a web address; it's a structured string with specific rules. A URL is composed of several parts, and certain characters are reserved to define this structure. For example, the question mark (?) separates the main path from the query string, and the ampersand (&) separates key-value pairs within that query string.
+                        
+                        The problem arises when these reserved characters, or other "unsafe" characters like spaces, need to be included as part of the data itself. If you have a search query for "cats & dogs", the ampersand would be misinterpreted by the server as a separator for a new parameter, breaking the query. This is where URL encoding comes in.
+                    
+                    
+                        
+                         Percent-Encoding: The Universal Language of URLs
+                        
+                        URL encoding, officially known as 
+                        
+                        A percent sign (%).
+                        Two hexadecimal digits representing the ASCII value of the character.
+                        
+                        Let's look at some common examples:
+                         
+                            
+                                
+                                
+                                
+                            
+                            
+                                
+                                
+                                 
+                                Spaces are not allowed in URLs.
+                                
+                            
+                            
+                                
+                                
+                                &
+                                
+                            
+                            
+                                Reserved character for separating query parameters.
+                                
+                            
+                            
+                                
+                                
+                                ?
+                                
+                            
+                            
+                                Reserved character for starting the query string.
+                                
+                            
+                            
+                                
+                                
+                                /
+                                
+                            
+                            
+                                Reserved character for separating path segments.
+                                
+                            
+                            
+                                
+                                
+                                #
+                                
+                            
+                            
+                                Reserved character for identifying URL fragments.
+                                
+                            
+                        
+                        By encoding these characters, you ensure that they are treated as literal data by the receiving server, rather than as structural parts of the URL.
+                    
+                     vs. 
+                    
+                    JavaScript provides two main functions for this purpose, and it's crucial to know which one to use. This tool uses 
+                    
+                        
+                        This function is aggressive. It assumes you are encoding a piece of a URL, like a query parameter's value or a path segment. It encodes all characters that have special meaning, including 
+                         You should use this when building a URL from parts, for example: 
+                        
+                            
+                         This function is less aggressive. It assumes you are passing it a full, valid URI and you don't want to break its structure. Therefore, it does 
+                        
+                    
+                
             
-            <section>
-                <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
-                <div className="grid md:grid-cols-2 gap-6">
-                    <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Building a Search URL</h3>
-                        <p className="text-sm text-muted-foreground">A developer is creating a link to a search engine. The user's query is "best C++ tutorials". To safely add this to a URL, they must encode it. The final URL would be `https://www.google.com/search?q=best%20C%2B%2B%20tutorials`, ensuring the `+` characters are correctly encoded as `%2B`.</p>
-                    </div>
-                     <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Passing a URL as a Parameter</h3>
-                        <p className="text-sm text-muted-foreground">A redirection service needs to pass a destination URL as a parameter to another URL. For example: `https://example.com/redirect?target=https://other.com/page?id=1`. The `target` parameter's value must be fully encoded to prevent the `?` and `/` from breaking the parent URL. This tool is used to encode the target URL into a safe string.</p>
-                    </div>
-                     <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Debugging Analytics Data</h3>
-                        <p className="text-sm text-muted-foreground">A data analyst is looking at a report of top landing pages and sees a URL like `/products/view?item=T-Shirt%20%28Blue%29`. To make their report more readable, they copy the encoded part (`T-Shirt%20%28Blue%29`) and use the decoder to find the original product name: "T-Shirt (Blue)".</p>
-                    </div>
-                     <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Creating Social Media Share Links</h3>
-                        <p className="text-sm text-muted-foreground">A content creator wants to make a "Share on X" link that pre-fills a post. The desired text is "Check out this amazing tool! #ICT". They must URL-encode this text to create a valid link, like `https://x.com/intent/post?text=Check%20out%20this%20amazing%20tool!%20%23ICT`, ensuring the space and '#' are handled correctly.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
-                <Card>
-                    <CardContent className="p-6">
-                        <Accordion type="single" collapsible className="w-full">
-                            {faqData.map((item, index) => (
-                                <AccordionItem value={`item-${index}`} key={index}>
-                                    <AccordionTrigger>{item.question}</AccordionTrigger>
-                                    <AccordionContent>
-                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace('Base64 encoding', "<a href='/tools/base64-encoder-decoder' class='text-primary hover:underline'>Base64 encoding</a>").replace('Unicode/ASCII Converter', "<a href='/tools/unicode-ascii-converter' class='text-primary hover:underline'>Unicode/ASCII Converter</a>") }} />
-                                    </AccordionContent>
-                                </AccordionItem>
-                            ))}
-                        </Accordion>
-                    </CardContent>
-                </Card>
-            </section>
             
-            <section>
-                <h2 className="text-2xl font-bold mb-4">Related Tools & Articles</h2>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Link href="/tools/base64-encoder-decoder" className="block">
-                        <Card className="hover:border-primary transition-colors h-full">
-                            <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">Base64 Encoder / Decoder<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">For encoding binary data or other content that needs to be safely transmitted in a text-based format.</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </Link>
-                    <Link href="/tools/http-header-checker" className="block">
-                        <Card className="hover:border-primary transition-colors h-full">
-                            <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">HTTP Header Checker<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Inspect the headers of a URL to see how a server responds to an encoded request.</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </Link>
-                     <Link href="/tools/json-formatter" className="block">
-                        <Card className="hover:border-primary transition-colors h-full">
-                            <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">JSON Formatter / Validator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">If you are passing JSON objects in a URL, they must be URL-encoded after being stringified.</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </Link>
-                </div>
-            </section>
-        </div>
+                
+                    Pro Tips & Quick Hacks
+                    
+                        Check Browser Address Bar:
+                         Your browser automatically encodes URLs when you type them or click links. You can often see the encoded result directly in the address bar after submitting a search form.
+                        Decoding for Readability:
+                         When you see a long, confusing URL in server logs or analytics, paste it into the "Encoded" box of this tool to quickly decode it and understand the user's original query.
+                         Use for  Links:
+                         URL encoding is essential for creating complex  links that include a pre-filled subject and body, as these fields often contain spaces and special characters.
+                        Bookmarklet Creation:
+                         Developers often create browser bookmarklets using JavaScript. All code within the bookmarklet must be URL-encoded to function correctly.
+                        
+                    
+                
+                
+                    Common Mistakes to Avoid
+                    
+                        Double Encoding:
+                         Accidentally encoding a string that is already encoded. This will result in % being encoded as %25, leading to strings like %2520 instead of %20, which will not decode correctly.
+                        Encoding the Full URL:
+                         Using () on an entire URL (://example.com/path?q=test). This will break the URL by encoding the colons and slashes (https%3A%2F%2Fexample.com...), making it unusable.
+                        Not Encoding Query Parameters:
+                         Forgetting to encode user-generated content before adding it to a URL's query string. This is a common source of bugs and can lead to security vulnerabilities.
+                        Assuming Plus  for Spaces:
+                         While some systems use  for spaces, the universal standard is %20. Relying on  can lead to issues if the receiving server does not interpret it correctly.
+                        
+                    
+                
+            
+
+            
+                
+                    
+                     Real-Life Application Scenarios
+                    
+                    Building a Search URL
+                     A developer is creating a link to a search engine. The user's query is "best C++ tutorials". To safely add this to a URL, they must encode it. The final URL would be ://www.google.com/search?q=best%20C%2B%2B%20tutorials, ensuring the + characters are correctly encoded as %2B.
+                    Passing a URL as a Parameter
+                     A redirection service needs to pass a destination URL as a parameter to another URL. For example: ://example.com/redirect?target=://other.com/page?id=1. The  parameter's value must be fully encoded to prevent the  and / from breaking the parent URL. This tool is used to encode the target URL into a safe string.
+                    Debugging Analytics Data
+                     A data analyst is looking at a report of top landing pages and sees a URL like /products/view?item=T-Shirt%20%28Blue%29. To make their report more readable, they copy the encoded part (T-Shirt%20%28Blue%29) and use the decoder to find the original product name: "T-Shirt (Blue)".
+                    Creating Social Media Share Links
+                     A content creator wants to make a "Share on X" link that pre-fills a post. The desired text is "Check out this amazing tool! #ICT". They must URL-encode this text to create a valid link, like ://x.com/intent/post?text=Check%20out%20this%20amazing%20tool!%20%23ICT, ensuring the space and '#' are handled correctly.
+                    
+                
+            
+
+            
+                
+                    Frequently Asked Questions
+                    
+                        
+                            
+                                
+                                
+                                    
+                                    
+                                
+                            
+                        
+                    
+                
+            
+            
+                
+                    Related Tools & Articles
+                    
+                        Base64 Encoder / Decoder
+                         For encoding binary data or other content that needs to be safely transmitted in a text-based format.
+                        HTTP Header Checker
+                         Inspect the headers of a URL to see how a server responds to an encoded request.
+                         JSON Formatter / Validator
+                         If you are passing JSON objects in a URL, they must be URL-encoded after being stringified.
+                        
+                    
+                
+            
+        
     );
 }
