@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import { Inter, Source_Code_Pro } from 'next/font/google';
 import Script from 'next/script';
@@ -48,6 +49,9 @@ export const metadata: Metadata = {
     title: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     description: 'A comprehensive suite of free online tools for ICT professionals and students.',
     // images: ['/og-image.png'], // Replace with your actual OG image path
+  },
+  icons: {
+    icon: '/favicon.ico',
   },
 };
 
