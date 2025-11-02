@@ -122,7 +122,7 @@ export function BandwidthCostCalculator() {
             providerTiers = customTiers.map(t => ({
                 upTo: t.upTo === '' ? Infinity : t.upTo,
                 rate: t.rate === '' ? 0 : t.rate
-            })).sort((a, b) => a.upTo - b.upTo);
+            })).sort((a, b) => (a.upTo === Infinity ? 1 : b.upTo === Infinity ? -1 : a.upTo - b.upTo));
         } else {
             providerTiers = (pricing[provider as keyof typeof pricing] as any)[region];
         }
@@ -225,7 +225,7 @@ export function BandwidthCostCalculator() {
                                     <p className="text-4xl font-bold text-primary">${results.totalCost.toFixed(2)}</p>
                                     <p className="text-sm text-muted-foreground">per month</p>
                                 </div>
-                                <h4 className="font-semibold">Pricing Tiers ({provider.toUpperCase()}{provider !== 'custom' && ` - ${region}`})</h4>
+                                <h4 className="font-semibold">Pricing Tiers ({provider === 'custom' ? 'Custom' : `${provider.toUpperCase()} - ${region}`})</h4>
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
