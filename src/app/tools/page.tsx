@@ -30,7 +30,6 @@ import { HttpHeaderChecker } from '@/app/tools/http-header-checker/http-header-c
 import { HttpRequestSizeCalculator } from '@/app/tools/http-request-size-calculator/http-request-size-calculator';
 import { SslExpiryChecker } from '@/app/tools/ssl-expiry-checker/ssl-expiry-checker';
 import { UrlEncoderDecoder } from '@/app/tools/url-encoder-decoder/url-encoder-decoder';
-import { HtmlEntityEncoderDecoder } from '@/app/tools/html-entity-encoder-decoder/html-entity-encoder-decoder';
 import { CodeMinifier } from '@/app/tools/code-minifier/code-minifier';
 import { RobotsTxtTool } from '@/app/tools/robots-txt-tool/robots-txt-tool';
 import { SitemapGenerator } from '@/app/tools/sitemap-generator/sitemap-generator';
@@ -87,10 +86,10 @@ import { PrimaryForeignKeyValidator } from '@/app/tools/key-validator/key-valida
 import { NormalizationChecker } from '@/app/tools/normalization-checker/normalization-checker';
 import { DuplicateRowFinder } from '@/app/tools/duplicate-row-finder/duplicate-row-finder';
 import { ColumnTypeConverter } from '@/app/tools/column-type-converter/column-type-converter';
-import { SqlInjectionTester } from '@/app/tools/sql-injection-tester/sql-injection-tester';
 import { DatabaseHealthChecker } from '@/app/tools/db-health-checker/db-health-checker';
-import BigOComplexityQuizPage from '@/app/tools/big-o-quiz/page';
+import { CodeForm } from '@/app/tools/code-generator/code-form';
 import { RecursionSimulator } from '@/app/tools/recursion-simulator/recursion-simulator';
+import BigOQuiz from '@/app/tools/big-o-quiz/big-o-quiz';
 
 export async function generateMetadata({ params: rawParams }: { params: { slug: string } }) {
   const params = await rawParams;
@@ -140,7 +139,6 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'http-request-size-calculator': HttpRequestSizeCalculator,
   'ssl-expiry-checker': SslExpiryChecker,
   'url-encoder-decoder': UrlEncoderDecoder,
-  'html-entity-encoder-decoder': HtmlEntityEncoderDecoder,
   'code-minifier': CodeMinifier,
   'robots-txt-tool': RobotsTxtTool,
   'sitemap-generator': SitemapGenerator,
@@ -199,10 +197,10 @@ const toolComponentMap: { [key: string]: React.ComponentType } = {
   'duplicate-row-finder': DuplicateRowFinder,
   'table-size-estimator': DbStorageEstimator,
   'column-type-converter': ColumnTypeConverter,
-  'sql-injection-tester': SqlInjectionTester,
   'db-health-checker': DatabaseHealthChecker,
-  'big-o-quiz': BigOComplexityQuizPage,
   'recursion-simulator': RecursionSimulator,
+  'big-o-quiz': BigOQuiz,
+  'code-generator': CodeForm,
 };
 
 export default function ToolPage({ params }: { params: { slug: string } }) {

@@ -10,19 +10,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
   }
 
-  const PageComponent = (await import(`../tools/${tool.slug}/page`)).default;
-  if (PageComponent.metadata) {
-    return PageComponent.metadata;
-  }
-
+  // The metadata is now handled by each tool's dedicated page file.
+  // This dynamic import is no longer needed here.
+  // We will rely on the default metadata generation logic.
   return {
     title: `${tool.name} | ICT Tools Hub`,
     description: tool.description,
-    openGraph: {
-      title: `${tool.name} | ICT Tools Hub`,
-      description: tool.description,
-      url: `/tools/${tool.slug}`,
-    },
   };
 }
 
