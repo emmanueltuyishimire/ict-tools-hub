@@ -90,10 +90,9 @@ import { NormalizationChecker } from '@/app/tools/normalization-checker/normaliz
 import { DuplicateRowFinder } from '@/app/tools/duplicate-row-finder/duplicate-row-finder';
 import { ColumnTypeConverter } from '@/app/tools/column-type-converter/column-type-converter';
 import { DatabaseHealthChecker } from '@/app/tools/db-health-checker/db-health-checker';
-import { RecursionSimulator } from '@/app/tools/recursion-simulator/recursion-simulator';
 import { CodeForm } from '@/app/tools/code-generator/code-form';
-import { HtmlEntityEncoderDecoder } from '@/app/tools/html-entity-encoder-decoder/html-entity-encoder-decoder';
 import { SqlInjectionTester } from '@/app/tools/sql-injection-tester/sql-injection-tester';
+import { RecursionSimulator } from '@/app/tools/recursion-simulator/recursion-simulator';
 
 const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
   'ip-to-binary': IpToBinaryConverter,
@@ -121,7 +120,6 @@ const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
   'http-request-size-calculator': HttpRequestSizeCalculator,
   'ssl-expiry-checker': SslExpiryChecker,
   'url-encoder-decoder': UrlEncoderDecoder,
-  'html-entity-encoder-decoder': HtmlEntityEncoderDecoder,
   'code-minifier': CodeMinifier,
   'robots-txt-tool': RobotsTxtTool,
   'sitemap-generator': SitemapGenerator,

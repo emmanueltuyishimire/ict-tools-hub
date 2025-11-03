@@ -10,6 +10,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
   }
 
+  const PageComponent = (await import(`../tools/${tool.slug}/page`)).default;
+  if (PageComponent.metadata) {
+    return PageComponent.metadata;
+  }
+
   return {
     title: `${tool.name} | ICT Tools Hub`,
     description: tool.description,

@@ -187,9 +187,7 @@ export function SubnetCalculator() {
     };
 
     return (
-        <div className="max-w-4xl mx-auto space-y-12">
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
+        <div className="space-y-6">
             <Card>
                 <CardHeader>
                     <CardTitle>Subnet Calculator</CardTitle>

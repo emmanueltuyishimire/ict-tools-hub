@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -453,10 +454,10 @@ export function SqlQueryTester() {
                                 <h4 className="font-semibold mb-2 capitalize">{tableName}</h4>
                                 <div className="overflow-x-auto rounded-md border">
                                     <Table>
-                                        <TableHeader><TableRow>{Object.keys(data[0] || {}).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
+                                        <TableHeader><TableRow>{(data.length > 0 ? Object.keys(data[0]) : []).map(h => <TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader>
                                         <TableBody>
-                                            {data.slice(0, 5).map((row: any, i: number) => <TableRow key={i}>{Object.values(row).map((val: any, j) => <TableCell key={j}>{String(val)}</TableCell>)}</TableRow>)}
-                                            {data.length > 5 && <TableRow><TableCell colSpan={Object.keys(data[0] || {}).length} className="text-center text-muted-foreground">...and {data.length - 5} more rows</TableCell></TableRow>}
+                                            {data.slice(0, 5).map((row: any, i: number) => <TableRow key={i}>{(data.length > 0 ? Object.values(row) : []).map((val: any, j) => <TableCell key={j}>{String(val)}</TableCell>)}</TableRow>)}
+                                            {data.length > 5 && <TableRow><TableCell colSpan={(data.length > 0 ? Object.keys(data[0]) : []).length} className="text-center text-muted-foreground">...and {data.length - 5} more rows</TableCell></TableRow>}
                                         </TableBody>
                                     </Table>
                                 </div>
