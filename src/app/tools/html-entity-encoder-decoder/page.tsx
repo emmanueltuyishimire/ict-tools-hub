@@ -19,7 +19,7 @@ const faqData = [
     { question: "What are HTML entities?", answer: "HTML entities are pieces of text ('strings') that begin with an ampersand (&) and end with a semicolon (;). They are used to display reserved characters (which would otherwise be interpreted as HTML code), and invisible characters (like non-breaking spaces)." },
     { question: "Why do I need to encode HTML entities?", answer: "You need to encode them to prevent the browser from misinterpreting your text as HTML code. For example, if you want to display the text '<p>This is a paragraph.</p>' literally on your webpage, you must encode the '<' and '>' characters as '&lt;' and '&gt;'. Otherwise, the browser would render it as an actual HTML paragraph." },
     { question: "What is the difference between an entity name and an entity number?", answer: "Most entities have both a name (e.g., `&copy;` for copyright) and a number (e.g., `&#169;`). They render the same character. Names are easier to remember, but numbers are better supported across all character sets. This tool uses named entities where available." },
-    { question: "Is this safe for sensitive data?", answer: "Yes. All encoding and decoding operations happen entirely within your browser. No data is sent to any server." },
+    { question: "Is this tool safe for sensitive data?", answer: "Yes. All encoding and decoding operations happen entirely within your browser. No data is sent to any server." },
     { question: "What are 'unreserved' characters?", answer: "Unreserved characters are those that do not have a special meaning in a URL and do not need to be encoded. They include uppercase and lowercase letters (A-Z, a-z), digits (0-9), and the special characters `-`, `_`, `.`, and `~`." },
     { question: "What happens if I try to decode a string that isn't properly encoded?", answer: "The decoder will only convert valid entity sequences (like `&amp;` or `&#169;`). Any other text will remain as-is. If it encounters a malformed entity (like `&amp`), it might not convert it correctly." },
     { question: "Can I encode non-ASCII characters like 'é' or '€'?", answer: "Yes. This tool encodes a wide range of common non-ASCII characters into their respective HTML entities (e.g., `&eacute;` and `&euro;`), ensuring they are displayed correctly in any HTML document." },
@@ -35,9 +35,9 @@ const howToSchema = {
     description: 'A guide to encoding plain text into HTML entities and decoding them back.',
     step: [
         { '@type': 'HowToStep', name: 'Enter Text', text: 'To encode, type plain text into the top box. To decode, paste HTML entities into the bottom box.' },
-        { '@type': 'HowToStep', name: 'View Real-Time Results', text: 'As you type in one box, the converted text will instantly appear in the other.' },
+        { '@type': 'HowToStep', name: 'View Real-Time Results', text: 'As you type in one box, the converted text appears instantly in the other.' },
         { '@type': 'HowToStep', name: 'Copy the Output', text: 'Use the copy button to grab the converted text for your code.' },
-        { '@type': 'HowToStep', name: 'Swap or Clear', text: 'Use the swap button to switch the content of the boxes or the clear button to reset.' }
+        { '@type': 'HowToStep', name: 'Swap or Clear', text: 'Use the swap button to switch the contents of the two boxes, or the clear button to reset both text areas.' }
     ],
     totalTime: 'PT1M',
 };

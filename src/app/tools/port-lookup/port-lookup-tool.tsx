@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -206,7 +205,7 @@ export function PortLookupTool() {
                         <p>Not all communication is the same, and the internet has two primary protocols for transporting data, which work in conjunction with ports:</p>
                         <ul className="list-disc pl-5">
                             <li><strong>TCP (Transmission Control Protocol):</strong> This protocol is like a registered postal service. It's <strong>connection-oriented</strong>, meaning it establishes a formal connection (a "three-way handshake") before sending any data. It guarantees that all data packets are delivered, that they arrive in the correct order, and that they are error-checked. This reliability is crucial for activities like browsing websites, sending emails, and transferring files, where every single bit of data must be correct.</li>
-                            <li><strong>UDP (User Datagram Protocol):</strong> This protocol is like a standard, first-class mail courier. It's <strong>connectionless</strong>. It just sends the data packets (datagrams) and hopes for the best. There is no guarantee of delivery, order, or error-checking. While this sounds bad, it's incredibly fast because it has very little overhead. UDP is perfect for time-sensitive applications where speed is more important than perfect accuracy, such as live video streaming, online gaming, and DNS lookups. If a single video frame or game position update is lost, it's better to just skip it and move on to the next one rather than waiting for it to be re-sent. Our <Link href="/tools/latency-estimator" className="text-primary hover:underline">Latency Estimator</Link> can help you understand how delay impacts these real-time protocols.</li>
+                            <li><strong>UDP (User Datagram Protocol):</strong> This protocol is like a standard, first-class mail courier. It's <strong>connectionless</strong>. It just sends the data packets (datagrams) and hopes for the best. There is no guarantee of delivery, order, or error-checking. While this sounds bad, it's incredibly fast because it has very little overhead. UDP is perfect for time-sensitive applications where speed is more important than perfect accuracy, such as live video streaming, online gaming, and DNS lookups. Our <Link href="/tools/latency-estimator" className="text-primary hover:underline">Latency Estimator</Link> can help you understand how delay impacts these real-time protocols.</li>
                         </ul>
                     </section>
                     <section>

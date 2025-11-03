@@ -60,7 +60,6 @@ export const toolCategories: ToolCategory[] = [
       { name: 'HTTP Request Size Calculator', slug: 'http-request-size-calculator', description: 'Estimate the size of an HTTP request.' },
       { name: 'SSL Certificate Expiration Checker', slug: 'ssl-expiry-checker', description: 'Check SSL certificate expiration.' },
       { name: 'URL Encoder / Decoder', slug: 'url-encoder-decoder', description: 'Encode or decode URLs.' },
-      { name: 'HTML Entity Encoder / Decoder', slug: 'html-entity-encoder-decoder', description: 'Encode or decode HTML entities.' },
       { name: 'HTML / CSS / JS Minifier', slug: 'code-minifier', description: 'Minify HTML, CSS, or JavaScript code.' },
       { name: 'Robots.txt Validator / Generator', slug: 'robots-txt-tool', description: 'Validate or generate a robots.txt file.' },
       { name: 'Sitemap Generator (static)', slug: 'sitemap-generator', description: 'Generate a static XML sitemap.' },
@@ -138,7 +137,6 @@ export const toolCategories: ToolCategory[] = [
     name: 'Database & Admin Tools',
     icon: Database,
     tools: [
-      { name: 'SQL Query Tester', slug: 'sql-query-tester', description: 'Test basic SQL queries.' },
       { name: 'Database Row / Storage Estimator', slug: 'db-storage-estimator', description: 'Estimate database storage.' },
       { name: 'User Quota Calculator', slug: 'user-quota-calculator', description: 'Calculate user quotas.' },
       { name: 'Transaction / TPS Calculator', slug: 'tps-calculator', description: 'Calculate transactions per second.' },
@@ -160,7 +158,6 @@ export const toolCategories: ToolCategory[] = [
     tools: [
        { name: 'AI Code Generator & Debugger', slug: 'code-generator', description: 'Generate and debug code with AI.' },
       { name: 'Time Complexity Estimator', slug: 'big-o-calculator', description: 'Understand and visualize Big O notation.' },
-      { name: 'Big-O Complexity Quiz', slug: 'big-o-quiz', description: 'Quiz on Big-O complexity.' },
       { name: 'Algorithm Step Simulator', slug: 'algorithm-simulator', description: 'Simulate steps of simple algorithms.' },
       { name: 'Recursion Calculator / Simulator', slug: 'recursion-simulator', description: 'Simulate recursive functions.' },
     ],

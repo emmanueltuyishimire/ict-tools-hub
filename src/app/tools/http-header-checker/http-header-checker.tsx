@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useActionState, useRef, useEffect } from 'react';
@@ -14,6 +15,7 @@ import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Co
 import Link from 'next/link';
 import { checkHeaders, type FormState } from './actions';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 
 const initialState: FormState = null;
@@ -67,6 +69,7 @@ export function HttpHeaderChecker() {
     const [state, formAction] = useActionState(checkHeaders, initialState);
     const formRef = useRef<HTMLFormElement>(null);
     const resultRef = useRef<HTMLDivElement>(null);
+    const { pending } = useFormStatus();
     
     useEffect(() => {
         if(state && resultRef.current) {
@@ -106,7 +109,19 @@ export function HttpHeaderChecker() {
             </Card>
 
             <div ref={resultRef}>
-                {state && (
+                {pending && (
+                    <Card>
+                        <CardHeader>
+                            <Skeleton className="h-8 w-1/2" />
+                            <Skeleton className="h-4 w-3/4" />
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                             <Skeleton className="h-10 w-full" />
+                             <Skeleton className="h-40 w-full" />
+                        </CardContent>
+                    </Card>
+                )}
+                {state && !pending && (
                     <div aria-live="polite">
                         {!state.success ? (
                             <Alert variant="destructive">
@@ -327,36 +342,6 @@ export function HttpHeaderChecker() {
                         </Accordion>
                     </CardContent>
                 </Card>
-            </section>
-            
-             <section>
-                <h2 className="text-2xl font-bold mb-4">Related Tools & Articles</h2>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Link href="/tools/ssl-checker" className="block">
-                        <Card className="hover:border-primary transition-colors h-full">
-                            <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">SSL Certificate Checker<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Verify the SSL certificate that enables HTTPS and secures your headers.</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </Link>
-                    <Link href="/tools/dns-lookup" className="block">
-                        <Card className="hover:border-primary transition-colors h-full">
-                            <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">DNS Lookup Tool<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Find the IP address your domain points to before you check its headers.</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </Link>
-                    <Link href="/tools/url-encoder-decoder" className="block">
-                        <Card className="hover:border-primary transition-colors h-full">
-                            <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">URL Encoder / Decoder<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Encode special characters in a URL before you check its headers.</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </Link>
-                </div>
             </section>
         </div>
     );

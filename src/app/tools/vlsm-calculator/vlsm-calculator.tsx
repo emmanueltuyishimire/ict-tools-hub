@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
@@ -10,10 +11,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
 import { StructuredData } from '@/components/structured-data';
-import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Plus, Trash2, SlidersHorizontal, Network } from 'lucide-react';
+import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Binary, Network, Combine, ListRestart } from 'lucide-react';
 import Link from 'next/link';
+import { Textarea } from '@/components/ui/textarea';
 
-// --- IP Math Logic ---
 const ipToLong = (ip: string): number | null => {
     const parts = ip.split('.').map(part => parseInt(part, 10));
     if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) return null;
@@ -334,27 +335,6 @@ export function VlsmCalculator() {
                     </Card>
                 </div>
             )}
-
-            <section>
-                <h2 className="text-2xl font-bold mb-4">How to Use the VLSM Calculator</h2>
-                <Card className="prose prose-sm max-w-none text-foreground p-6">
-                    <p>Variable Length Subnet Masking (VLSM) is a powerful technique for designing efficient and scalable IP networks. This tool automates the entire process.</p>
-                    <ol>
-                        <li><strong>Enter the Major Network:</strong> Start with the total IP address block assigned to you. Enter the network address (e.g., <code className="font-code bg-muted p-1 rounded-sm">172.16.0.0</code>) and its CIDR prefix (e.g., <code className="font-code bg-muted p-1 rounded-sm">/22</code>). The calculator will validate that you've entered a valid network address for that CIDR.</li>
-                        <li><strong>Define Your Subnet Needs:</strong> For each separate network segment you need (e.g., a department, a server farm, a WAN link), add a new entry. Give it a descriptive name and specify the exact number of hosts (devices) it must support.</li>
-                        <li><strong>Add and Remove as Needed:</strong> Use the "+ Add Subnet" button to create new rows. If you make a mistake, use the trash can icon to remove a requirement.</li>
-                        <li><strong>Design the Network:</strong> Click the "Design Network" button. The calculator will perform the VLSM algorithm: it sorts your requirements from largest to smallest and allocates the most appropriately sized subnet for each one from the major network block.</li>
-                        <li><strong>Analyze the Results:</strong> The results table shows your complete IP plan. For each subnet, you'll see the assigned Network ID, the CIDR, the usable range of IPs for your devices, the broadcast address, and the subnet mask. Any leftover address space is also shown, available for future expansion.</li>
-                    </ol>
-                     <Alert>
-                        <Lightbulb className="h-4 w-4" />
-                        <AlertTitle>Example Scenario</AlertTitle>
-                        <AlertDescription>
-                          Try calculating a plan for a major network of <code className="font-code bg-muted p-1 rounded-sm">10.10.0.0/16</code> with three requirements: Corp HQ (1000 hosts), Branch Office (200 hosts), and a WAN link (2 hosts). The calculator will correctly allocate a /22 for HQ, a /24 for the branch, and a /30 (or /31) for the WAN link, assigning them sequential network IDs.
-                        </AlertDescription>
-                    </Alert>
-                </Card>
-            </section>
         </div>
     );
 }

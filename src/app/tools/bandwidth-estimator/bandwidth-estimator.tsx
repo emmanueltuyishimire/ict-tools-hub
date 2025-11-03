@@ -129,14 +129,14 @@ export function BandwidthEstimator() {
 
     const handleCalculate = () => {
         setError('');
-        const validRows = usageRows.filter(row => row.devices && row.devices > 0 && activityData[row.activity]);
+        const validRows = usageRows.filter(row => row.devices && row.devices > 0 && activityData[row.activity as keyof typeof activityData]);
         if (validRows.length === 0) {
             setError('Please add at least one activity with a valid number of devices.');
             return;
         }
 
         const breakdown = validRows.map(row => {
-            const activity = activityData[row.activity];
+            const activity = activityData[row.activity as keyof typeof activityData];
             const totalBw = activity.bandwidth * (row.devices as number);
             return { name: activity.name, devices: row.devices, totalBw: totalBw };
         });
@@ -306,7 +306,7 @@ export function BandwidthEstimator() {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {results.breakdown.map((item, i) => (
+                                        {results.breakdown.map((item: any, i: number) => (
                                             <TableRow key={i}>
                                                 <TableCell>{item.name}</TableCell>
                                                 <TableCell className="text-right">{item.devices}</TableCell>
