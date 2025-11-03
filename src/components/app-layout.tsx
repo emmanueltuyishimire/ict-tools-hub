@@ -13,7 +13,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   }, []);
 
   const footerLinks = [
-    { name: 'Blog', href: 'https://calculation.site' },
+    { name: 'Central Hub', href: 'https://calculation.site' },
     { name: 'Math Calculators', href: 'https://maths.calculation.site' },
     { name: 'Health & Fitness Calculators', href: 'https://health.calculation.site' },
     { name: 'ICT Tools Hub', href: 'https://ict.calculation.site' },
