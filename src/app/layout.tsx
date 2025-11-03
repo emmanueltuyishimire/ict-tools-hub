@@ -80,12 +80,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceCodePro.variable}`}>
       <head>
         <StructuredData data={webAppSchema} />
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=pub-3042243846300811"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        ></script>
         {/* Google tag (gtag.js) */}
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-2LF3Z5PGR4"></Script>
         <Script id="google-analytics">
