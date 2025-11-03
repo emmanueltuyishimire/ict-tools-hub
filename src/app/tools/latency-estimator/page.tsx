@@ -35,9 +35,15 @@ const LatencyEstimatorPage = () => {
       "url": "https://www.icttoolbench.com/tools/latency-estimator"
     };
     
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } })),
+    };
+
     return (
         <>
-            <StructuredData data={faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))} />
+            <StructuredData data={faqSchema} />
             <StructuredData data={howToSchema} />
             <StructuredData data={softwareAppSchema} />
             <div className="max-w-4xl mx-auto space-y-12">
@@ -115,7 +121,7 @@ const LatencyEstimatorPage = () => {
                    <Card>
                       <CardContent className="p-6">
                           <dl className="space-y-4">
-                              {faqData.map((item) => (
+                              {keyTerminologies.map((item) => (
                                   <div key={item.term}>
                                       <dt className="font-semibold">{item.term}</dt>
                                       <dd className="text-muted-foreground text-sm">{item.definition}</dd>
@@ -211,5 +217,3 @@ const LatencyEstimatorPage = () => {
 };
 
 export default LatencyEstimatorPage;
-
-    
