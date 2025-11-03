@@ -1,3 +1,4 @@
+
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toolCategories } from '@/lib/tools';
@@ -9,7 +10,7 @@ export default function Home() {
     <>
       <PageHeader
         title="Welcome to ICT Tools Hub"
-        description="A comprehensive suite of 200+ free online tools for students, developers, network admins, and tech enthusiasts. Explore the categories below to find the tool you need."
+        description="A comprehensive suite of 100+ free online tools for students, developers, network admins, and tech enthusiasts. Explore the categories below to find the tool you need."
       />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {toolCategories.map((category) => (

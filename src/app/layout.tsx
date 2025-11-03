@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: '%s | ICT Tools Hub',
   },
   description:
-    'A comprehensive suite of 200+ free online tools for students, developers, network admins, and tech enthusiasts. Networking, programming, security, and more.',
+    'A comprehensive suite of 100+ free online tools for students, developers, network admins, and tech enthusiasts. Networking, programming, security, and more.',
   openGraph: {
     title: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     description: 'A comprehensive suite of free online tools for ICT professionals and students.',
