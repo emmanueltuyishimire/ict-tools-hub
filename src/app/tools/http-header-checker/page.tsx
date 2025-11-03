@@ -5,12 +5,9 @@ import { HttpHeaderChecker } from './http-header-checker';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
+import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-
 
 export const metadata = {
     title: 'Live HTTP Header Checker | Check & Analyze Response Headers | ICT Toolbench',
@@ -22,7 +19,7 @@ export const metadata = {
     }
 };
 
-const HttpHeaderCheckerPage = () => {
+export default function HttpHeaderCheckerPage() {
     const softwareAppSchema = {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
@@ -167,7 +164,9 @@ const HttpHeaderCheckerPage = () => {
                               {faqData.map((item, index) => (
                                   <AccordionItem value={`item-${index}`} key={index}>
                                       <AccordionTrigger>{item.question}</AccordionTrigger>
-                                      <AccordionContent>{item.answer}</AccordionContent>
+                                      <AccordionContent>
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} />
+                                      </AccordionContent>
                                   </AccordionItem>
                               ))}
                           </Accordion>
