@@ -102,6 +102,9 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className="min-h-screen bg-background font-body antialiased flex"
       >
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-background focus:text-foreground">
+          Skip to main content
+        </a>
         <AppLayout>{children}</AppLayout>
         <Toaster />
       </body>

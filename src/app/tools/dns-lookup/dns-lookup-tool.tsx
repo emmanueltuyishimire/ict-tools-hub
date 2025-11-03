@@ -22,7 +22,7 @@ function SubmitButton() {
     const { pending } = useFormStatus();
     return (
         <Button type="submit" disabled={pending} className="w-full sm:w-auto">
-            <Dna className="mr-2 h-4 w-4" /> 
+            <Dna className="mr-2 h-4 w-4" aria-hidden="true" /> 
             {pending ? 'Looking up...' : 'Lookup DNS'}
         </Button>
     );
@@ -95,20 +95,19 @@ export function DnsLookupTool() {
                     <form action={formAction} className="space-y-4">
                         <div className="grid grid-cols-1 sm:grid-cols-6 gap-2">
                              <div className="sm:col-span-4 space-y-2">
-                                <Label htmlFor="domain-input" className="sr-only">Domain</Label>
+                                <Label htmlFor="domain-input">Domain</Label>
                                 <Input
                                     id="domain-input"
                                     name="domain"
                                     type="text"
                                     placeholder="example.com"
                                     className="font-code"
-                                    aria-label="Domain to lookup"
                                     value={domain}
                                     onChange={(e) => setDomain(e.target.value)}
                                 />
                             </div>
                             <div className="sm:col-span-2 space-y-2">
-                                 <Label htmlFor="record-type" className="sr-only">Record Type</Label>
+                                 <Label htmlFor="record-type">Record Type</Label>
                                  <Select name="recordType" value={recordType} onValueChange={setRecordType}>
                                     <SelectTrigger id="record-type"><SelectValue/></SelectTrigger>
                                     <SelectContent>

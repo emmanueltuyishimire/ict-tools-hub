@@ -50,19 +50,20 @@ export function ReverseDnsLookupTool() {
                     <form action={formAction} className="space-y-4">
                         <div className="flex flex-col sm:flex-row gap-2">
                              <div className="flex-grow space-y-2">
-                                <Label htmlFor="ip-input" className="sr-only">IP Address</Label>
+                                <Label htmlFor="ip-input">IP Address</Label>
                                 <Input
                                     id="ip-input"
                                     name="ip"
                                     type="text"
                                     placeholder="e.g., 8.8.8.8"
                                     className="font-code"
-                                    aria-label="IP Address to look up"
                                     value={ipAddress}
                                     onChange={(e) => setIpAddress(e.target.value)}
                                 />
                             </div>
-                            <SubmitButton />
+                            <div className="self-end w-full sm:w-auto">
+                                <SubmitButton />
+                            </div>
                         </div>
                     </form>
                 </CardContent>

@@ -49,17 +49,18 @@ export function HttpHeaderChecker() {
                     <form ref={formRef} action={formAction} className="space-y-4">
                         <div className="flex flex-col sm:flex-row gap-2">
                             <div className="flex-grow space-y-2">
-                                <Label htmlFor="url-input" className="sr-only">URL</Label>
+                                <Label htmlFor="url-input">URL</Label>
                                 <Input
                                     id="url-input"
                                     name="url"
                                     type="text"
                                     placeholder="example.com"
                                     className="font-code"
-                                    aria-label="URL to check"
                                 />
                             </div>
-                            <SubmitButton />
+                            <div className="self-end w-full sm:w-auto">
+                                <SubmitButton />
+                            </div>
                         </div>
                     </form>
                 </CardContent>

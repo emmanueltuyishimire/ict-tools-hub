@@ -61,17 +61,18 @@ export function SslChecker() {
                     <form action={formAction} className="space-y-4">
                         <div className="flex flex-col sm:flex-row gap-2">
                             <div className="flex-grow space-y-2">
-                                <Label htmlFor="domain-input" className="sr-only">Domain</Label>
+                                <Label htmlFor="domain-input">Domain</Label>
                                 <Input
                                     id="domain-input"
                                     name="domain"
                                     type="text"
                                     placeholder="example.com"
                                     className="font-code"
-                                    aria-label="Domain to check"
                                 />
                             </div>
-                            <SubmitButton />
+                            <div className="self-end w-full sm:w-auto">
+                                <SubmitButton />
+                            </div>
                         </div>
                     </form>
                 </CardContent>
