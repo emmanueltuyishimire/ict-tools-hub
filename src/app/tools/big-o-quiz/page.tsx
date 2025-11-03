@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -19,16 +18,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import BigOQuiz from './big-o-quiz';
-
-export const metadata = {
-    title: 'Big-O Complexity Quiz | ICT Tools Hub',
-    description: 'Test your understanding of Big O notation by identifying the time complexity of various code snippets. A quick and effective way to sharpen your algorithm analysis skills.',
-    openGraph: {
-        title: 'Big-O Complexity Quiz | ICT Tools Hub',
-        description: 'An interactive quiz to test knowledge of Big O notation and algorithm time complexity.',
-        url: 'https://www.icttoolshub.com/tools/big-o-quiz',
-    }
-};
 
 const BigOComplexityQuizPage = () => {
   const faqSchema = {
@@ -327,5 +316,16 @@ const BigOComplexityQuizPage = () => {
         </>
     );
 };
+
+export const metadata = {
+    title: 'Big-O Complexity Quiz | ICT Tools Hub',
+    description: 'Test your understanding of Big O notation by identifying the time complexity of various code snippets. A quick and effective way to sharpen your algorithm analysis skills.',
+    openGraph: {
+        title: 'Big-O Complexity Quiz | ICT Tools Hub',
+        description: 'An interactive quiz to test knowledge of Big O notation and algorithm time complexity.',
+        url: 'https://www.icttoolshub.com/tools/big-o-quiz',
+    }
+};
+
 
 export default BigOComplexityQuizPage;

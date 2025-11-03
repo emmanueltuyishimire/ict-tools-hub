@@ -1,4 +1,6 @@
 
+'use client';
+
 import React from "react";
 import { PageHeader } from '@/components/page-header';
 import { HtmlEntityEncoderDecoder } from './html-entity-encoder-decoder';
@@ -36,8 +38,8 @@ const howToSchema = {
     step: [
         { '@type': 'HowToStep', name: 'Enter Text', text: 'To encode, type plain text into the top box. To decode, paste HTML entities into the bottom box.' },
         { '@type': 'HowToStep', name: 'View Real-Time Results', text: 'As you type in one box, the converted text appears instantly in the other.' },
-        { '@type': 'HowToStep', name: 'Copy the Output', text: 'Use the copy button to grab the converted text for your code.' },
-        { '@type': 'HowToStep', name: 'Swap or Clear', text: 'Use the swap button to switch the contents of the two boxes, or the clear button to reset both text areas.' }
+        { '@type': 'HowToStep', name: 'Copy the Output', text: 'Use the copy button to grab the converted text for your clipboard.' },
+        { '@type': 'HowToStep', name: 'Swap or Clear', text: 'Use the swap button to switch the content of the boxes or the clear button to reset both text areas.' }
     ],
     totalTime: 'PT1M',
 };
