@@ -1,23 +1,34 @@
 
+'use client';
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
-import { RecursionSimulator } from './recursion-simulator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
 
-export const metadata = {
-    title: 'Recursion Simulator | Visualize the Call Stack | ICT Toolbench',
-    description: 'An interactive, educational tool to visualize how recursion works. See the call stack build and unwind with a classic factorial function example, making abstract concepts concrete.',
-    openGraph: {
-        title: 'Recursion Simulator | ICT Toolbench',
-        description: 'Learn recursion by visualizing the call stack. An interactive demo for students and developers to understand base cases, recursive steps, and stack frames.',
-        url: '/tools/recursion-simulator',
-    }
-};
+const RecursionSimulator = dynamic(
+  () => import('./recursion-simulator').then((mod) => mod.RecursionSimulator),
+  {
+    ssr: false,
+    loading: () => (
+      <Card>
+        <CardHeader>
+          <Skeleton className="h-8 w-3/4" />
+        </CardHeader>
+        <CardContent>
+          <Skeleton className="h-40 w-full" />
+        </CardContent>
+      </Card>
+    ),
+  }
+);
+
 
 const RecursionSimulatorPage = () => {
     const faqSchema = {
@@ -143,7 +154,9 @@ const RecursionSimulatorPage = () => {
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">File System Traversal</h3>
-                            <p className="text-sm text-muted-foreground">A common task is to find a file or calculate the size of a directory and all its subdirectories. A recursive function is a natural fit: to get the size of a folder, get the size of all files inside it, and then for each subdirectory inside, call the same function on that subdirectory.</p>
+                            <p className="text-sm text-muted-foreground">
+                                A common task is to find a file or calculate the size of a directory and all its subdirectories. A recursive function is a natural fit: to get the size of a folder, get the size of all files inside it, and then for each subdirectory inside, call the same function on that subdirectory.
+                            </p>
                         </div>
                          <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Parsing Hierarchical Data (JSON/XML)</h3>

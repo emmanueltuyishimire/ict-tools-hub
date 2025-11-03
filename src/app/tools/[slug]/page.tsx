@@ -10,10 +10,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
   }
 
-  // The metadata is now handled by each tool's dedicated page file.
-  // This dynamic import is no longer needed here.
-  // We will rely on the default metadata generation logic.
-  return {
+  const metadataModule = await import(`@/app/tools/${tool.slug}/page.tsx`)
+    .catch(() => ({ metadata: null }));
+
+  return metadataModule.metadata || {
     title: `${tool.name} | ICT Tools Hub`,
     description: tool.description,
   };
