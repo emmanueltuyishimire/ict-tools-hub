@@ -14,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CodeBlock } from '@/components/code-block';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, Wand, Bot } from 'lucide-react';
-// import { generateCode } from './actions';
+import { generateCode } from './actions';
 
 type Language = 'javascript' | 'python' | 'html' | 'css';
 
@@ -35,14 +35,6 @@ const formSchema = z.object({
 });
 
 type FormData = z.infer<typeof formSchema>;
-
-async function generateCode(data: FormData): Promise<{success: boolean; message?: string; code?: string; explanation?: string;}> {
-    return {
-        success: false,
-        message: "The AI Code Generator is disabled in this static deployment environment. It requires a server to function."
-    }
-}
-
 
 export function CodeForm() {
     const [mode, setMode] = useState<'generate' | 'debug'>('generate');

@@ -1,3 +1,5 @@
+
+'use server';
 import tls from 'tls';
 import { z } from 'zod';
 

@@ -1,3 +1,5 @@
+
+'use server';
 import { z } from 'zod';
 import http from 'http';
 import https from 'https';
@@ -110,7 +112,7 @@ export async function checkResponseTime(
             if (code === 'ENOTFOUND') {
                 message = `Domain not found: ${url.hostname}. Please check the domain name.`;
             } else if (code === 'ECONNREFUSED') {
-                message = `Connection refused by ${url.hostname}. Is the port correct and the server running?`;
+                message = `Connection refused by ${url.hostname}:${port}. Is the port correct and the server running?`;
             }
         }
         resolve({ success: false, message });

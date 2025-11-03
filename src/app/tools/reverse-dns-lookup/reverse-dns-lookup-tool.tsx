@@ -8,26 +8,11 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Label } from '@/components/ui/label';
-// import { reverseDnsLookup, type FormState } from './actions';
+import { reverseDnsLookup, type FormState } from './actions';
 import { AlertCircle, Globe } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Mock types and functions for static build
-type FormState = {
-  success: boolean;
-  message: string;
-  ip?: string;
-  hostnames?: string[];
-} | null;
-
 const initialState: FormState = null;
-
-async function reverseDnsLookup(prevState: FormState, formData: FormData): Promise<FormState> {
-    return {
-        success: false,
-        message: "This tool is disabled in the current static deployment environment."
-    }
-}
 
 
 function SubmitButton() {

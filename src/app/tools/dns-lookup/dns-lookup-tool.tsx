@@ -2,36 +2,19 @@
 'use client';
 
 import { useActionState, useRef, useEffect, useState } from 'react';
-import { useFormState } from 'react-dom';
+import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Label } from '@/components/ui/label';
-// import { lookupDns, type FormState } from './actions';
+import { lookupDns, type FormState } from './actions';
 import { AlertCircle, Search, Dna } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-// Mock types and functions for static build
-type FormState = {
-  success: boolean;
-  message: string;
-  domain?: string;
-  recordType?: string;
-  records?: any[];
-} | null;
-
 const initialState: FormState = null;
-
-async function lookupDns(prevState: FormState, formData: FormData): Promise<FormState> {
-    return {
-        success: false,
-        message: "This tool is disabled in the current static deployment environment."
-    }
-}
-
 
 const recordTypes = ['A', 'AAAA', 'MX', 'CNAME', 'NS', 'TXT', 'SOA'];
 

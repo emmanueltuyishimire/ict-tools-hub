@@ -9,35 +9,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Label } from '@/components/ui/label';
-import { StructuredData } from '@/components/structured-data';
 import { AlertCircle, ShieldCheck, Clock, Building } from 'lucide-react';
-// import { checkSsl, type FormState } from './actions';
+import { checkSsl, type FormState } from './actions';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Mock types and functions for static build
-type FormState = {
-  success: boolean;
-  message: string;
-  domain?: string;
-  issuer?: string;
-  validFrom?: string;
-  validTo?: string;
-  daysRemaining?: number;
-  commonName?: string;
-  sans?: string[];
-  serialNumber?: string;
-  valid?: boolean;
-} | null;
-
 const initialState: FormState = null;
-
-async function checkSsl(prevState: FormState, formData: FormData): Promise<FormState> {
-    return {
-        success: false,
-        message: "This tool is disabled in the current static deployment environment."
-    }
-}
 
 
 function SubmitButton() {

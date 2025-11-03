@@ -1,3 +1,5 @@
+
+'use server';
 import { z } from 'zod';
 import net from 'net';
 
@@ -21,7 +23,12 @@ function getWhoisData(domain: string, server: string): Promise<string> {
         const client = new net.Socket();
         let data = '';
         client.connect(43, server, () => {
-            client.write(domain + '\r\n');
+            // For .com domains, Verisign requires a specific format
+            if (server.endsWith('verisign-grs.com')) {
+                 client.write(`=${domain}\r\n`);
+            } else {
+                 client.write(domain + '\r\n');
+            }
         });
         client.on('data', (chunk) => {
             data += chunk.toString();

@@ -8,35 +8,14 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Label } from '@/components/ui/label';
-// import { checkResponseTime, type FormState } from './actions';
+import { checkResponseTime, type FormState } from './actions';
 import { AlertCircle, Timer, BarChart, CheckCircle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Progress } from '@/components/ui/progress';
 
-// Mock types and functions for static build
-type FormState = {
-  success: boolean;
-  message: string;
-  url?: string;
-  status?: number;
-  timings?: {
-    dnsLookup: number;
-    tcpConnection: number;
-    tlsHandshake: number;
-    ttfb: number;
-    total: number;
-  };
-} | null;
-
 const initialState: FormState = null;
 
-async function checkResponseTime(prevState: FormState, formData: FormData): Promise<FormState> {
-    return {
-        success: false,
-        message: "This tool is disabled in the current static deployment environment."
-    }
-}
 
 function SubmitButton() {
     const { pending } = useFormStatus();

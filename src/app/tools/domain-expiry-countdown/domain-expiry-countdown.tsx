@@ -8,31 +8,13 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Label } from '@/components/ui/label';
-// import { checkDomainExpiry, type FormState } from './actions';
+import { checkDomainExpiry, type FormState } from './actions';
 import { AlertCircle, CalendarClock, Building, CalendarCheck2, History } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 
-// Mock types and functions for static build
-type FormState = {
-  success: boolean;
-  message: string;
-  domain?: string;
-  expiryDate?: string;
-  registrar?: string;
-  updatedDate?: string;
-  creationDate?: string;
-} | null;
-
 const initialState: FormState = null;
-
-async function checkDomainExpiry(prevState: FormState, formData: FormData): Promise<FormState> {
-    return {
-        success: false,
-        message: "This tool is disabled in the current static deployment environment."
-    }
-}
 
 
 function SubmitButton() {

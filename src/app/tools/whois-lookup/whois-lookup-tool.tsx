@@ -8,28 +8,12 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Label } from '@/components/ui/label';
-// import { getWhoisInfo, type FormState } from './actions';
+import { getWhoisInfo, type FormState } from './actions';
 import { AlertCircle, Search } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { CodeBlock } from '@/components/code-block';
 
-// Mock types and functions for static build
-type FormState = {
-  success: boolean;
-  message: string;
-  domain?: string;
-  data?: string;
-} | null;
-
 const initialState: FormState = null;
-
-async function getWhoisInfo(prevState: FormState, formData: FormData): Promise<FormState> {
-    return {
-        success: false,
-        message: "This tool is disabled in the current static deployment environment."
-    }
-}
-
 
 function SubmitButton() {
     const { pending } = useFormStatus();
