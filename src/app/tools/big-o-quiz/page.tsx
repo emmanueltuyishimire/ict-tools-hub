@@ -1,4 +1,3 @@
-'use client';
 
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
@@ -18,6 +17,16 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import BigOQuiz from './big-o-quiz';
+
+export const metadata = {
+    title: 'Big-O Complexity Quiz | ICT Tools Hub',
+    description: 'Test your understanding of Big O notation by identifying the time complexity of various code snippets. A quick and effective way to sharpen your algorithm analysis skills.',
+    openGraph: {
+        title: 'Big-O Complexity Quiz | ICT Tools Hub',
+        description: 'An interactive quiz to test knowledge of Big O notation and algorithm time complexity.',
+        url: 'https://www.icttoolshub.com/tools/big-o-quiz',
+    }
+};
 
 const BigOComplexityQuizPage = () => {
   const faqSchema = {
@@ -297,7 +306,7 @@ const BigOComplexityQuizPage = () => {
                       <Link href="/tools/big-o-calculator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Time Complexity Estimator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardTitle className="text-base flex items-center justify-between">Time Complexity Estimator</CardTitle>
                                   <CardDescription className="text-xs">Visualize the growth curves of different Big O notations on a graph.</CardDescription>
                               </CardHeader>
                           </Card>
@@ -305,7 +314,7 @@ const BigOComplexityQuizPage = () => {
                       <Link href="/tools/algorithm-simulator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Algorithm Step Simulator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardTitle className="text-base flex items-center justify-between">Algorithm Step Simulator</CardTitle>
                                   <CardDescription className="text-xs">Watch algorithms like Bubble Sort (O(n²)) execute step-by-step to see their complexity in action.</CardDescription>
                               </CardHeader>
                           </Card>
@@ -316,16 +325,5 @@ const BigOComplexityQuizPage = () => {
         </>
     );
 };
-
-export const metadata = {
-    title: 'Big-O Complexity Quiz | ICT Tools Hub',
-    description: 'Test your understanding of Big O notation by identifying the time complexity of various code snippets. A quick and effective way to sharpen your algorithm analysis skills.',
-    openGraph: {
-        title: 'Big-O Complexity Quiz | ICT Tools Hub',
-        description: 'An interactive quiz to test knowledge of Big O notation and algorithm time complexity.',
-        url: 'https://www.icttoolshub.com/tools/big-o-quiz',
-    }
-};
-
 
 export default BigOComplexityQuizPage;

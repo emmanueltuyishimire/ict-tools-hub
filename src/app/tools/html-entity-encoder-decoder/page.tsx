@@ -34,12 +34,12 @@ const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
     name: 'How to Use the HTML Entity Encoder/Decoder',
-    description: 'A guide to encoding plain text into HTML entities and decoding them back.',
+    description: 'A guide to encoding and decoding URL strings.',
     step: [
-        { '@type': 'HowToStep', name: 'Enter Text', text: 'To encode, type plain text into the top box. To decode, paste HTML entities into the bottom box.' },
-        { '@type': 'HowToStep', name: 'View Real-Time Results', text: 'As you type in one box, the converted text appears instantly in the other.' },
-        { '@type': 'HowToStep', name: 'Copy the Output', text: 'Use the copy button to grab the converted text for your clipboard.' },
-        { '@type': 'HowToStep', name: 'Swap or Clear', text: 'Use the swap button to switch the content of the boxes or the clear button to reset both text areas.' }
+        { '@type': 'HowToStep', name: 'Enter Text', text: 'To encode, type or paste your plain text into the "Decoded" text area. To decode, paste your encoded string into the "Encoded" text area.' },
+        { '@type': 'HowToStep', name: 'View Instant Results', text: 'As you type in one box, the corresponding encoded or decoded text will instantly appear in the other box.' },
+        { '@type': 'HowToStep', name: 'Copy the Output', text: 'Click the "Copy" button above the output box you need to copy its contents to your clipboard.' },
+        { '@type': 'HowToStep', name: 'Swap and Clear', text: 'Use the "Swap" button to switch the content between the boxes or the "Clear" button to reset both text areas.' }
     ],
     totalTime: 'PT1M',
 };
@@ -51,7 +51,6 @@ const keyTerminologies = [
     { term: 'Percent-Encoding', definition: 'The encoding mechanism used for URLs, which is different from HTML entity encoding. Use a URL Encoder for this.' },
     { term: 'Non-Breaking Space', definition: 'An HTML entity (`&nbsp;`) that creates a space that will not be collapsed by the browser and prevents a line break.' },
 ];
-
 
 export default function HtmlEntityEncoderDecoderPage() {
   const faqSchema = {
@@ -80,10 +79,10 @@ export default function HtmlEntityEncoderDecoderPage() {
           <section>
               <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
               <Card className="prose prose-sm max-w-none text-foreground p-6">
-                  <p>This tool provides real-time, two-way conversion between plain text and HTML entities.</p>
+                  <p>This tool provides real-time, two-way conversion for HTML entity encoding.</p>
                   <ol>
                       <li><strong>Live Conversion:</strong> As you type in either box, the other will update instantly with the converted content.</li>
-                      <li><strong>To Encode:</strong> Type plain text with special characters (e.g., <strong>&lt;h1&gt;Title&lt;/h1&gt;</strong>) into the top "Decoded" box. The safe HTML entity version will appear in the "Encoded" box.</li>
+                      <li><strong>To Encode:</strong> Type or paste your plain text with special characters (e.g., <strong>&lt;h1&gt;Title&lt;/h1&gt;</strong>) into the top "Decoded" box. The safe HTML entity version will appear in the "Encoded" box.</li>
                       <li><strong>To Decode:</strong> Paste text containing HTML entities (e.g., <strong>&amp;lt;p&amp;gt;</strong>) into the bottom "Encoded" box to see the original plain text.</li>
                       <li><strong>Swap & Copy:</strong> Use the `Swap` button (<ArrowRightLeft className="inline h-4 w-4" />) to instantly switch the contents of the two boxes. Use the `Copy` icon (<Copy className="inline h-4 w-4" />) above either box to copy its content to your clipboard.</li>
                   </ol>
