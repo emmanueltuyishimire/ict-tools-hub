@@ -1,6 +1,3 @@
-
-'use server';
-
 import { z } from 'zod';
 import http from 'http';
 import https from 'https';

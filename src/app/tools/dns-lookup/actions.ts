@@ -1,6 +1,3 @@
-
-'use server';
-
 import { z } from 'zod';
 import dns from 'dns/promises';
 

@@ -1,6 +1,3 @@
-
-'use server';
-
 import { z } from 'zod';
 import dns from 'dns/promises';
 
@@ -51,5 +48,4 @@ export async function reverseDnsLookup(
     return { success: false, message, ip };
   }
 }
-
     
