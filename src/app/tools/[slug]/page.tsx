@@ -1,21 +1,24 @@
 import { allTools } from '@/lib/tools';
 import ToolRenderer from './tool-renderer';
+import { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const tool = allTools.find((t) => t.slug === params.slug);
 
   if (!tool) {
     return {
-      title: 'Tool Not Found',
+      title: 'Tool Not Found | ICT Tools Hub',
     };
   }
 
-  const metadataModule = await import(`@/app/tools/${tool.slug}/page.tsx`)
-    .catch(() => ({ metadata: null }));
-
-  return metadataModule.metadata || {
+  return {
     title: `${tool.name} | ICT Tools Hub`,
     description: tool.description,
+    openGraph: {
+        title: `${tool.name} | ICT Tools Hub`,
+        description: tool.description,
+        url: `/tools/${tool.slug}`,
+    }
   };
 }
 

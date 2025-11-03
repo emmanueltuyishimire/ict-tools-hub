@@ -1,8 +1,7 @@
-
 'use client';
 
 import { allTools } from '@/lib/tools';
-import { notFound, useParams } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Construction } from 'lucide-react';
