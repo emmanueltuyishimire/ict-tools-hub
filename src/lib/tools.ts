@@ -152,7 +152,7 @@ export const toolCategories: ToolCategory[] = [
     ],
   },
   {
-    name: 'Learning Tools',
+    name: 'AI & Learning Tools',
     icon: BrainCircuit,
     tools: [
       { name: 'Time Complexity Estimator', slug: 'big-o-calculator', description: 'Understand and visualize Big O notation.' },
