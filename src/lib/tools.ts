@@ -148,7 +148,6 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Normalization Checker', slug: 'normalization-checker', description: 'Check database normalization.' },
       { name: 'Duplicate Row Finder', slug: 'duplicate-row-finder', description: 'Find duplicate rows in data.' },
       { name: 'Column Type Converter', slug: 'column-type-converter', description: 'Suggest column type conversions.' },
-      { name: 'SQL Injection Tester', slug: 'sql-injection-tester', description: 'Educational SQL injection tester.' },
       { name: 'Database Health Checker', slug: 'db-health-checker', description: 'Basic database health checks.' },
     ],
   },

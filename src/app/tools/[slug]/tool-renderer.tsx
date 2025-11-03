@@ -91,7 +91,6 @@ import { DuplicateRowFinder } from '@/app/tools/duplicate-row-finder/duplicate-r
 import { ColumnTypeConverter } from '@/app/tools/column-type-converter/column-type-converter';
 import { DatabaseHealthChecker } from '@/app/tools/db-health-checker/db-health-checker';
 import { CodeForm } from '@/app/tools/code-generator/code-form';
-import { SqlInjectionTester } from '@/app/tools/sql-injection-tester/sql-injection-tester';
 import { RecursionSimulator } from '@/app/tools/recursion-simulator/recursion-simulator';
 
 const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
@@ -178,7 +177,6 @@ const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
   'duplicate-row-finder': DuplicateRowFinder,
   'table-size-estimator': DbStorageEstimator,
   'column-type-converter': ColumnTypeConverter,
-  'sql-injection-tester': SqlInjectionTester,
   'db-health-checker': DatabaseHealthChecker,
   'recursion-simulator': RecursionSimulator,
   'code-generator': CodeForm,
