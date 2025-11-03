@@ -13,12 +13,29 @@ import { Label } from '@/components/ui/label';
 import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Search, Globe, Code, Key, Cookie, Calendar, RefreshCw, FileIcon, Info } from 'lucide-react';
 import Link from 'next/link';
-import { checkHeaders, type FormState } from './actions';
+// import { checkHeaders, type FormState } from './actions';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 
+// Mock types and functions for static build
+type FormState = {
+  success: boolean;
+  message: string;
+  url?: string;
+  headers?: Record<string, string>;
+  status?: number;
+  statusText?: string;
+} | null;
 
 const initialState: FormState = null;
+
+async function checkHeaders(prevState: FormState, formData: FormData): Promise<FormState> {
+    return {
+        success: false,
+        message: "This tool is disabled in the current static deployment environment."
+    }
+}
+
 
 const faqData = [
     { question: "What are HTTP headers?", answer: "HTTP headers are key-value pairs that are sent along with every HTTP request and response. They provide essential metadata about the request or the response, such as the content type, character encoding, caching instructions, and server information." },
@@ -165,184 +182,6 @@ export function HttpHeaderChecker() {
                     </div>
                 )}
             </div>
-
-            <section>
-                <h2 className="text-2xl font-bold mb-4">How to Use the HTTP Header Checker</h2>
-                <Card className="prose prose-sm max-w-none text-foreground p-6">
-                    <p>This tool allows you to peek behind the curtain of a web request and see the metadata that the server sends back with a web page.</p>
-                    <ol>
-                        <li><strong>Enter the URL:</strong> Type or paste the full web address you want to inspect. The tool will automatically add `https://` if you forget it.</li>
-                        <li><strong>Check Headers:</strong> Click the "Check Headers" button. Our server makes a request to the URL you provided. We do this from our server to avoid browser security issues (CORS) that can block such requests.</li>
-                        <li><strong>Analyze the Status Line:</strong> The first result is the most important. It tells you the outcome of the request. A `200 OK` means success. A `301 Moved Permanently` means the page has moved. A `404 Not Found` means the page does't exist, and a `500 Internal Server Error` indicates a problem on the server side.</li>
-                        <li><strong>Inspect the Header Table:</strong> Below the status, you'll find a detailed table of all the headers the server sent back. This is where you can debug caching issues (`Cache-Control`), check redirect locations (`Location`), verify security policies (`Content-Security-Policy`), and see what web server software is being used (`Server`).</li>
-                    </ol>
-                </Card>
-            </section>
-            
-            <section>
-                 <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
-                 <Card>
-                    <CardContent className="p-6">
-                        <dl className="space-y-4">
-                            {keyTerminologies.map((item) => (
-                                <div key={item.term}>
-                                    <dt className="font-semibold">{item.term}</dt>
-                                    <dd className="text-muted-foreground text-sm">{item.definition}</dd>
-                                </div>
-                            ))}
-                        </dl>
-                    </CardContent>
-                 </Card>
-            </section>
-            
-            <Card className='bg-secondary/30 border-primary/20'>
-                <CardHeader>
-                    <div className='flex items-center gap-2 text-primary'>
-                        <BookOpen className="h-6 w-6" aria-hidden="true" />
-                        <CardTitle className="text-primary">Educational Deep Dive: The Invisible Conversation of the Web</CardTitle>
-                    </div>
-                    <CardDescription>Understand the vital role of HTTP headers in every single web interaction, from performance and security to SEO.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
-                    <section>
-                        <h3 className="font-bold text-xl">What Are HTTP Headers?</h3>
-                        <p>When your browser requests a web page, it's not just asking "give me the file." It initiates a detailed conversation with the web server. This conversation, defined by the Hypertext Transfer Protocol (HTTP), consists of requests and responses. HTTP headers are key-value pairs of metadata that accompany every one of these requests and responses, providing crucial instructions and context for both the client and the server.</p>
-                        <p>Think of it like sending a formal business letter. The content of the letter is the HTML, CSS, and JavaScript of the web page. The headers are everything written on the envelope: the return address, the destination address, the date sent, special handling instructions ("fragile," "air mail"), and information about the letter carrier. These headers ensure the letter gets delivered correctly, securely, and efficiently.</p>
-                    </section>
-                    <section>
-                        <h3 className="font-bold text-xl">Key Headers and Their Meanings</h3>
-                        <div className="space-y-4">
-                           <div className="flex items-start gap-4">
-                                <FileIcon className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
-                                <div>
-                                    <strong className="font-code">Content-Type</strong>
-                                    <p className="mt-0 text-sm text-muted-foreground">Indicates the media type of the resource (e.g., `text/html`, `application/json`).</p>
-                                </div>
-                            </div>
-                            <div className="flex items-start gap-4">
-                                <RefreshCw className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
-                                <div>
-                                    <strong className="font-code">Cache-Control</strong>
-                                    <p className="mt-0 text-sm text-muted-foreground">Directives for caching in both requests and responses (e.g., `max-age=3600`, `no-cache`).</p>
-                                </div>
-                            </div>
-                            <div className="flex items-start gap-4">
-                                <Globe className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
-                                <div>
-                                    <strong className="font-code">Location</strong>
-                                    <p className="mt-0 text-sm text-muted-foreground">Used in 3xx redirects to specify the new URL the client should go to.</p>
-                                </div>
-                            </div>
-                             <div className="flex items-start gap-4">
-                                <Code className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
-                                <div>
-                                    <strong className="font-code">Server</strong>
-                                    <p className="mt-0 text-sm text-muted-foreground">Information about the software used by the origin server.</p>
-                                </div>
-                            </div>
-                             <div className="flex items-start gap-4">
-                                <Cookie className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
-                                <div>
-                                    <strong className="font-code">Set-Cookie</strong>
-                                    <p className="mt-0 text-sm text-muted-foreground">Sends a cookie from the server to the user agent.</p>
-                                </div>
-                            </div>
-                             <div className="flex items-start gap-4">
-                                <Key className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
-                                <div>
-                                    <strong className="font-code">Strict-Transport-Security</strong>
-                                    <p className="mt-0 text-sm text-muted-foreground">(HSTS) A security header that tells browsers to only interact with it using HTTPS.</p>
-                                </div>
-                            </div>
-                             <div className="flex items-start gap-4">
-                                <Calendar className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
-                                <div>
-                                    <strong className="font-code">Expires</strong>
-                                    <p className="mt-0 text-sm text-muted-foreground">The date/time after which the response is considered stale (an older way of caching).</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                     <section>
-                        <h3 className="font-bold text-xl">Why Headers are Critical for SEO and Performance</h3>
-                        <p>Properly configured HTTP headers are not just a technical detail; they have a direct impact on your website's performance and search engine ranking.</p>
-                         <ul className="list-disc pl-5">
-                            <li><strong>Redirects and Canonical URLs:</strong> Using the correct `301` redirect headers when moving content is essential to transfer "link equity" (SEO value) from the old URL to the new one. Headers like `Link` with `rel="canonical"` also help tell search engines which version of a page is the definitive one, avoiding duplicate content penalties.</li>
-                            <li><strong>Caching:</strong> The `Cache-Control` and `Expires` headers tell browsers how long they can store a local copy of a resource. Effective caching means returning visitors don't have to re-download images, scripts, and stylesheets, making the site load dramatically faster. Page speed is a significant ranking factor for Google.</li>
-                             <li><strong>Security:</strong> Search engines favor secure websites. Implementing headers like `Strict-Transport-Security` (which enforces HTTPS) is a positive signal. A secure site also builds user trust, which indirectly impacts engagement metrics that search engines value.</li>
-                        </ul>
-                    </section>
-                </CardContent>
-            </Card>
-
-            <div className="grid md:grid-cols-2 gap-8">
-                <Card>
-                    <CardHeader>
-                        <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
-                    </CardHeader>
-                    <CardContent>
-                        <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                            <li><strong>Use `curl` for quick checks:</strong> On the command line, you can use `curl -I https://example.com` to quickly fetch only the headers of a URL without downloading the body.</li>
-                            <li><strong>Debug API Calls:</strong> This tool is perfect for debugging third-party APIs. If a request is failing, check the headers to see the `Content-Type`, `Server` info, and any custom headers that might give you a clue.</li>
-                            <li><strong>Check Redirect Chains:</strong> If a URL is redirecting unexpectedly, check the `Location` header to see where it's sending you. This is the first step in diagnosing redirect loops.</li>
-                            <li><strong>Verify CDN Caching:</strong> When using a Content Delivery Network (CDN), check for headers like `X-Cache` or `CF-Cache-Status`. A `HIT` value means the content was served from the CDN's cache, which is fast. A `MISS` means it had to go back to the origin server, which is slower.</li>
-                        </ul>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader>
-                         <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
-                    </CardHeader>
-                    <CardContent>
-                         <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                            <li><strong>Using 302 for Permanent Redirects:</strong> A 302 is a "Temporary Redirect". Using it for a permanent URL change can cause SEO issues, as search engines may not transfer the link equity to the new page. Always use 301 for permanent moves.</li>
-                            <li><strong>Aggressive Caching on Dynamic Content:</strong> Setting a long `Cache-Control: max-age` on content that changes frequently (like a user's profile page) can lead to users seeing stale, outdated information.</li>
-                             <li><strong>Missing Security Headers:</strong> Forgetting to implement headers like `Strict-Transport-Security` (HSTS) or `Content-Security-Policy` (CSP) leaves your site vulnerable to common attacks like man-in-the-middle and cross-site scripting (XSS).</li>
-                            <li><strong>Incorrect `Content-Type`:</strong> Serving JSON data with a `Content-Type` of `text/html` can cause browsers and client applications to fail to parse the response correctly.</li>
-                        </ul>
-                    </CardContent>
-                </Card>
-            </div>
-            
-            <section>
-                <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
-                <div className="grid md:grid-cols-2 gap-6">
-                    <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Debugging an SEO Redirect Issue</h3>
-                        <p className="text-sm text-muted-foreground">An SEO specialist notices that an old blog post's traffic has dropped to zero after a site migration. They enter the old URL into the Header Checker and see the server is responding with a `404 Not Found` instead of the expected `301 Moved Permanently` and `Location` header. This instantly tells them the redirect was never implemented, and they can file a ticket to have it fixed.</p>
-                    </div>
-                     <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Optimizing Website Performance</h3>
-                        <p className="text-sm text-muted-foreground">A web developer wants to improve their site's load time. They check the headers for their main CSS file and notice the `Cache-Control` header is set to `no-cache`. This means browsers are re-downloading the file on every single page load. They change the server configuration to set a long `max-age` (e.g., `max-age=31536000`), and the site's performance for returning visitors improves dramatically.</p>
-                    </div>
-                     <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Verifying a Security Fix</h3>
-                        <p className="text-sm text-muted-foreground">After a security audit, a sysadmin is tasked with implementing HSTS. After deploying the change, they use the Header Checker to inspect their site's response. They look for the `Strict-Transport-Security` header and confirm its presence and correct `max-age` value, providing clear proof that the security measure is active.</p>
-                    </div>
-                     <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Integrating with a Third-Party API</h3>
-                        <p className="text-sm text-muted-foreground">A developer is trying to get data from a third-party API but their requests are failing. They use the Header Checker on the API endpoint and inspect the response. They discover an `X-Rate-Limit-Remaining: 0` header, which tells them they have exhausted their API quota for the hour. They can now adjust their code to handle rate limiting gracefully.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <section>
-                <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
-                <Card>
-                    <CardContent className="p-6">
-                        <Accordion type="single" collapsible className="w-full">
-                            {faqData.map((item, index) => (
-                                <AccordionItem value={`item-${index}`} key={index}>
-                                    <AccordionTrigger>{item.question}</AccordionTrigger>
-                                    <AccordionContent>
-                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/`([^`]+)`/g, "<code class='font-code bg-muted p-1 rounded-sm'>$1</code>") }} />
-                                    </AccordionContent>
-                                </AccordionItem>
-                            ))}
-                        </Accordion>
-                    </CardContent>
-                </Card>
-            </section>
         </div>
     );
 }
