@@ -10,12 +10,12 @@ import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export const metadata = {
-    title: 'Binary to IP Address Converter | Convert Binary to IPv4 | ICT Toolbench',
+    title: 'Binary to IP Address Converter | Convert Binary to IPv4 | ICT Tools Hub',
     description: 'Instantly convert a 32-bit binary string into its human-readable dot-decimal IPv4 address. An essential tool for networking students and IT professionals working with binary data.',
     openGraph: {
-        title: 'Binary to IP Address Converter | Convert Binary to IPv4 | ICT Toolbench',
+        title: 'Binary to IP Address Converter | Convert Binary to IPv4 | ICT Tools Hub',
         description: 'A free, real-time tool to convert 32-bit binary strings to IPv4 addresses. Includes an in-depth guide on binary conversion, IP structure, and practical networking applications.',
-        url: '/tools/binary-to-ip',
+        url: 'https://ict.calculation.site/tools/binary-to-ip',
     }
 };
 
@@ -32,7 +32,7 @@ const BinaryToIpPage = () => {
         "priceCurrency": "USD"
       },
       "description": "A free online tool to convert 32-bit binary strings into their standard dot-decimal IPv4 address representation.",
-      "url": "https://www.icttoolbench.com/tools/binary-to-ip"
+      "url": "https://ict.calculation.site/tools/binary-to-ip"
     };
 
     return (
@@ -186,8 +186,9 @@ const BinaryToIpPage = () => {
                         </CardHeader>
                         <CardContent>
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Memorize Key Patterns:</strong> Learn common binary patterns. For example, `11111111` is always 255, and `10000000` is always 128. This speeds up mental conversions.</li>
                                 <li><strong>Use Spaces for Readability:</strong> The tool strips them for conversion, but formatting your input with spaces or dots makes it easier for you to proofread.</li>
-                                <li><strong>Work Backwards:</strong> If you're unsure about a conversion, use our <Link href="/tools/ip-to-binary" className='text-primary hover:underline'>IP to Binary Converter</Link> to check your work. Reversing the process is a great way to solidify your understanding.</li>
+                                <li><strong>Work Backwards:</strong> If you're unsure about a conversion, use our <Link href="/tools/ip-to-binary" className='text-primary hover:underline'>IP to Binary Converter</Link> to check your work.</li>
                             </ul>
                         </CardContent>
                     </Card>
@@ -228,7 +229,10 @@ const BinaryToIpPage = () => {
                       <Link href="/tools/ip-to-binary" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">IP to Binary Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardTitle className="text-base flex items-center justify-between">
+                                      IP to Binary Converter
+                                      <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                                  </CardTitle>
                                   <CardDescription className="text-xs">The reverse process: convert decimal IP addresses back to their binary form.</CardDescription>
                               </CardHeader>
                           </Card>
@@ -236,7 +240,10 @@ const BinaryToIpPage = () => {
                       <Link href="/tools/subnet-calculator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Subnet Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardTitle className="text-base flex items-center justify-between">
+                                      Subnet Calculator
+                                       <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                                  </CardTitle>
                                   <CardDescription className="text-xs">See how binary IP addresses and subnet masks are used to define network ranges.</CardDescription>
                               </CardHeader>
                           </Card>
@@ -244,7 +251,10 @@ const BinaryToIpPage = () => {
                        <Link href="/tools/number-converter" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Number Base Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                                  <CardTitle className="text-base flex items-center justify-between">
+                                      Number Base Converter
+                                       <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                                  </CardTitle>
                                   <CardDescription className="text-xs">A general-purpose tool to convert numbers between binary, decimal, and hexadecimal.</CardDescription>
                               </CardHeader>
                           </Card>

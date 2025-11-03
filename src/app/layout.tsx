@@ -22,7 +22,7 @@ const sourceCodePro = Source_Code_Pro({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.icttoolshub.com'), // Replace with your actual domain
+  metadataBase: new URL('https://ict.calculation.site'), // Replace with your actual domain
   title: {
     default: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     template: '%s | ICT Tools Hub',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     description: 'A comprehensive suite of free online tools for ICT professionals and students.',
-    url: 'https://www.icttoolshub.com', // Replace with your actual domain
+    url: 'https://ict.calculation.site', // Replace with your actual domain
     siteName: 'ICT Tools Hub',
     images: [
       {
@@ -60,7 +60,7 @@ const webAppSchema = {
   '@type': 'WebApplication',
   name: 'ICT Tools Hub',
   description: 'A comprehensive suite of free online tools for ICT professionals, students, and enthusiasts, including networking, programming, and security utilities.',
-  url: 'https://www.icttoolshub.com', // Replace with actual URL
+  url: 'https://ict.calculation.site', // Replace with actual URL
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'All',
   offers: {
@@ -89,10 +89,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning={true}
-        className={cn(
-          'min-h-screen bg-background font-body antialiased flex',
-          'selection:bg-primary selection:text-primary-foreground'
-        )}
+        className="min-h-screen bg-background font-body antialiased flex"
       >
         <AppLayout>{children}</AppLayout>
         <Toaster />

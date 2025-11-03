@@ -37,7 +37,7 @@ export const faqData = [
       answer: "No, this tool is specifically designed for IPv4 addresses. IPv6 addresses are 128 bits long and are represented in hexadecimal format, so they require a different conversion process."
     },
     {
-      question: "Why does my conversion fail even if I have 32 bits?",
+      question: "Why did my conversion fail even if I have 32 bits?",
       answer: "The most likely reason is an invalid character. The input must only contain '0's and '1's (and optional dots or spaces, which are stripped). Any other character, including letters or other numbers, will result in an error. Double-check your input for typos."
     }
 ];

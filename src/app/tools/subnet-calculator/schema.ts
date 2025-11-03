@@ -45,7 +45,7 @@ export const softwareAppSchema = {
       "priceCurrency": "USD"
     },
     "description": "A comprehensive IPv4 Subnet Calculator for calculating network addresses, broadcast addresses, usable host ranges, and more for any CIDR prefix.",
-    "url": "https://www.icttoolbench.com/tools/subnet-calculator"
+    "url": "https://ict.calculation.site/tools/subnet-calculator"
 };
 
 export const keyTerminologies = [

@@ -10,12 +10,12 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { faqData, howToSchema, keyTerminologies, softwareAppSchema } from './schema';
 
 export const metadata = {
-    title: 'IPv4 Subnet Calculator | ICT Toolbench',
+    title: 'IPv4 Subnet Calculator | ICT Tools Hub',
     description: 'A comprehensive IPv4 Subnet Calculator for network administrators and students. Easily calculate network addresses, broadcast addresses, usable host ranges, and more for any CIDR prefix.',
     openGraph: {
-      title: 'IPv4 Subnet Calculator | ICT Toolbench',
+      title: 'IPv4 Subnet Calculator | ICT Tools Hub',
       description: 'The ultimate tool for subnetting calculations. Get network ID, broadcast, host range, subnet mask, and wildcard mask for any IPv4 address and CIDR prefix.',
-      url: '/tools/subnet-calculator',
+      url: 'https://ict.calculation.site/tools/subnet-calculator',
     }
 };
 

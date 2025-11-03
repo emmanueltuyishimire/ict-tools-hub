@@ -3,7 +3,7 @@ import { PageHeader } from '@/components/page-header';
 import { SubnetMaskConverter } from './subnet-mask-converter';
 
 export const metadata = {
-    title: 'Subnet Mask Converter | ICT Toolbench',
+    title: 'Subnet Mask Converter | ICT Tools Hub',
     description: 'Instantly convert between CIDR, subnet mask, and wildcard mask formats. An essential tool for network engineers configuring routers and firewalls.',
 };
 
