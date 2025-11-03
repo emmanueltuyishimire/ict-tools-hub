@@ -14,11 +14,11 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   const footerLinks = [
     { name: 'Central Hub', href: 'https://calculation.site' },
-    { name: 'Math Calculators', href: 'https://maths.calculation.site' },
+    { name: 'Age Calculators', href: 'https://age.calculation.site' },
+    { name: 'Finance Calculators', href: 'https://finance.calculation.site' },
     { name: 'Health & Fitness Calculators', href: 'https://health.calculation.site' },
     { name: 'ICT Tools Hub', href: 'https://ict.calculation.site' },
-    { name: 'Finance Calculators', href: 'https://finance.calculation.site' },
-    { name: 'Age Calculators', href: 'https://age.calculation.site' },
+    { name: 'Math Calculators', href: 'https://maths.calculation.site' },
     { name: 'Unit Converters', href: 'https://unit.calculation.site' },
   ];
 
@@ -32,7 +32,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <MainNav />
           </SidebarContent>
         </Sidebar>
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-col flex-1 min-h-screen">
             <header className="flex h-14 items-center gap-4 border-b bg-background/95 px-4 sticky top-0 z-30 backdrop-blur-sm lg:h-[60px] lg:px-6">
                 <SidebarTrigger className="lg:hidden" aria-label="Toggle navigation menu" />
                 <div className="flex-1">
