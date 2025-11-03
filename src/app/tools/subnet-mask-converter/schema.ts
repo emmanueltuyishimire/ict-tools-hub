@@ -28,8 +28,8 @@ export const howToSchema = {
 
 export const keyTerminologies = [
     { term: 'CIDR (Classless Inter-Domain Routing)', definition: 'A compact notation for an IP network, using a forward slash and a number (e.g., /24) to represent the length of the subnet mask.' },
-    { term: 'Subnet Mask', definition: 'A 32-bit number that divides an IP address into network and host portions. '1' bits represent the network; '0' bits represent the host.' },
-    { term: 'Wildcard Mask', definition: 'An inverted subnet mask used in Access Control Lists (ACLs), where '0' bits indicate positions that must match and '1' bits are "don\'t care" positions.' },
+    { term: 'Subnet Mask', definition: 'A 32-bit number that divides an IP address into network and host portions. \'1\' bits represent the network; \'0\' bits represent the host.' },
+    { term: 'Wildcard Mask', definition: 'An inverted subnet mask used in Access Control Lists (ACLs), where \'0\' bits indicate positions that must match and \'1\' bits are "don\'t care" positions.' },
     { term: 'ACL (Access Control List)', definition: 'A set of rules used by routers and firewalls to filter network traffic based on IP addresses, ports, and other criteria.' },
     { term: 'Usable Hosts', definition: 'The number of IP addresses in a subnet that can be assigned to devices, which is the total number of addresses minus two for the reserved network and broadcast addresses.' },
 ];
