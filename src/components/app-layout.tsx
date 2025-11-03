@@ -13,11 +13,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   }, []);
 
   const footerLinks = [
-    { name: 'About', href: 'https://calculation.site/about' },
-    { name: 'Contact', href: 'https://calculation.site/contact' },
-    { name: 'Privacy Policy', href: 'https://calculation.site/privacy' },
-    { name: 'Terms of Service', href: 'https://calculation.site/terms' },
-    { name: 'Disclaimer', href: 'https://calculation.site/disclaimer' },
+    { name: 'Blog', href: 'https://calculation.site' },
+    { name: 'Math Calculators', href: 'https://maths.calculation.site' },
+    { name: 'Health & Fitness Calculators', href: 'https://health.calculation.site' },
+    { name: 'ICT Tools Hub', href: 'https://ict.calculation.site' },
+    { name: 'Finance Calculators', href: 'https://finance.calculation.site' },
+    { name: 'Age Calculators', href: 'https://age.calculation.site' },
+    { name: 'Unit Converters', href: 'https://unit.calculation.site' },
   ];
 
   return (
