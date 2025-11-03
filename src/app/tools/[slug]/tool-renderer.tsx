@@ -76,6 +76,7 @@ import { AlgorithmStepSimulator } from '@/app/tools/algorithm-simulator/algorith
 import { CloudStorageCostEstimator } from '@/app/tools/cloud-storage-cost-estimator/cloud-storage-cost-estimator';
 import { BandwidthCostCalculator } from '@/app/tools/bandwidth-cost-calculator/bandwidth-cost-calculator';
 import { BackupStorageCalculator } from '@/app/tools/backup-storage-calculator/backup-storage-calculator';
+import { DataCompressionCalculator } from '@/app/tools/compression-estimator/compression-estimator';
 import { VmRequirementEstimator } from '@/app/tools/vm-requirement-estimator/vm-requirement-estimator';
 import { DiskUsageEstimator } from '@/app/tools/disk-usage-estimator/disk-usage-estimator';
 import { CloudInstanceCostCalculator } from '@/app/tools/cloud-instance-cost-calculator/cloud-instance-cost-calculator';
@@ -88,6 +89,7 @@ import { DatabaseGrowthCalculator } from '@/app/tools/db-growth-calculator/db-gr
 import { PrimaryForeignKeyValidator } from '@/app/tools/key-validator/key-validator';
 import { NormalizationChecker } from '@/app/tools/normalization-checker/normalization-checker';
 import { DuplicateRowFinder } from '@/app/tools/duplicate-row-finder/duplicate-row-finder';
+import { TableSizeEstimator } from '@/app/tools/db-storage-estimator/page';
 import { ColumnTypeConverter } from '@/app/tools/column-type-converter/column-type-converter';
 import { DatabaseHealthChecker } from '@/app/tools/db-health-checker/db-health-checker';
 import { RecursionSimulator } from '@/app/tools/recursion-simulator/recursion-simulator';
