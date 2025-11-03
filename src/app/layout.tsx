@@ -90,7 +90,7 @@ export default function RootLayout({
       <body
         suppressHydrationWarning={true}
         className={cn(
-          'min-h-screen bg-background font-body antialiased',
+          'min-h-screen bg-background font-body antialiased flex',
           'selection:bg-primary selection:text-primary-foreground'
         )}
       >

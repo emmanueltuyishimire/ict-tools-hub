@@ -6,7 +6,7 @@ import { Logo } from '@/components/logo';
 import { MainNav } from '@/components/main-nav';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
-  const [year, setYear] = useState(new Date().getFullYear());
+  const [year, setYear] = useState<number | null>(null);
 
   useEffect(() => {
     setYear(new Date().getFullYear());
@@ -32,7 +32,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <MainNav />
           </SidebarContent>
         </Sidebar>
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col flex-1">
             <header className="flex h-14 items-center gap-4 border-b bg-background/95 px-4 sticky top-0 z-30 backdrop-blur-sm lg:h-[60px] lg:px-6">
                 <SidebarTrigger className="lg:hidden" aria-label="Toggle navigation menu" />
                 <div className="flex-1">
