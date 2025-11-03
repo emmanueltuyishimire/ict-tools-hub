@@ -155,7 +155,6 @@ export const toolCategories: ToolCategory[] = [
     name: 'AI & Learning Tools',
     icon: BrainCircuit,
     tools: [
-       { name: 'AI Code Generator & Debugger', slug: 'code-generator', description: 'Generate and debug code with AI.' },
       { name: 'Time Complexity Estimator', slug: 'big-o-calculator', description: 'Understand and visualize Big O notation.' },
       { name: 'Algorithm Step Simulator', slug: 'algorithm-simulator', description: 'Simulate steps of simple algorithms.' },
       { name: 'Recursion Calculator / Simulator', slug: 'recursion-simulator', description: 'Simulate recursive functions.' },

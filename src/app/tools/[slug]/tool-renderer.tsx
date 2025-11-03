@@ -90,7 +90,6 @@ import { NormalizationChecker } from '@/app/tools/normalization-checker/normaliz
 import { DuplicateRowFinder } from '@/app/tools/duplicate-row-finder/duplicate-row-finder';
 import { ColumnTypeConverter } from '@/app/tools/column-type-converter/column-type-converter';
 import { DatabaseHealthChecker } from '@/app/tools/db-health-checker/db-health-checker';
-import { CodeForm } from '@/app/tools/code-generator/code-form';
 import { RecursionSimulator } from '@/app/tools/recursion-simulator/recursion-simulator';
 
 const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
@@ -179,7 +178,6 @@ const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
   'column-type-converter': ColumnTypeConverter,
   'db-health-checker': DatabaseHealthChecker,
   'recursion-simulator': RecursionSimulator,
-  'code-generator': CodeForm,
 };
 
 export default function ToolRenderer({ slug }: { slug: string }) {
