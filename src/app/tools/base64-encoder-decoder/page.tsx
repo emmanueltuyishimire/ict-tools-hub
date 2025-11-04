@@ -54,7 +54,7 @@ const keyTerminologies = [
 ];
 
 export default function Base64Page() {
-  const faqSchema = {
+  const faqPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } })),
@@ -64,7 +64,7 @@ export default function Base64Page() {
     <>
        <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
         />
         <script
           type="application/ld+json"

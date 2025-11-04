@@ -13,7 +13,7 @@ export const metadata = {
 };
 
 export default function HashGeneratorPage() {
-  const faqSchema = {
+  const faqPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqData.map(item => ({
@@ -45,7 +45,7 @@ export default function HashGeneratorPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
       />
       <script
         type="application/ld+json"
@@ -182,7 +182,7 @@ export default function HashGeneratorPage() {
                           <AccordionItem value={`item-${index}`} key={index}>
                               <AccordionTrigger>{item.question}</AccordionTrigger>
                               <AccordionContent>
-                                  <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                  <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} />
                               </AccordionContent>
                           </AccordionItem>
                       ))}
@@ -224,5 +224,3 @@ export default function HashGeneratorPage() {
     </>
   );
 }
-
-    

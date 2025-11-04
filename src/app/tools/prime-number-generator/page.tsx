@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { PrimeNumberGeneratorTool } from './prime-number-generator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -20,7 +19,7 @@ export const metadata = {
 };
 
 const PrimeNumberGeneratorPage = () => {
-  const faqSchema = {
+  const faqPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqData.map(item => ({
@@ -50,9 +49,18 @@ const PrimeNumberGeneratorPage = () => {
 
   return (
     <>
-      <StructuredData data={faqSchema} />
-      <StructuredData data={howToSchema} />
-      <StructuredData data={softwareAppSchema} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
+      />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
           title="Prime Number Generator"
@@ -100,7 +108,7 @@ const PrimeNumberGeneratorPage = () => {
           </CardHeader>
           <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
               <section>
-                  <h3>The Sieve of Eratosthenes: An Ancient and Elegant Algorithm</h3>
+                  <h3 className="font-bold text-xl">The Sieve of Eratosthenes: An Ancient and Elegant Algorithm</h3>
                   <p>
                     The most famous and efficient algorithm for finding all prime numbers up to a specified limit is the <strong>Sieve of Eratosthenes</strong>, which this tool uses. Conceived by the ancient Greek mathematician Eratosthenes of Cyrene, this algorithm is remarkable for its simplicity and efficiency. Instead of testing each number for primality one by one, it works by progressively eliminating composite numbers.
                   </p>
@@ -118,7 +126,7 @@ const PrimeNumberGeneratorPage = () => {
                   </p>
               </section>
               <section>
-                  <h3>Trial Division: Simple but Slow</h3>
+                  <h3 className="font-bold text-xl">Trial Division: Simple but Slow</h3>
                   <p>
                     The most basic method of checking if a single number `n` is prime is <strong>trial division</strong>. This involves dividing `n` by every integer from 2 up to the square root of `n`. If any division results in a whole number (i.e., no remainder), then `n` is composite. If no such divisor is found, `n` is prime. You can see this in action in our <Link href='/tools/prime-checker' className='text-primary hover:underline'>Prime Number Checker</Link> tool.
                   </p>
@@ -127,7 +135,7 @@ const PrimeNumberGeneratorPage = () => {
                   </p>
               </section>
               <section>
-                  <h3>Primality Testing for Massive Numbers</h3>
+                  <h3 className="font-bold text-xl">Primality Testing for Massive Numbers</h3>
                   <p>
                     What about the enormous prime numbers used in cryptography, which can have hundreds of digits? Trial division and even the Sieve are far too slow for this. For these numbers, computer scientists use <strong>probabilistic primality tests</strong>, such as the Miller-Rabin test.
                   </p>
@@ -188,7 +196,7 @@ const PrimeNumberGeneratorPage = () => {
                           <AccordionItem value={`item-${index}`} key={index}>
                               <AccordionTrigger>{item.question}</AccordionTrigger>
                               <AccordionContent>
-                                <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} />
                               </AccordionContent>
                           </AccordionItem>
                       ))}
@@ -212,7 +220,7 @@ const PrimeNumberGeneratorPage = () => {
                   <Card className="hover:border-primary transition-colors h-full">
                       <CardHeader>
                           <CardTitle className="text-base flex items-center justify-between">Fibonacci Sequence Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                          <CardDescription className="text-xs">Explore another fundamental sequence in mathematics with its own unique properties.</CardDescription>
+                          <CardDescription className="text-xs">Explore another fundamental mathematical sequence with its own unique properties.</CardDescription>
                       </CardHeader>
                   </Card>
               </Link>

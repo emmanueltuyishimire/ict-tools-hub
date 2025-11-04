@@ -19,7 +19,7 @@ export const metadata = {
 };
 
 const IpToBinaryPage = () => {
-    const faqSchema = {
+    const faqPageSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
         mainEntity: faqData.map(item => ({
@@ -51,7 +51,7 @@ const IpToBinaryPage = () => {
         <>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
             />
              <script
                 type="application/ld+json"
@@ -157,12 +157,10 @@ const IpToBinaryPage = () => {
                                     </ul>
                                 </li>
                                 <li>
-                                    <strong>Understand 8-Bit Positional Values:</strong> Each octet is an 8-bit number. To convert it, you need to know the decimal value of each bit position. From left to right, the values are powers of 2, starting from 2<sup>7</sup>.
+                                    <strong>Understand 8-Bit Positional Values:</strong> Each position in an 8-bit octet corresponds to a power of 2, starting from 2<sup>7</sup> on the far right.
                                     <div className="overflow-x-auto my-4">
                                         <table className="w-full">
-                                            <thead>
-                                                <tr className='border-b'><th className="p-2 text-left font-semibold">Decimal Value</th><td className="p-2 font-code">128</td><td className="p-2 font-code">64</td><td className="p-2 font-code">32</td><td className="p-2 font-code">16</td><td className="p-2 font-code">8</td><td className="p-2 font-code">4</td><td className="p-2 font-code">2</td><td className="p-2 font-code">1</td></tr>
-                                            </thead>
+                                            <thead><tr className='border-b'><th className="p-2 text-left font-semibold">Decimal Value</th><td className="p-2 font-code">128</td><td className="p-2 font-code">64</td><td className="p-2 font-code">32</td><td className="p-2 font-code">16</td><td className="p-2 font-code">8</td><td className="p-2 font-code">4</td><td className="p-2 font-code">2</td><td className="p-2 font-code">1</td></tr></thead>
                                         </table>
                                     </div>
                                 </li>
@@ -288,5 +286,3 @@ const IpToBinaryPage = () => {
 };
 
 export default IpToBinaryPage;
-
-    

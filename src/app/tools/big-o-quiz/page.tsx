@@ -28,7 +28,7 @@ export const metadata = {
 };
 
 const BigOComplexityQuizPage = () => {
-  const faqSchema = {
+  const faqPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqData.map(item => ({
@@ -60,7 +60,7 @@ const BigOComplexityQuizPage = () => {
         <>
             <script
               type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
             />
              <script
               type="application/ld+json"
@@ -299,7 +299,7 @@ const BigOComplexityQuizPage = () => {
                                   <AccordionItem value={`item-${index}`} key={index}>
                                       <AccordionTrigger>{item.question}</AccordionTrigger>
                                       <AccordionContent>
-                                        <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} />
                                       </AccordionContent>
                                   </AccordionItem>
                               ))}
@@ -314,7 +314,7 @@ const BigOComplexityQuizPage = () => {
                       <Link href="/tools/big-o-calculator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Time Complexity Estimator</CardTitle>
+                                  <CardTitle className="text-base flex items-center justify-between">Time Complexity Estimator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
                                   <CardDescription className="text-xs">Visualize the growth curves of different Big O notations on a graph.</CardDescription>
                               </CardHeader>
                           </Card>
@@ -322,7 +322,7 @@ const BigOComplexityQuizPage = () => {
                       <Link href="/tools/algorithm-simulator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
-                                  <CardTitle className="text-base flex items-center justify-between">Algorithm Step Simulator</CardTitle>
+                                  <CardTitle className="text-base flex items-center justify-between">Algorithm Step Simulator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
                                   <CardDescription className="text-xs">Watch algorithms like Bubble Sort (O(n²)) execute step-by-step to see their complexity in action.</CardDescription>
                               </CardHeader>
                           </Card>
@@ -335,5 +335,3 @@ const BigOComplexityQuizPage = () => {
 };
 
 export default BigOComplexityQuizPage;
-
-    

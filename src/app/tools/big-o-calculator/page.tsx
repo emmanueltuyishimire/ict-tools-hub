@@ -28,7 +28,7 @@ export const metadata = {
 };
 
 const BigOCalculatorPage = () => {
-    const faqSchema = {
+    const faqPageSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
         mainEntity: faqData.map(item => ({
@@ -60,7 +60,7 @@ const BigOCalculatorPage = () => {
         <>
             <script
               type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
             />
             <script
               type="application/ld+json"
@@ -297,7 +297,7 @@ const BigOCalculatorPage = () => {
                                   <AccordionItem value={`item-${index}`} key={index}>
                                       <AccordionTrigger>{item.question}</AccordionTrigger>
                                       <AccordionContent>
-                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace('Random Number Generator', "<a href='/tools/random-number-generator' class='text-primary hover:underline'>Random Number Generator</a>") }} />
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} />
                                       </AccordionContent>
                                   </AccordionItem>
                               ))}
@@ -341,7 +341,3 @@ const BigOCalculatorPage = () => {
 };
 
 export default BigOCalculatorPage;
-
-    
-
-    

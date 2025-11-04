@@ -36,7 +36,7 @@ const Base32_58Page = () => {
         "url": "https://www.icttoolbench.com/tools/base32-58-encoder-decoder"
     };
     
-    const faqSchema = {
+    const faqPageSchema = {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
       mainEntity: faqData.map(item => ({
@@ -53,7 +53,7 @@ const Base32_58Page = () => {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
       />
       <script
         type="application/ld+json"
@@ -234,7 +234,7 @@ const Base32_58Page = () => {
                           <AccordionItem value={`item-${index}`} key={index}>
                               <AccordionTrigger>{item.question}</AccordionTrigger>
                               <AccordionContent>
-                                <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} />
                               </AccordionContent>
                           </AccordionItem>
                       ))}

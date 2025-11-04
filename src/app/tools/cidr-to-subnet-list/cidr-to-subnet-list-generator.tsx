@@ -34,7 +34,7 @@ export function CidrToSubnetListGenerator() {
     const [majorNetwork, setMajorNetwork] = useState('192.168.0.0');
     const [originalCidr, setOriginalCidr] = useState('24');
     const [newCidr, setNewCidr] = useState('27');
-    const [results, setResults] = useState<{ summary: any, subnets: SubnetResult[] } | null>(null);
+    const [results, setResults<{ summary: any, subnets: SubnetResult[] } | null>(null);
     const [error, setError] = useState('');
     const resultRef = useRef<HTMLDivElement>(null);
     const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -190,3 +190,5 @@ export function CidrToSubnetListGenerator() {
         </div>
     );
 }
+
+    

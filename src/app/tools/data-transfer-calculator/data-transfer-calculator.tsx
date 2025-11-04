@@ -37,11 +37,11 @@ const bytesIn = {
 };
 
 export function DataTransferTimeCalculator() {
-    const [fileSize, setFileSize] = useState<number | ''>(100);
+    const [fileSize, setFileSize<number | ''>(100);
     const [fileUnit, setFileUnit] = useState('GB');
-    const [speed, setSpeed] = useState<number | ''>(500);
+    const [speed, setSpeed<number | ''>(500);
     const [speedUnit, setSpeedUnit] = useState('Mb');
-    const [results, setResults] = useState<any>(null);
+    const [results, setResults<any>(null);
     const [error, setError] = useState('');
     const resultRef = useRef<HTMLDivElement>(null);
 
@@ -187,3 +187,5 @@ export function DataTransferTimeCalculator() {
         </div>
     );
 }
+
+    

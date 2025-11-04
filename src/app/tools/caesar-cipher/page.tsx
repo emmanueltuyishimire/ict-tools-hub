@@ -14,7 +14,7 @@ export const metadata = {
 };
 
 export default function CaesarCipherPage() {
-  const faqSchema = {
+  const faqPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqData.map(item => ({
@@ -46,7 +46,7 @@ export default function CaesarCipherPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
       />
       <script
         type="application/ld+json"
@@ -180,7 +180,9 @@ export default function CaesarCipherPage() {
                       {faqData.map((item, index) => (
                           <AccordionItem value={`item-${index}`} key={index}>
                               <AccordionTrigger>{item.question}</AccordionTrigger>
-                              <AccordionContent><div dangerouslySetInnerHTML={{ __html: item.answer }} /></AccordionContent>
+                              <AccordionContent>
+                                <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} />
+                              </AccordionContent>
                           </AccordionItem>
                       ))}
                   </Accordion>
