@@ -51,9 +51,9 @@ export function DataTransferTimeCalculator() {
             return;
         }
 
-        const sizeInBytes = fileSize * (bytesIn as any)[fileUnit];
+        const sizeInBytes = Number(fileSize) * (bytesIn as any)[fileUnit];
         const sizeInBits = sizeInBytes * 8;
-        const speedInBps = speed * (bitsIn as any)[speedUnit];
+        const speedInBps = Number(speed) * (bitsIn as any)[speedUnit];
         
         if (speedInBps === 0) {
             setError('Transfer speed cannot be zero.');
@@ -79,7 +79,6 @@ export function DataTransferTimeCalculator() {
     useEffect(() => {
         if (results && resultRef.current) {
             resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            resultRef.current.focus();
         }
     }, [results]);
     

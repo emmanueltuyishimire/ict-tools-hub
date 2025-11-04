@@ -106,6 +106,15 @@ const DuplicateRowFinder = dynamic(() => import('@/app/tools/duplicate-row-finde
 const ColumnTypeConverter = dynamic(() => import('@/app/tools/column-type-converter/column-type-converter').then(mod => mod.ColumnTypeConverter), { loading: () => <LoadingComponent /> });
 const DatabaseHealthChecker = dynamic(() => import('@/app/tools/db-health-checker/db-health-checker').then(mod => mod.DatabaseHealthChecker), { loading: () => <LoadingComponent /> });
 const RecursionSimulator = dynamic(() => import('@/app/tools/recursion-simulator/recursion-simulator').then(mod => mod.RecursionSimulator), { loading: () => <LoadingComponent /> });
+const BigOQuiz = dynamic(() => import('@/app/tools/big-o-quiz/big-o-quiz').then(mod => mod.default), { loading: () => <LoadingComponent /> });
+const CloudSyncTimeCalculator = dynamic(() => import('@/app/tools/cloud-sync-time-calculator/page').then(mod => mod.default), { loading: () => <LoadingComponent /> });
+const DataMigrationEstimator = dynamic(() => import('@/app/tools/data-migration-estimator/page').then(mod => mod.default), { loading: () => <LoadingComponent /> });
+const VmScalingCalculator = dynamic(() => import('@/app/tools/vm-scaling-calculator/page').then(mod => mod.default), { loading: () => <LoadingComponent /> });
+const RaidCalculator = dynamic(() => import('@/app/tools/raid-calculator/raid-calculator').then(mod => mod.RaidCalculator), { loading: () => <LoadingComponent /> });
+const UserQuotaCalculator = dynamic(() => import('@/app/tools/user-quota-calculator/user-quota-calculator').then(mod => mod.UserQuotaCalculator), { loading: () => <LoadingComponent /> });
+const LogRotationCalculator = dynamic(() => import('@/app/tools/log-rotation-calculator/log-rotation-calculator').then(mod => mod.LogRotationCalculator), { loading: () => <LoadingComponent /> });
+const TpsCalculator = dynamic(() => import('@/app/tools/tps-calculator/tps-calculator').then(mod => mod.TpsCalculator), { loading: () => <LoadingComponent /> });
+const SqlInjectionTester = dynamic(() => import('@/app/tools/sql-injection-tester/sql-injection-tester').then(mod => mod.SqlInjectionTester), { loading: () => <LoadingComponent /> });
 
 const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
   'ip-to-binary': IpToBinaryConverter,
@@ -193,6 +202,15 @@ const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
   'column-type-converter': ColumnTypeConverter,
   'db-health-checker': DatabaseHealthChecker,
   'recursion-simulator': RecursionSimulator,
+  'big-o-quiz': BigOQuiz,
+  'cloud-sync-time-calculator': CloudSyncTimeCalculator,
+  'data-migration-estimator': DataMigrationEstimator,
+  'vm-scaling-calculator': VmScalingCalculator,
+  'raid-calculator': RaidCalculator,
+  'user-quota-calculator': UserQuotaCalculator,
+  'log-rotation-calculator': LogRotationCalculator,
+  'tps-calculator': TpsCalculator,
+  'sql-injection-tester': SqlInjectionTester,
 };
 
 export default function ToolRenderer({ slug }: { slug: string }) {

@@ -112,6 +112,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Two-Factor Auth TOTP Demo', slug: 'totp-demo', description: 'Educational TOTP demo.' },
       { name: 'Base32 / Base58 Encoder / Decoder', slug: 'base32-58-encoder-decoder', description: 'Encode/decode Base32/58.' },
       { name: 'File Integrity Checker', slug: 'file-integrity-checker', description: 'Generate checksums (SHA) for files.' },
+      { name: 'SQL Injection Tester', slug: 'sql-injection-tester', description: 'Educational SQL injection demo.' },
     ],
   },
   {
@@ -131,6 +132,9 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Snapshot / Backup Scheduler', slug: 'backup-scheduler', description: 'Schedule snapshots and backups.' },
       { name: 'Storage Growth Estimator', slug: 'storage-growth-estimator', description: 'Estimate storage growth.' },
       { name: 'RAID Storage Calculator', slug: 'raid-calculator', description: 'Calculate RAID storage.' },
+      { name: 'VM Scaling Planning Guide', slug: 'vm-scaling-calculator', description: 'Understand horizontal vs vertical scaling.' },
+      { name: 'Cloud Sync Time Calculator', slug: 'cloud-sync-time-calculator', description: 'Estimate cloud data transfer times.' },
+      { name: 'Data Migration Estimator', slug: 'data-migration-estimator', description: 'Plan your data migration projects.' },
     ],
   },
   {
@@ -158,6 +162,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Time Complexity Estimator', slug: 'big-o-calculator', description: 'Understand and visualize Big O notation.' },
       { name: 'Algorithm Step Simulator', slug: 'algorithm-simulator', description: 'Simulate steps of simple algorithms.' },
       { name: 'Recursion Calculator / Simulator', slug: 'recursion-simulator', description: 'Simulate recursive functions.' },
+      { name: 'Big-O Complexity Quiz', slug: 'big-o-quiz', description: 'Test your knowledge of time complexity.' },
     ],
   },
 ];
