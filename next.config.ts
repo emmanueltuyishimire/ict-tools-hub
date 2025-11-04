@@ -32,6 +32,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/ict',
+        permanent: true,
+        basePath: false,
+      },
+    ]
+  },
 };
 
 export default nextConfig;
