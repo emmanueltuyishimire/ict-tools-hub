@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { DataRetentionCalculator } from './data-retention-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle, Lightbulb } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -51,9 +50,9 @@ const DataRetentionCalculatorPage = () => {
 
     return (
         <>
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
-            <StructuredData data={softwareAppSchema} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
                     title="Data Retention Period Calculator"
@@ -263,7 +262,7 @@ const DataRetentionCalculatorPage = () => {
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
                                   <CardTitle className="text-base flex items-center justify-between">Uptime / Availability Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                  <CardDescription className="text-xs">Understand the SLA and availability promises that protect your stored data.</CardDescription>
+                                  <CardDescription className="text-xs">Understand the SLA promises that protect your stored data.</CardDescription>
                               </CardHeader>
                           </Card>
                       </Link>

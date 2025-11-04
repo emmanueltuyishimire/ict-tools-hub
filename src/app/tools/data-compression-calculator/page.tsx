@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { CompressionEstimator } from '../compression-estimator/compression-estimator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -50,10 +49,15 @@ const keyTerminologies = [
 ];
 
 const DataCompressionCalculatorPage = () => {
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))
+    };
     return (
         <>
-            <StructuredData data={{'@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))}} />
-            <StructuredData data={howToSchema} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
                     title="Data Compression Savings Estimator"
@@ -65,7 +69,9 @@ const DataCompressionCalculatorPage = () => {
                 <section>
                     <h2 className="text-2xl font-bold mb-4">How to Use This Tool</h2>
                     <Card className="prose prose-sm max-w-none text-foreground p-6">
-                        <p>This estimator helps you visualize the powerful impact of compression on data size. It's perfect for planning website optimizations or backup strategies.</p>
+                        <p>
+                            This estimator helps you visualize the powerful impact of compression on data size. It's perfect for planning website optimizations or backup strategies.
+                        </p>
                         <ol>
                             <li><strong>Enter Original Size:</strong> Input the size of your uncompressed data. This could be the size of a single large file (like a database backup) or the combined size of your website's text assets (HTML, CSS, JS).</li>
                             <li><strong>Select the Unit:</strong> Choose the appropriate unit for your data size (KB, MB, GB, or TB).</li>

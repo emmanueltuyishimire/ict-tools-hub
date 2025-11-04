@@ -15,9 +15,15 @@ export const metadata = {
 };
 
 const CloudSyncTimeCalculatorPage = () => {
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))
+    };
+
     return (
         <>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}}))) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
             <CloudSyncTimeCalculator />
@@ -26,5 +32,3 @@ const CloudSyncTimeCalculatorPage = () => {
 }
 
 export default CloudSyncTimeCalculatorPage;
-
-    
