@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { CdnBandwidthEstimator } from './cdn-bandwidth-estimator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 
@@ -60,8 +59,14 @@ const faqSchemaData = {
 export default function CdnBandwidthEstimatorPage() {
   return (
     <>
-      <StructuredData data={faqSchemaData} />
-      <StructuredData data={howToSchema} />
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchemaData) }}
+        />
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+        />
       <PageHeader
         title="CDN Bandwidth Estimator"
         description="Estimate the monthly data transfer for your website to better forecast CDN and hosting costs. Understand the financial impact of your cache hit ratio."
@@ -180,7 +185,7 @@ export default function CdnBandwidthEstimatorPage() {
             </div>
         </section>
 
-        <section>
+       <section>
           <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
           <Card>
               <CardContent className="p-6">

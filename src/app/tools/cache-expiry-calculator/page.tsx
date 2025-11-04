@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { CacheExpirationCalculator } from './cache-expiry-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 
@@ -53,10 +52,28 @@ const keyTerminologies = [
 ];
 
 export default function CacheExpirationCalculatorPage() {
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer.replace(/<[^>]*>?/gm, ''),
+            },
+        })),
+    };
   return (
     <>
-      <StructuredData data={faqData} />
-      <StructuredData data={howToSchema} />
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+        />
       <PageHeader
         title="Cache Expiration Calculator"
         description="Calculate the expiration date of a cached web resource based on its `Cache-Control: max-age` header. A simple tool for web developers and performance engineers."
@@ -179,7 +196,7 @@ export default function CacheExpirationCalculatorPage() {
                           <AccordionItem value={`item-${index}`} key={index}>
                               <AccordionTrigger>{item.question}</AccordionTrigger>
                               <AccordionContent>
-                                  <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                <div dangerouslySetInnerHTML={{ __html: item.answer }} />
                               </AccordionContent>
                           </AccordionItem>
                       ))}
