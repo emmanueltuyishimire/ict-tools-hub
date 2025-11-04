@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { LatencyEstimator } from './latency-estimator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight, Lightbulb } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -43,15 +42,15 @@ const LatencyEstimatorPage = () => {
 
     return (
         <>
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
-            <StructuredData data={softwareAppSchema} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
+            <PageHeader
+                title="Ping / Latency Estimator"
+                description="Calculate the theoretical minimum round-trip time (RTT) between any two locations based on the speed of light. This tool helps you understand the physical limits of network speed, a critical factor in application performance."
+            />
+            
             <div className="max-w-4xl mx-auto space-y-12">
-                <PageHeader
-                    title="Ping / Latency Estimator"
-                    description="Calculate the theoretical minimum round-trip time (RTT) between any two locations based on the speed of light. This tool helps you understand the physical limits of network speed, a critical factor in application performance."
-                />
-                
                 <LatencyEstimator />
 
                 <section>
@@ -203,7 +202,7 @@ const LatencyEstimatorPage = () => {
                                   <AccordionItem value={`item-${index}`} key={index}>
                                       <AccordionTrigger>{item.question}</AccordionTrigger>
                                       <AccordionContent>
-                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/href="\/tools\/([^"]*)"/g, 'href="/tools/$1" class="text-primary hover:underline"') }} />
+                                        <div dangerouslySetInnerHTML={{ __html: item.answer.replace(/<a href='([^']*)' class='[^']*'>/g, "<a href='$1' class='text-primary hover:underline'>") }} />
                                       </AccordionContent>
                                   </AccordionItem>
                               ))}
@@ -215,5 +214,3 @@ const LatencyEstimatorPage = () => {
         </>
     );
 };
-
-export default LatencyEstimatorPage;
