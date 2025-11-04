@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     description: 'A comprehensive suite of free online tools for ICT professionals and students.',
   },
   icons: {
-    icon: '/ict/favicon.ico',
+    icon: '/favicon.ico',
   },
 };
 
