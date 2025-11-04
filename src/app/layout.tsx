@@ -21,7 +21,7 @@ const sourceCodePro = Source_Code_Pro({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://calculation.site'), // Set the base URL for canonicals
+  metadataBase: new URL('https://calculation.site'),
   title: {
     default: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     template: '%s | ICT Tools Hub',
@@ -31,11 +31,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     description: 'A comprehensive suite of free online tools for ICT professionals and students.',
-    url: '/ict', // Use the final proxied URL structure
+    url: '/ict',
     siteName: 'ICT Tools Hub',
     images: [
       {
-        url: '/ict/og-image.png', // Replace with your actual OG image path
+        url: '/ict/og-image.png',
         width: 1200,
         height: 630,
       },
@@ -47,7 +47,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     description: 'A comprehensive suite of free online tools for ICT professionals and students.',
-    // images: ['/ict/og-image.png'], // Replace with your actual OG image path
   },
   icons: {
     icon: '/ict/favicon.ico',
@@ -59,7 +58,7 @@ const webAppSchema = {
   '@type': 'WebApplication',
   name: 'ICT Tools Hub',
   description: 'A comprehensive suite of free online tools for ICT professionals, students, and enthusiasts, including networking, programming, and security utilities.',
-  url: 'https://calculation.site/ict', // Use the final proxied URL
+  url: 'https://calculation.site/ict',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'All',
   offers: {

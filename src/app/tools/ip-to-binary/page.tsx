@@ -7,19 +7,62 @@ import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-r
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { allTools, toolCategories } from '@/lib/tools';
+import { Metadata } from 'next';
 
-export const metadata = {
-    title: 'IP Address to Binary Converter | Convert IPv4 to Binary | ICT Toolbench',
-    description: 'Instantly convert any IPv4 address from its standard dot-decimal notation to its 32-bit binary equivalent. An essential tool for network engineers, students, and IT professionals.',
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const tool = allTools.find((t) => t.slug === params.slug);
+  if (!tool) {
+    return {
+      title: 'Tool Not Found | ICT Tools Hub',
+    };
+  }
+
+  const canonicalUrl = `https://calculation.site/ict/tools/${tool.slug}`;
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://calculation.site/ict',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: toolCategories.find(cat => cat.tools.some(t => t.slug === tool.slug))?.name || 'Tools',
+        item: `https://calculation.site/ict/tools/${tool.slug}`, // The category itself doesn't have a page, so we link to the tool.
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: tool.name,
+        item: canonicalUrl,
+      },
+    ],
+  };
+
+  return {
+    title: `${tool.name} | ICT Tools Hub`,
+    description: tool.description,
+    alternates: {
+        canonical: canonicalUrl,
+    },
     openGraph: {
-        title: 'IP Address to Binary Converter | Convert IPv4 to Binary | ICT Toolbench',
-        description: 'A free, real-time tool to convert IPv4 addresses to binary format. Includes an in-depth guide on binary conversion, subnetting, and IP address structure.',
-        url: '/tools/ip-to-binary',
-    }
-};
+        title: `${tool.name} | ICT Tools Hub`,
+        description: tool.description,
+        url: canonicalUrl,
+    },
+    structuredData: breadcrumbSchema,
+  };
+}
+
 
 const IpToBinaryPage = () => {
-    const faqPageSchema = {
+    const faqSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
         mainEntity: faqData.map(item => ({
@@ -44,14 +87,14 @@ const IpToBinaryPage = () => {
         "priceCurrency": "USD"
       },
       "description": "A free online tool to convert standard dot-decimal IPv4 addresses into their 32-bit binary representation.",
-      "url": "https://www.icttoolbench.com/tools/ip-to-binary"
+      "url": "https://calculation.site/ict/tools/ip-to-binary"
     };
 
     return (
         <>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
             />
              <script
                 type="application/ld+json"

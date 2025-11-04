@@ -7,16 +7,59 @@ import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-r
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { allTools, toolCategories } from '@/lib/tools';
+import { Metadata } from 'next';
 
-export const metadata = {
-    title: 'Binary to IP Address Converter | Convert Binary to IPv4 | ICT Tools Hub',
-    description: 'Instantly convert a 32-bit binary string into its human-readable dot-decimal IPv4 address. An essential tool for networking students and IT professionals working with binary data.',
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const tool = allTools.find((t) => t.slug === params.slug);
+  if (!tool) {
+    return {
+      title: 'Tool Not Found | ICT Tools Hub',
+    };
+  }
+
+  const canonicalUrl = `https://calculation.site/ict/tools/${tool.slug}`;
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://calculation.site/ict',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: toolCategories.find(cat => cat.tools.some(t => t.slug === tool.slug))?.name || 'Tools',
+        item: `https://calculation.site/ict/tools/${tool.slug}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: tool.name,
+        item: canonicalUrl,
+      },
+    ],
+  };
+
+  return {
+    title: `${tool.name} | ICT Tools Hub`,
+    description: tool.description,
+    alternates: {
+        canonical: canonicalUrl,
+    },
     openGraph: {
-        title: 'Binary to IP Address Converter | Convert Binary to IPv4 | ICT Tools Hub',
-        description: 'A free, real-time tool to convert 32-bit binary strings to IPv4 addresses. Includes an in-depth guide on binary conversion, IP structure, and practical networking applications.',
-        url: 'https://ict.calculation.site/tools/binary-to-ip',
-    }
-};
+        title: `${tool.name} | ICT Tools Hub`,
+        description: tool.description,
+        url: canonicalUrl,
+    },
+    structuredData: breadcrumbSchema,
+  };
+}
+
 
 const BinaryToIpPage = () => {
     const softwareAppSchema = {
@@ -31,14 +74,20 @@ const BinaryToIpPage = () => {
         "priceCurrency": "USD"
       },
       "description": "A free online tool to convert 32-bit binary strings into their standard dot-decimal IPv4 address representation.",
-      "url": "https://ict.calculation.site/tools/binary-to-ip"
+      "url": "https://calculation.site/ict/tools/binary-to-ip"
+    };
+    
+    const faqPageSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))
     };
 
     return (
         <>
             <script
               type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))) }}
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
             />
             <script
               type="application/ld+json"
