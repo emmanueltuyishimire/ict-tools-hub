@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { CodeMinifier } from './code-minifier';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 
@@ -54,10 +53,21 @@ const keyTerminologies = [
 ];
 
 export default function CodeMinifierPage() {
+  const faqSchemaData = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } }))
+  };
   return (
     <div className="max-w-4xl mx-auto space-y-12">
-      <StructuredData data={faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } }))} />
-      <StructuredData data={howToSchema} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchemaData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
       <PageHeader
         title="HTML, CSS, & JS Minifier"
         description="Optimize your website's performance by reducing the file size of your code. Paste your code into the appropriate tab to get a clean, minified version."
@@ -106,9 +116,13 @@ export default function CodeMinifierPage() {
           <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
               <section>
                   <h3 className="font-bold text-xl">What is Minification and Why Does It Matter?</h3>
-                  <p>When developers write code, they use spacing, comments, and descriptive variable names to make it readable and maintainable for humans. This is great for development, but it results in files that are larger than they need to be. A web browser doesn't care about comments or indentation; it just needs to execute the code.</p>
+                  <p>
+                    When developers write code, they use spacing, comments, and descriptive variable names to make it readable and maintainable for humans. This is great for development, but it results in files that are larger than they need to be. A web browser doesn't care about comments or indentation; it just needs to execute the code.
+                  </p>
                   <p><strong>Minification</strong> is an automated process that strips out all of this "human-friendly" formatting. It removes whitespace, newlines, and comments, effectively packing the code into the smallest possible space without altering its logic. The result is a functionally identical file that is significantly smaller in size.</p>
-                  <p>This matters because file size directly impacts website performance. Smaller files mean faster download times, especially on mobile networks. A faster website leads to a better user experience, lower bounce rates, higher conversion rates, and improved search engine rankings, as page speed is a key factor in Google's algorithm. You can estimate the impact of file size on download times with our <Link href="/tools/data-transfer-calculator" className="text-primary hover:underline">Data Transfer Time Calculator</Link>.</p>
+                  <p>
+                    This matters because file size directly impacts website performance. Smaller files mean faster download times, especially on mobile networks. A faster website leads to a better user experience, lower bounce rates, higher conversion rates, and improved search engine rankings, as page speed is a key factor in Google's algorithm. You can estimate the impact of file size on download times with our <Link href="/tools/data-transfer-calculator" className="text-primary hover:underline">Data Transfer Time Calculator</Link>.
+                  </p>
               </section>
               <section>
                   <h3 className="font-bold text-xl">Minification vs. Compression: A Two-Step Optimization</h3>
