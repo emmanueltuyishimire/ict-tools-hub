@@ -51,6 +51,21 @@ export default function IpSummarizationPage() {
                 description="Efficiently combine multiple IP network ranges into a single summary route. This tool helps you optimize routing tables, improve network performance, and simplify access control lists."
             />
             <IpSummarizationTool />
+             <Card>
+                <CardHeader>
+                    <CardTitle>Frequently Asked Questions</CardTitle>
+                </CardHeader>
+                <CardContent>
+                     <Accordion type="single" collapsible className="w-full">
+                        {faqData.map((faq, index) => (
+                            <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger>{faq.question}</AccordionTrigger>
+                                <AccordionContent>{faq.answer}</AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                </CardContent>
+            </Card>
         </>
     );
 }

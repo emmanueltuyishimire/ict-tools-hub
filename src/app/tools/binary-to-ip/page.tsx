@@ -7,58 +7,6 @@ import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-r
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { allTools, toolCategories } from '@/lib/tools';
-import { Metadata } from 'next';
-
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const tool = allTools.find((t) => t.slug === params.slug);
-  if (!tool) {
-    return {
-      title: 'Tool Not Found | ICT Tools Hub',
-    };
-  }
-
-  const canonicalUrl = `https://calculation.site/ict/tools/${tool.slug}`;
-
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://calculation.site/ict',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: toolCategories.find(cat => cat.tools.some(t => t.slug === tool.slug))?.name || 'Tools',
-        item: `https://calculation.site/ict/tools/${tool.slug}`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: tool.name,
-        item: canonicalUrl,
-      },
-    ],
-  };
-
-  return {
-    title: `${tool.name} | ICT Tools Hub`,
-    description: tool.description,
-    alternates: {
-        canonical: canonicalUrl,
-    },
-    openGraph: {
-        title: `${tool.name} | ICT Tools Hub`,
-        description: tool.description,
-        url: canonicalUrl,
-    },
-    structuredData: breadcrumbSchema,
-  };
-}
 
 
 const BinaryToIpPage = () => {
