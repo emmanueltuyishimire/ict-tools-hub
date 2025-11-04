@@ -1,3 +1,6 @@
+
+'use client';
+
 import { PageHeader } from '@/components/page-header';
 import { DataTransferTimeCalculator } from '../data-transfer-calculator/data-transfer-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';

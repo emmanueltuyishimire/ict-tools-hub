@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
@@ -100,7 +101,7 @@ const allQuizQuestions = [
     }
 ];
 
-export default function BigOQuiz() {
+export function BigOQuiz() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [userAnswers, setUserAnswers] = useState<(string | null)[]>([]);
     const [quizState, setQuizState] = useState<'not-started' | 'in-progress' | 'finished'>('not-started');
