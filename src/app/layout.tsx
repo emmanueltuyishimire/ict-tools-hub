@@ -82,19 +82,19 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
         />
-        <script
+        {/* Google Analytics & AdSense */}
+        <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=pub-3042243846300811"
           crossOrigin="anonymous"
-        ></script>
-        {/* Google tag (gtag.js) */}
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-2LF3Z5PGR4"></Script>
+          strategy="lazyOnload"
+        />
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-2LF3Z5PGR4" />
         <Script id="google-analytics">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-
             gtag('config', 'G-2LF3Z5PGR4');
           `}
         </Script>
