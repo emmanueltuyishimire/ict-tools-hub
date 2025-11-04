@@ -4,10 +4,10 @@ import { PageHeader } from '@/components/page-header';
 import { DataTransferTimeCalculator } from '../data-transfer-calculator/data-transfer-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
-import { BookOpen, AlertTriangle, Wand, ChevronRight, Lightbulb } from 'lucide-react';
+import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle, Lightbulb } from 'lucide-react';
 import Link from 'next/link';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { faqData, howToSchema, keyTerminologies } from './schema';
 
 export const metadata = {
     title: 'Cloud Sync Time Calculator | Estimate Upload & Download Time | ICT Toolbench',
@@ -19,43 +19,7 @@ export const metadata = {
     }
 };
 
-const faqData = [
-    { question: "Why is estimating sync time important?", answer: "Estimating sync time is critical for planning. A large initial backup or data migration can take hours, days, or even weeks. Knowing this upfront helps you schedule the transfer during off-hours, budget for network costs, and set realistic project timelines. It helps you decide if a network transfer is feasible or if you need to use a physical data transfer service (like AWS Snowball)." },
-    { question: "Does upload speed or download speed matter more?", answer: "For an initial cloud sync or backup, your **upload speed** is the critical factor, as you are sending data from your location to the cloud. For retrieving data, download speed matters. Many home and office internet connections are asymmetrical, with much slower upload speeds than download speeds, which can make initial syncs surprisingly long." },
-    { question: "Why is my actual sync time slower than the estimate?", answer: "This calculator provides a theoretical best-case time. Real-world sync times are slower due to network overhead (TCP/IP headers), latency, network congestion, throttling by your ISP or cloud provider, and the processing power of the source and destination machines. For many small files, the overhead of starting a new transfer for each file can also add significant time." },
-    { question: "How does latency affect sync time?", answer: "Latency is the delay before a transfer begins. For a single, very large file, its effect is minimal. However, if your sync process involves thousands of small files, the cumulative delay from the latency of each file's transfer 'handshake' can add a significant amount of time to the total process. You can learn more with our <a href='/tools/latency-estimator' class='text-primary hover:underline'>Latency Estimator</a>." },
-    { question: "What is a good upload speed for cloud backups?", answer: "For regular, small incremental backups, most modern broadband connections (20+ Mbps upload) are sufficient. For a large initial sync of several terabytes, a fiber connection with symmetrical upload/download speeds (e.g., 500/500 Mbps or 1/1 Gbps) is highly recommended to reduce the transfer time from weeks to days or hours." },
-    { question: "How can I speed up my initial cloud sync?", answer: "First, ensure you are using a wired Ethernet connection, not Wi-Fi. Second, perform the sync during off-peak hours when your local network and internet connection are less congested. Third, compress your data before uploading; a single large compressed archive will often transfer faster than thousands of small uncompressed files. Our <a href='/tools/data-compression-calculator' class='text-primary hover:underline'>Data Compression Calculator</a> can estimate these savings." },
-    { question: "Does the cloud provider's speed matter?", answer: "Yes, but for ingress (uploads to the cloud), major providers like AWS, Google Cloud, and Azure have massive inbound bandwidth, so they are rarely the bottleneck. The bottleneck is almost always your local upload speed." },
-    { question: "What is a physical data transfer appliance?", answer: "For massive (multi-terabyte or petabyte) data migrations, it's often faster and cheaper to use a physical appliance. Services like AWS Snowball or Azure Data Box ship you a rugged, high-capacity storage device. You load your data onto it locally and ship it back to the data center, bypassing the public internet entirely." },
-    { question: "Does this calculator account for compression?", answer: "No. This tool calculates the transfer time for the data size you enter. If you plan to compress your data before uploading, you should first use our <a href='/tools/data-compression-calculator' class='text-primary hover:underline'>Data Compression Calculator</a> to estimate the compressed size, and then use that smaller size in this calculator for a more accurate time estimate." },
-    { question: "How can I check my actual upload speed?", answer: "Use a reputable online speed test tool. For the most accurate result, run the test from a computer connected directly to your router with an Ethernet cable, and ensure no other devices are heavily using the network at the same time." }
-];
-
-const howToSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'HowTo',
-    name: 'How to Calculate Cloud Sync Time',
-    description: 'A step-by-step guide to estimating the duration of a large data transfer to or from the cloud.',
-    step: [
-        { '@type': 'HowToStep', name: 'Enter Data Size', text: 'Input the total size of the data you need to sync or transfer. Be sure to select the correct unit (GB, TB, etc.).' },
-        { '@type': 'HowToStep', name: 'Enter Transfer Speed', text: 'Input your network connection speed. For uploads to the cloud, this should be your **upload speed**. For downloads, use your download speed. Select the correct unit (usually Mbps).' },
-        { '@type': 'HowToStep', name: 'Calculate Sync Time', text: 'Click the "Calculate Transfer Time" button.' },
-        { '@type': 'HowToStep', name: 'Review the Estimate', text: 'The tool will display the estimated time required for the transfer, providing a clear picture for your planning.' }
-    ],
-    totalTime: 'PT1M',
-};
-
-const keyTerminologies = [
-    { term: 'Cloud Sync', definition: 'The process of synchronizing or transferring files and data between a local device or server and a cloud storage service.' },
-    { term: 'Ingress/Egress', definition: 'Ingress is data moving *into* a network (e.g., uploading to the cloud). Egress is data moving *out of* a network (e.g., downloading from the cloud). Cloud providers typically charge for egress but not ingress.' },
-    { term: 'Upload/Download Speed', definition: 'Upload speed is the rate at which you can send data from your device to the internet. Download speed is the rate at which you can receive data. They are often different (asymmetrical).' },
-    { term: 'Latency', definition: 'The delay in network communication, representing the time it takes for a data packet to travel from a source to a destination. High latency can slow down transfers of many small files.' },
-    { term: 'Throughput', definition: 'The actual rate of data transfer that is achieved over a network, which is often lower than the theoretical maximum bandwidth due to factors like latency, protocol overhead, and congestion.' },
-    { term: 'Physical Data Transfer', definition: 'A service (like AWS Snowball) for migrating huge datasets by shipping a physical storage device instead of transferring the data over the internet.' },
-];
-
-export default function CloudSyncTimeCalculatorPage() {
+const CloudSyncTimeCalculatorPage = () => {
     const faqSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
@@ -64,8 +28,14 @@ export default function CloudSyncTimeCalculatorPage() {
 
     return (
         <>
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+            />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
                     title="Cloud Sync Time Calculator"
@@ -194,7 +164,7 @@ export default function CloudSyncTimeCalculatorPage() {
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
                         <CardHeader>
-                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
+                            <div className='flex items-center gap-2'><Wand className="h-4 w-4 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
                         </CardHeader>
                         <CardContent>
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
@@ -207,7 +177,7 @@ export default function CloudSyncTimeCalculatorPage() {
                     </Card>
                     <Card>
                         <CardHeader>
-                             <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                             <div className='flex items-center gap-2'><AlertTriangle className="h-4 w-4 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
                         </CardHeader>
                         <CardContent>
                              <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
@@ -257,7 +227,7 @@ export default function CloudSyncTimeCalculatorPage() {
                               </CardHeader>
                           </Card>
                       </Link>
-                       <Link href="/tools/data-compression-calculator" className="block">
+                       <Link href="/tools/compression-estimator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
                                   <CardTitle className="text-base flex items-center justify-between">Data Compression Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
