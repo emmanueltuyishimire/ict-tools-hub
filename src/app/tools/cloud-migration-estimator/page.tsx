@@ -1,5 +1,7 @@
+
 import React from 'react';
-import DataMigrationEstimator from './data-migration-estimator';
+import DataMigrationEstimator from '@/app/tools/data-migration-estimator/data-migration-estimator';
+import { faqData, howToSchema, keyTerminologies } from './schema';
 
 export const metadata = {
     title: 'Cloud Migration Planning Guide | ICT Toolbench',
@@ -12,7 +14,44 @@ export const metadata = {
 };
 
 const CloudMigrationPlanningGuidePage = () => {
-    return <DataMigrationEstimator />;
+    // This is now a Server Component that wraps the client component
+    // It can handle metadata and other server-side logic
+    const softwareAppSchema = {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Cloud Migration Planning Guide",
+      "operatingSystem": "All",
+      "applicationCategory": "DeveloperApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "A comprehensive guide to planning your cloud migration, including cost estimation, strategy selection, and common pitfalls.",
+      "url": "https://www.icttoolbench.com/tools/cloud-migration-estimator"
+    };
+
+     const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer.replace(/<[^>]*>?/gm, ''),
+            },
+        })),
+    };
+
+    return (
+        <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
+            <DataMigrationEstimator />
+        </>
+    );
 };
 
 export default CloudMigrationPlanningGuidePage;

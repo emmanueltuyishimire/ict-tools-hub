@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { CloudStorageCostEstimator } from './cloud-storage-cost-estimator';
@@ -48,36 +49,38 @@ const CloudStorageCostEstimatorPage = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto space-y-12">
+        <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
-            <PageHeader
-                title="Cloud Storage Cost Estimator"
-                description="Plan your cloud budget with confidence. This tool provides a high-level estimate of your monthly object storage costs for popular providers like AWS, Google Cloud, and Azure, helping you understand the key factors that drive your bill."
-            />
+            <div className="max-w-4xl mx-auto space-y-12">
+                <PageHeader
+                    title="Cloud Storage Cost Estimator"
+                    description="Plan your cloud budget with confidence. This tool provides a high-level estimate of your monthly object storage costs for popular providers like AWS, Google Cloud, and Azure, helping you understand the key factors that drive your bill."
+                />
 
-            <CloudStorageCostEstimator />
-            
-            <section>
-                <h2 className="text-2xl font-bold mb-4">How to Use the Estimator</h2>
-                <Card className="prose prose-sm max-w-none text-foreground p-6">
-                    <p>This estimator simplifies the complex pricing models of major cloud providers to give you a directional cost forecast. Follow these steps:</p>
-                    <ol>
-                        <li><strong>Enter Storage Amount:</strong> Input the total amount of data you plan to store in the "Total Storage" field. Be sure to select the correct unit (GB or TB).</li>
-                        <li><strong>Enter Data Transfer:</strong> Input the amount of data you expect to transfer <em>out</em> of the storage service each month. This is often called "egress" and is a major cost factor. Inbound data transfer is typically free.</li>
-                        <li><strong>Select Your Provider &amp; Region:</strong> Choose the cloud provider (AWS, Google, Azure) and the region where your data will be stored. Prices vary significantly between regions. You can also select "Custom" to enter your own pricing.</li>
-                        <li><strong>Review the Estimated Costs:</strong> The tool will instantly calculate and display the estimated monthly cost, broken down into storage costs and data transfer costs.</li>
-                    </ol>
-                    <Alert>
-                        <Lightbulb className="h-4 w-4" />
-                        <AlertTitle>Note on Accuracy</AlertTitle>
-                        <AlertDescription>
-                            This is a high-level estimate based on standard storage tiers and does not include costs for operations (GET/PUT requests), infrequent access tiers, or free tier credits. Use this for planning, not for precise billing calculations. For detailed costs, always refer to the provider's official pricing calculator.
-                        </AlertDescription>
-                    </Alert>
-                </CardContent>
-            </Card>
+                <CloudStorageCostEstimator />
+                
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">How to Use the Estimator</h2>
+                    <Card className="prose prose-sm max-w-none text-foreground p-6">
+                        <p>This estimator simplifies the complex pricing models of major cloud providers to give you a directional cost forecast. Follow these steps:</p>
+                        <ol>
+                            <li><strong>Enter Storage Amount:</strong> Input the total amount of data you plan to store in the "Total Storage" field. Be sure to select the correct unit (GB or TB).</li>
+                            <li><strong>Enter Data Transfer:</strong> Input the amount of data you expect to transfer <em>out</em> of the storage service each month. This is often called "egress" and is a major cost factor. Inbound data transfer is typically free.</li>
+                            <li><strong>Select Your Provider &amp; Region:</strong> Choose the cloud provider (AWS, Google, Azure) and the region where your data will be stored. Prices vary significantly between regions. You can also select "Custom" to enter your own pricing.</li>
+                            <li><strong>Review the Estimated Costs:</strong> The tool will instantly calculate and display the estimated monthly cost, broken down into storage costs and data transfer costs.</li>
+                        </ol>
+                        <Alert>
+                            <Lightbulb className="h-4 w-4" />
+                            <AlertTitle>Note on Accuracy</AlertTitle>
+                            <AlertDescription>
+                                This is a high-level estimate based on standard storage tiers and does not include costs for operations (GET/PUT requests), infrequent access tiers, or free tier credits. Use this for planning, not for precise billing calculations.
+                            </AlertDescription>
+                        </Alert>
+                    </Card>
+                </section>
+            </div>
         </>
     );
 };
