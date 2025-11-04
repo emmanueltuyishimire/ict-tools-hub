@@ -12,13 +12,6 @@ export const faqData = [
     { question: "Does this tool work with IPv6?", answer: "No, this calculator is designed for IPv4 only. IPv6 uses a similar concept of summarization, but the 128-bit address length and hexadecimal notation require a different set of tools and calculations." }
 ];
 
-
-export const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } })),
-};
-
 export const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
