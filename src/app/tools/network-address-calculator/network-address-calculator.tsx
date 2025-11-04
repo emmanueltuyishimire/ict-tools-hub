@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
@@ -10,7 +9,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Binary, Network } from 'lucide-react';
 import Link from 'next/link';
 
@@ -131,7 +129,7 @@ export function NetworkAddressCalculator() {
 
     const renderResultRow = (label: string, key: string, value: any, isPrimary = false) => {
         if (value === undefined || value === null) return null;
-        const displayValue = value.toString();
+        const displayValue = typeof value === 'number' ? value.toLocaleString() : value.toString();
         
         return (
             <TableRow key={key} className={isPrimary ? 'bg-primary/10' : ''}>
@@ -156,8 +154,6 @@ export function NetworkAddressCalculator() {
 
     return (
         <div className="max-w-4xl mx-auto space-y-12">
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
             <Card>
                 <CardHeader>
                     <CardTitle>Network Address Calculator</CardTitle>
@@ -243,163 +239,6 @@ export function NetworkAddressCalculator() {
                     </Card>
                 </div>
             )}
-
-            <section>
-                <h2 className="text-2xl font-bold mb-4">How to Use the Network Address Calculator</h2>
-                <Card className="prose prose-sm max-w-none text-foreground p-6">
-                    <p>This tool pinpoints the exact starting address of any IPv4 subnet, a critical piece of information for network routing and administration.</p>
-                    <ol>
-                        <li><strong>Enter an IP Address:</strong> Type any IP address that exists within the subnet you wish to analyze.</li>
-                        <li><strong>Select the Subnet Mask:</strong> Choose the correct network mask for that subnet from the dropdown menu. The menu includes both the CIDR prefix (e.g., /24) and the full dot-decimal mask for clarity.</li>
-                        <li><strong>Calculate:</strong> Click the "Calculate" button.</li>
-                        <li><strong>Get the Result:</strong> The tool will instantly display the calculated Network Address (also known as the Network ID).</li>
-                        <li><strong>View Binary Details (Optional):</strong> For a deeper understanding, you can expand the "Show Binary Calculation" section to see the bitwise AND operation that produces the result.</li>
-                    </ol>
-                     <Alert>
-                        <Lightbulb className="h-4 w-4" />
-                        <AlertTitle>Example</AlertTitle>
-                        <AlertDescription>
-                          If you enter the IP `10.20.30.40` with a `/28` mask, the calculator will perform the AND operation and determine that the network address for this specific subnet is `10.20.30.32`.
-                        </AlertDescription>
-                    </Alert>
-                </Card>
-            </section>
-
-            <Card className='bg-secondary/30 border-primary/20'>
-                <CardHeader>
-                    <div className='flex items-center gap-2 text-primary'>
-                        <BookOpen className="h-6 w-6" aria-hidden="true" />
-                        <CardTitle className="text-primary">Educational Deep Dive: The Foundation of Routing</CardTitle>
-                    </div>
-                    <CardDescription>Explore what a network address is, how it's calculated, and its fundamental role in how data traverses networks.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
-                    <section>
-                        <h3 className="font-bold text-xl">What is a Network Address? The Subnet's Unique Identifier</h3>
-                        <p>In IPv4 networking, a <strong>network address</strong> (or Network ID) is the very first IP address in a subnet range. Its purpose is to serve as a unique identifier for the entire subnet. Think of it like a ZIP code. A ZIP code doesn't point to a single house, but to an entire neighborhood. Similarly, a network address doesn't identify a single computer, but the entire "digital neighborhood" or subnet where a group of devices resides.</p>
-                        <p>This address is reserved and <strong>cannot be assigned to any individual host</strong> (like a computer, server, or printer). Its primary role is to be listed in routing tables. When a router needs to send a packet to an IP address, it uses its routing table to find which network that IP belongs to and then sends the packet in the right direction. The network address is the key that makes this entire system work.</p>
-                    </section>
-                    <section>
-                        <h3 className="font-bold text-xl">The Bitwise AND: How the Calculation Works</h3>
-                        <p>The magic behind finding the network address is a simple but powerful binary operation called a <strong>bitwise AND</strong>. To find the network ID, a device performs this operation on its own IP address and its subnet mask.</p>
-                        <p>The rules for a bitwise AND are:</p>
-                        <ul className="list-disc pl-5">
-                           <li>1 AND 1 = 1</li>
-                           <li>1 AND 0 = 0</li>
-                           <li>0 AND 1 = 0</li>
-                           <li>0 AND 0 = 0</li>
-                        </ul>
-                        <p>Essentially, the result is 1 only if <strong>both</strong> input bits are 1. Since a subnet mask is a continuous block of 1s followed by 0s, this operation has a specific effect: it preserves the network portion of the IP address (where the mask has 1s) and zeroes out the host portion (where the mask has 0s). The result is always the first address in the subnet. You can visualize this with our <Link href="/tools/ip-to-binary" className="text-primary hover:underline">IP to Binary Converter</Link>.</p>
-                        <p><strong>Example: IP `192.168.1.174` with Mask `255.255.255.192` (/26)</strong></p>
-                         <div className="overflow-x-auto my-4 text-sm font-code">
-                            <pre className='p-4 bg-muted rounded-md'>
-IP Address: 11000000.10101000.00000001.<span className="text-blue-500">10101110</span><br/>
-Subnet Mask: 11111111.11111111.11111111.<span className="text-red-500">11000000</span><br/>
-------------------------------------------------<br/>
-Network ID:  11000000.10101000.00000001.<span className="text-green-500">10000000</span>  = 192.168.1.128
-                            </pre>
-                        </div>
-                        <p>As you can see, where the mask's bits are `1` (the first 26 bits), the IP address's bits are copied down. Where the mask's bits are `0` (the last 6 bits), the resulting bits are forced to `0`. This gives us the network address `192.168.1.128`.</p>
-                    </section>
-                </CardContent>
-            </Card>
-
-            <div className="grid md:grid-cols-2 gap-8">
-                <Card>
-                    <CardHeader>
-                        <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
-                    </CardHeader>
-                    <CardContent>
-                        <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                            <li><strong>"Magic Number" Trick:</strong> For masks that don't fall on an octet boundary (like /26), find the "interesting" octet (the one that isn't 255 or 0). Subtract its value from 256 to find the block size. For /26 (255.255.255.192), the block size is 256 - 192 = 64. This means network IDs will be multiples of 64: 0, 64, 128, 192. Find which block your IP falls into, and that's your network address.</li>
-                            <li><strong>Route Summarization:</strong> Understanding network addresses is key to route summarization, where you can represent multiple smaller networks with a single larger network address, simplifying routing tables.</li>
-                            <li><strong>Troubleshooting Tool:</strong> If two devices can't communicate, use this tool to check if they resolve to the same network address with the given subnet mask. If they don't, they are on different subnets and need a router to communicate.</li>
-                        </ul>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader>
-                         <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
-                    </CardHeader>
-                    <CardContent>
-                         <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                            <li><strong>Confusing Network ID with Gateway:</strong> The network address identifies the network; it is not the gateway. The gateway is a specific, usable IP address within the subnet (often the first or last usable one) that devices use to send traffic to other networks.</li>
-                            <li><strong>Incorrect Manual Calculation:</strong> Manually performing the bitwise AND operation is prone to error. Always use a reliable tool to verify your calculations when configuring production systems.</li>
-                            <li><strong>Assuming the Network ID is Always `.0`:</strong> This is only true for `/8`, `/16`, and `/24` networks. For any other subnet size, the network ID can be a different number, as shown in the example above where it was `.128`.</li>
-                        </ul>
-                    </CardContent>
-                </Card>
-            </div>
-            
-            <section>
-                <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
-                <div className="grid md:grid-cols-2 gap-6">
-                    <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Configuring a Router Interface</h3>
-                        <p className="text-sm text-muted-foreground">An administrator is adding a new route to a router. The command requires the destination network address and its mask, not just any IP in that network. They are told the network contains the IP `172.25.84.99` and is a `/22`. They use the calculator to find the correct Network ID is `172.25.84.0`, which they then use to correctly configure the static route.</p>
-                    </div>
-                     <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Designing a Firewall Rule</h3>
-                        <p className="text-sm text-muted-foreground">A security team needs to create a firewall rule to block all traffic from a known malicious subnet, `104.18.32.0/20`. The firewall requires the rule to be written using the network address. The team uses this tool to confirm `104.18.32.0` is indeed the correct network address for a /20 block, ensuring their rule will be effective.</p>
-                    </div>
-                     <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Troubleshooting DHCP Scopes</h3>
-                        <p className="text-sm text-muted-foreground">A device is getting an IP address of `192.168.2.10` from a DHCP server. The technician suspects it's on the wrong VLAN. They use the Network Address Calculator with the device's IP and mask (`/24`) to find its network ID is `192.168.2.0`. This confirms the device is on the 'Sales' VLAN (`192.168.2.0/24`) instead of the intended 'Engineering' VLAN (`192.168.1.0/24`), allowing them to fix the switch port configuration.</p>
-                    </div>
-                     <div className="bg-card p-6 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">Network Documentation</h3>
-                        <p className="text-sm text-muted-foreground">When creating network diagrams and documentation, it is standard practice to label each subnet with its network address and CIDR prefix (e.g., `10.1.10.0/24`). This tool is essential for accurately identifying and labeling these subnets, creating clear and professional documentation.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <section>
-                <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
-                <Card>
-                    <CardContent className="p-6">
-                        <Accordion type="single" collapsible className="w-full">
-                            {faqData.map((item, index) => (
-                                <AccordionItem value={`item-${index}`} key={index}>
-                                    <AccordionTrigger>{item.question}</AccordionTrigger>
-                                    <AccordionContent>
-                                        <div dangerouslySetInnerHTML={{ __html: item.answer }} />
-                                    </AccordionContent>
-                                </AccordionItem>
-                            ))}
-                        </Accordion>
-                    </CardContent>
-                </Card>
-            </section>
-
-             <section>
-                <h2 className="text-2xl font-bold mb-4">Related Tools & Articles</h2>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Link href="/tools/subnet-calculator" className="block">
-                        <Card className="hover:border-primary transition-colors h-full">
-                            <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">Subnet Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Get the full picture, including the Network ID, Broadcast Address, and full host range.</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </Link>
-                    <Link href="/tools/broadcast-address-calculator" className="block">
-                        <Card className="hover:border-primary transition-colors h-full">
-                            <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">Broadcast Address Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Find the last address in a subnet, the counterpart to the Network Address.</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </Link>
-                    <Link href="/tools/ip-to-binary" className="block">
-                        <Card className="hover:border-primary transition-colors h-full">
-                            <CardHeader>
-                                <CardTitle className="text-base flex items-center justify-between">IP to Binary Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Visualize the bitwise AND operation that is used to calculate the network address.</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </Link>
-                </div>
-            </section>
         </div>
     );
 }

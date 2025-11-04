@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
@@ -9,7 +8,6 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, CheckCircle, XCircle, Fingerprint } from 'lucide-react';
 import Link from 'next/link';
 
@@ -129,8 +127,6 @@ export function MacValidator() {
 
     return (
         <div className="max-w-4xl mx-auto space-y-12">
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
             <Card>
                 <CardHeader>
                     <CardTitle>MAC Address Validator</CardTitle>
@@ -208,7 +204,7 @@ export function MacValidator() {
                 <Card className="prose prose-sm max-w-none text-foreground p-6">
                     <p>This MAC Address Validator provides a quick and easy way to check a MAC address and find its manufacturer. The validation happens instantly as you type.</p>
                     <ol>
-                        <li><strong>Enter the MAC Address:</strong> Type or paste the MAC address into the input field. The tool is flexible and accepts several common formats:
+                        <li><strong>Enter the MAC Address:</strong> Type or paste the MAC address you want to validate into the input field. The tool is flexible and accepts several common formats:
                             <ul>
                                 <li><strong>Colon-Separated:</strong> <code className="font-code bg-muted p-1 rounded-sm">00:1A:2B:3C:4D:5E</code></li>
                                 <li><strong>Hyphen-Separated:</strong> <code className="font-code bg-muted p-1 rounded-sm">00-1A-2B-3C-4D-5E</code></li>
@@ -218,7 +214,7 @@ export function MacValidator() {
                         </li>
                         <li><strong>Review Instant Feedback:</strong> A status box will appear immediately, showing whether the address is valid or invalid and explaining why.</li>
                         <li><strong>Check the Details:</strong> If the address is valid, a "Validation Details" card will display the standard colon-separated format, the OUI (the first six digits that identify the manufacturer), and the name of the manufacturer.</li>
-                        <li><strong>Clear or Copy:</strong> Use the "Clear" button to empty the input field or the copy icon in the results table to copy the standardized MAC address.</li>
+                        <li><strong>Clear or Copy:</strong> Use the "Clear" button to reset the tool or the copy icon in the results table to copy the standardized MAC address.</li>
                     </ol>
                     <Alert>
                         <Lightbulb className="h-4 w-4" />

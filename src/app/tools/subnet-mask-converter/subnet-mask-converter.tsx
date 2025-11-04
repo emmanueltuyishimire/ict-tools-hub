@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
@@ -10,7 +9,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, SlidersHorizontal } from 'lucide-react';
 import Link from 'next/link';
 
@@ -191,8 +189,6 @@ export function SubnetMaskConverter() {
 
     return (
         <div className="max-w-4xl mx-auto space-y-12">
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
             <Card>
                 <CardHeader>
                     <CardTitle>Subnet Mask Converter</CardTitle>
