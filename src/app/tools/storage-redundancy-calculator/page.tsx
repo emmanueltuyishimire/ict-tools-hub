@@ -1,12 +1,12 @@
 
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
-import { RaidCalculator } from '../raid-calculator/raid-calculator';
+import { RaidCalculator } from '@/app/tools/raid-calculator/raid-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { faqData, howToSchema, keyTerminologies } from '../raid-calculator/schema'; // Re-using schema from RAID as it's the core topic
+import { faqData, howToSchema, keyTerminologies } from '@/app/tools/raid-calculator/schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const metadata = {

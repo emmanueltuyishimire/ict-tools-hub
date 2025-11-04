@@ -1,6 +1,6 @@
 
 import React from 'react';
-import DataMigrationEstimator from '@/app/tools/cloud-migration-estimator/data-migration-estimator';
+import DataMigrationEstimator from './data-migration-estimator';
 import { faqData, howToSchema, keyTerminologies } from './schema';
 import { PageHeader } from '@/components/page-header';
 

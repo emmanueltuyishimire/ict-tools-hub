@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { DbStorageEstimator } from './db-storage-estimator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -51,9 +50,9 @@ const DbStorageEstimatorPage = () => {
 
     return (
         <>
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
-            <StructuredData data={softwareAppSchema} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
                     title="Database Row / Storage Estimator"
@@ -153,7 +152,7 @@ const DbStorageEstimatorPage = () => {
                                 A database index is a special data structure that dramatically speeds up data retrieval operations. Without an index, finding a specific user in a million-row table would require a "full table scan," which is extremely slow. With an index on the `email` column, the database can find that user almost instantly.
                             </p>
                             <p>
-                                However, this performance comes at a cost: <strong>storage space</strong>. An index is essentially a sorted copy of the data from one or more columns, along with pointers back to the original rows. This means that every index you create on a table consumes additional disk space. A complex table with 5-6 indexes can easily double its total storage footprint. The "Overhead" percentage in our calculator is designed to help you account for this critical trade-off between read performance and storage cost.
+                                However, this performance comes at a cost: <strong>storage space</strong>. An index is essentially a sorted copy of the data from one or more columns, along with pointers back to the original rows. This means that every index you create on a table consumes additional disk space. A complex table with 5-6 indexes can easily double its total storage footprint. The "Overhead" percentage in our calculator is a simplified way to account for this critical trade-off between read performance and storage cost. Our <Link href="/tools/index-size-calculator" className="text-primary hover:underline">Index Size Calculator</Link> can help you estimate this more precisely.
                             </p>
                         </section>
                         <section>
@@ -185,7 +184,7 @@ const DbStorageEstimatorPage = () => {
                         </div>
                          <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Deciding on an Index</h3>
-                            <p className="text-sm text-muted-foreground">A developer wants to add a new index to a very large table to speed up a query. They use the estimator to calculate the approximate size of the new index by adding its columns and setting the row count. This helps them understand the storage cost of the performance improvement, allowing them to make an informed trade-off.</p>
+                            <p className="text-sm text-muted-foreground">A developer wants to add a new index to a very large table to speed up a query. They use our <Link href="/tools/index-size-calculator" className="text-primary hover:underline">Index Size Calculator</Link> to estimate the storage cost of the new index, allowing them to make an informed trade-off between performance gain and disk space consumption.</p>
                         </div>
                     </div>
                 </section>

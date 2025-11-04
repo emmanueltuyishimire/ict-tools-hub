@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { DnsLookupTool } from './dns-lookup-tool';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, Server } from 'lucide-react';
 import Link from 'next/link';
 
@@ -56,10 +55,15 @@ const keyTerminologies = [
 ];
 
 export default function DnsLookupPage() {
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer}}))
+    };
   return (
     <>
-      <StructuredData data={faqData} />
-      <StructuredData data={howToSchema} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <PageHeader
         title="DNS Lookup Tool"
         description="Query the Domain Name System for any domain's records. Check A, AAAA, MX, CNAME, TXT, and other records to diagnose website and email configuration issues."
@@ -209,7 +213,7 @@ export default function DnsLookupPage() {
                   <Card className="hover:border-primary transition-colors h-full">
                       <CardHeader>
                           <CardTitle className="text-base flex items-center justify-between">SSL Checker<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                          <CardDescription className="text-xs">Once you have the IP, check the SSL certificate installed on that server.</CardDescription>
+                          <CardDescription className="text-xs">After finding the IP, check the SSL certificate installed on that server.</CardDescription>
                       </CardHeader>
                   </Card>
               </Link>
@@ -227,5 +231,3 @@ export default function DnsLookupPage() {
     </>
   );
 }
-
-    
