@@ -1,9 +1,9 @@
 
+import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { CodeSnippetFormatter } from './code-snippet-formatter';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -31,9 +31,18 @@ const CodeSnippetFormatterPage = () => {
 
   return (
     <>
-      <StructuredData data={faqData} />
-      <StructuredData data={howToSchema} />
-      <StructuredData data={softwareAppSchema} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
+      />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
           title="Code Snippet Formatter"
@@ -81,7 +90,7 @@ const CodeSnippetFormatterPage = () => {
           </CardHeader>
           <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
               <section>
-                  <h3 className="font-bold text-xl">Code for Humans, Not Just Computers</h3>
+                  <h3>Code for Humans, Not Just Computers</h3>
                   <p>
                     While a computer can perfectly execute a single, mile-long line of minified code, humans cannot. We rely on visual structure—indentation, line breaks, and consistent spacing—to parse logic, understand control flow, and spot errors. This is why code formatting, or "beautifying," is a non-negotiable part of professional software development. Its sole purpose is to improve readability for the human developers who will read, debug, and maintain the code long after it's written.
                   </p>
@@ -90,7 +99,7 @@ const CodeSnippetFormatterPage = () => {
                   </p>
               </section>
               <section>
-                  <h3 className="font-bold text-xl">Language-Specific Conventions</h3>
+                  <h3>Language-Specific Conventions</h3>
                   <p>Different languages have different stylistic conventions, and a good formatter respects them:</p>
                   <ul className="list-disc pl-5">
                      <li><strong>JavaScript/CSS/HTML:</strong> The common convention is to use 2 spaces for indentation. Braces for functions and blocks often follow specific styles (like opening on the same line). Our <Link href="/tools/code-formatter" className="text-primary hover:underline">main Code Formatter</Link> provides more detail on these web languages.</li>

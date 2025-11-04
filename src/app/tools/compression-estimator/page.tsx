@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { CompressionEstimator } from './compression-estimator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 
@@ -28,19 +27,6 @@ const faqData = [
     { question: "What is the difference between compression and minification?", answer: "They are two different but complementary performance optimizations. Minification removes unnecessary characters (whitespace, comments) from the code itself. Compression applies an algorithm to the minified file to find and replace repeating patterns. For best results, you should always minify your files *before* they are compressed by the server. Use our <a href='/tools/code-minifier' class='text-primary hover:underline'>Code Minifier</a> for this." },
 ];
 
-const howToSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'HowTo',
-    name: 'How to Estimate Compression Savings',
-    description: 'A step-by-step guide to estimating file size reduction from Gzip and Brotli compression.',
-    step: [
-        { '@type': 'HowToStep', name: 'Enter Original File Size', text: 'Input the size of your uncompressed, text-based file (e.g., a 500 KB JavaScript bundle).' },
-        { '@type': 'HowToStep', name: 'Select Unit', text: 'Choose the appropriate unit for your file size, either Kilobytes (KB) or Megabytes (MB).' },
-        { '@type': 'HowToStep', name: 'Review Estimated Savings', text: 'The tool will instantly display the estimated compressed file size for both Gzip and Brotli, along with the percentage of bandwidth savings for each.' },
-    ],
-    totalTime: 'PT1M'
-};
-
 const keyTerminologies = [
     { term: 'Gzip', definition: 'A widely supported, fast compression algorithm used to reduce the size of web assets during transfer.' },
     { term: 'Brotli', definition: 'A modern compression algorithm developed by Google that typically offers superior compression ratios compared to Gzip.' },
@@ -55,11 +41,12 @@ export default function CompressionEstimatorPage() {
     '@type': 'FAQPage',
     mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
   };
-
   return (
     <>
-      <StructuredData data={faqSchemaData} />
-      <StructuredData data={howToSchema} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchemaData) }}
+      />
       <PageHeader
         title="Compression Savings Estimator"
         description="Estimate how much smaller your text-based assets (HTML, CSS, JS) can be by enabling Gzip or Brotli compression on your server. A simple way to see the impact of a crucial web performance optimization."

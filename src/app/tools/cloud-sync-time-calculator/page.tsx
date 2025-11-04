@@ -1,13 +1,8 @@
 
 import React from 'react';
 import CloudSyncTimeCalculator from './cloud-sync-time-calculator';
-import { PageHeader } from '@/components/page-header';
 import { faqData, howToSchema, keyTerminologies, softwareAppSchema } from './schema';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
-import Link from 'next/link';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { PageHeader } from '@/components/page-header';
 
 export const metadata = {
     title: 'Cloud Sync Time Calculator | Estimate Upload & Download Time | ICT Toolbench',
@@ -20,10 +15,9 @@ export const metadata = {
 };
 
 const CloudSyncTimeCalculatorPage = () => {
-    // This is now a Server Component that renders the client component
     return (
         <>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}}))) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
             <CloudSyncTimeCalculator />

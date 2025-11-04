@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { ColorConverter } from './color-converter';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -44,10 +43,17 @@ const keyTerminologies = [
 ];
 
 const Page = () => {
+    const faqSchemaData = faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer}}));
     return (
         <>
-            <StructuredData data={faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer}}))} />
-            <StructuredData data={howToSchema} />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchemaData) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+            />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
                     title="Hex ↔ RGB Color Converter"
@@ -93,7 +99,7 @@ const Page = () => {
                     </CardHeader>
                     <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
                         <section>
-                            <h3 className="font-bold text-xl">The RGB Model: Mixing Light</h3>
+                            <h3>The RGB Model: Mixing Light</h3>
                             <p>
                                 Every color you see on a digital screen—be it a monitor, phone, or TV—is created by mixing three primary colors of light: Red, Green, and Blue. This is known as an **additive color model**. Starting with black (the absence of light), you add different amounts of red, green, and blue light to produce the full spectrum of colors. In the digital world, the intensity of each color component is represented by a number from 0 (no light) to 255 (maximum intensity).
                             </p>
@@ -104,7 +110,7 @@ const Page = () => {
                             </ul>
                         </section>
                          <section>
-                            <h3 className="font-bold text-xl">Hexadecimal: The Developer's Shorthand</h3>
+                            <h3>Hexadecimal: The Developer's Shorthand</h3>
                             <p>
                                 While `rgb(255, 0, 0)` is descriptive, it's also quite long to write in code. This is where the hexadecimal format comes in. Hexadecimal is a base-16 number system. A standard hex color code combines the three RGB values into a single six-digit string. Each color component (Red, Green, Blue) gets two hexadecimal digits to represent its value from 0 to 255.
                             </p>

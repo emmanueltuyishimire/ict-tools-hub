@@ -4,7 +4,6 @@ import { ColorPaletteGenerator } from './color-palette-generator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { BookOpen, ChevronRight, Wand, AlertTriangle } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import Link from 'next/link';
 
 export const metadata = {
@@ -51,10 +50,17 @@ const howToSchema = {
 };
 
 const ColorPaletteGeneratorPage = () => {
+    const faqSchemaData = faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer}}));
     return (
     <>
-      <StructuredData data={faqData} />
-      <StructuredData data={howToSchema} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchemaData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
             title="Color Palette Generator"

@@ -1,5 +1,7 @@
+
 import React from 'react';
 import DataMigrationEstimator from './data-migration-estimator';
+import { faqData, howToSchema, keyTerminologies } from './schema';
 
 export const metadata = {
     title: 'Data Migration Estimator & Planning Guide | ICT Toolbench',
@@ -11,6 +13,12 @@ export const metadata = {
     }
 };
 
-export default function DataMigrationEstimatorPage() {
-    return <DataMigrationEstimator />;
+const DataMigrationEstimatorPage = () => {
+    return (
+        <>
+            <DataMigrationEstimator />
+        </>
+    );
 };
+
+export default DataMigrationEstimatorPage;
