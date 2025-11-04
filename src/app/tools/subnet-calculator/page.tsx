@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { SubnetCalculator } from './subnet-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -22,9 +21,18 @@ export const metadata = {
 export default function SubnetCalculatorPage() {
     return (
         <>
-            <StructuredData data={faqData} />
-            <StructuredData data={howToSchema} />
-            <StructuredData data={softwareAppSchema} />
+             <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
+            />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
                     title="IPv4 Subnet Calculator"
