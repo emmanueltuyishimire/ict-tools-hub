@@ -3,46 +3,14 @@ import { PageHeader } from '@/components/page-header';
 import { Rot13EncoderDecoder } from './rot13-encoder-decoder';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, ArrowRightLeft, Copy } from 'lucide-react';
 import Link from 'next/link';
+import { faqData, howToSchema, keyTerminologies } from './schema';
 
 export const metadata = {
     title: 'ROT13 Encoder / Decoder | Simple Substitution Cipher | ICT Toolbench',
     description: 'Instantly encode or decode text with the ROT13 cipher. A simple tool for learning about basic substitution ciphers and for light-hearted message obfuscation.',
 };
-
-const faqData = [
-    { question: "What is ROT13?", answer: "ROT13 ('rotate by 13 places') is a simple letter substitution cipher that replaces a letter with the 13th letter after it in the alphabet. It's a special case of the Caesar cipher, which can use any shift from 1 to 25." },
-    { question: "How does ROT13 work?", answer: "The English alphabet has 26 letters. Applying ROT13 twice to a piece of text will restore the original text. For example, 'A' becomes 'N', and applying ROT13 again to 'N' brings it back to 'A'. This makes it its own inverse; the same algorithm is used for both encoding and decoding." },
-    { question: "Is ROT13 a form of encryption?", answer: "No, not in any meaningful security sense. It's a form of obfuscation (hiding something in plain sight) but provides no cryptographic security whatsoever. It should never be used to protect sensitive information." },
-    { question: "What is the historical use of ROT13?", answer: "ROT13 became popular in early online forums (like Usenet) in the 1980s as a simple way to hide spoilers, punchlines, or potentially offensive content from a casual glance. A user would have to consciously decode the text to read it, preventing accidental exposure." },
-    { question: "What happens to numbers and symbols?", answer: "The standard ROT13 algorithm only applies to the 26 letters of the English alphabet. All numbers, symbols, and whitespace are left unchanged, which this tool adheres to." },
-    { question: "Is this tool safe for sensitive data?", answer: "Yes, because all operations happen entirely within your browser. No data is sent to our servers. However, you should never use ROT13 itself to protect sensitive data as it offers no real security." },
-    { question: "How does ROT13 relate to the Caesar cipher?", answer: "The Caesar cipher is a general substitution cipher where each letter is shifted by a fixed number of positions down the alphabet. ROT13 is simply a Caesar cipher with a fixed shift of 13. You can explore this with our <a href='/tools/caesar-cipher' class='text-primary hover:underline'>Caesar Cipher tool</a>." },
-    { question: "Can I use ROT13 for languages other than English?", answer: "The standard ROT13 algorithm is defined for the 26-letter Latin alphabet. Applying it to text with diacritics (like é, ü) or other alphabets (like Cyrillic or Greek) will not work correctly and will likely leave those characters unchanged." },
-];
-
-const howToSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'HowTo',
-    name: 'How to Use the ROT13 Encoder/Decoder',
-    description: 'A guide to encoding and decoding text using the ROT13 cipher.',
-    step: [
-        { '@type': 'HowToStep', name: 'Enter Text', text: 'To encode, type or paste the text you want to encode into the top "Decoded" box. To decode, paste your ROT13-encoded text into the bottom "Encoded" box.' },
-        { '@type': 'HowToStep', name: 'View Instant Results', text: 'The tool works in real-time. As you type in one box, the correctly translated text will instantly appear in the other.' },
-        { '@type': 'HowToStep', name: 'Copy or Swap', text: 'Use the copy button to grab the output. Use the swap button to switch the contents of the two text boxes.' },
-    ],
-    totalTime: 'PT1M'
-};
-
-const keyTerminologies = [
-    { term: 'Substitution Cipher', definition: 'A method of encrypting in which units of plaintext are replaced with ciphertext, according to a fixed system. ROT13 is a very simple substitution cipher.' },
-    { term: 'Caesar Cipher', definition: 'An early substitution cipher where each letter in the plaintext is shifted a certain number of places down the alphabet. ROT13 is a Caesar cipher with a shift of 13.' },
-    { term: 'Obfuscation', definition: 'The practice of making something difficult to understand. ROT13 is used for light obfuscation, not for security.' },
-    { term: 'Ciphertext', definition: 'The result of encryption performed on plaintext using an algorithm, called a cipher.' },
-    { term: 'Plaintext', definition: 'The original, unencrypted message.' },
-];
 
 export default function Rot13Page() {
   const faqSchema = {
@@ -60,8 +28,14 @@ export default function Rot13Page() {
 
   return (
     <>
-      <StructuredData data={faqSchema} />
-      <StructuredData data={howToSchema} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
           title="ROT13 Encoder / Decoder"
@@ -138,7 +112,7 @@ export default function Rot13Page() {
                 </div>
                  <div className="bg-card p-6 rounded-lg">
                     <h3 className="font-semibold text-lg mb-2">Introduction to Cryptography</h3>
-                    <p className="text-sm text-muted-foreground">An educator teaching a basic computer science class uses the ROT13 tool to demonstrate the concept of a substitution cipher. Students can encode and decode messages instantly, providing a hands-on, interactive way to understand the fundamental principles before moving on to more complex topics like the <a href="/tools/caesar-cipher" className="text-primary hover:underline">Caesar Cipher</a> or modern encryption.</p>
+                    <p className="text-sm text-muted-foreground">An educator teaching a basic computer science class uses the ROT13 tool to demonstrate the concept of a substitution cipher. Students can encode and decode messages instantly, providing a hands-on, interactive way to understand the fundamental principles before moving on to more complex topics like the <a href="/tools/caesar-cipher" className="text-primary hover:underline">Caesar Cipher</a>.</p>
                 </div>
                  <div className="bg-card p-6 rounded-lg">
                     <h3 className="font-semibold text-lg mb-2">Lightweight Data Obfuscation</h3>
@@ -222,3 +196,5 @@ export default function Rot13Page() {
     </>
   );
 }
+
+    

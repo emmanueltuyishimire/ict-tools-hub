@@ -10,7 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Rss } from 'lucide-react';
 import Link from 'next/link';
 
@@ -164,8 +163,14 @@ export function BroadcastAddressCalculator() {
 
     return (
         <div className="max-w-4xl mx-auto space-y-12">
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+            />
             <Card>
                 <CardHeader>
                     <CardTitle>Broadcast Address Calculator</CardTitle>
@@ -392,7 +397,7 @@ export function BroadcastAddressCalculator() {
                         <Card className="hover:border-primary transition-colors h-full">
                             <CardHeader>
                                 <CardTitle className="text-base flex items-center justify-between">Network Address Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                                <CardDescription className="text-xs">Focus on finding the first address in a subnet, the counterpart to the broadcast address.</CardDescription>
+                                <CardDescription className="text-xs">Find the first address in a subnet, the counterpart to the broadcast address.</CardDescription>
                             </CardHeader>
                         </Card>
                     </Link>

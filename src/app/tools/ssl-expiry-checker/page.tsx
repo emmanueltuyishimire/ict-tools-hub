@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { SslExpiryChecker } from './ssl-expiry-checker';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 
@@ -37,7 +36,7 @@ const howToSchema = {
         { '@type': 'HowToStep', name: 'Review the Summary', text: 'A summary card will appear, showing the most critical information: if the certificate is valid, how many days are left until it expires, and who issued it.' },
         { '@type': 'HowToStep', name: 'Analyze Full Details', text: 'For a comprehensive view, a table will display all the key fields of the certificate, including the subject name, issuer, serial number, and the full validity period.' },
     ],
-    totalTime: 'PT1M',
+    totalTime: 'PT1M'
 };
 
 const keyTerminologies = [
@@ -51,10 +50,29 @@ const keyTerminologies = [
 ];
 
 export default function SslExpiryCheckerPage() {
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer.replace(/<[^>]*>?/gm, ''),
+            },
+        })),
+    };
+
   return (
     <div className="max-w-4xl mx-auto space-y-12">
-        <StructuredData data={faqData} />
-        <StructuredData data={howToSchema} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+        />
         <PageHeader
             title="SSL Certificate Expiration Checker"
             description="Enter a domain name to check the validity and expiration date of its SSL/TLS certificate, ensuring your connection is secure and trusted."
@@ -131,7 +149,7 @@ export default function SslExpiryCheckerPage() {
         <div className="grid md:grid-cols-2 gap-8">
             <Card>
                 <CardHeader>
-                    <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips & Quick Hacks</CardTitle></div>
+                    <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
                 </CardHeader>
                 <CardContent>
                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
@@ -144,7 +162,7 @@ export default function SslExpiryCheckerPage() {
             </Card>
             <Card>
                 <CardHeader>
-                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes</CardTitle></div>
                 </CardHeader>
                 <CardContent>
                      <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
@@ -156,7 +174,7 @@ export default function SslExpiryCheckerPage() {
                 </CardContent>
             </Card>
         </div>
-        
+
         <section>
             <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
             <div className="grid md:grid-cols-2 gap-6">
@@ -196,7 +214,7 @@ export default function SslExpiryCheckerPage() {
         </section>
         
          <section>
-            <h2 className="text-2xl font-bold mb-4">Related Tools & Articles</h2>
+            <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <Link href="/tools/http-header-checker" className="block">
                     <Card className="hover:border-primary transition-colors h-full">
@@ -224,6 +242,9 @@ export default function SslExpiryCheckerPage() {
                 </Link>
             </div>
         </section>
-    </div>
+      </div>
+    </>
   );
 }
+
+    

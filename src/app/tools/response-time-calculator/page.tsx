@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { ResponseTimeCalculator } from './response-time-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -53,14 +52,22 @@ const keyTerminologies = [
 ];
 
 export default function ResponseTimeCalculatorPage() {
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
+  };
+
   return (
     <>
-      <StructuredData data={{
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
-      }} />
-      <StructuredData data={howToSchema} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
       <PageHeader
         title="Website Response Time Calculator"
         description="Analyze your website's server performance by measuring key metrics like Time to First Byte (TTFB), DNS lookup time, and more. A fast response time is a critical factor for user experience and SEO."
@@ -249,3 +256,5 @@ export default function ResponseTimeCalculatorPage() {
     </>
   );
 }
+
+    

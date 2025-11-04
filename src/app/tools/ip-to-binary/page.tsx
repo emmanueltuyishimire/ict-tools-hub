@@ -19,6 +19,19 @@ export const metadata = {
 };
 
 const IpToBinaryPage = () => {
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer.replace(/<[^>]*>?/gm, ''),
+            },
+        })),
+    };
+    
     const softwareAppSchema = {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
@@ -38,7 +51,7 @@ const IpToBinaryPage = () => {
         <>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))) }}
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
             />
              <script
                 type="application/ld+json"
@@ -275,3 +288,5 @@ const IpToBinaryPage = () => {
 };
 
 export default IpToBinaryPage;
+
+    

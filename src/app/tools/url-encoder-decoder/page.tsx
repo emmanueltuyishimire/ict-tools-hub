@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { UrlEncoderDecoder } from './url-encoder-decoder';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, ArrowRightLeft, Copy } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -52,10 +51,22 @@ const keyTerminologies = [
 
 
 export default function UrlEncoderDecoderPage() {
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer}}))
+    };
+
   return (
     <div className="max-w-4xl mx-auto space-y-12">
-        <StructuredData data={faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer}}))} />
-        <StructuredData data={howToSchema} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+        />
         <PageHeader
             title="URL Encoder / Decoder"
             description="Easily encode strings for safe use in URLs or decode URL-encoded strings back to their original form. This tool handles percent-encoding for all special characters."
@@ -246,3 +257,5 @@ export default function UrlEncoderDecoderPage() {
     </div>
   );
 }
+
+    

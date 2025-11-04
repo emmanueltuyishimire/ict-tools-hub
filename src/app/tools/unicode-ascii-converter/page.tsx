@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { UnicodeAsciiConverter } from './unicode-ascii-converter';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -50,9 +49,18 @@ const UnicodeAsciiConverterPage = () => {
 
   return (
     <>
-      <StructuredData data={faqSchema} />
-      <StructuredData data={howToSchema} />
-      <StructuredData data={softwareAppSchema} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
+      />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
           title="Unicode / ASCII Converter"
@@ -173,7 +181,7 @@ const UnicodeAsciiConverterPage = () => {
                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                         <li><strong>Find Hidden Characters:</strong> Sometimes text copied from a PDF or website contains invisible characters (like zero-width spaces) that can break code. Pasting the text into this tool will reveal the code points for all characters, visible or not.</li>
                         <li><strong>Debugging Encoding Issues:</strong> If text from a database or API is showing up as garbled symbols (like "â€" instead of a dash), it's often an encoding mismatch. Use this tool to inspect the code points of the garbled text to help diagnose the issue.</li>
-                        <li><strong>HTML Entities:</strong> The Unicode code point can be used to create an HTML entity. For example, the Euro symbol (€) is U+20AC. You can represent it in HTML as `&amp;#x20AC;` (hexadecimal) or `&amp;#8364;` (decimal). Explore this with our <Link href='/tools/html-entity-encoder-decoder' className='text-primary hover:underline'>HTML Entity Encoder</Link>.</li>
+                        <li><strong>HTML Entities:</strong> The Unicode code point can be used to create an HTML entity. For example, the Euro symbol (€) is U+20AC. You can represent it in HTML as `&#x20AC;` (hexadecimal) or `&#8364;` (decimal). Explore this with our <Link href='/tools/html-entity-encoder-decoder' className='text-primary hover:underline'>HTML Entity Encoder</Link>.</li>
                     </ul>
                 </CardContent>
             </Card>
@@ -214,3 +222,5 @@ const UnicodeAsciiConverterPage = () => {
 };
 
 export default UnicodeAsciiConverterPage;
+
+    

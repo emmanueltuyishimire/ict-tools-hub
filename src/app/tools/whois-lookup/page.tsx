@@ -3,11 +3,9 @@ import { PageHeader } from '@/components/page-header';
 import { WhoisLookupTool } from './whois-lookup-tool';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-
 
 export const metadata = {
     title: 'Whois Lookup Tool | Find Domain Ownership & Registration Data | ICT Toolbench',
@@ -55,10 +53,29 @@ const keyTerminologies = [
 ];
 
 export default function WhoisLookupPage() {
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer.replace(/<[^>]*>?/gm, ''),
+            },
+        })),
+    };
+
   return (
     <>
-      <StructuredData data={faqData} />
-      <StructuredData data={howToSchema} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
       <PageHeader
         title="Whois Lookup Tool"
         description="Query the public Whois database to find the registration details of any domain name, including registrar, creation date, and expiration information."
@@ -101,7 +118,7 @@ export default function WhoisLookupPage() {
                   <dl className="space-y-4">
                       {keyTerminologies.map((item) => (
                           <div key={item.term}>
-                              <dt><strong>{item.term}</strong></dt>
+                              <dt className="font-semibold">{item.term}</dt>
                               <dd className="text-muted-foreground text-sm">{item.definition}</dd>
                           </div>
                       ))}
@@ -171,28 +188,6 @@ export default function WhoisLookupPage() {
       </div>
 
        <section>
-          <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-card p-6 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">Finding a Domain Registrar</h3>
-                  <p className="text-sm text-muted-foreground">A small business owner has forgotten where they registered their domain years ago and needs to renew it. They use the Whois lookup tool, find the "Registrar" field (e.g., "GoDaddy"), and now know exactly which company to contact to manage their domain and prevent it from expiring.</p>
-              </div>
-               <div className="bg-card p-6 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">Investigating a Suspicious Email</h3>
-                  <p className="text-sm text-muted-foreground">You receive a convincing-looking email from "yourbank-security.com". Before clicking anything, you perform a Whois lookup on the domain. The results show it was just registered yesterday. This is a massive red flag, confirming it's a phishing attempt, and you safely delete the email.</p>
-              </div>
-               <div className="bg-card p-6 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">Researching a Potential Business Partner</h3>
-                  <p className="text-sm text-muted-foreground">You are considering doing business with a new online company. As part of your due diligence, you run a Whois lookup on their domain. You see that the domain has been registered for over 10 years and is registered to their official company name, which adds a layer of credibility and suggests they are a stable, long-standing entity.</p>
-              </div>
-               <div className="bg-card p-6 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">Checking a Domain's Availability</h3>
-                  <p className="text-sm text-muted-foreground">A startup founder has a great idea for a new app and wants to see if "new-cool-app.com" is available. They perform a Whois lookup. The result comes back with "No match for domain" or "NOT FOUND". This tells them the domain is not currently registered, and they can proceed to purchase it from a registrar.</p>
-              </div>
-          </div>
-      </section>
-
-       <section>
           <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
           <Card>
               <CardContent className="p-6">
@@ -244,3 +239,4 @@ export default function WhoisLookupPage() {
   );
 }
 
+    
