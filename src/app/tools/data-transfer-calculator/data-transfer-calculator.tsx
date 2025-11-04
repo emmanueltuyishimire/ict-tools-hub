@@ -7,10 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
-import { Lightbulb, AlertCircle, Wand, AlertTriangle, BookOpen, ChevronRight, Copy, Check, Timer, Binary, File, Server } from 'lucide-react';
-import Link from 'next/link';
+import { AlertCircle, Timer } from 'lucide-react';
 
 // --- Conversion Constants ---
 const bitsIn = {
@@ -37,11 +35,11 @@ const bytesIn = {
 };
 
 export function DataTransferTimeCalculator() {
-    const [fileSize, setFileSize<number | ''>(100);
+    const [fileSize, setFileSize] = useState<number | ''>(100);
     const [fileUnit, setFileUnit] = useState('GB');
-    const [speed, setSpeed<number | ''>(500);
+    const [speed, setSpeed] = useState<number | ''>(500);
     const [speedUnit, setSpeedUnit] = useState('Mb');
-    const [results, setResults<any>(null);
+    const [results, setResults] = useState<any>(null);
     const [error, setError] = useState('');
     const resultRef = useRef<HTMLDivElement>(null);
 
@@ -187,5 +185,3 @@ export function DataTransferTimeCalculator() {
         </div>
     );
 }
-
-    
