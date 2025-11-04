@@ -1,7 +1,7 @@
 
 'use client';
 
-import { PageHeader } from '@/components/page-header';
+import React from 'react';
 import { DataTransferTimeCalculator } from '../data-transfer-calculator/data-transfer-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -13,11 +13,6 @@ import { faqData, howToSchema, keyTerminologies } from './schema';
 export default function CloudSyncTimeCalculator() {
   return (
     <>
-      <PageHeader
-        title="Cloud Sync Time Calculator"
-        description="Estimate how long it will take to perform an initial sync, backup, or migration of your data to the cloud. This tool helps you plan large data transfers by calculating the time based on data size and your network's upload speed."
-      />
-      
       <DataTransferTimeCalculator />
 
       <div className="max-w-4xl mx-auto space-y-12 mt-12">

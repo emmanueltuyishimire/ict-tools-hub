@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import BigOQuiz from './big-o-quiz';
+import {BigOQuiz} from './big-o-quiz';
 
 export const metadata = {
     title: 'Big-O Complexity Quiz | ICT Tools Hub',
@@ -335,3 +335,5 @@ const BigOComplexityQuizPage = () => {
 };
 
 export default BigOComplexityQuizPage;
+
+    

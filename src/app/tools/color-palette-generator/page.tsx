@@ -204,32 +204,34 @@ const ColorPaletteGeneratorPage = () => {
                   </Accordion>
               </CardContent>
           </Card>
-        </section>
+      </section>
 
-        <section>
-            <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <Link href="/tools/color-converter" className="block">
-                    <Card className="hover:border-primary transition-colors h-full">
-                        <CardHeader>
-                            <CardTitle className="text-base flex items-center justify-between">Hex ↔ RGB Color Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                            <CardDescription className="text-xs">Convert your generated hex codes to RGB values for use in different applications.</CardDescription>
-                        </CardHeader>
-                    </Card>
-                </Link>
-                <Link href="/tools/css-grid-generator" className="block">
-                    <Card className="hover:border-primary transition-colors h-full">
-                        <CardHeader>
-                            <CardTitle className="text-base flex items-center justify-between">CSS Grid Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                            <CardDescription className="text-xs">Once you have your color palette, use it to design a modern CSS grid layout.</CardDescription>
-                        </CardHeader>
-                    </Card>
-                </Link>
-            </div>
-        </section>
+      <section>
+          <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <Link href="/tools/color-converter" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">Hex ↔ RGB Color Converter<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">Convert your generated hex codes to RGB values for use in different applications.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+              <Link href="/tools/css-grid-generator" className="block">
+                  <Card className="hover:border-primary transition-colors h-full">
+                      <CardHeader>
+                          <CardTitle className="text-base flex items-center justify-between">CSS Grid Generator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                          <CardDescription className="text-xs">Once you have your color palette, use it to design a modern CSS grid layout.</CardDescription>
+                      </CardHeader>
+                  </Card>
+              </Link>
+          </div>
+      </section>
       </div>
     </>
     );
 };
 
 export default ColorPaletteGeneratorPage;
+
+    

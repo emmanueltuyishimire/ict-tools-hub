@@ -2,6 +2,7 @@
 import React from 'react';
 import VmScalingCalculator from './vm-scaling-calculator';
 import { faqData, howToSchema, keyTerminologies } from './schema';
+import { StructuredData } from '@/components/structured-data';
 
 export const metadata = {
     title: 'VM Scaling Planning Guide | Horizontal vs. Vertical Scaling | ICT Toolbench',
@@ -16,9 +17,13 @@ export const metadata = {
 const VmScalingCalculatorPage = () => {
     return (
         <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
             <VmScalingCalculator />
         </>
     );
 };
 
 export default VmScalingCalculatorPage;
+
+    

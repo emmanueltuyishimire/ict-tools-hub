@@ -1,7 +1,8 @@
 
 import React from 'react';
-import DataMigrationEstimator from '@/app/tools/data-migration-estimator/data-migration-estimator';
 import { faqData, howToSchema, keyTerminologies } from './schema';
+import DataMigrationEstimator from './data-migration-estimator';
+import { PageHeader } from '@/components/page-header';
 
 export const metadata = {
     title: 'Cloud Migration Planning Guide | ICT Toolbench',
@@ -14,8 +15,6 @@ export const metadata = {
 };
 
 const CloudMigrationPlanningGuidePage = () => {
-    // This is now a Server Component that wraps the client component
-    // It can handle metadata and other server-side logic
     const softwareAppSchema = {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
@@ -55,3 +54,5 @@ const CloudMigrationPlanningGuidePage = () => {
 };
 
 export default CloudMigrationPlanningGuidePage;
+
+    

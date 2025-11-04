@@ -106,7 +106,7 @@ const DuplicateRowFinder = dynamic(() => import('@/app/tools/duplicate-row-finde
 const ColumnTypeConverter = dynamic(() => import('@/app/tools/column-type-converter/column-type-converter').then(mod => mod.ColumnTypeConverter), { loading: () => <LoadingComponent /> });
 const DatabaseHealthChecker = dynamic(() => import('@/app/tools/db-health-checker/db-health-checker').then(mod => mod.DatabaseHealthChecker), { loading: () => <LoadingComponent /> });
 const RecursionSimulator = dynamic(() => import('@/app/tools/recursion-simulator/recursion-simulator').then(mod => mod.RecursionSimulator), { loading: () => <LoadingComponent /> });
-const BigOQuiz = dynamic(() => import('@/app/tools/big-o-quiz/big-o-quiz').then(mod => mod.BigOQuiz), { loading: () => <LoadingComponent /> });
+const BigOQuiz = dynamic(() => import('@/app/tools/big-o-quiz/big-o-quiz').then(mod => mod.default), { loading: () => <LoadingComponent /> });
 const CloudSyncTimeCalculator = dynamic(() => import('@/app/tools/cloud-sync-time-calculator/cloud-sync-time-calculator').then(mod => mod.default), { loading: () => <LoadingComponent /> });
 const DataMigrationEstimator = dynamic(() => import('@/app/tools/data-migration-estimator/data-migration-estimator').then(mod => mod.default), { loading: () => <LoadingComponent /> });
 const VmScalingCalculator = dynamic(() => import('@/app/tools/vm-scaling-calculator/vm-scaling-calculator').then(mod => mod.default), { loading: () => <LoadingComponent /> });
@@ -255,3 +255,5 @@ export default function ToolRenderer({ slug }: { slug: string }) {
     </div>
   );
 }
+
+    

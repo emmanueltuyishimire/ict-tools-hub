@@ -3,7 +3,7 @@ import { PageHeader } from '@/components/page-header';
 import { CodeFormatter } from './code-formatter';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
+import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, ArrowRightLeft, Copy } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
@@ -232,3 +232,5 @@ export default function CodeFormatterPage() {
     </>
   );
 }
+
+    

@@ -324,3 +324,7 @@ export function BigOQuiz() {
         </Card>
     );
 }
+
+export default BigOQuiz;
+
+    

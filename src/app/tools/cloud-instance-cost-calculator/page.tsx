@@ -86,3 +86,5 @@ const CloudInstanceCostCalculatorPage = () => {
 };
 
 export default CloudInstanceCostCalculatorPage;
+
+    
