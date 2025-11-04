@@ -31,11 +31,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     description: 'A comprehensive suite of free online tools for ICT professionals and students.',
-    url: 'https://calculation.site/ict', // Use the final proxied URL structure
+    url: '/ict', // Use the final proxied URL structure
     siteName: 'ICT Tools Hub',
     images: [
       {
-        url: '/og-image.png', // Replace with your actual OG image path
+        url: '/ict/og-image.png', // Replace with your actual OG image path
         width: 1200,
         height: 630,
       },
@@ -47,10 +47,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     description: 'A comprehensive suite of free online tools for ICT professionals and students.',
-    // images: ['/og-image.png'], // Replace with your actual OG image path
+    // images: ['/ict/og-image.png'], // Replace with your actual OG image path
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: '/ict/favicon.ico',
   },
 };
 
