@@ -21,7 +21,7 @@ const sourceCodePro = Source_Code_Pro({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ict.calculation.site'), // Replace with your actual domain
+  metadataBase: new URL('https://calculation.site'), // Set the base URL for canonicals
   title: {
     default: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     template: '%s | ICT Tools Hub',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     description: 'A comprehensive suite of free online tools for ICT professionals and students.',
-    url: 'https://ict.calculation.site', // Replace with your actual domain
+    url: 'https://calculation.site/ict', // Use the final proxied URL structure
     siteName: 'ICT Tools Hub',
     images: [
       {
@@ -59,7 +59,7 @@ const webAppSchema = {
   '@type': 'WebApplication',
   name: 'ICT Tools Hub',
   description: 'A comprehensive suite of free online tools for ICT professionals, students, and enthusiasts, including networking, programming, and security utilities.',
-  url: 'https://ict.calculation.site', // Replace with actual URL
+  url: 'https://calculation.site/ict', // Use the final proxied URL
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'All',
   offers: {
