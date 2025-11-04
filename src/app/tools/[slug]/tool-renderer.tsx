@@ -107,9 +107,9 @@ const ColumnTypeConverter = dynamic(() => import('@/app/tools/column-type-conver
 const DatabaseHealthChecker = dynamic(() => import('@/app/tools/db-health-checker/db-health-checker').then(mod => mod.DatabaseHealthChecker), { loading: () => <LoadingComponent /> });
 const RecursionSimulator = dynamic(() => import('@/app/tools/recursion-simulator/recursion-simulator').then(mod => mod.RecursionSimulator), { loading: () => <LoadingComponent /> });
 const BigOQuiz = dynamic(() => import('@/app/tools/big-o-quiz/big-o-quiz').then(mod => mod.default), { loading: () => <LoadingComponent /> });
-const CloudSyncTimeCalculator = dynamic(() => import('@/app/tools/cloud-sync-time-calculator/page').then(mod => mod.default), { loading: () => <LoadingComponent /> });
-const DataMigrationEstimator = dynamic(() => import('@/app/tools/data-migration-estimator/page').then(mod => mod.default), { loading: () => <LoadingComponent /> });
-const VmScalingCalculator = dynamic(() => import('@/app/tools/vm-scaling-calculator/page').then(mod => mod.default), { loading: () => <LoadingComponent /> });
+const CloudSyncTimeCalculator = dynamic(() => import('@/app/tools/cloud-sync-time-calculator/cloud-sync-time-calculator').then(mod => mod.default), { loading: () => <LoadingComponent /> });
+const DataMigrationEstimator = dynamic(() => import('@/app/tools/data-migration-estimator/data-migration-estimator').then(mod => mod.default), { loading: () => <LoadingComponent /> });
+const VmScalingCalculator = dynamic(() => import('@/app/tools/vm-scaling-calculator/vm-scaling-calculator').then(mod => mod.default), { loading: () => <LoadingComponent /> });
 const RaidCalculator = dynamic(() => import('@/app/tools/raid-calculator/raid-calculator').then(mod => mod.RaidCalculator), { loading: () => <LoadingComponent /> });
 const UserQuotaCalculator = dynamic(() => import('@/app/tools/user-quota-calculator/user-quota-calculator').then(mod => mod.UserQuotaCalculator), { loading: () => <LoadingComponent /> });
 const LogRotationCalculator = dynamic(() => import('@/app/tools/log-rotation-calculator/log-rotation-calculator').then(mod => mod.LogRotationCalculator), { loading: () => <LoadingComponent /> });
