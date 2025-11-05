@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -20,20 +19,17 @@ const calculateEntropyDetails = (password: string) => {
     if (!password) return { entropy: 0, poolSize: 0, length: 0 };
     
     let poolSize = 0;
+    const charSets = {
+        lowercase: /[a-z]/.test(password),
+        uppercase: /[A-Z]/.test(password),
+        numbers: /\d/.test(password),
+        symbols: /[^a-zA-Z0-9]/.test(password)
+    };
     
-    if (/[a-z]/.test(password)) {
-        poolSize += 26;
-    }
-    if (/[A-Z]/.test(password)) {
-        poolSize += 26;
-    }
-    if (/\d/.test(password)) {
-        poolSize += 10;
-    }
-    
-    const specialChars = password.replace(/[a-zA-Z0-9]/g, '');
-    const uniqueSpecialChars = new Set(specialChars.split(''));
-    poolSize += uniqueSpecialChars.size;
+    if (charSets.lowercase) poolSize += 26;
+    if (charSets.uppercase) poolSize += 26;
+    if (charSets.numbers) poolSize += 10;
+    if (charSets.symbols) poolSize += 32; // Common approximation for symbols
 
     if (poolSize === 0) return { entropy: 0, poolSize: 0, length: password.length };
     

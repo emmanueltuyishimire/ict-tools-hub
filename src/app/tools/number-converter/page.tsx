@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { NumberConverter } from './number-converter';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 
@@ -53,14 +52,21 @@ const keyTerminologies = [
 ];
 
 export default function NumberConverterPage() {
-  return (
-    <>
-      <StructuredData data={{
+  const faqSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
         mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
-      }} />
-      <StructuredData data={howToSchema} />
+      };
+  return (
+    <>
+       <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+        />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
           title="Binary ↔ Decimal ↔ Hex Converter"
@@ -91,7 +97,7 @@ export default function NumberConverterPage() {
           </CardHeader>
           <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
               <section>
-                  <h3 className="font-bold text-xl">Why We Don't All Use Base-10</h3>
+                  <h3>Why We Don't All Use Base-10</h3>
                   <p>
                     Humans naturally think in <strong>Decimal (Base-10)</strong> because we have ten fingers. It's the system we learn from childhood, with digits 0 through 9. But computers are built on transistors that have only two states: on or off. This makes <strong>Binary (Base-2)</strong>, with its two digits 0 and 1, the native language of all digital hardware.
                   </p>
@@ -103,7 +109,7 @@ export default function NumberConverterPage() {
                   </p>
               </section>
               <section>
-                  <h3 className="font-bold text-xl">Manual Conversion: From Decimal to Binary and Hex</h3>
+                  <h3>Manual Conversion: From Decimal to Binary and Hex</h3>
                    <p>Understanding how the conversion works manually solidifies the concepts. Let's convert the decimal number <strong>214</strong>.</p>
                     <h4>Decimal to Binary</h4>
                     <p>We use powers of 2. Find the largest power of 2 that fits into 214 and subtract it, then repeat with the remainder.</p>

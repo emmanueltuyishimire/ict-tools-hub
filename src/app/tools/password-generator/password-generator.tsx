@@ -1,7 +1,6 @@
-
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -54,6 +53,12 @@ export function PasswordGenerator() {
         }
         setGeneratedPassword(result);
     };
+    
+    // Generate a password on initial load
+    useEffect(() => {
+        generatePassword();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const copyPassword = () => {
         if (!generatedPassword) return;
@@ -143,7 +148,7 @@ export function PasswordGenerator() {
                 </CardContent>
             </Card>
             <div className="space-y-6">
-                <PasswordStrengthChecker />
+                <PasswordStrengthChecker password={generatedPassword} />
             </div>
         </div>
     );

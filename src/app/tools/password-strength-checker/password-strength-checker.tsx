@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
@@ -48,7 +47,11 @@ const calculateEntropy = (password: string) => {
     if (/[a-z]/.test(password)) charPool += 26;
     if (/[A-Z]/.test(password)) charPool += 26;
     if (/\d/.test(password)) charPool += 10;
-    if (/[^a-zA-Z0-9]/.test(password)) charPool += 32; // Approximate special characters
+    
+    const specialChars = password.replace(/[a-zA-Z0-9]/g, '');
+    const uniqueSpecialChars = new Set(specialChars.split(''));
+    charPool += uniqueSpecialChars.size;
+
     if (charPool === 0) return 0;
     
     const entropy = password.length * Math.log2(charPool);
@@ -65,10 +68,16 @@ const getStrengthLabel = (score: number, length: number) => {
 };
 
 // --- Component ---
-export function PasswordStrengthChecker() {
-    const [password, setPassword] = useState('');
+export function PasswordStrengthChecker({ password: initialPassword }: { password?: string }) {
+    const [password, setPassword] = useState(initialPassword || '');
     const [showPassword, setShowPassword] = useState(false);
     const [analysis, setAnalysis] = useState({ score: 0, checks: { length: false, uppercase: false, lowercase: false, number: false, specialChar: false }, entropy: 0 });
+
+    useEffect(() => {
+        if(initialPassword !== undefined) {
+            setPassword(initialPassword);
+        }
+    }, [initialPassword]);
 
     useEffect(() => {
         const scoreChecks = checkPasswordStrength(password);

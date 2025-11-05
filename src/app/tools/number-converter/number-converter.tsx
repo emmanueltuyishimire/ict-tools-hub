@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -51,45 +50,58 @@ export function NumberConverter() {
 
     useEffect(() => {
         if (lastChanged !== 'dec') return;
-        const num = BigInt(dec);
-        if (dec === '' || isNaN(Number(num))) {
-             if (dec !== '') setError('Invalid decimal number');
-             return
-        };
-        setHex(num.toString(16));
-        setBin(num.toString(2));
+        if (dec === '') {
+            setHex('');
+            setBin('');
+            return;
+        }
+        try {
+            const num = BigInt(dec);
+            setHex(num.toString(16));
+            setBin(num.toString(2));
+        } catch (e) {
+            setError('Invalid decimal number');
+        }
     }, [dec, lastChanged]);
 
     useEffect(() => {
         if (lastChanged !== 'hex') return;
         if (hex === '') {
-            setDec('0');
-            setBin('0');
+            setDec('');
+            setBin('');
             return;
         }
         if (!/^[0-9a-f]*$/i.test(hex)) {
             setError('Invalid hexadecimal number');
             return;
         }
-        const num = BigInt(`0x${hex}`);
-        setDec(num.toString(10));
-        setBin(num.toString(2));
+        try {
+            const num = BigInt(`0x${hex}`);
+            setDec(num.toString(10));
+            setBin(num.toString(2));
+        } catch (e) {
+            setError('Invalid hexadecimal number');
+        }
     }, [hex, lastChanged]);
 
     useEffect(() => {
         if (lastChanged !== 'bin') return;
         if (bin === '') {
-            setDec('0');
-            setHex('0');
+            setDec('');
+            setHex('');
             return;
         }
         if (!/^[01]*$/.test(bin)) {
             setError('Invalid binary number');
             return;
         }
-        const num = BigInt(`0b${bin}`);
-        setDec(num.toString(10));
-        setHex(num.toString(16));
+        try {
+            const num = BigInt(`0b${bin}`);
+            setDec(num.toString(10));
+            setHex(num.toString(16));
+        } catch (e) {
+            setError('Invalid binary number');
+        }
     }, [bin, lastChanged]);
 
     return (
@@ -157,4 +169,3 @@ export function NumberConverter() {
         </Card>
     );
 }
-

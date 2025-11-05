@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { PasswordGenerator } from './password-generator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -51,9 +50,9 @@ const PasswordGeneratorPage = () => {
 
   return (
     <>
-      <StructuredData data={faqSchema} />
-      <StructuredData data={howToSchema} />
-      <StructuredData data={softwareAppSchema} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
           title="Secure Password Generator"
@@ -172,25 +171,16 @@ const PasswordGeneratorPage = () => {
                             <div>
                                 <h4 className="font-semibold">Enable Two-Factor Authentication (2FA)</h4>
                                 <p className="text-sm text-muted-foreground">
-                                    Enable 2FA (or MFA) on every account that supports it. This requires a second code (usually from your phone) to log in, meaning an attacker can't get in even if they steal your password.
+                                    2FA adds a second layer of security, usually a temporary code from an app on your phone. Even if an attacker steals your password, they can't log in without this second factor. Enable it on every service that offers it.
                                 </p>
                             </div>
                         </li>
                          <li className="flex items-start gap-4">
                             <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                             <div>
-                                <h4 className="font-semibold">Aim for Length</h4>
+                                <h4 className="font-semibold">Favor Long Passphrases</h4>
                                 <p className="text-sm text-muted-foreground">
-                                    When creating a master password or a password for a critical account, prioritize length. A four-word random passphrase is an excellent, memorable, and highly secure option.
-                                </p>
-                            </div>
-                        </li>
-                        <li className="flex items-start gap-4">
-                            <CheckCircle className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                            <div>
-                                <h4 className="font-semibold">Be Wary of Public Wi-Fi</h4>
-                                <p className="text-sm text-muted-foreground">
-                                    Avoid logging into sensitive accounts on public Wi-Fi networks unless you are using a VPN. An attacker on the same network could potentially intercept your traffic.
+                                    Create a long password from a memorable but random sequence of words, like <strong>Green-Desk-Run-Fast-47!</strong>. It's easier to remember than <strong>Tr0ub4d&amp;r</strong> but significantly harder to crack due to its length. Our <strong><Link href="/tools/password-generator" className="text-primary hover:underline">Password Generator</Link></strong> can help create these.
                                 </p>
                             </div>
                         </li>

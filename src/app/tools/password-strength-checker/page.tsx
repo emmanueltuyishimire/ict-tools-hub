@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { PasswordStrengthChecker } from './password-strength-checker';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 
@@ -75,9 +74,9 @@ const PasswordStrengthCheckerPage = () => {
     };
   return (
     <>
-      <StructuredData data={faqSchema} />
-      <StructuredData data={howToSchema} />
-      <StructuredData data={softwareAppSchema} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
             title="Password Strength Checker"
@@ -314,5 +313,3 @@ const PasswordStrengthCheckerPage = () => {
 }
 
 export default PasswordStrengthCheckerPage;
-
-    

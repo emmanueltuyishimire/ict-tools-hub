@@ -128,26 +128,32 @@ export function BigOCalculator() {
     const [selectedComplexity, setSelectedComplexity] = useState<Complexity>('O(n)');
     const [n, setN] = useState(100);
 
-    const chartConfig = {
+    const chartConfig = useMemo(() => ({
         operations: {
             label: 'Operations',
             color: complexityData[selectedComplexity].color,
         },
-    };
+    }), [selectedComplexity]);
 
     const chartData = useMemo(() => {
         const data = [];
-        const step = Math.max(1, Math.floor(n / 100));
-        for (let i = 1; i <= n; i += step) {
+        const maxN = selectedComplexity === 'O(2ⁿ)' ? 20 : 1000;
+        const currentN = Math.min(n, maxN);
+        const step = Math.max(1, Math.floor(currentN / 100));
+
+        for (let i = 1; i <= currentN; i += step) {
+            const operations = complexityData[selectedComplexity].func(i);
+            // Cap exponential growth for visualization purposes
             data.push({
                 n: i,
-                operations: complexityData[selectedComplexity].func(i),
+                operations: operations > 1_000_000 ? 1_000_000 : operations,
             });
         }
         return data;
     }, [n, selectedComplexity]);
     
     const currentData = complexityData[selectedComplexity];
+    const maxN = selectedComplexity === 'O(2ⁿ)' ? 20 : 1000;
 
     return (
         <Card>
@@ -163,10 +169,10 @@ export function BigOCalculator() {
                         </Select>
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="n-slider">Input Size (n)</Label>
+                        <Label htmlFor="n-slider">Input Size (n) - Max {maxN}</Label>
                         <div className="flex items-center gap-4">
-                            <Slider id="n-slider" min={1} max={1000} step={1} value={[n]} onValueChange={(v) => setN(v[0])} />
-                            <span className="font-mono text-muted-foreground w-12 text-right">{n}</span>
+                            <Slider id="n-slider" min={1} max={maxN} step={1} value={[n]} onValueChange={(v) => setN(v[0])} />
+                            <span className="font-mono text-muted-foreground w-12 text-right">{n > maxN ? maxN : n}</span>
                         </div>
                     </div>
                 </div>
@@ -189,7 +195,7 @@ export function BigOCalculator() {
                                     </linearGradient>
                                 </defs>
                                 <CartesianGrid vertical={false} />
-                                <XAxis dataKey="n" tickLine={false} axisLine={false} tickMargin={8} label={{ value: 'Input Size (n)', position: 'insideBottom', offset: -10 }} />
+                                <XAxis dataKey="n" type="number" domain={[1, 'dataMax']} tickLine={false} axisLine={false} tickMargin={8} label={{ value: 'Input Size (n)', position: 'insideBottom', offset: -10 }} />
                                 <YAxis tickLine={false} axisLine={false} tickMargin={8} label={{ value: 'Operations', angle: -90, position: 'insideLeft' }} />
                                 <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
                                 <Area dataKey="operations" type="natural" fill="url(#fillColor)" stroke={currentData.color} stackId="a" />
