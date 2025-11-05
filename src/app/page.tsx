@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { toolCategories } from '@/lib/tools';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { IpLookup } from '@/components/ip-lookup';
 
 export default function Home() {
   return (
@@ -11,7 +12,9 @@ export default function Home() {
       <PageHeader
         title="Welcome to ICT Tools Hub"
         description="A comprehensive suite of 100+ free online tools for students, developers, network admins, and tech enthusiasts. Explore the categories below to find the tool you need."
-      />
+      >
+        <IpLookup />
+      </PageHeader>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {toolCategories.map((category) => (
           <Card key={category.name} className="flex flex-col">

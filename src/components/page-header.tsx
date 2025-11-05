@@ -1,10 +1,12 @@
+
 type PageHeaderProps = {
   title: string;
   description?: string;
   className?: string;
+  children?: React.ReactNode;
 };
 
-export function PageHeader({ title, description, className }: PageHeaderProps) {
+export function PageHeader({ title, description, className, children }: PageHeaderProps) {
   return (
     <div className={`mb-8 ${className}`}>
       <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl font-headline">
@@ -15,6 +17,7 @@ export function PageHeader({ title, description, className }: PageHeaderProps) {
           {description}
         </p>
       )}
+      {children}
     </div>
   );
 }
