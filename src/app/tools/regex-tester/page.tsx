@@ -1,19 +1,23 @@
 
 import React from "react";
 import { PageHeader } from "@/components/page-header";
-import { StructuredData } from "@/components/structured-data";
 import { RegexTester } from "./regex-tester";
-import { faqSchemaData, howToSchema, keyTerminologies, faqData } from "./schema";
+import { faqData, howToSchema, keyTerminologies } from "./schema";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 
 const RegexTesterPage = () => {
+  const faqSchemaData = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
+  };
   return (
     <>
-      <StructuredData data={faqSchemaData} />
-      <StructuredData data={howToSchema} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchemaData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
             title="Regex Tester / Generator"

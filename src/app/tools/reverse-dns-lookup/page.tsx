@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { ReverseDnsLookupTool } from './reverse-dns-lookup-tool';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -55,8 +54,8 @@ const keyTerminologies = [
 export default function ReverseDnsLookupPage() {
   return (
     <>
-      <StructuredData data={faqData} />
-      <StructuredData data={howToSchema} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <PageHeader
         title="Reverse DNS Lookup Tool"
         description="Find the hostname associated with an IP address by querying its PTR record. Essential for troubleshooting email delivery and network configuration issues."
