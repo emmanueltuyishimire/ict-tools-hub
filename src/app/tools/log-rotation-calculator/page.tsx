@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { LogRotationCalculator } from './log-rotation-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -21,39 +20,8 @@ export const metadata = {
 };
 
 const LogRotationCalculatorPage = () => {
-    const faqSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqData.map(item => ({
-            '@type': 'Question',
-            name: item.question,
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: item.answer.replace(/<[^>]*>?/gm, ''),
-            },
-        })),
-    };
-
-    const softwareAppSchema = {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Log Rotation Calculator",
-      "operatingSystem": "All",
-      "applicationCategory": "DeveloperApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "description": "A free online tool for system administrators to calculate and plan their log rotation strategy, estimating storage usage and retention periods.",
-      "url": "https://www.icttoolbench.com/tools/log-rotation-calculator"
-    };
-
     return (
         <>
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
-            <StructuredData data={softwareAppSchema} />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
                     title="Log Rotation Calculator"

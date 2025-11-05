@@ -5,12 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
-import { faqData, howToSchema, keyTerminologies } from './schema';
+import { faqData, howToSchema, keyTerminologies, softwareAppSchema } from './schema';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 
 const IpToBinaryPage = () => {
-    const faqSchema = {
+    const faqPageSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
         mainEntity: faqData.map(item => ({
@@ -23,26 +23,11 @@ const IpToBinaryPage = () => {
         })),
     };
     
-    const softwareAppSchema = {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "IP Address to Binary Converter",
-      "operatingSystem": "All",
-      "applicationCategory": "DeveloperApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "description": "A free online tool to convert standard dot-decimal IPv4 addresses into their 32-bit binary representation.",
-      "url": "https://calculation.site/ict/tools/ip-to-binary"
-    };
-
     return (
         <>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
             />
              <script
                 type="application/ld+json"
@@ -85,7 +70,7 @@ const IpToBinaryPage = () => {
                     <div className="space-y-6">
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-xl">Example 1: A Standard Class C Address</CardTitle>
+                                <CardTitle className="text-xl">A Standard Class C Address</CardTitle>
                                 <CardDescription>Converting a common private IP address, `192.168.1.1`.</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
@@ -103,7 +88,7 @@ const IpToBinaryPage = () => {
                         </Card>
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-xl">Example 2: A Public IP Address</CardTitle>
+                                <CardTitle className="text-xl">A Public IP Address</CardTitle>
                                 <CardDescription>Converting Google's public DNS server address, `8.8.8.8`.</CardDescription>
                             </CardHeader>
                              <CardContent className="space-y-4">
@@ -264,7 +249,7 @@ const IpToBinaryPage = () => {
                                   <CardTitle className="text-base flex items-center justify-between">
                                       Number Base Converter
                                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                                  </Tle>
+                                  </CardTitle>
                                   <CardDescription className="text-xs">A general-purpose tool to convert numbers between binary, decimal, and hexadecimal.</CardDescription>
                               </CardHeader>
                           </Card>

@@ -26,7 +26,7 @@ export default function NetworkMaskValidatorPage() {
       "url": "https://ict.calculation.site/tools/network-mask-validator"
     };
 
-    const faqSchema = {
+    const faqPageSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
         mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } })),
@@ -34,7 +34,7 @@ export default function NetworkMaskValidatorPage() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
       <PageHeader

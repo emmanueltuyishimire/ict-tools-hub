@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { WebpageLoadTimeEstimator } from './load-time-estimator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -31,19 +30,6 @@ const faqData = [
     { question: "Why is there a separate field for the HTML document?", answer: "The HTML document is the first file downloaded and is critical because it contains the instructions for what other resources (CSS, JS, images) the browser needs to fetch. Its download time is a key part of the 'Time to First Byte' (TTFB) and initial render process." }
 ];
 
-const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqData.map(item => ({
-        '@type': 'Question',
-        name: item.question,
-        acceptedAnswer: {
-            '@type': 'Answer',
-            text: item.answer.replace(/<[^>]*>?/gm, ''),
-        },
-    })),
-};
-
 const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
@@ -68,10 +54,20 @@ const keyTerminologies = [
 ];
 
 export default function WebpageLoadTimeEstimatorPage() {
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer.replace(/<[^>]*>?/gm, ''),
+        },
+    })),
+  };
   return (
     <>
-      <StructuredData data={faqSchema} />
-      <StructuredData data={howToSchema} />
       <PageHeader
         title="Webpage Load Time Estimator"
         description="Estimate a webpage's theoretical load time based on its size, number of requests, and network conditions. A crucial tool for understanding and improving web performance."
@@ -183,28 +179,6 @@ export default function WebpageLoadTimeEstimatorPage() {
         </div>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-card p-6 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">Justifying Optimization Work</h3>
-                  <p className="text-sm text-muted-foreground">A developer wants to convince a client to invest in performance optimization. They plug the current page stats (e.g., 3MB total size) into the estimator, showing a 5-second load time on a mobile connection. They then adjust the numbers to a target (e.g., 1.5MB total size) and show the new estimated load time of 2.5 seconds, providing a concrete business case for the work.</p>
-              </div>
-               <div className="bg-card p-6 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">Choosing a Website Theme</h3>
-                  <p className="text-sm text-muted-foreground">A blogger is choosing between two WordPress themes. They test the demo page for each theme using their browser's dev tools. Theme A is 1.2MB with 40 requests. Theme B is 3.5MB with 95 requests. By plugging both sets of numbers into the estimator, they can clearly see that Theme A will provide a significantly better user experience, especially for mobile visitors.</p>
-              </div>
-               <div className="bg-card p-6 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">Impact of a New Feature</h3>
-                  <p className="text-sm text-muted-foreground">A marketing team wants to add a large, interactive JavaScript-based map to the homepage. The development team uses the estimator to model the impact. They add the feature's size (e.g., +400KB of JS) and number of requests (+5) to the current page stats. This allows them to show the marketing team that the new feature will add approximately 0.8 seconds to the load time, leading to a discussion about how to lazy-load the feature to mitigate the impact.</p>
-              </div>
-               <div className="bg-card p-6 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">Setting Performance Budgets</h3>
-                  <p className="text-sm text-muted-foreground">A performance-conscious team sets a "performance budget" for their new project: the page must load in under 3 seconds on a "Fast 3G" connection. They use the estimator with their target network conditions (e.g., 1.6 Mbps, 150ms latency) and work backwards to determine the maximum page size and number of requests they can afford, guiding their entire development process.</p>
-              </div>
-          </div>
-      </section>
-
-       <section>
           <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
           <Card>
               <CardContent className="p-6">
@@ -221,7 +195,6 @@ export default function WebpageLoadTimeEstimatorPage() {
               </CardContent>
           </Card>
       </section>
-
       </div>
     </>
   );
