@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { FileConversionEstimator } from './file-conversion-estimator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -51,9 +50,9 @@ const FileConversionEstimatorPage = () => {
 
     return (
         <>
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
-            <StructuredData data={softwareAppSchema} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
                     title="File Conversion Estimator"
@@ -198,7 +197,7 @@ const FileConversionEstimatorPage = () => {
                         </div>
                          <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Document Management in an Office</h3>
-                            <p className="text-sm text-muted-foreground">A legal assistant drafts a contract in Microsoft Word (DOCX). To send it to a client for review and signature, they convert the DOCX to a PDF. This ensures the formatting, fonts, and layout are preserved perfectly on any device the client uses. It also makes the document non-editable, protecting its integrity. The conversion also often reduces the file size, making it easier to email.</p>
+                            <p className="text-sm text-muted-foreground">A legal assistant drafts a contract in Microsoft Word (DOCX). To send it to a client for review and signature, they convert the DOCX to a PDF. This ensures the formatting, fonts, and layout are preserved perfectly on any device the client uses. It also makes the document non-editable, protecting its integrity.</p>
                         </div>
                          <div className="bg-card p-6 rounded-lg">
                             <h3 className="font-semibold text-lg mb-2">Video Archiving</h3>
@@ -287,4 +286,3 @@ const FileConversionEstimatorPage = () => {
 };
 
 export default FileConversionEstimatorPage;
-

@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useMemo } from 'react';
@@ -17,7 +16,6 @@ type Period = 'day' | 'week' | 'month' | 'year';
 const calculateGrowth = (
     initialSize: number,
     growthRate: number,
-    growthPeriod: Period,
     projectionPeriods: number
 ) => {
     let size = initialSize;
@@ -58,7 +56,7 @@ export function StorageGrowthEstimator() {
         if (unit === 'TB') initialSizeInGb = initialSize * 1024;
         if (unit === 'PB') initialSizeInGb = initialSize * 1024 * 1024;
         
-        const growthData = calculateGrowth(initialSizeInGb, growthRate, growthPeriod, projectionPeriods);
+        const growthData = calculateGrowth(initialSizeInGb, growthRate, projectionPeriods);
         setResults(growthData);
     };
     
@@ -156,7 +154,7 @@ export function StorageGrowthEstimator() {
                                         label={{ value: `Time (${growthPeriod}s)`, position: 'insideBottom', offset: -10 }}
                                     />
                                     <YAxis
-                                        tickFormatter={(value) => formatSize(value)}
+                                        tickFormatter={(value) => formatSize(value as number)}
                                         tickLine={false}
                                         axisLine={false}
                                         tickMargin={8}

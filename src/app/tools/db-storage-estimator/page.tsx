@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
-import { DbStorageEstimator } from './db-storage-estimator';
+import { DbStorageEstimator } from '@/app/tools/db-storage-estimator/db-storage-estimator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
@@ -115,22 +115,6 @@ const DbStorageEstimatorPage = () => {
                     </div>
                 </section>
 
-                <section>
-                   <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
-                   <Card>
-                      <CardContent className="p-6">
-                          <dl className="space-y-4">
-                              {keyTerminologies.map((item) => (
-                                  <div key={item.term}>
-                                      <dt className="font-semibold">{item.term}</dt>
-                                      <dd className="text-muted-foreground text-sm">{item.definition}</dd>
-                                  </div>
-                              ))}
-                          </dl>
-                      </CardContent>
-                   </Card>
-                </section>
-
                 <Card className='bg-secondary/30 border-primary/20'>
                     <CardHeader>
                         <div className='flex items-center gap-2 text-primary'>
@@ -168,28 +152,6 @@ const DbStorageEstimatorPage = () => {
                 </Card>
 
                  <section>
-                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
-                    <div className="grid md:grid-cols-2 gap-6">
-                        <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">Planning a New Application's Database</h3>
-                            <p className="text-sm text-muted-foreground">A developer is designing a `users` table and a `posts` table. They use the estimator to model both. They estimate the `users` table will be small, but the `posts` table, with a large `TEXT` column, will grow significantly. This helps them decide to put the two tables in different storage volumes, allowing the `posts` table's storage to scale independently.</p>
-                        </div>
-                         <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">Forecasting Cloud Database Costs</h3>
-                            <p className="text-sm text-muted-foreground">A startup needs to choose a managed database plan on a cloud provider. By using this tool to estimate a total size of 500 GB after one year, they can use our <Link href="/tools/cloud-storage-cost-estimator" className="text-primary hover:underline">Cloud Storage Cost Estimator</Link> to accurately forecast the monthly bill and budget accordingly, avoiding "bill shock".</p>
-                        </div>
-                         <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">Justifying an Archiving Strategy</h3>
-                            <p className="text-sm text-muted-foreground">A DBA sees their `audit_logs` table is growing by millions of rows a month. They use the estimator to project that the table will consume 2 TB of expensive primary storage within a year. This data provides a clear justification to management for implementing a data archiving strategy where logs older than 90 days are moved to cheaper, long-term storage.</p>
-                        </div>
-                         <div className="bg-card p-6 rounded-lg">
-                            <h3 className="font-semibold text-lg mb-2">Deciding on an Index</h3>
-                            <p className="text-sm text-muted-foreground">A developer wants to add a new index to a very large table to speed up a query. They use our <Link href="/tools/index-size-calculator" className="text-primary hover:underline">Index Size Calculator</Link> to estimate the storage cost of the new index, allowing them to make an informed trade-off between performance gain and disk space consumption.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
                     <h2 className="text-2xl font-bold mb-4">Practical Tips</h2>
                      <Card>
                         <CardContent className="p-6">
@@ -225,6 +187,57 @@ const DbStorageEstimatorPage = () => {
                         </CardContent>
                      </Card>
                 </section>
+                
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Planning a New Application's Database</h3>
+                            <p className="text-sm text-muted-foreground">A developer is designing a `users` table and a `posts` table. They use the estimator to model both. They estimate the `users` table will be small, but the `posts` table, with a large `TEXT` column, will grow significantly. This helps them decide to put the two tables in different storage volumes, allowing the `posts` table's storage to scale independently.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Forecasting Cloud Database Costs</h3>
+                            <p className="text-sm text-muted-foreground">A startup needs to choose a managed database plan on a cloud provider. By using this tool to estimate a total size of 500 GB after one year, they can use our <Link href="/tools/cloud-storage-cost-estimator" className="text-primary hover:underline">Cloud Storage Cost Estimator</Link> to accurately forecast the monthly bill and budget accordingly, avoiding "bill shock".</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Justifying an Archiving Strategy</h3>
+                            <p className="text-sm text-muted-foreground">A DBA sees their `audit_logs` table is growing by millions of rows a month. They use the estimator to project that the table will consume 2 TB of expensive primary storage within a year. This data provides a clear justification to management for implementing a data archiving strategy where logs older than 90 days are moved to cheaper, long-term storage.</p>
+                        </div>
+                         <div className="bg-card p-6 rounded-lg">
+                            <h3 className="font-semibold text-lg mb-2">Deciding on an Index</h3>
+                            <p className="text-sm text-muted-foreground">A developer wants to add a new index to a very large table to speed up a query. They use our <Link href="/tools/index-size-calculator" className="text-primary hover:underline">Index Size Calculator</Link> to estimate the storage cost of the new index, allowing them to make an informed trade-off between performance gain and disk space consumption.</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <div className="grid md:grid-cols-2 gap-8">
+                    <Card>
+                        <CardHeader>
+                            <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips for Sizing</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                            <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Right-Size Data Types:</strong> Don't use a `BIGINT` for a status flag that only needs a `TINYINT`. Using the smallest appropriate data type for each column is the most fundamental storage optimization.</li>
+                                <li><strong>Understand `VARCHAR` vs `TEXT`/`BLOB`:</strong> For very large text or binary data, many databases store `TEXT` or `BLOB` data "off-page", meaning the main table row only stores a small pointer. This keeps the main table compact and fast to scan.</li>
+                                <li><strong>`NULL` Has a Cost:</strong> Storing `NULL` values isn't free. Most database engines use a bitmap in the row header to track which columns are null, adding a small amount of overhead for every nullable column.</li>
+                                <li><strong>Estimate Index Separately:</strong> For a more detailed analysis, use this tool to calculate your raw data size, then use our <Link href="/tools/index-size-calculator" className="text-primary hover:underline">Index Size Calculator</Link> to estimate the size of each planned index. Add these together for a comprehensive total.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                             <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
+                        </CardHeader>
+                        <CardContent>
+                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                                <li><strong>Ignoring Index Overhead:</strong> Forgetting that indexes can often consume as much or more space than the data itself. A 25% overhead estimate is a bare minimum; 50-100% is more realistic for tables with several indexes.</li>
+                                <li><strong>Underestimating Growth:</strong> This tool estimates current size. You must combine this with a growth forecast (using our <Link href="/tools/storage-growth-estimator" className="text-primary hover:underline">Storage Growth Estimator</Link>) to plan for the future.</li>
+                                <li><strong>Ignoring Page Fill Factor:</strong> Databases intentionally leave pages partially empty to accommodate future `UPDATE`s. This means a 1TB database will consume more than 1TB on disk. This tool's "Overhead" field is a simplified way to account for this.</li>
+                                <li><strong>Using `CHAR` Instead of `VARCHAR`:</strong> Using a `CHAR(255)` for a column where most entries are short is wasteful. `CHAR` always reserves the full amount of space, whereas `VARCHAR` only uses what's needed.</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                </div>
                 
                <section>
                   <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>

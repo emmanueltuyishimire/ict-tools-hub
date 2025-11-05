@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { DomainExpiryCountdown } from './domain-expiry-countdown';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 
@@ -29,7 +28,7 @@ const faqData = [
     { question: "How far in advance should I renew my domain?", answer: "It is best practice to renew your domain at least 30-90 days before its expiration date. Many businesses opt to set their domains to 'auto-renew' with their registrar to completely avoid the risk of accidental expiration." },
     { question: "What's the difference between 'Updated Date' and 'Creation Date'?", answer: "'Creation Date' is the date the domain was first registered. 'Updated Date' is the last time any information in the WHOIS record was modified, such as changing contact details or nameservers." },
     { question: "Does domain age affect SEO?", answer: "While a very complex topic, many SEO experts believe that the age of a domain (how long it has been registered) can be a minor positive ranking factor, as it can signal stability and longevity to search engines. However, the quality of content and backlinks are far more important." },
-    { question: "Can I check the expiration of any TLD (Top-Level Domain)?", answer: "This tool attempts to follow WHOIS referrals to find the correct server for most common TLDs (like .com, .net, .org). However, some country-code TLDs (ccTLDs) have unique WHOIS servers or policies that may not be compatible with this basic tool." }
+    { question: "Can I check the expiration of any TLD (Top-Level Domain)?", answer: "This tool attempts to follow WHOIS referrals to find the correct server for most common TLDs (like .com, .net, .org). However, some country-code TLDs (ccTLDs) have their own unique WHOIS servers or policies that may not be compatible with this basic tool." }
 ];
 
 const howToSchema = {
@@ -52,14 +51,26 @@ const keyTerminologies = [
     { term: 'Expiration Date', definition: 'The date on which a domain name registration is no longer valid and the associated services (website, email) will stop working.' },
     { term: 'Grace Period', definition: 'A period after a domain expires during which the original owner can still renew it, often without extra fees.' },
     { term: 'Redemption Period', definition: 'A period after the grace period where the domain has not yet been released to the public, but renewing it incurs a significant extra fee.' },
-    { term: 'ICANN', definition: 'The Internet Corporation for Assigned Names and Numbers, the non-profit organization responsible for coordinating the maintenance of databases related to the namespaces of the Internet.' },
+    { term: 'ICANN', definition: 'The Internet Corporation for Assigned Names and Numbers, the non-profit organization responsible for coordinating the maintenance of the internet\'s namespaces.' },
 ];
 
 export default function DomainExpiryCountdownPage() {
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer}}))
+  };
+
   return (
     <>
-      <StructuredData data={faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } }))} />
-      <StructuredData data={howToSchema} />
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+        />
       <PageHeader
         title="Domain Expiration Countdown"
         description="Never let your domain expire by accident. This tool performs a live WHOIS lookup to find your domain's expiration date and provides a real-time countdown."
@@ -109,7 +120,7 @@ export default function DomainExpiryCountdownPage() {
               <section>
                   <h3 className="font-bold text-xl">What is the WHOIS System?</h3>
                   <p>
-                    The WHOIS system is a public, distributed database that stores information about the owners and administrators of internet resources, most notably domain names. When a person or organization registers a domain, ICANN (the governing body of the internet) requires that their contact information be submitted to this database. A WHOIS lookup is the act of querying this database for a specific domain. The information returned typically includes the name and contact details of the registrant, the domain registrar, the nameservers, and, most importantly, the creation and expiration dates.
+                    The WHOIS system is one of the oldest protocols on the internet. It functions as a massive, public, and distributed database containing the registration details for domain names and IP address blocks. When someone registers a domain, ICANN (the organization that governs domain names) requires that their contact information, the registrar they used, and key dates be made publicly available. This tool allows you to query that public database for any domain.
                   </p>
                   <p>
                     While privacy concerns have led to the rise of WHOIS privacy services that redact personal information, key administrative data like the expiration date usually remains public, as it's essential for the transparent operation of the domain name system.
@@ -118,7 +129,7 @@ export default function DomainExpiryCountdownPage() {
               <section>
                   <h3 className="font-bold text-xl">The Lifecycle of a Domain Name</h3>
                   <p>A domain name goes through a predictable lifecycle, and understanding it is key to never losing control of your digital identity.</p>
-                  <ol className="list-decimal pl-5">
+                  <ol className="list-decimal pl-5 space-y-2">
                      <li><strong>Available:</strong> The domain is unregistered and can be purchased by anyone.</li>
                      <li><strong>Active:</strong> The domain has been registered and is owned by an individual or organization. It can be held for a period of 1 to 10 years. This is the stage where the website and email services are active.</li>
                      <li><strong>Expired & Grace Period:</strong> Once the expiration date passes, the domain enters a 'grace period'. During this time (typically 0-45 days, depending on the registrar), the website and email will stop working, but the original owner can still renew the domain at the standard price.</li>
@@ -200,4 +211,3 @@ export default function DomainExpiryCountdownPage() {
     </>
   );
 }
-
