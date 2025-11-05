@@ -30,6 +30,7 @@ export const toolCategories: ToolCategory[] = [
     name: 'Networking & IP Tools',
     icon: Network,
     tools: [
+      { name: 'IP Address Lookup', slug: 'ip-lookup', description: 'Find geolocation and ISP details for any IP address.' },
       { name: 'IP Address to Binary Converter', slug: 'ip-to-binary', description: 'Convert IPv4 addresses to binary format.' },
       { name: 'Binary to IP Address Converter', slug: 'binary-to-ip', description: 'Convert binary strings to IPv4 addresses.' },
       { name: 'Subnet Calculator', slug: 'subnet-calculator', description: 'Calculate network ranges, broadcast addresses, and available hosts for any subnet.' },

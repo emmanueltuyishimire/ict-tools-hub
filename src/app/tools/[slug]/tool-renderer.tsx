@@ -115,8 +115,10 @@ const UserQuotaCalculator = dynamic(() => import('@/app/tools/user-quota-calcula
 const LogRotationCalculator = dynamic(() => import('@/app/tools/log-rotation-calculator/log-rotation-calculator').then(mod => mod.LogRotationCalculator), { loading: () => <LoadingComponent /> });
 const TpsCalculator = dynamic(() => import('@/app/tools/tps-calculator/tps-calculator').then(mod => mod.TpsCalculator), { loading: () => <LoadingComponent /> });
 const SqlInjectionTester = dynamic(() => import('@/app/tools/sql-injection-tester/sql-injection-tester').then(mod => mod.SqlInjectionTester), { loading: () => <LoadingComponent /> });
+const IpLookupTool = dynamic(() => import('@/app/tools/ip-lookup/ip-lookup-tool').then(mod => mod.IpLookupTool), { loading: () => <LoadingComponent /> });
 
 const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
+  'ip-lookup': IpLookupTool,
   'ip-to-binary': IpToBinaryConverter,
   'binary-to-ip': BinaryToIpConverter,
   'subnet-calculator': SubnetCalculator,
