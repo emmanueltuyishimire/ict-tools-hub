@@ -1,87 +1,40 @@
 
+'use client';
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { RaidCalculator } from './raid-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { faqData, howToSchema, keyTerminologies } from './schema';
+import { faqData, howToSchema, keyTerminologies } from '@/app/tools/raid-calculator/schema';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-export const metadata = {
-    title: 'RAID Storage Calculator | ICT Toolbench',
-    description: 'Calculate usable capacity, fault tolerance, and efficiency for RAID 0, 1, 5, 6, and 10 arrays. An essential tool for server administrators and storage enthusiasts.',
-    openGraph: {
-        title: 'RAID Storage Calculator | ICT Toolbench',
-        description: 'Easily compare different RAID levels to plan your server storage. Our calculator helps you understand the trade-offs between performance, capacity, and redundancy.',
-        url: '/tools/raid-calculator',
-    }
-};
+// Note: Metadata is now handled in a separate generateMetadata function if needed,
+// but for client components, it's often simpler to manage in a layout or parent server component.
+// For now, we'll focus on fixing the runtime error.
 
 const RaidCalculatorPage = () => {
-    const faqSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqData.map(item => ({
-            '@type': 'Question',
-            name: item.question,
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: item.answer.replace(/<[^>]*>?/gm, ''),
-            },
-        })),
-    };
-
-    const softwareAppSchema = {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "RAID Storage Calculator",
-      "operatingSystem": "All",
-      "applicationCategory": "DeveloperApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "description": "A free online tool to calculate and compare the usable capacity, fault tolerance, and efficiency of various RAID levels (RAID 0, 1, 5, 6, 10).",
-      "url": "https://www.icttoolbench.com/tools/raid-calculator"
-    };
-
+    // FAQ and schema data can be used directly in the client component
     return (
         <>
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
-            <StructuredData data={softwareAppSchema} />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
-                    title="RAID Storage Calculator"
+                    title="Storage Redundancy & RAID Calculator"
                     description="Plan your storage array with confidence. This tool helps you calculate the usable capacity, fault tolerance, and efficiency for common RAID levels, empowering you to make informed decisions about your data storage strategy."
                 />
                 
+                <Alert>
+                    <BookOpen className="h-4 w-4" />
+                    <AlertTitle>Guide & Calculator</AlertTitle>
+                    <AlertDescription>
+                       This guide explains the concept of storage redundancy. The primary method for achieving this is with a <strong>RAID array</strong>. Use the calculator below to explore different RAID levels and their trade-offs.
+                    </AlertDescription>
+                </Alert>
+
                 <RaidCalculator />
 
-                <section>
-                    <h2 className="text-2xl font-bold mb-4">How to Use the RAID Calculator</h2>
-                    <Card className="prose prose-sm max-w-none text-foreground p-6">
-                        <p>This calculator simplifies the complex task of determining the characteristics of a RAID array. Follow these steps to model your configuration:</p>
-                        <ol>
-                            <li><strong>Select the RAID Level:</strong> Choose the RAID configuration you want to analyze from the dropdown menu (e.g., RAID 5, RAID 10).</li>
-                            <li><strong>Set the Number of Disks:</strong> Use the slider or input field to specify the total number of physical disks in your array. The tool will enforce the minimum disk requirements for each RAID level.</li>
-                            <li><strong>Enter Disk Size:</strong> Input the capacity of a single disk in the array. This calculator assumes all disks are the same size, which is a requirement for most RAID setups.</li>
-                            <li><strong>Analyze the Results:</strong> The tool instantly calculates and displays the key metrics for your chosen configuration:
-                                <ul>
-                                    <li><strong>Total Raw Capacity:</strong> The sum of all individual disk capacities.</li>
-                                    <li><strong>Usable Capacity:</strong> The actual storage space available to you after accounting for data used for parity or mirroring.</li>
-                                    <li><strong>Storage Efficiency:</strong> The percentage of raw capacity that is usable.</li>
-                                    <li><strong>Fault Tolerance:</strong> The number of disk failures the array can withstand before data is lost.</li>
-                                </ul>
-                            </li>
-                        </ol>
-                    </Card>
-                </section>
-                
                 <section>
                    <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
                    <Card>
@@ -97,7 +50,7 @@ const RaidCalculatorPage = () => {
                       </CardContent>
                    </Card>
                 </section>
-
+                
                 <Card className='bg-secondary/30 border-primary/20'>
                     <CardHeader>
                         <div className='flex items-center gap-2 text-primary'>
@@ -169,7 +122,7 @@ const RaidCalculatorPage = () => {
                             <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                                 <li><strong>Never Use RAID 5 with Large Drives:</strong> For modern, high-capacity drives (e.g., > 2TB), RAID 5 is considered unsafe. The long rebuild time after a single disk failure puts immense stress on the remaining drives, significantly increasing the probability of a second disk failing during the rebuild, which would result in total data loss. Use RAID 6 or RAID 10 for large arrays.</li>
                                 <li><strong>Use Identical Drives:</strong> For best performance and reliability, always use identical drives (same manufacturer, model, size, and speed) in your RAID array.</li>
-                                <li><strong>RAID is NOT a Backup:</strong> This is the most critical rule. RAID protects against hardware failure; it does not protect against accidental file deletion, file corruption, malware, or catastrophic events like fire or theft. You must still have a comprehensive backup strategy. Use our <Link href="/tools/backup-scheduler" className="text-primary hover:underline">Backup Scheduler</Link> to plan it.</li>
+                                <li><strong>RAID is NOT a Backup:</strong> This is the most critical rule. RAID protects against hardware failure; it does not protect against accidental file deletion, data corruption, malware, or catastrophic events like fire or theft. You must still have a comprehensive backup strategy. Use our <Link href="/tools/backup-scheduler" className="text-primary hover:underline">Backup Scheduler</Link> to plan it.</li>
                                 <li><strong>Hot Spares:</strong> For critical systems, configure a "hot spare." This is an unused disk in the array that can automatically take the place of a failed disk and start the rebuild process immediately, without waiting for manual intervention.</li>
                             </ul>
                         </CardContent>

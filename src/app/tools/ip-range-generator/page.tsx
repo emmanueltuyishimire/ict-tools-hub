@@ -46,11 +46,12 @@ export default function IpRangeGeneratorPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
       />
-      <PageHeader
-        title="IP Address Range Generator"
-        description="Quickly generate a list of IPv4 addresses from a start and end IP, or from a CIDR network block. Perfect for scripting, configuration, and documentation."
-      />
-      <IpRangeGenerator />
+      <div className="max-w-4xl mx-auto space-y-12">
+        <PageHeader
+            title="IP Address Range Generator"
+            description="Quickly generate a list of IPv4 addresses from a start and end IP, or from a CIDR network block. Perfect for scripting, configuration, and documentation."
+        />
+        <IpRangeGenerator />
         <Card>
             <CardHeader>
                 <CardTitle>Frequently Asked Questions</CardTitle>
@@ -66,6 +67,7 @@ export default function IpRangeGeneratorPage() {
                 </Accordion>
             </CardContent>
         </Card>
+      </div>
     </>
   );
 }

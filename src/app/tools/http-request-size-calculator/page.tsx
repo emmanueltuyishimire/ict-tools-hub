@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { HttpRequestSizeCalculator } from './http-request-size-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -49,18 +48,18 @@ const keyTerminologies = [
 export default function HttpRequestSizeCalculatorPage() {
   return (
     <>
-      <StructuredData data={{
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
         mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
-      }} />
-      <StructuredData data={howToSchema} />
-      <PageHeader
+      }) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <div className="max-w-4xl mx-auto space-y-12">
+        <PageHeader
         title="HTTP Request Size Calculator"
         description="Estimate the total byte size of an HTTP request by breaking down its components. Essential for optimizing API calls and improving performance in low-bandwidth environments."
       />
       
-      <div className="max-w-4xl mx-auto space-y-12">
         <HttpRequestSizeCalculator />
 
         <section>
@@ -112,13 +111,13 @@ export default function HttpRequestSizeCalculatorPage() {
           </CardHeader>
           <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
               <section>
-                  <h3 className="font-bold text-xl">The Cost of a Request</h3>
+                  <h3>The Cost of a Request</h3>
                   <p>
                     Every time an application needs to communicate with a server, it sends an HTTP request. While we often focus on the size of the <strong>response</strong> (e.g., a large image or JSON payload), the size of the initial request also matters, especially in certain contexts. For devices on slow or metered mobile networks (like IoT devices or users in developing countries), every byte counts. Large requests consume more bandwidth, use more battery power, and take longer to transmit, making the application feel sluggish.
                   </p>
               </section>
               <section>
-                  <h3 className="font-bold text-xl">Where Does the Size Come From?</h3>
+                  <h3>Where Does the Size Come From?</h3>
                   <p>This tool breaks down the request into its three core parts:</p>
                   <ul className="list-disc pl-5">
                      <li><strong>Request Line:</strong> A single line containing the HTTP method, the path, and the protocol version. Its size is directly affected by the length of your URL and query parameters.</li>
