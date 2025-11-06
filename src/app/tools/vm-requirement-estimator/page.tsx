@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { VmRequirementEstimator } from './vm-requirement-estimator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -51,9 +50,9 @@ const VmRequirementEstimatorPage = () => {
 
     return (
         <>
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
-            <StructuredData data={softwareAppSchema} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
                     title="VM RAM & CPU Requirement Estimator"
@@ -249,7 +248,7 @@ const VmRequirementEstimatorPage = () => {
               <section>
                   <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      <Link href="/tools/cloud-storage-cost-estimator" className="block">
+                      <Link href="/tools/cloud-instance-cost-calculator" className="block">
                           <Card className="hover:border-primary transition-colors h-full">
                               <CardHeader>
                                   <CardTitle className="text-base flex items-center justify-between">Cloud Instance Cost Calculator<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
@@ -281,3 +280,5 @@ const VmRequirementEstimatorPage = () => {
 };
 
 export default VmRequirementEstimatorPage;
+
+    

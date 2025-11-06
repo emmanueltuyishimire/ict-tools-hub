@@ -1,9 +1,9 @@
+
 import React from 'react';
 import { PageHeader } from '@/components/page-header';
 import { StorageGrowthEstimator } from './storage-growth-estimator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -50,9 +50,9 @@ const StorageGrowthEstimatorPage = () => {
 
     return (
         <>
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
-            <StructuredData data={softwareAppSchema} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
                     title="Storage Growth Estimator"
@@ -151,7 +151,7 @@ const StorageGrowthEstimatorPage = () => {
                                 Capacity planning is the process of determining the production capacity needed by an organization to meet changing demands for its products—in IT, this means ensuring you have enough server resources (CPU, RAM, and especially storage) to meet the current and future needs of your applications. It's about looking ahead to prevent problems, rather than reacting to them after they occur.
                             </p>
                             <p>
-                                Running out of disk space is one of the most common and disruptive failures in IT. A full disk can crash a database, stop a web server from writing logs, prevent users from uploading files, and bring business operations to a halt. Proactive storage growth estimation is the key to preventing these avoidable outages.
+                                Running out of disk space is one of the most common and disruptive failures in IT. A full disk can crash a database, stop a web server from writing logs, prevent users from uploading files, and bring business operations to a halt. Proactive storage growth estimation is the key to preventing these avoidable emergencies.
                             </p>
                         </section>
                         <section>
@@ -267,3 +267,5 @@ const StorageGrowthEstimatorPage = () => {
 };
 
 export default StorageGrowthEstimatorPage;
+
+    

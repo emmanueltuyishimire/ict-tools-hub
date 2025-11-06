@@ -2,7 +2,6 @@
 import React from 'react';
 import VmScalingCalculator from './vm-scaling-calculator';
 import { faqData, howToSchema, keyTerminologies } from './schema';
-import { StructuredData } from '@/components/structured-data';
 
 export const metadata = {
     title: 'VM Scaling Planning Guide | Horizontal vs. Vertical Scaling | ICT Toolbench',

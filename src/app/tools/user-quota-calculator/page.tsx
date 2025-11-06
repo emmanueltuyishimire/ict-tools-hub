@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { UserQuotaCalculator } from './user-quota-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle, Lightbulb } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -51,9 +50,9 @@ const UserQuotaCalculatorPage = () => {
 
     return (
         <>
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
-            <StructuredData data={softwareAppSchema} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
                     title="User Quota Calculator"
@@ -179,7 +178,7 @@ const UserQuotaCalculatorPage = () => {
                     </CardContent>
                 </Card>
                 
-                 <section>
+                <section>
                     <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-card p-6 rounded-lg">
@@ -279,3 +278,5 @@ const UserQuotaCalculatorPage = () => {
 };
 
 export default UserQuotaCalculatorPage;
+
+    
