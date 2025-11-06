@@ -26,6 +26,14 @@ export default function Rot13Page() {
     })),
   };
 
+  const howToPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Use the ROT13 Encoder/Decoder',
+    description: 'A step-by-step guide to encoding and decoding text using the ROT13 cipher.',
+    step: howToSchema.step,
+  };
+
   return (
     <>
       <script
@@ -34,7 +42,7 @@ export default function Rot13Page() {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToPageSchema) }}
       />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
@@ -98,7 +106,7 @@ export default function Rot13Page() {
               </section>
           </CardContent>
         </Card>
-
+        
         <section>
             <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
             <div className="grid md:grid-cols-2 gap-6">

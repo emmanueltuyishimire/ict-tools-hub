@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { SslChecker } from './ssl-checker';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -34,11 +33,17 @@ export default function SslCheckerPage() {
       "url": "https://www.icttoolbench.com/tools/ssl-checker"
     };
 
+    const faqPageSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))
+    };
+
   return (
     <>
-      <StructuredData data={faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))} />
-      <StructuredData data={howToSchema} />
-      <StructuredData data={softwareAppSchema} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
             title="SSL Certificate Checker"

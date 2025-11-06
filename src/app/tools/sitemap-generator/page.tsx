@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { SitemapGenerator } from './sitemap-generator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 
@@ -57,10 +56,22 @@ const keyTerminologies = [
 ];
 
 export default function SitemapGeneratorPage() {
+    const faqPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
+  };
+
   return (
     <>
-      <StructuredData data={faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))} />
-      <StructuredData data={howToSchema} />
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
+        />
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+        />
       <PageHeader
         title="Sitemap Generator (Static)"
         description="Create a simple, static XML sitemap for your website. This tool helps you build a clean sitemap file to guide search engines in crawling and indexing your content."

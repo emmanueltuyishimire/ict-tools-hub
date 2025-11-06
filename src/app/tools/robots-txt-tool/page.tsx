@@ -3,7 +3,6 @@ import { PageHeader } from '@/components/page-header';
 import { RobotsTxtTool } from './robots-txt-tool';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
 
@@ -56,10 +55,29 @@ const howToSchema = {
 };
 
 export default function RobotsTxtToolPage() {
+  const faqPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer.replace(/<[^>]*>?/gm, ''),
+      },
+    })),
+  };
+
   return (
     <>
-      <StructuredData data={faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } }))} />
-      <StructuredData data={howToSchema} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
       <PageHeader
         title="Robots.txt Validator & Generator"
         description="Take control of how search engines crawl your site. Generate a custom robots.txt file from scratch or validate your existing one against SEO best practices."
@@ -137,7 +155,7 @@ export default function RobotsTxtToolPage() {
                 <CardContent>
                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                         <li><strong>Be Specific:</strong> A trailing slash matters. `Disallow: /folder` will block both `/folder` and `/folder-with-more-text`, while `Disallow: /folder/` will only block content inside that specific directory.</li>
-                        <li><strong>Use `$` for Precision:</strong> Use a dollar sign `$` to mark the end of a URL. For example, `Disallow: /*.pdf$` will block any URL ending in `.pdf`, preventing crawlers from downloading these files.</li>
+                        <li><strong>Use `$` for Precision:</strong> Use a dollar sign `$` to mark the end of a URL. For example, `Disallow: /*.pdf$` would block any URL ending in `.pdf`, preventing crawlers from downloading these files.</li>
                         <li><strong>Test Before You Deploy:</strong> Always use a tool like this one or Google's own Robots Testing Tool in Search Console to validate your file before uploading it. A small syntax error can have major SEO consequences, like accidentally blocking your entire site.</li>
                         <li><strong>Consolidate Sitemaps:</strong> If you have multiple sitemaps, it's best practice to create a sitemap index file and link to that single index file in your `robots.txt`.</li>
                     </ul>
@@ -196,7 +214,7 @@ export default function RobotsTxtToolPage() {
                 <Link href="/tools/url-encoder-decoder" className="block">
                     <Card className="hover:border-primary transition-colors h-full">
                         <CardHeader>
-                            <CardTitle className="text-base flex items-center justify-between">URL Encoder/Decoder<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
+                            <CardTitle className="text-base flex items-center justify-between">URL Encoder / Decoder<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
                             <CardDescription className="text-xs">Ensure paths with special characters are correctly formatted for your `robots.txt` rules.</CardDescription>
                         </CardHeader>
                     </Card>
