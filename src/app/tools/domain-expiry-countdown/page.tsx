@@ -139,7 +139,7 @@ export default function DomainExpiryCountdownPage() {
                   </ol>
               </section>
           </CardContent>
-      </Card>
+        </Card>
       
         <div className="grid md:grid-cols-2 gap-8">
             <Card>
@@ -168,7 +168,7 @@ export default function DomainExpiryCountdownPage() {
                     </ul>
                 </CardContent>
             </Card>
-        </div>
+        </section>
 
         <section>
             <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>

@@ -1,213 +1,171 @@
+import {
+  type LucideIcon,
+  Network,
+  Server,
+  Code2,
+  Shield,
+  Cloud,
+  Database,
+  BookOpen,
+  BrainCircuit,
+  Wrench,
+  Boxes,
+} from 'lucide-react';
 
-import { PageHeader } from '@/components/page-header';
-import { SslExpiryChecker } from './ssl-expiry-checker';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
-import Link from 'next/link';
-import { faqData, howToSchema, keyTerminologies } from '../ssl-checker/schema';
-
-
-export const metadata = {
-    title: 'SSL Certificate Expiration Checker | ICT Toolbench',
-    description: 'Check the expiration date and validity of any SSL/TLS certificate in real-time. Verify issuer details, days remaining, and learn why SSL is critical for web security.',
+export type Tool = {
+  name: string;
+  slug: string;
+  description: string;
 };
 
-export default function SslExpiryCheckerPage() {
-    const faqSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqData.map(item => ({
-            '@type': 'Question',
-            name: item.question,
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: item.answer.replace(/<[^>]*>?/gm, ''),
-            },
-        })),
-    };
+export type ToolCategory = {
+  name: string;
+  icon: LucideIcon;
+  tools: Tool[];
+};
 
-  return (
-    <>
-      <div className="max-w-4xl mx-auto space-y-12">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
-        />
-        <PageHeader
-            title="SSL Certificate Expiration Checker"
-            description="Enter a domain name to check the validity and expiration date of its SSL/TLS certificate, ensuring your connection is secure and trusted."
-        />
-        <SslExpiryChecker />
-        <section>
-            <h2 className="text-2xl font-bold mb-4">How to Use the SSL Checker</h2>
-            <Card className="prose prose-sm max-w-none text-foreground p-6">
-                <p>This tool lets you instantly inspect the public SSL/TLS certificate of any website, providing critical information for security and maintenance.</p>
-                <ol>
-                    <li><strong>Enter a Domain Name:</strong> In the input box, type the domain you want to check (e.g., `google.com`). You don't need `https://` or `www`. To check a service on a non-standard port, append it with a colon, like `my-service.com:8443`.</li>
-                    <li><strong>Check Certificate:</strong> Click the "Check Certificate" button. Our server will then initiate a secure handshake with the domain's server to fetch its public certificate data.</li>
-                    <li><strong>Review the Summary:</strong> The most important information is displayed at the top in summary cards: the number of days until expiration, the Certificate Authority (CA) that issued it, and its current validity status.</li>
-                    <li><strong>Analyze the Details:</strong> For a deeper dive, the table below provides more granular data, including the common name, subject alternative names (SANS), the certificate's serial number, and the full "valid from" and "valid to" timestamps.</li>
-                </ol>
-            </Card>
-        </section>
-        
-        <section>
-             <h2 className="text-2xl font-bold mb-4">Key Terminologies</h2>
-             <Card>
-                <CardContent className="p-6">
-                    <dl className="space-y-4">
-                        {keyTerminologies.map((item) => (
-                            <div key={item.term}>
-                                <dt className="font-semibold">{item.term}</dt>
-                                <dd className="text-muted-foreground text-sm">{item.definition}</dd>
-                            </div>
-                        ))}
-                    </dl>
-                </CardContent>
-             </Card>
-        </section>
-        
-        <Card className='bg-secondary/30 border-primary/20'>
-            <CardHeader>
-                <div className='flex items-center gap-2 text-primary'>
-                    <BookOpen className="h-6 w-6" aria-hidden="true" />
-                    <CardTitle className="text-primary">Educational Deep Dive: The Chain of Trust</CardTitle>
-                </div>
-                <CardDescription>From encryption to identity verification, understand the technology that underpins the secure web and keeps your data safe.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6 prose prose-lg max-w-none text-foreground">
-                <section>
-                    <h3 className="font-bold text-xl">What is an SSL/TLS Certificate?</h3>
-                    <p>At its core, an SSL/TLS certificate is a small data file hosted on a web server that enables two fundamental security features: <strong>encryption</strong> and <strong>authentication</strong>. When you visit a website with a valid SSL certificate (indicated by `https://` in the URL), your browser and the server perform a "TLS handshake." This process establishes an encrypted channel, scrambling all data passed between them. This prevents eavesdroppers or "man-in-the-middle" attackers from reading your sensitive information, such as passwords, credit card numbers, or personal messages.</p>
-                    <p>Just as importantly, the certificate also serves as a digital passport for the website. It proves that the domain you are visiting is owned and operated by a legitimate entity, not an imposter. This authentication is based on a concept called the "chain of trust."</p>
-                </section>
-                <section>
-                    <h3 className="font-bold text-xl">The Chain of Trust: From Root to Leaf</h3>
-                    <p>Your browser doesn't inherently trust every website's SSL certificate. Instead, it trusts a small, curated list of highly secure organizations known as <strong>Certificate Authorities (CAs)</strong>. These include well-known names like DigiCert, Let's Encrypt, and GlobalSign. The public certificates of these CAs, called <strong>Root Certificates</strong>, are pre-installed in your browser and operating system.</p>
-                    <p>The chain of trust works as follows:</p>
-                    <ol className="list-decimal pl-5 space-y-2">
-                       <li>A Root CA issues an <strong>Intermediate Certificate</strong> to another organization, effectively delegating its trust.</li>
-                       <li>This Intermediate CA then issues an <strong>End-Entity Certificate</strong> (or "leaf" certificate) to a website owner (e.g., `google.com`) after verifying their identity.</li>
-                       <li>When you visit `google.com`, the server presents its End-Entity certificate along with the Intermediate certificate. Your browser checks if the End-Entity certificate was signed by the Intermediate. It then checks if the Intermediate certificate was signed by a Root CA that it already trusts.</li>
-                       <li>If this chain is complete and unbroken all the way back to a trusted root, the browser accepts the certificate as valid and displays the padlock icon. If any link in the chain is broken, expired, or untrusted, you will see a security warning.</li>
-                    </ol>
-                </section>
-                 <section>
-                    <h3 className="font-bold text-xl">Why Do Certificates Expire?</h3>
-                    <p>Certificate expiration is a crucial security feature, not an inconvenience. It ensures that authentication information is periodically re-validated. If certificates lasted forever, a compromised or outdated certificate could be misused indefinitely. The industry standard for certificate lifespan has been steadily decreasing to improve security. What was once five years became three, then two, and now the maximum validity period for public SSL certificates is just over one year (398 days).</p>
-                    <p>This regular renewal process ensures that:</p>
-                     <ul className="list-disc pl-5">
-                        <li>The domain ownership is re-verified, preventing old certificates from being used after a domain changes hands.</li>
-                        <li>Encryption standards are kept up-to-date, encouraging the adoption of stronger cryptographic algorithms.</li>
-                        <li>Revocation lists don't grow to unmanageable sizes.</li>
-                    </ul>
-                     <p>An expired certificate breaks the chain of trust and triggers browser warnings, making proactive monitoring and renewal essential for any website owner. Using a tool like this one to check your expiration dates is a key step in responsible website management.</p>
-                </section>
-            </CardContent>
-        </Card>
+export const toolCategories: ToolCategory[] = [
+  {
+    name: 'Networking & IP Tools',
+    icon: Network,
+    tools: [
+      { name: 'IP Address Lookup', slug: 'ip-lookup', description: 'Find geolocation and ISP details for any IP address.' },
+      { name: 'IP Address to Binary Converter', slug: 'ip-to-binary', description: 'Convert IPv4 addresses to binary format.' },
+      { name: 'Binary to IP Address Converter', slug: 'binary-to-ip', description: 'Convert binary strings to IPv4 addresses.' },
+      { name: 'Subnet Calculator', slug: 'subnet-calculator', description: 'Calculate network ranges, broadcast addresses, and available hosts for any subnet.' },
+      { name: 'Subnet Mask Converter', slug: 'subnet-mask-converter', description: 'Convert between CIDR, wildcard, and subnet masks.' },
+      { name: 'VLSM Calculator', slug: 'vlsm-calculator', description: 'Design efficient network schemes with Variable Length Subnet Masking.' },
+      { name: 'Network Bandwidth Estimator', slug: 'bandwidth-estimator', description: 'Estimate network bandwidth requirements based on usage.' },
+      { name: 'Ping / Latency Estimator', slug: 'latency-estimator', description: 'Estimate ping and latency over distances.' },
+      { name: 'Data Transfer Time Calculator', slug: 'data-transfer-calculator', description: 'Calculate time to transfer data.' },
+      { name: 'MAC Address Validator', slug: 'mac-validator', description: 'Validate MAC address format and find the vendor.' },
+      { name: 'Port Number Lookup', slug: 'port-lookup', description: 'Look up common network port numbers.' },
+      { name: 'Network Mask Validator', slug: 'network-mask-validator', description: 'Validate a network mask.' },
+      { name: 'Public vs Private IP Checker', slug: 'ip-privacy-checker', description: 'Check if an IP is public or private.' },
+      { name: 'IP Class Finder', slug: 'ip-class-finder', description: 'Find the class of an IP address.' },
+      { name: 'IP Range Generator', slug: 'ip-range-generator', description: 'Generate a list of IP addresses in a range.' },
+      { name: 'Broadcast Address Calculator', slug: 'broadcast-address-calculator', description: 'Calculate the broadcast address of a network.' },
+      { name: 'Host Count Calculator', slug: 'host-count-calculator', description: 'Calculate the number of hosts in a subnet.' },
+      { name: 'Network Address Calculator', slug: 'network-address-calculator', description: 'Calculate the network address (Network ID) of a subnet.' },
+      { name: 'CIDR to Subnet List Generator', slug: 'cidr-to-subnet-list', description: 'Generate subnets from a CIDR.' },
+      { name: 'CIDR to Wildcard Mask Converter', slug: 'cidr-to-wildcard', description: 'Convert CIDR to wildcard mask.' },
+      { name: 'IP Summarization Tool', slug: 'ip-summarization', description: 'Summarize a list of IP networks into a single route.' },
+    ],
+  },
+  {
+    name: 'Web & Server Tools',
+    icon: Server,
+    tools: [
+      { name: 'HTTP Header Checker', slug: 'http-header-checker', description: 'Check the HTTP status code of a URL.' },
+      { name: 'HTTP Request Size Calculator', slug: 'http-request-size-calculator', description: 'Estimate the size of an HTTP request.' },
+      { name: 'URL Encoder / Decoder', slug: 'url-encoder-decoder', description: 'Encode or decode URLs.' },
+      { name: 'HTML / CSS / JS Minifier', slug: 'code-minifier', description: 'Minify HTML, CSS, or JavaScript code.' },
+      { name: 'Robots.txt Validator / Generator', slug: 'robots-txt-tool', description: 'Validate or generate a robots.txt file.' },
+      { name: 'Sitemap Generator (static)', slug: 'sitemap-generator', description: 'Generate a static XML sitemap.' },
+      { name: 'Response Time Calculator', slug: 'response-time-calculator', description: 'Calculate server response time.' },
+      { name: 'Domain Expiration Countdown', slug: 'domain-expiry-countdown', description: 'Countdown to domain expiration.' },
+      { name: 'SSL Checker', slug: 'ssl-checker', description: 'Check SSL certificate details.' },
+      { name: 'Server Uptime Calculator', slug: 'uptime-calculator', description: 'Calculate server uptime percentage.' },
+      { name: 'DNS Lookup Tool', slug: 'dns-lookup', description: 'Perform a DNS lookup.' },
+      { name: 'Reverse DNS Lookup', slug: 'reverse-dns-lookup', description: 'Perform a reverse DNS lookup.' },
+      { name: 'Whois Lookup', slug: 'whois-lookup', description: 'Perform a Whois lookup on a domain.' },
+      { name: 'Webpage Load Time Estimator', slug: 'load-time-estimator', description: 'Estimate webpage load time.' },
+      { name: 'Cache Expiration Calculator', slug: 'cache-expiry-calculator', description: 'Calculate cache expiration dates.' },
+      { name: 'Compression Savings Estimator', slug: 'compression-estimator', description: 'Estimate savings from compression.' },
+      { name: 'CDN Bandwidth Estimator', slug: 'cdn-bandwidth-estimator', description: 'Estimate CDN bandwidth usage.' },
+    ],
+  },
+  {
+    name: 'Programming & Code',
+    icon: Code2,
+    tools: [
+      { name: 'Code Formatter / Beautifier', slug: 'code-formatter', description: 'Format and beautify your code.' },
+      { name: 'Regex Tester / Generator', slug: 'regex-tester', description: 'Test and generate regular expressions.' },
+      { name: 'Base64 Encoder / Decoder', slug: 'base64-encoder-decoder', description: 'Encode or decode Base64 strings.' },
+      { name: 'Hex ↔ RGB Color Converter', slug: 'color-converter', description: 'Convert between Hex and RGB colors.' },
+      { name: 'Color Palette Generator', slug: 'color-palette-generator', description: 'Generate harmonious color palettes.' },
+      { name: 'Binary ↔ Decimal ↔ Hex Converter', slug: 'number-converter', description: 'Convert between number bases.' },
+      { name: 'MD5 / SHA Hash Generator', slug: 'hash-generator-md5-sha', description: 'Generate MD5 and SHA hashes.' },
+      { name: 'ROT13 Encoder / Decoder', slug: 'rot13-encoder-decoder', description: 'Encode or decode using ROT13 cipher.' },
+      { name: 'Caesar Cipher Encoder / Decoder', slug: 'caesar-cipher', description: 'Encode or decode using Caesar cipher.' },
+      { name: 'Time Complexity Estimator', slug: 'big-o-calculator', description: 'Understand and visualize Big O notation.' },
+      { name: 'Prime Number Checker', slug: 'prime-checker', description: 'Check if a number is prime.' },
+      { name: 'Prime Number Generator', slug: 'prime-number-generator', description: 'Generate a list of prime numbers.' },
+      { name: 'Fibonacci Sequence Generator', slug: 'fibonacci-generator', description: 'Generate the Fibonacci sequence.' },
+      { name: 'Factorial Calculator', slug: 'factorial-calculator', description: 'Calculate the factorial of a number.' },
+      { name: 'Random String Generator', slug: 'random-string-generator', description: 'Generate a random string of specified length and complexity.' },
+      { name: 'Random Number Generator', slug: 'random-number-generator', description: 'Generate a random number within a specified range.' },
+      { name: 'Code Snippet Formatter', slug: 'code-snippet-formatter', description: 'Format a code snippet.' },
+      { name: 'Variable Name Validator', slug: 'variable-name-validator', description: 'Validate variable names.' },
+      { name: 'Unicode / ASCII Converter', slug: 'unicode-ascii-converter', description: 'Convert between Unicode and ASCII.' },
+    ],
+  },
+  {
+    name: 'Security & Password',
+    icon: Shield,
+    tools: [
+      { name: 'Password Generator', slug: 'password-generator', description: 'Generate secure passwords.' },
+      { name: 'Password Strength Checker', slug: 'password-strength-checker', description: 'Check the strength of a password.' },
+      { name: 'Password Entropy Calculator', slug: 'password-entropy-calculator', description: 'Calculate the entropy of a password in bits.' },
+      { name: 'Encryption / Decryption Tool', slug: 'encryption-decryption-tool', description: 'Encrypt or decrypt text using AES.' },
+      { name: 'Two-Factor Auth TOTP Demo', slug: 'totp-demo', description: 'Educational TOTP demo.' },
+      { name: 'Base32 / Base58 Encoder / Decoder', slug: 'base32-58-encoder-decoder', description: 'Encode/decode Base32/58.' },
+      { name: 'File Integrity Checker', slug: 'file-integrity-checker', description: 'Generate checksums (SHA) for files.' },
+      { name: 'SQL Injection Tester', slug: 'sql-injection-tester', description: 'Educational SQL injection demo.' },
+    ],
+  },
+  {
+    name: 'Cloud & Storage Tools',
+    icon: Cloud,
+    tools: [
+      { name: 'Cloud Storage Cost Estimator', slug: 'cloud-storage-cost-estimator', description: 'Estimate cloud storage costs.' },
+      { name: 'Cloud Bandwidth Cost Calculator (Egress)', slug: 'bandwidth-cost-calculator', description: 'Calculate bandwidth costs.' },
+      { name: 'Backup Storage Requirement', slug: 'backup-storage-calculator', description: 'Calculate backup storage needs.' },
+      { name: 'Data Compression Calculator', slug: 'data-compression-calculator', description: 'Calculate data compression.' },
+      { name: 'VM RAM & CPU Requirement', slug: 'vm-requirement-estimator', description: 'Estimate VM resource needs.' },
+      { name: 'Disk Usage / Partition Estimator', slug: 'disk-usage-estimator', description: 'Estimate disk usage.' },
+      { name: 'Cloud Instance Cost Calculator', slug: 'cloud-instance-cost-calculator', description: 'Calculate cloud instance costs.' },
+      { name: 'Storage vs. Memory Cost Analyzer', slug: 'storage-memory-cost-analyzer', description: 'Analyze storage vs. memory costs.' },
+      { name: 'File Conversion Estimator', slug: 'file-conversion-estimator', description: 'Estimate file conversion sizes.' },
+      { name: 'Data Retention Period Calculator', slug: 'data-retention-calculator', description: 'Calculate data retention periods.' },
+      { name: 'Snapshot / Backup Scheduler', slug: 'backup-scheduler', description: 'Schedule snapshots and backups.' },
+      { name: 'Storage Growth Estimator', slug: 'storage-growth-estimator', description: 'Estimate storage growth.' },
+      { name: 'RAID Storage Calculator', slug: 'raid-calculator', description: 'Calculate RAID storage.' },
+      { name: 'VM Scaling Planning Guide', slug: 'vm-scaling-calculator', description: 'Understand horizontal vs vertical scaling.' },
+      { name: 'Cloud Sync Time Calculator', slug: 'cloud-sync-time-calculator', description: 'Estimate cloud data transfer times.' },
+      { name: 'Data Migration Estimator', slug: 'data-migration-estimator', description: 'Plan your data migration projects.' },
+    ],
+  },
+  {
+    name: 'Database & Admin Tools',
+    icon: Database,
+    tools: [
+      { name: 'Database Row / Storage Estimator', slug: 'db-storage-estimator', description: 'Estimate database storage.' },
+      { name: 'User Quota Calculator', slug: 'user-quota-calculator', description: 'Calculate user quotas.' },
+      { name: 'Transaction / TPS Calculator', slug: 'tps-calculator', description: 'Calculate transactions per second.' },
+      { name: 'Log Rotation Calculator', slug: 'log-rotation-calculator', description: 'Calculate log rotation schedules.' },
+      { name: 'Database Index Size Calculator', slug: 'index-size-calculator', description: 'Calculate database index size.' },
+      { name: 'Query Execution Time Estimator', slug: 'query-time-estimator', description: 'Estimate query execution time.' },
+      { name: 'Database Growth Calculator', slug: 'db-growth-calculator', description: 'Calculate database growth.' },
+      { name: 'Primary / Foreign Key Validator', slug: 'key-validator', description: 'Validate primary/foreign keys.' },
+      { name: 'Normalization Checker', slug: 'normalization-checker', description: 'Check database normalization.' },
+      { name: 'Duplicate Row Finder', slug: 'duplicate-row-finder', description: 'Find duplicate rows in data.' },
+      { name: 'Column Type Converter', slug: 'column-type-converter', description: 'Suggest column type conversions.' },
+      { name: 'Database Health Checker', slug: 'db-health-checker', description: 'Basic database health checks.' },
+    ],
+  },
+  {
+    name: 'AI & Learning Tools',
+    icon: BrainCircuit,
+    tools: [
+      { name: 'Time Complexity Estimator', slug: 'big-o-calculator', description: 'Understand and visualize Big O notation.' },
+      { name: 'Algorithm Step Simulator', slug: 'algorithm-simulator', description: 'Simulate steps of simple algorithms.' },
+      { name: 'Recursion Calculator / Simulator', slug: 'recursion-simulator', description: 'Simulate recursive functions.' },
+      { name: 'Big-O Complexity Quiz', slug: 'big-o-quiz', description: 'Test your knowledge of time complexity.' },
+    ],
+  },
+];
 
-        <div className="grid md:grid-cols-2 gap-8">
-            <Card>
-                <CardHeader>
-                    <div className='flex items-center gap-2'><Wand className="h-6 w-6 text-accent" /> <CardTitle>Pro Tips</CardTitle></div>
-                </CardHeader>
-                <CardContent>
-                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                        <li><strong>Automate Renewals:</strong> Use services like Let's Encrypt with Certbot to automate the renewal process. This is the most effective way to prevent expiration-related outages.</li>
-                        <li><strong>Check SANs:</strong> The Subject Alternative Name (SAN) field is crucial. It lists all the hostnames a single certificate is valid for (e.g., `example.com`, `www.example.com`, `api.example.com`). Always check that all your required subdomains are listed.</li>
-                        <li><strong>Set Calendar Reminders:</strong> For manually renewed certificates, set multiple calendar reminders starting 60-90 days before expiration to give yourself ample time to purchase and deploy the new certificate.</li>
-                        <li><strong>Command-Line Check:</strong> For a quick check from your terminal, you can use OpenSSL: `openssl s_client -connect example.com:443 -servername example.com | openssl x509 -noout -dates`.</li>
-                    </ul>
-                </CardContent>
-            </Card>
-            <Card>
-                <CardHeader>
-                     <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes</CardTitle></div>
-                </CardHeader>
-                <CardContent>
-                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
-                        <li><strong>Ignoring Renewal Emails:</strong> Certificate Authorities send multiple warning emails before a certificate expires. Make sure these emails go to a distribution list or an actively monitored inbox, not just one person who might be on vacation.</li>
-                        <li><strong>Forgetting Intermediate Certificates:</strong> When installing a new certificate, you must also install the Intermediate CA certificate provided by your vendor. Forgetting this step will cause a "broken chain" error in some browsers.</li>
-                         <li><strong>Mismatching Common Name:</strong> A certificate is only valid for the domains listed in its Common Name (CN) or Subject Alternative Names (SAN). If you visit `www.example.com` but the certificate is only for `example.com`, you will get a security warning.</li>
-                        <li><strong>Mixed Content Errors:</strong> Even with a valid SSL certificate, if your page loads resources like images or scripts over insecure HTTP, browsers will flag it as a "mixed content" warning, which diminishes user trust.</li>
-                    </ul>
-                </CardContent>
-            </Card>
-        </div>
+export const allTools: Tool[] = toolCategories.flatMap(category => category.tools);
 
-        <section>
-            <h2 className="text-2xl font-bold mb-4">Real-Life Application Scenarios</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-card p-6 rounded-lg">
-                    <h3 className="font-semibold text-lg mb-2">E-commerce Store Outage</h3>
-                    <p className="text-sm text-muted-foreground">An online store suddenly sees its sales drop to zero. Panicked customers report seeing a "Your connection is not private" error. The store owner uses this tool, enters their domain, and discovers their SSL certificate expired yesterday. They immediately contact their hosting provider to renew it, restoring trust and bringing the store back online.</p>
-                </div>
-                 <div className="bg-card p-6 rounded-lg">
-                    <h3 className="font-semibold text-lg mb-2">API Integration Debugging</h3>
-                    <p className="text-sm text-muted-foreground">A developer's application is failing to connect to a third-party API, receiving a "certificate validation failed" error. They use the SSL checker on the API's endpoint and find that the certificate was issued by a new, untrusted Certificate Authority. This tells them they need to update the trust store on their application server to include the new CA's root certificate.</p>
-                </div>
-                 <div className="bg-card p-6 rounded-lg">
-                    <h3 className="font-semibold text-lg mb-2">Routine Security Audit</h3>
-                    <p className="text-sm text-muted-foreground">As part of a quarterly security audit, a system administrator uses this tool to check the certificates on all of the company's public-facing websites. They discover that one marketing microsite has a certificate with only 15 days remaining. This allows them to proactively renew the certificate long before it becomes an emergency.</p>
-                </div>
-                 <div className="bg-card p-6 rounded-lg">
-                    <h3 className="font-semibold text-lg mb-2">Verifying a New Site's Security</h3>
-                    <p className="text-sm text-muted-foreground">Before entering payment information on an unfamiliar e-commerce site, a savvy user decides to check its legitimacy. They use this tool to see who issued the certificate. Seeing it was issued by a well-known authority like DigiCert to the correct company name gives them the confidence to proceed with their purchase.</p>
-                </div>
-            </div>
-        </section>
-        
-        <section>
-            <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
-            <Card>
-                <CardContent className="p-6">
-                    <Accordion type="single" collapsible className="w-full">
-                        {faqData.map((item, index) => (
-                            <AccordionItem value={`item-${index}`} key={index}>
-                                <AccordionTrigger>{item.question}</AccordionTrigger>
-                                <AccordionContent>{item.answer}</AccordionContent>
-                            </AccordionItem>
-                        ))}
-                    </Accordion>
-                </CardContent>
-            </Card>
-        </section>
-        
-         <section>
-            <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <Link href="/tools/http-header-checker" className="block">
-                    <Card className="hover:border-primary transition-colors h-full">
-                        <CardHeader>
-                            <CardTitle className="text-base flex items-center justify-between">HTTP Header Checker<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                            <CardDescription className="text-xs">Check for security headers like HSTS, which works with SSL.</CardDescription>
-                        </CardHeader>
-                    </Card>
-                </Link>
-                <Link href="/tools/dns-lookup" className="block">
-                    <Card className="hover:border-primary transition-colors h-full">
-                        <CardHeader>
-                            <CardTitle className="text-base flex items-center justify-between">DNS Lookup Tool<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                            <CardDescription className="text-xs">Verify that your domain is pointing to the correct server IP before checking its SSL.</CardDescription>
-                        </CardHeader>
-                    </Card>
-                </Link>
-                <Link href="/tools/password-strength-checker" className="block">
-                    <Card className="hover:border-primary transition-colors h-full">
-                        <CardHeader>
-                            <CardTitle className="text-base flex items-center justify-between">Password Strength Checker<ChevronRight className="h-4 w-4 text-muted-foreground" /></CardTitle>
-                            <CardDescription className="text-xs">While SSL protects data in transit, a strong password protects it at rest.</CardDescription>
-                        </CardHeader>
-                    </Card>
-                </Link>
-            </div>
-        </section>
-      </div>
-    </>
-  );
-}
+export const mainNavLinks = []

@@ -5,7 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { CheckCircle, AlertCircle, Search, FileJson, Clipboard, Check } from 'lucide-react';
+import { CheckCircle, AlertCircle, Search, Clipboard, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export function StructuredDataTester() {
