@@ -44,17 +44,17 @@ const DomainExpiryCountdownPage = () => {
   return (
     <>
       <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
-        />
-         <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
-        />
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
+      />
       <PageHeader
         title="Domain Expiration Countdown"
         description="Never let your domain expire by accident. This tool performs a live WHOIS lookup to find your domain's expiration date and provides a real-time countdown."
@@ -171,7 +171,7 @@ const DomainExpiryCountdownPage = () => {
                 </div>
                  <div className="bg-card p-6 rounded-lg">
                     <h3 className="font-semibold text-lg mb-2">Cybersecurity Investigation</h3>
-                    <p className="text-sm text-muted-foreground">A cybersecurity analyst receives a phishing email from a suspicious domain. They use this tool to perform a WHOIS lookup. They find the domain was just registered two days ago from a registrar known for lax policies. This information, combined with other factors, strongly indicates the domain is malicious and can be added to a blocklist.</p>
+                    <p className="text-sm text-muted-foreground">A cybersecurity analyst receives a phishing email from a suspicious domain. They use this tool to perform a WHOIS lookup. They find the domain was just registered two days ago from a registrar known for being lenient. This information, combined with other factors, strongly indicates the domain is malicious and can be added to a blocklist.</p>
                 </div>
             </div>
         </section>
