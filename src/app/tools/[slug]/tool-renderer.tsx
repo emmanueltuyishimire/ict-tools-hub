@@ -90,7 +90,7 @@ const AlgorithmStepSimulator = dynamic(() => import('@/app/tools/algorithm-simul
 const CloudStorageCostEstimator = dynamic(() => import('@/app/tools/cloud-storage-cost-estimator/cloud-storage-cost-estimator').then(mod => mod.CloudStorageCostEstimator), { loading: () => <LoadingComponent /> });
 const BandwidthCostCalculator = dynamic(() => import('@/app/tools/bandwidth-cost-calculator/bandwidth-cost-calculator').then(mod => mod.BandwidthCostCalculator), { loading: () => <LoadingComponent /> });
 const BackupStorageCalculator = dynamic(() => import('@/app/tools/backup-storage-calculator/backup-storage-calculator').then(mod => mod.BackupStorageCalculator), { loading: () => <LoadingComponent /> });
-const VmRequirementEstimator = dynamic(() => import('@app/tools/vm-requirement-estimator/vm-requirement-estimator').then(mod => mod.VmRequirementEstimator), { loading: () => <LoadingComponent /> });
+const VmRequirementEstimator = dynamic(() => import('@/app/tools/vm-requirement-estimator/vm-requirement-estimator').then(mod => mod.VmRequirementEstimator), { loading: () => <LoadingComponent /> });
 const DiskUsageEstimator = dynamic(() => import('@/app/tools/disk-usage-estimator/disk-usage-estimator').then(mod => mod.DiskUsageEstimator), { loading: () => <LoadingComponent /> });
 const CloudInstanceCostCalculator = dynamic(() => import('@/app/tools/cloud-instance-cost-calculator/cloud-instance-cost-calculator').then(mod => mod.CloudInstanceCostCalculator), { loading: () => <LoadingComponent /> });
 const StorageMemoryCostAnalyzer = dynamic(() => import('@/app/tools/storage-memory-cost-analyzer/storage-memory-cost-analyzer').then(mod => mod.StorageMemoryCostAnalyzer), { loading: () => <LoadingComponent /> });
@@ -115,6 +115,7 @@ const LogRotationCalculator = dynamic(() => import('@/app/tools/log-rotation-cal
 const TpsCalculator = dynamic(() => import('@/app/tools/tps-calculator/tps-calculator').then(mod => mod.TpsCalculator), { loading: () => <LoadingComponent /> });
 const SqlInjectionTester = dynamic(() => import('@/app/tools/sql-injection-tester/sql-injection-tester').then(mod => mod.SqlInjectionTester), { loading: () => <LoadingComponent /> });
 const IpLookupTool = dynamic(() => import('@/app/tools/ip-lookup/ip-lookup-tool').then(mod => mod.IpLookupTool), { loading: () => <LoadingComponent /> });
+const StructuredDataTester = dynamic(() => import('@/app/tools/structured-data-tester/structured-data-tester').then(mod => mod.StructuredDataTester), { loading: () => <LoadingComponent /> });
 
 const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
   'ip-lookup': IpLookupTool,
@@ -211,6 +212,7 @@ const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
   'log-rotation-calculator': LogRotationCalculator,
   'tps-calculator': TpsCalculator,
   'sql-injection-tester': SqlInjectionTester,
+  'structured-data-tester': StructuredDataTester,
 };
 
 export default function ToolRenderer({ slug }: { slug: string }) {

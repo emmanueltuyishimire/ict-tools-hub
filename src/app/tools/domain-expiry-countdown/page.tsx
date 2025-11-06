@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
+import { faqData, howToSchema, keyTerminologies } from './schema';
 
 
 export const metadata = {
@@ -18,48 +19,27 @@ export const metadata = {
     }
 };
 
-const faqData = [
-    { question: "What is WHOIS?", answer: "WHOIS is a query and response protocol that is widely used for querying databases that store the registered users or assignees of an Internet resource, such as a domain name. It returns information including the domain owner, registrar, creation date, and expiration date." },
-    { question: "What happens if my domain expires?", answer: "If your domain expires, your website and email will stop working. The domain enters a 'grace period' where you can usually renew it, often at a higher price. If you don't renew it, it may go into a 'redemption period' (even more expensive to recover) before eventually being released to the public, at which point anyone can register it." },
-    { question: "Is my personal information public in a WHOIS lookup?", answer: "Traditionally, yes. However, due to privacy regulations like GDPR, many registrars now offer 'WHOIS privacy' or 'domain privacy' services. This service replaces your personal information in the public WHOIS record with the details of a proxy service, protecting your privacy." },
-    { question: "Why can't this tool find the expiration date for my domain?", answer: "There are a few reasons this might happen. The domain may not be registered. The registrar might have a very non-standard WHOIS response format that our parser can't read. Or, the domain might have a privacy service that redacts this information (though this is less common for expiration dates)." },
-    { question: "How accurate is the WHOIS data?", answer: "The data is as accurate as the registrar's database. By ICANN rules, this information is required to be accurate. The 'Updated Date' can tell you when the record was last modified." },
-    { question: "What is a domain registrar?", answer: "A domain registrar is a company accredited by ICANN (Internet Corporation for Assigned Names and Numbers) to manage the reservation of internet domain names. Examples include GoDaddy, Namecheap, and Google Domains. The registrar is who you pay to register and renew your domain." },
-    { question: "How far in advance should I renew my domain?", answer: "It is best practice to renew your domain at least 30-90 days before its expiration date. Many businesses opt to set their domains to 'auto-renew' with their registrar to completely avoid the risk of accidental expiration." },
-    { question: "What's the difference between 'Updated Date' and 'Creation Date'?", answer: "'Creation Date' is the date the domain was first registered. 'Updated Date' is the last time any information in the WHOIS record was modified, such as changing contact details or nameservers." },
-    { question: "Does domain age affect SEO?", answer: "While a very complex topic, many SEO experts believe that the age of a domain (how long it has been registered) can be a minor positive ranking factor, as it can signal stability and longevity to search engines. However, the quality of content and backlinks are far more important." },
-    { question: "Can I check the expiration of any TLD (Top-Level Domain)?", answer: "This tool attempts to follow WHOIS referrals to find the correct server for most common TLDs (like .com, .net, .org). However, some country-code TLDs (ccTLDs) have their own unique WHOIS servers or policies that may not be compatible with this basic tool." }
-];
+const DomainExpiryCountdownPage = () => {
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))
+    };
 
-const howToSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'HowTo',
-    name: 'How to Check a Domain\'s Expiration Date',
-    description: 'A step-by-step guide to finding and tracking your domain\'s expiry.',
-    step: [
-        { '@type': 'HowToStep', name: 'Enter Domain Name', text: 'Type the domain name you want to check into the input field (e.g., example.com).' },
-        { '@type': 'HowToStep', name: 'Check Expiry', text: 'Click the "Check Expiry" button. Our server will perform a WHOIS lookup to find the registration data.' },
-        { '@type': 'HowToStep', name: 'Review the Countdown', text: 'The tool will display a live countdown showing the time remaining until the domain expires.' },
-        { '@type': 'HowToStep', name: 'Analyze WHOIS Details', text: 'A table will show other key details from the WHOIS record, such as the registrar, creation date, and last updated date.' }
-    ],
-    totalTime: 'PT1M'
-};
-
-const keyTerminologies = [
-    { term: 'WHOIS', definition: 'A protocol for querying databases to get registration information about an internet resource like a domain name.' },
-    { term: 'Domain Registrar', definition: 'A company that manages the reservation of domain names (e.g., GoDaddy, Namecheap).' },
-    { term: 'Expiration Date', definition: 'The date on which a domain name registration is no longer valid and the associated services (website, email) will stop working.' },
-    { term: 'Grace Period', definition: 'A period after a domain expires during which the original owner can still renew it, often without extra fees.' },
-    { term: 'Redemption Period', definition: 'A period after the grace period where the domain has not yet been released to the public, but renewing it incurs a significant extra fee.' },
-    { term: 'ICANN', definition: 'The Internet Corporation for Assigned Names and Numbers, the non-profit organization responsible for coordinating the maintenance of the internet\'s namespaces.' },
-];
-
-export default function DomainExpiryCountdownPage() {
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer}}))
-  };
+    const softwareAppSchema = {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Domain Expiration Countdown & WHOIS Checker",
+        "operatingSystem": "All",
+        "applicationCategory": "SecurityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "A free online tool to check the expiration date of a domain name via a WHOIS lookup and provide a live countdown.",
+        "url": "https://www.icttoolbench.com/tools/domain-expiry-countdown"
+    };
 
   return (
     <>
@@ -70,6 +50,10 @@ export default function DomainExpiryCountdownPage() {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+        />
+         <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
         />
       <PageHeader
         title="Domain Expiration Countdown"
