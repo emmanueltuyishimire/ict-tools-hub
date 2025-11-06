@@ -23,7 +23,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <SidebarProvider defaultOpen>
+    <SidebarProvider defaultOpen={false}>
         <Sidebar>
           <SidebarHeader>
             <Logo />
