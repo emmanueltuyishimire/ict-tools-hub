@@ -6,10 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Check, Clipboard, AlertCircle, Wand, Lightbulb, BookOpen, ChevronRight, AlertTriangle } from 'lucide-react';
+import { Check, Clipboard, AlertCircle } from 'lucide-react';
 import { Label } from '@/components/ui/label';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import Link from 'next/link';
 
 export function IpToBinaryConverter() {
     const [ip, setIp] = useState('192.168.1.1');

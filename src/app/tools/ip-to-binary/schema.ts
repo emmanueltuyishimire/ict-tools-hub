@@ -1,4 +1,5 @@
 
+
 export const faqData = [
     {
         question: "How does the IP to Binary conversion work?",
@@ -65,6 +66,21 @@ export const howToSchema = {
         }
     ],
     totalTime: 'PT1M',
+};
+
+export const softwareAppSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "IP to Binary Converter",
+    "operatingSystem": "All",
+    "applicationCategory": "DeveloperApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "A free online tool to convert IPv4 addresses from dot-decimal to their 32-bit binary representation.",
+    "url": "https://ict.calculation.site/tools/ip-to-binary"
 };
 
 export const keyTerminologies = [
