@@ -75,7 +75,7 @@ export default function RootLayout({
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=pub-3042243846300811"
           crossOrigin="anonymous"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-2LF3Z5PGR4" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
