@@ -2,6 +2,7 @@
 import { allTools, toolCategories } from '@/lib/tools';
 import ToolRenderer from './tool-renderer';
 import { Metadata } from 'next';
+import React from 'react';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const tool = allTools.find((t) => t.slug === params.slug);
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
   }
 
-  const canonicalUrl = `https://calculation.site/ict/tools/${tool.slug}`;
+  const canonicalUrl = `https://ict.calculation.site/tools/${tool.slug}`;
   const category = toolCategories.find(cat => cat.tools.some(t => t.slug === tool.slug));
 
   const breadcrumbSchema = {
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         '@type': 'ListItem',
         position: 1,
         name: 'ICT Tools Hub',
-        item: `https://calculation.site/ict`,
+        item: `https://ict.calculation.site`,
       },
       {
         '@type': 'ListItem',
@@ -76,7 +77,55 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default function ToolPage({ params }: { params: { slug: string } }) {
-  return <ToolRenderer slug={params.slug} />;
+  const tool = allTools.find((t) => t.slug === params.slug);
+  const softwareAppSchema = {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": tool?.name,
+      "operatingSystem": "All",
+      "applicationCategory": "Utilities",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": tool?.description,
+      "url": `https://ict.calculation.site/tools/${tool?.slug}`
+  };
+
+  const category = toolCategories.find(cat => cat.tools.some(t => t.slug === tool?.slug));
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'ICT Tools Hub',
+        item: `https://ict.calculation.site`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: category?.name || 'Tools',
+        item: `https://ict.calculation.site/tools/${tool?.slug}`, 
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: tool?.name,
+        item: `https://ict.calculation.site/tools/${tool?.slug}`,
+      },
+    ],
+  };
+
+  return (
+    <>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}/>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}/>
+        <ToolRenderer slug={params.slug} />
+    </>
+  );
 }
 
 export function generateStaticParams() {

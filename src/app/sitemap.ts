@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next';
 import { toolCategories } from '@/lib/tools';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://calculation.site/ict';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ict.calculation.site';
 
   const toolUrls = toolCategories.flatMap(category =>
     category.tools.map(tool => ({

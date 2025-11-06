@@ -21,7 +21,7 @@ const sourceCodePro = Source_Code_Pro({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://calculation.site'),
+  metadataBase: new URL('https://ict.calculation.site'),
   title: {
     default: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     template: '%s | ICT Tools Hub',
@@ -31,11 +31,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ICT Tools Hub - Your Ultimate Tech Toolkit',
     description: 'A comprehensive suite of free online tools for ICT professionals and students.',
-    url: '/ict',
+    url: '/',
     siteName: 'ICT Tools Hub',
     images: [
       {
-        url: '/ict/og-image.png',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
       },
@@ -58,7 +58,7 @@ const webAppSchema = {
   '@type': 'WebApplication',
   name: 'ICT Tools Hub',
   description: 'A comprehensive suite of free online tools for ICT professionals, students, and enthusiasts, including networking, programming, and security utilities.',
-  url: 'https://calculation.site/ict',
+  url: 'https://ict.calculation.site',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'All',
   offers: {
