@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -122,5 +121,3 @@ export function FactorialCalculator() {
         </Card>
     );
 }
-
-    

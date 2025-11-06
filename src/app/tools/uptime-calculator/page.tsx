@@ -3,9 +3,9 @@ import { PageHeader } from '@/components/page-header';
 import { UptimeCalculator } from './uptime-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { Lightbulb, AlertTriangle, BookOpen, ChevronRight, Wand } from 'lucide-react';
 import Link from 'next/link';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const metadata = {
     title: 'Server Uptime & SLA Calculator | 99.9% Availability | ICT Toolbench',
@@ -53,10 +53,29 @@ const keyTerminologies = [
 ];
 
 export default function UptimeCalculatorPage() {
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer.replace(/<[^>]*>?/gm, ''),
+            },
+        })),
+    };
+
   return (
     <>
-      <StructuredData data={faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } }))} />
-      <StructuredData data={howToSchema} />
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
       <PageHeader
         title="Server Uptime & SLA Calculator"
         description="Quickly calculate server uptime percentage from a known downtime period, or see how an SLA percentage (e.g., 99.9%) translates into actual hours of downtime."
@@ -131,7 +150,7 @@ export default function UptimeCalculatorPage() {
                           </tbody>
                       </table>
                   </div>
-                  <p>As you can see, the difference between 99.9% and 99.99% is the difference between nearly 9 hours of downtime and less than an hour of downtime per year. For a mission-critical e-commerce site, those 7+ hours could mean thousands of dollars in lost revenue.</p>
+                  <p>As you can see, the difference between 99.9% and 99.99% uptime is the difference between nearly 9 hours of downtime and less than an hour of downtime per year. For a mission-critical e-commerce site, those 7+ hours could mean thousands of dollars in lost revenue.</p>
               </section>
                <section>
                     <h3 className="font-bold text-xl">The Path to High Availability</h3>

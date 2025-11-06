@@ -41,9 +41,18 @@ export default function SslCheckerPage() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
+      />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
             title="SSL Certificate Checker"
@@ -184,7 +193,7 @@ export default function SslCheckerPage() {
                 </CardContent>
             </Card>
         </section>
-
+        
          <section>
             <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

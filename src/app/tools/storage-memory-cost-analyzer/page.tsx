@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { StorageMemoryCostAnalyzer } from './storage-memory-cost-analyzer';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -50,9 +49,18 @@ const StorageMemoryCostAnalyzerPage = () => {
 
     return (
         <>
-            <StructuredData data={faqSchema} />
-            <StructuredData data={howToSchema} />
-            <StructuredData data={softwareAppSchema} />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+            />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
+            />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
                     title="Storage vs. Memory Cost Analyzer"
@@ -172,7 +180,7 @@ const StorageMemoryCostAnalyzerPage = () => {
                         </CardContent>
                     </Card>
                 </div>
-
+                
                <section>
                   <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
                   <Card>

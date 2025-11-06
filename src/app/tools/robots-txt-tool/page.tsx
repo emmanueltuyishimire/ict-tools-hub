@@ -55,24 +55,16 @@ const howToSchema = {
 };
 
 export default function RobotsTxtToolPage() {
-  const faqPageSchema = {
+  const faqSchemaData = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqData.map(item => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.answer.replace(/<[^>]*>?/gm, ''),
-      },
-    })),
+    mainEntity: faqData.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '') } }))
   };
-
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchemaData) }}
       />
       <script
         type="application/ld+json"

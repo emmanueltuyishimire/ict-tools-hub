@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -141,4 +140,3 @@ export function UserQuotaCalculator() {
         </Card>
     );
 }
-

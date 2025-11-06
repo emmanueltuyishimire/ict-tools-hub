@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -92,7 +91,7 @@ export function FibonacciGeneratorTool() {
                     <div className="space-y-4">
                         <div className="flex justify-between items-center">
                             <Label htmlFor="sequence-output">
-                                Generated Sequence ({generatedSequence.length.toLocaleString()} numbers)
+                                Found {generatedPrimes.length.toLocaleString()} prime numbers
                             </Label>
                             <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleCopy}>
                                 {hasCopied ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}

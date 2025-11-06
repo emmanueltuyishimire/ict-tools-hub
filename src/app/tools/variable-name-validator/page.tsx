@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { VariableNameValidator } from './variable-name-validator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -50,9 +49,18 @@ const VariableNameValidatorPage = () => {
 
   return (
     <>
-      <StructuredData data={faqSchema} />
-      <StructuredData data={howToSchema} />
-      <StructuredData data={softwareAppSchema} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
+      />
       <div className="max-w-4xl mx-auto space-y-12">
         <PageHeader
           title="Variable Name Validator"
@@ -168,7 +176,7 @@ const VariableNameValidatorPage = () => {
                      <div className='flex items-center gap-2'><AlertTriangle className="h-6 w-6 text-destructive" /> <CardTitle>Common Mistakes to Avoid</CardTitle></div>
                 </CardHeader>
                 <CardContent>
-                    <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
+                     <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground">
                         <li><strong>Using Reserved Keywords:</strong> Trying to name a variable `class` in Java or `for` in Python will always result in a syntax error.</li>
                         <li><strong>Starting with a Number:</strong> `1stPlace` is an invalid variable name in all major languages.</li>
                         <li><strong>Using Hyphens:</strong> `first-name` is invalid for variables. The hyphen is interpreted as a minus sign. Use `firstName` or `first_name` instead.</li>

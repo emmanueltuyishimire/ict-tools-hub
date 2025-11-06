@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -172,4 +171,3 @@ export function DbStorageEstimator() {
         </Card>
     );
 }
-

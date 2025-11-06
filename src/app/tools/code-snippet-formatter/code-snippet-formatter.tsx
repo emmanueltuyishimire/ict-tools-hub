@@ -65,6 +65,7 @@ const formatCss = (code: string): string => {
 };
 
 const formatJs = (code: string): string => {
+    // A very basic JS formatter
     let indentLevel = 0;
     const tab = '  ';
     let formattedCode = '';

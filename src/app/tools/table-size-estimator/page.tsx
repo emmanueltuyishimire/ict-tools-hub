@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import { DbStorageEstimator } from '@/app/tools/db-storage-estimator/db-storage-estimator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { StructuredData } from '@/components/structured-data';
 import { BookOpen, AlertTriangle, Wand, ChevronRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { faqData, howToSchema, keyTerminologies } from './schema';
@@ -21,10 +20,23 @@ export const metadata = {
 };
 
 const TableSizeEstimatorPage = () => {
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer.replace(/<[^>]*>?/gm, ''),
+            },
+        })),
+    };
+
     const softwareAppSchema = {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": "Database Table Size Estimator",
+      "name": "Database Row / Storage Estimator",
       "operatingSystem": "All",
       "applicationCategory": "DeveloperApplication",
       "offers": {
@@ -33,18 +45,27 @@ const TableSizeEstimatorPage = () => {
         "priceCurrency": "USD"
       },
       "description": "A free online tool for developers and DBAs to estimate database table storage requirements based on table schema, row count, and index overhead.",
-      "url": "https://www.icttoolbench.com/tools/table-size-estimator"
+      "url": "https://www.icttoolbench.com/tools/db-storage-estimator"
     };
 
     return (
         <>
-            <StructuredData data={faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))} />
-            <StructuredData data={howToSchema} />
-            <StructuredData data={softwareAppSchema} />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+            />
+             <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
+            />
             <div className="max-w-4xl mx-auto space-y-12">
                 <PageHeader
-                    title="Database Table Size Estimator"
-                    description="Plan your database capacity by modeling your table schema and forecasting total storage needs, including indexes and overhead. This tool is a crucial first step for database architects, developers, and system administrators in designing a scalable and cost-effective database."
+                    title="Database Row / Storage Estimator"
+                    description="Plan your database capacity by modeling your table schema and forecasting total storage needs, including indexes and overhead. A crucial first step in designing a scalable and cost-effective database."
                 />
                 
                 <DbStorageEstimator />
