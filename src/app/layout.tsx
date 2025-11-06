@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     siteName: 'ICT Tools Hub',
     images: [
       {
-        url: '/og-image.png',
+        url: '/ict/og-image.png',
         width: 1200,
         height: 630,
       },
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     description: 'A comprehensive suite of free online tools for ICT professionals and students.',
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: '/ict/favicon.ico',
   },
 };
 
