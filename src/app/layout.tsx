@@ -1,23 +1,11 @@
 
 import type { Metadata } from 'next';
-import { Inter, Source_Code_Pro } from 'next/font/google';
 import Script from 'next/script';
 import { cn } from '@/lib/utils';
 import './globals.css';
 import { AppLayout } from '@/components/app-layout';
 import { Toaster } from '@/components/ui/toaster';
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-});
-
-const sourceCodePro = Source_Code_Pro({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-source-code-pro',
-});
+import { fontBody, fontCode } from '@/app/fonts';
 
 
 export const metadata: Metadata = {
@@ -74,7 +62,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sourceCodePro.variable}`}>
+    <html lang="en" suppressHydrationWarning className={cn(fontBody.variable, fontCode.variable)}>
       <head>
         <script
           type="application/ld+json"
