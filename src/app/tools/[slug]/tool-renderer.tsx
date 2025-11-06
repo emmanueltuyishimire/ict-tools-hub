@@ -257,5 +257,3 @@ export default function ToolRenderer({ slug }: { slug: string }) {
     </div>
   );
 }
-
-    

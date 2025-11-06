@@ -14,6 +14,27 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 
   const canonicalUrl = `https://ict.calculation.site/tools/${tool.slug}`;
+  
+  return {
+    title: `${tool.name} | ICT Tools Hub`,
+    description: tool.description,
+    alternates: {
+        canonical: canonicalUrl,
+    },
+    openGraph: {
+        title: `${tool.name} | ICT Tools Hub`,
+        description: tool.description,
+        url: canonicalUrl,
+    },
+  };
+}
+
+export default function ToolPage({ params }: { params: { slug: string } }) {
+  const tool = allTools.find((t) => t.slug === params.slug);
+  if (!tool) {
+    return <ToolRenderer slug={params.slug} />; // Let renderer handle notFound
+  }
+  const canonicalUrl = `https://ict.calculation.site/tools/${tool.slug}`;
   const category = toolCategories.find(cat => cat.tools.some(t => t.slug === tool.slug));
 
   const breadcrumbSchema = {
@@ -30,8 +51,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         '@type': 'ListItem',
         position: 2,
         name: category?.name || 'Tools',
-        // Since category pages don't exist, we can link back to the main page
-        // or to the tool page itself. Linking to the tool is simpler here.
         item: canonicalUrl, 
       },
       {
@@ -58,30 +77,18 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       "url": canonicalUrl
   };
 
-  return {
-    title: `${tool.name} | ICT Tools Hub`,
-    description: tool.description,
-    alternates: {
-        canonical: canonicalUrl,
-    },
-    openGraph: {
-        title: `${tool.name} | ICT Tools Hub`,
-        description: tool.description,
-        url: canonicalUrl,
-    },
-    other: {
-      'structured-data-breadcrumb': JSON.stringify(breadcrumbSchema),
-      'structured-data-software': JSON.stringify(softwareAppSchema)
-    }
-  };
-}
 
-export default function ToolPage({ params }: { params: { slug: string } }) {
-  // All metadata including structured data is now handled in generateMetadata.
-  // The component is now only responsible for rendering the tool.
   return (
     <>
-        <ToolRenderer slug={params.slug} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
+      />
+      <ToolRenderer slug={params.slug} />
     </>
   );
 }
