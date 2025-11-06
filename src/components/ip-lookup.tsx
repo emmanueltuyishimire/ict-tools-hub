@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Wifi } from 'lucide-react';
+import { Wifi, Copy } from 'lucide-react';
 import { Button } from './ui/button';
 import { useToast } from '@/hooks/use-toast';
 
@@ -18,7 +18,12 @@ export function IpLookup() {
         setLoading(true);
         setError(null);
         fetch('https://ipapi.co/json/')
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return res.json();
+            })
             .then(data => {
                 if (data.ip) {
                     setIpData(data);
@@ -46,16 +51,16 @@ export function IpLookup() {
 
     if (loading) {
         return (
-            <Card className="mt-6">
-                <CardHeader>
-                    <CardTitle className="text-lg flex items-center gap-2">
-                        <Wifi className="h-5 w-5 text-primary" />
-                        Fetching Your Public IP Address...
-                    </CardTitle>
+            <Card>
+                 <CardHeader className="pb-2">
+                    <div className="bg-primary/10 p-3 rounded-full w-fit mx-auto">
+                         <Wifi className="h-6 w-6 text-primary" />
+                    </div>
+                    <CardTitle className="text-xl mt-2 text-center">Your Public IP Address</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-2">
-                    <Skeleton className="h-8 w-1/2" />
-                    <Skeleton className="h-4 w-3/4" />
+                <CardContent className="flex flex-col items-center justify-center text-center p-6 pt-0">
+                    <Skeleton className="h-8 w-40 mb-2" />
+                    <Skeleton className="h-4 w-32" />
                 </CardContent>
             </Card>
         );
@@ -63,14 +68,14 @@ export function IpLookup() {
     
     if (error) {
          return (
-            <Card className="mt-6 border-destructive/50">
-                <CardHeader>
-                    <CardTitle className="text-lg text-destructive flex items-center gap-2">
-                        <Wifi className="h-5 w-5" />
-                        IP Address Lookup Failed
-                    </CardTitle>
+            <Card className="border-destructive/50">
+                 <CardHeader className="pb-2">
+                    <div className="bg-destructive/10 p-3 rounded-full w-fit mx-auto">
+                        <Wifi className="h-6 w-6 text-destructive" />
+                    </div>
+                    <CardTitle className="text-xl mt-2 text-center">IP Lookup Failed</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="text-center p-6 pt-0">
                     <p className="text-sm text-destructive">{error}</p>
                 </CardContent>
             </Card>
@@ -78,23 +83,23 @@ export function IpLookup() {
     }
 
     return (
-        <Card className="mt-6 bg-secondary/30 border-primary/20">
-            <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2 text-primary">
-                    <Wifi className="h-5 w-5" />
-                    Your Public IP Address
-                </CardTitle>
+        <Card className="flex flex-col justify-center items-center text-center p-6">
+            <CardHeader className="pb-2">
+                 <div className="bg-primary/10 p-3 rounded-full w-fit mx-auto">
+                    <Wifi className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle className="text-xl mt-2">Your Public IP Address</CardTitle>
             </CardHeader>
             <CardContent>
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="text-center sm:text-left">
-                        <p className="text-3xl font-bold font-mono tracking-wider">{ipData?.ip}</p>
-                        {ipData?.city && ipData?.country_name && (
-                            <p className="text-muted-foreground">{ipData.city}, {ipData.region}, {ipData.country_name}</p>
-                        )}
-                    </div>
-                     <Button onClick={handleCopy}>Copy IP Address</Button>
+                <div className="flex items-center gap-2 bg-muted p-2 rounded-md justify-center">
+                    <p className="text-2xl font-bold font-mono tracking-wider">{ipData?.ip}</p>
+                    <Button variant="ghost" size="icon" onClick={handleCopy} aria-label="Copy IP Address">
+                        <Copy className="h-5 w-5" />
+                    </Button>
                 </div>
+                {ipData?.city && ipData?.country_name && (
+                    <CardDescription className="mt-2">{ipData.city}, {ipData.region}, {ipData.country_name}</CardDescription>
+                )}
             </CardContent>
         </Card>
     );
