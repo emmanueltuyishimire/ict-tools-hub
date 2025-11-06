@@ -60,7 +60,6 @@ const webAppSchema = {
   description: 'A comprehensive suite of free online tools for ICT professionals, students, and enthusiasts, including networking, programming, and security utilities.',
   url: 'https://ict.calculation.site',
   applicationCategory: 'DeveloperApplication',
-  operatingSystem: 'All',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -86,7 +85,7 @@ export default function RootLayout({
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=pub-3042243846300811"
           crossOrigin="anonymous"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-2LF3Z5PGR4" />
         <Script id="google-analytics">

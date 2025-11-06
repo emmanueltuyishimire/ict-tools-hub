@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -55,7 +54,7 @@ export default function VmScalingCalculator() {
                                   <li>Queue length in a messaging system.</li>
                               </ul>
                           </li>
-                          <li><strong>Phase 5: Monitor, Test, and Iterate.</strong> Deploy your initial configuration, but don't "set it and forget it." Use cloud monitoring tools to watch your application's real-world performance. Conduct load testing to see how your system behaves under stress and adjust your instance sizes and scaling rules accordingly.</li>
+                          <li><strong>Phase 5: Monitor, Test, and Iterate.</strong> Deploy your initial configuration, monitor its real-world performance, and use the data to continuously refine your instance sizes and scaling rules.</li>
                       </ol>
                   </Card>
               </section>
