@@ -77,52 +77,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default function ToolPage({ params }: { params: { slug: string } }) {
-  const tool = allTools.find((t) => t.slug === params.slug);
-  const softwareAppSchema = {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": tool?.name,
-      "operatingSystem": "All",
-      "applicationCategory": "Utilities",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "description": tool?.description,
-      "url": `https://ict.calculation.site/tools/${tool?.slug}`
-  };
-
-  const category = toolCategories.find(cat => cat.tools.some(t => t.slug === tool?.slug));
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'ICT Tools Hub',
-        item: `https://ict.calculation.site`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: category?.name || 'Tools',
-        item: `https://ict.calculation.site/tools/${tool?.slug}`, 
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: tool?.name,
-        item: `https://ict.calculation.site/tools/${tool?.slug}`,
-      },
-    ],
-  };
-
+  // All metadata including structured data is now handled in generateMetadata.
+  // The component is now only responsible for rendering the tool.
   return (
     <>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}/>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}/>
         <ToolRenderer slug={params.slug} />
     </>
   );
