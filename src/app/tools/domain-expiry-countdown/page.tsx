@@ -20,25 +20,25 @@ export const metadata = {
 };
 
 const DomainExpiryCountdownPage = () => {
+    const softwareAppSchema = {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Domain Expiration Countdown & WHOIS Checker",
+      "operatingSystem": "All",
+      "applicationCategory": "SecurityApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "A free online tool to check the expiration date of a domain name via a WHOIS lookup and provide a live countdown.",
+      "url": "https://www.icttoolbench.com/tools/domain-expiry-countdown"
+    };
+
     const faqSchema = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
         mainEntity: faqData.map(item => ({'@type': 'Question', name: item.question, acceptedAnswer: {'@type': 'Answer', text: item.answer.replace(/<[^>]*>?/gm, '')}}))
-    };
-
-    const softwareAppSchema = {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Domain Expiration Countdown & WHOIS Checker",
-        "operatingSystem": "All",
-        "applicationCategory": "SecurityApplication",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "description": "A free online tool to check the expiration date of a domain name via a WHOIS lookup and provide a live countdown.",
-        "url": "https://www.icttoolbench.com/tools/domain-expiry-countdown"
     };
 
   return (
