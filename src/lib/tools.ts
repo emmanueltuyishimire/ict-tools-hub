@@ -1,4 +1,3 @@
-
 import {
   type LucideIcon,
   Network,
@@ -7,10 +6,7 @@ import {
   Shield,
   Cloud,
   Database,
-  BookOpen,
   BrainCircuit,
-  Wrench,
-  Boxes,
 } from 'lucide-react';
 
 export type Tool = {
@@ -64,7 +60,6 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Robots.txt Validator / Generator', slug: 'robots-txt-tool', description: 'Validate or generate a robots.txt file.' },
       { name: 'Sitemap Generator (static)', slug: 'sitemap-generator', description: 'Generate a static XML sitemap.' },
       { name: 'Response Time Calculator', slug: 'response-time-calculator', description: 'Calculate server response time.' },
-      { name: 'Domain Expiration Countdown', slug: 'domain-expiry-countdown', description: 'Countdown to domain expiration.' },
       { name: 'SSL Checker', slug: 'ssl-checker', description: 'Check SSL certificate details.' },
       { name: 'Server Uptime Calculator', slug: 'uptime-calculator', description: 'Calculate server uptime percentage.' },
       { name: 'DNS Lookup Tool', slug: 'dns-lookup', description: 'Perform a DNS lookup.' },
@@ -74,6 +69,7 @@ export const toolCategories: ToolCategory[] = [
       { name: 'Cache Expiration Calculator', slug: 'cache-expiry-calculator', description: 'Calculate cache expiration dates.' },
       { name: 'Compression Savings Estimator', slug: 'compression-estimator', description: 'Estimate savings from compression.' },
       { name: 'CDN Bandwidth Estimator', slug: 'cdn-bandwidth-estimator', description: 'Estimate CDN bandwidth usage.' },
+      { name: 'Structured Data Tester', slug: 'structured-data-tester', description: 'Validate JSON-LD structured data.' },
     ],
   },
   {

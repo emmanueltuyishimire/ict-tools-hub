@@ -1,4 +1,3 @@
-
 'use client';
 
 import { allTools } from '@/lib/tools';
@@ -51,7 +50,6 @@ const CodeMinifier = dynamic(() => import('@/app/tools/code-minifier/code-minifi
 const RobotsTxtTool = dynamic(() => import('@/app/tools/robots-txt-tool/robots-txt-tool').then(mod => mod.RobotsTxtTool), { loading: () => <LoadingComponent /> });
 const SitemapGenerator = dynamic(() => import('@/app/tools/sitemap-generator/sitemap-generator').then(mod => mod.SitemapGenerator), { loading: () => <LoadingComponent /> });
 const ResponseTimeCalculator = dynamic(() => import('@/app/tools/response-time-calculator/response-time-calculator').then(mod => mod.ResponseTimeCalculator), { loading: () => <LoadingComponent /> });
-const DomainExpiryCountdown = dynamic(() => import('@/app/tools/domain-expiry-countdown/domain-expiry-countdown').then(mod => mod.DomainExpiryCountdown), { loading: () => <LoadingComponent /> });
 const SslChecker = dynamic(() => import('@/app/tools/ssl-checker/ssl-checker').then(mod => mod.SslChecker), { loading: () => <LoadingComponent /> });
 const UptimeCalculator = dynamic(() => import('@/app/tools/uptime-calculator/uptime-calculator').then(mod => mod.UptimeCalculator), { loading: () => <LoadingComponent /> });
 const DnsLookupTool = dynamic(() => import('@/app/tools/dns-lookup/dns-lookup-tool').then(mod => mod.DnsLookupTool), { loading: () => <LoadingComponent /> });
@@ -147,7 +145,6 @@ const toolComponentMap: { [key: string]: React.ComponentType<any> } = {
   'robots-txt-tool': RobotsTxtTool,
   'sitemap-generator': SitemapGenerator,
   'response-time-calculator': ResponseTimeCalculator,
-  'domain-expiry-countdown': DomainExpiryCountdown,
   'ssl-checker': SslChecker,
   'uptime-calculator': UptimeCalculator,
   'dns-lookup': DnsLookupTool,
@@ -230,6 +227,7 @@ export default function ToolRenderer({ slug }: { slug: string }) {
         <PageHeader
             title={tool.name}
             description={tool.description}
+            aria-label={`Tool: ${tool.name}`}
         />
         {ToolComponent ? (
           <ToolComponent />
