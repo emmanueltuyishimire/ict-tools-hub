@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Label } from '@/components/ui/label';
 import { ipLookup, type FormState } from './actions';
-import { AlertCircle, Search, MapPin, Building, Wifi, Globe, Briefcase } from 'lucide-react';
+import { AlertCircle, Search, MapPin, Building, Wifi, Globe, Briefcase, ShieldCheck } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table';
 
